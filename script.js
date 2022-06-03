@@ -5,6 +5,8 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+// primeiras alterações para o PullRequest
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
