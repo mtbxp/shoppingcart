@@ -8,7 +8,7 @@ describe('2 - Teste a função fetchItem', () => {
     expect(typeof fetchItem).toBe('function');
   });
 
-  test('Se a uma função fetch é chamada e com o edpoint correto, ao executar a função fetchItem com o argumento "MLB1615760527"', async () => {
+  test('Se a função fetch é chamada e com o edpoint correto, ao executar a função fetchItem com o argumento "MLB1615760527"', async () => {
     expect.assertions(2);
     await fetchItem('MLB1615760527');
     expect(fetch).toBeCalled();
@@ -26,11 +26,4 @@ describe('2 - Teste a função fetchItem', () => {
     const responseNoParam = await fetchItem();
     expect(responseNoParam).toEqual(new Error('You must provide an url'));
   });
-
-  // test('Se a função fetchItem retorna um erro com a mensagem "Invalid product", quando chamada com agumento inválido', async () => {
-  //   expect.assertions(1);
-  //   const responseWrongParam = await fetchItem('InvalidProductId');
-  //   expect(responseWrongParam).toEqual(new Error('Invalid product'));
-  // });
-
 });
