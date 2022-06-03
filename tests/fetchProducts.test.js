@@ -8,12 +8,12 @@ describe('1 - Teste a função fetchProducts', () => {
   })
   it('Execute a função fetchProducts com o argumento "computador" e teste se fetch foi chamada', async () => {
     await fetchProducts('computador');
-    expect(fetch).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalledTimes(1);
   })
   it(`O "window.fetch" está definido em todos os testes, ou seja, será possível usar a função fetch dentro do seu ambiente de testes sem precisar importar ou instalar bibliotecas`, async () => {
     const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     await fetchProducts('computador');
-    expect(fetch).toBeCalledWith(url);
+    expect(fetch).toHaveBeenCalledWith(url);
   })
   it(`Teste se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, 
   que já está importado no arquivo.`, async () => {
