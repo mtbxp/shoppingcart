@@ -8,7 +8,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(typeof fetchProducts).toBe('function');
   });
 
-  test('Se a uma função fetch é chamada e com o edpoint correto, ao executar a função fetchProducts com o argumento "computador"', async () => {
+  test('Se a função fetch é chamada e com o edpoint correto, ao executar a função fetchProducts com o argumento "computador"', async () => {
     expect.assertions(2);
     await fetchProducts('computador');
     expect(fetch).toBeCalled();
@@ -25,11 +25,5 @@ describe('1 - Teste a função fetchProducts', () => {
     expect.assertions(1);
     const responseNoParam = await fetchProducts();
     expect(responseNoParam).toEqual(new Error('You must provide an url'));
-  });
-
-  test('Se a função fetchProducts retorna um erro com a mensagem "Invalid product type", quando chamada com agumento inválido', async () => {
-    expect.assertions(1);
-    const responseWrongParam = await fetchProducts('InvalidProduct');
-    expect(responseWrongParam).toEqual(new Error('Invalid product type'));
   });
 });
