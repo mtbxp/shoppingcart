@@ -19,6 +19,11 @@ describe('2 - Teste a função fetchItem', () => {
     expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527");
   })
   it('fetchItem with no parameter should return You must provide an url', async () => {
-    expect(fetchItem()).toThrow('You must provide an url');
+    try {
+      await fetchItem()
+    } catch (error) {
+      expect(error.message).toBe('You must provide an url')
+    }
+    // expect(fetchItem).toThrow('You must provide an url');
   })
 });

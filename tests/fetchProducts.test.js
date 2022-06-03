@@ -18,7 +18,11 @@ describe('1 - Teste a função fetchProducts', () => {
     const data = await fetchProducts('computador');
     expect(data).toMatchObject(computadorSearch.results);
   });
-  it('endPoint of fetchItem is euqal to https://api.mercadolibre.com/items/MLB1615760527', async () => {
-    expect(fetchProducts()).toThrow('You must provide an url');
+  it('fetchItem with no parameter should return You must provide an url', async () => {
+    try {
+      await fetchProducts()
+    } catch (error) {
+      expect(error.message).toBe('You must provide an url')
+    }
   })
 });
