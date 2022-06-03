@@ -28,3 +28,4 @@ describe('1 - Teste a função fetchProducts', () => {
 
   fail('Teste vazio');
 });
+
