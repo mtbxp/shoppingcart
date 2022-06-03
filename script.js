@@ -12,8 +12,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
-  const section = document.createElement('section');
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+  const section = document.createElement('section');  
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -38,4 +38,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const products = async () => {
+  const produtos = await fetchProducts('computador');
+  const { results } = produtos;
+  return results;
+};
+
+const senApiToSite = async () => {
+  const listaDeItems = document.querySelector('.items');
+  const produtos = await products();
+  const produtosMap = produtos.map((element) => {
+    const map = createProductItemElement(element);
+  return listaDeItems.appendChild(map);
+  });
+};
+
+window.onload = () => { 
+  senApiToSite();
+};
