@@ -12,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -38,4 +38,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => {
+  const itemsContainer = document.querySelector('.items');
+  fetchProducts('computador')
+    .then((obj) => obj.results.forEach((item) => {
+      itemsContainer.append(createProductItemElement(item));
+    }));
+};
