@@ -24,6 +24,21 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const createItems = (item) => {
+  const items = document.querySelector('.items');
+  items.append(item);
+};
+
+fetchProducts('computador').then((result) => result.forEach((product) => {
+  const obj = {
+    sku: product.id,
+    name: product.title,
+    image: product.thumbnail,
+  };
+  const myElement = createProductItemElement(obj);
+  createItems(myElement);
+}));
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
