@@ -1,14 +1,14 @@
-const fetchProductsUrl = (product) =>
-  `https://api.mercadolibre.com/sites/MLB/search?q=$QUERY/${product}`;
+// const fetchProductsUrl = (product) =>
+//   `https://api.mercadolibre.com/sites/MLB/search?q=$QUERY/${product}`;
 
-const fetchProducts = async (product) => {
-  try {
-    const url = fetchProductsUrl(product);
-    const response = await fetch(url);
-    const data = await response.json();
-  } catch (error) {
-    return error;
-  } 
+const fetchProducts = async () => {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
+  
+  const result = await fetch(url)
+    .then((response) => response.json())
+    .then((data) => data.data)
+    .catch((error) => `You must provide an url \n${error}`);
+  return result;
 };
 
 if (typeof module !== 'undefined') {
