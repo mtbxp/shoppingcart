@@ -7,5 +7,9 @@ describe('test the function fetchProducts', () => {
     expect(typeof fetchProducts).toBe('function');
   });
 
-  
+  it('function fetchProducts was called', async () => {
+    await fetchProducts('computador');
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
 });
