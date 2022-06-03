@@ -4,7 +4,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-// first commit
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -30,7 +30,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -39,8 +39,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => {
+  const items = document.querySelector('.items');
   fetchProducts('computador')
-    .then((data) =>
-      data.results.forEach((element) =>
-        document.querySelector('.items').appendChild(createProductItemElement(element))));
+    .then((data) => data.results.forEach((element) =>
+      items.appendChild(createProductItemElement(element))));
+  items.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('item__add')) {
+      const itemID = e.target.parentNode.firstChild.innerText;
+      fetchItem(itemID).then((item) =>
+        document.querySelector('.cart__items').appendChild(createCartItemElement(item)));
+    }
+  });
 };
