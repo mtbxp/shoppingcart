@@ -7,16 +7,20 @@ describe('1 - Teste a função fetchProducts', () => {
   it('É uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   })
-  it('Com o argumento computador, retorna o fetch', () => {
-    expect(fetchProducts(computador)).toBe('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  it('Com o argumento computador, retorna o fetch', async () => {
+    await fetchProducts("computador");
+    expect(fetch).toHaveBeenCalled();
   })
-  it('Com o argumento computador, utiliza endpoint', () => {
-    expect(fetchProducts(computador)).toBeCalledWith(computador);
+  it('Com o argumento computador, utiliza endpoint', async () => {
+    await fetchProducts("computador");
+    expect(fetch).toBeCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   })
-  it('Testa se o retorno é igual computadorSearch', () => {
-    expect(fetchProducts(computador)).toEqual(computadorSearch);
+  it('Testa se o retorno é igual computadorSearch', async () => {
+    const resp = await fetchProducts("computador")
+    expect(resp).toEqual(computadorSearch);
   })
-  it('Sem argumento retorna erro', () => {
-    expect(fetchProducts('')).toThrow('You must provide an url');
+  it('Sem argumento retorna erro', async () => {
+    const resp = await fetchProducts()
+    expect(resp).toEqual(new Error('You must provide an url'));
   })
 });

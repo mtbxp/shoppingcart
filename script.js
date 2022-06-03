@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -39,4 +38,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const createProductList = () => {
+  fetchProducts('computador').then((data) => {
+    const items = document.querySelector('.items');
+    const produtos = data.results;
+    produtos.forEach((element) => {
+      const item = createProductItemElement(element);
+      items.appendChild(item);
+    });
+  });
+};
+
+window.onload = () => { createProductList(); };
