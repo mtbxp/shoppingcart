@@ -23,10 +23,6 @@ describe('2 - Teste a função fetchItem', () => {
   });
 
   it('Should return new Error (\'You must provide an url\') when fetchItem(\'\') is called.', async () => {
-    expect(await fetchItem('')).toEqual(new Error(new Error('You must provide an url')));
-  });
-
-  it('Should return new Error (\'An error occurred\') when fetchItem(\'undefined\') is called.', async () => {
-    expect(await fetchItem(undefined)).toEqual(new Error('An error occurred. :c'));
+    expect(await fetchItem('')).toEqual(new Error('You must provide an url'));
   });
 });
