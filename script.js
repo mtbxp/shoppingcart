@@ -1,5 +1,7 @@
 const sectionItems = document.querySelector('.items');
 const olCartItems = document.querySelector('.cart__items');
+const spanTotalPrice = document.querySelector('.total-price');
+const clearCartBtn = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -29,7 +31,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const subFromCartTotal = (liText) => {
-  const spanTotalPrice = document.querySelector('.total-price');
   const price = liText.slice(liText.indexOf('$') + 1);
   // console.log(price);
   const totalPrice = Number(spanTotalPrice.innerText) - Number(price);
@@ -51,10 +52,14 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+clearCartBtn.addEventListener('click', () => {
+  olCartItems.textContent = '';
+  spanTotalPrice.innerText = 0;
+});
+
 olCartItems.addEventListener('click', cartItemClickListener);
 
 const addToCartTotal = ({ price }) => {
-  const spanTotalPrice = document.querySelector('.total-price');
   const totalPrice = Number(spanTotalPrice.innerText) + price;
   spanTotalPrice.innerText = Math.round(totalPrice * 100) / 100;
 };
