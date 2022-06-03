@@ -28,21 +28,36 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const subFromCartTotal = (liText) => {
+  const spanTotalPrice = document.querySelector('.total-price');
+  const price = liText.slice(liText.indexOf('$') + 1);
+  // console.log(price);
+  const totalPrice = Number(spanTotalPrice.innerText) - Number(price);
+  spanTotalPrice.innerText = Math.round(totalPrice * 100) / 100;
+};
+
 const cartItemClickListener = (event) => {
   if (event.target.classList.contains('cart__item')) {
+    subFromCartTotal(event.target.innerText);
     event.target.parentElement.removeChild(event.target);
     saveCartItems(olCartItems.innerHTML);
   }
 };
 
-const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {  
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;  
   return li;
 };
 
 olCartItems.addEventListener('click', cartItemClickListener);
+
+const addToCartTotal = ({ price }) => {
+  const spanTotalPrice = document.querySelector('.total-price');
+  const totalPrice = Number(spanTotalPrice.innerText) + price;
+  spanTotalPrice.innerText = Math.round(totalPrice * 100) / 100;
+};
 
 sectionItems.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
@@ -50,6 +65,7 @@ sectionItems.addEventListener('click', (event) => {
     fetchItem(productId)
     .then((product) => {
       olCartItems.appendChild(createCartItemElement(product));
+      addToCartTotal(product);
       saveCartItems(olCartItems.innerHTML);
     });
   }
