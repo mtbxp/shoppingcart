@@ -28,11 +28,11 @@ const createProductItemElement = ({ sku, name, image }) => {
 const appendElement = (element) => {
   const elementSectionItems = document.getElementsByClassName('items')[0];
   elementSectionItems.appendChild(element);
-}
+};
 
 const runCreateProduct = async () => {
   const results = await fetchProducts('computador');
-  console.log(results);
+
   results.forEach((item) => {
     const { id, title, thumbnail } = item;
     const obj = { sku: id, name: title, image: thumbnail };
