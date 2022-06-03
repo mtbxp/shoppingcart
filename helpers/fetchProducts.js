@@ -3,8 +3,8 @@ const fetchProducts = async () => {
   
   const response = await fetch(url);
   const products = await response.json();
-
-  return products.results;
+  
+  return products;
 };
 
 if (typeof module !== 'undefined') {

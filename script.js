@@ -15,7 +15,6 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -38,4 +37,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const item = async () => {
+  const items = await fetchProducts();
+  const result = items.results.map((product) => ({
+    sku: product.id,
+    name: product.title,
+    image: product.thumbnail,
+  }));
+  return result;
+};
+
+window.onload = async () => {
+  const products = await item();
+  products.forEach((product) => {
+    const divItems = document.querySelector('.items');
+    const section = createProductItemElement(product);
+    divItems.appendChild(section);
+  });
+};
