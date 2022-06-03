@@ -43,7 +43,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const products = () => {
   fetchProducts('computador')
     .then((element) => element.results
-    .forEach((product) => productSection.appendChild(createProductImageElement(product))));
+    .forEach((product) => productSection.appendChild(createProductItemElement(product))));
 };
 window.onload = () => { 
   products();
