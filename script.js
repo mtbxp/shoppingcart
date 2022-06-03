@@ -40,18 +40,18 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 window.onload = () => {
   const items = document.querySelector('.items');
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
   fetchProducts('computador')
     .then((data) => data.results.forEach((element) =>
       items.appendChild(createProductItemElement(element))));
   document.body.addEventListener('click', (e) => {
     if (e.target.classList.contains('item__add')) {
-      const itemID = e.target.parentNode.firstChild.innerText;
-      fetchItem(itemID).then((item) =>
-        document.querySelector('.cart__items').appendChild(createCartItemElement(item)));
-      saveCartItems(document.querySelector('.cart__items'));
+      fetchItem(getSkuFromProductItem(e.target.parentNode))
+        .then((item) => {
+           document.querySelector('.cart__items').appendChild(createCartItemElement(item));
+           saveCartItems(document.querySelector('.cart__items').innerHTML);
+        });
     }
-    if (e.target.classList.contains('cart__item')) {
-      cartItemClickListener(e);
-    }
+    if (e.target.classList.contains('cart__item')) return cartItemClickListener(e);
   });
 };
