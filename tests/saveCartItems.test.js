@@ -11,5 +11,5 @@ describe('3 - Teste a função saveCartItems', () => {
   it('Passa os argumentos corretos para localStorage.setItem', () => {
     const result = saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '<ol><li>Item</li></ol>');
-  })
+  });
 });

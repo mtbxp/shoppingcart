@@ -47,9 +47,23 @@ const addItemClickListener = async (event) => {
   cart.append(cartItem);
 };
 
+const toggleLoadingMessage = (parentElement, bool) => {
+  if (bool) {
+    const addLoading = document.createElement('section');
+    addLoading.className = 'loading';
+    addLoading.textContent = 'carregando...';
+    parentElement.append(addLoading);
+  } else {
+    const removeLoading = document.querySelector('.loading');
+    removeLoading.remove() 
+  }
+};
+
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
+  toggleLoadingMessage(items, true);
   const products = await fetchProducts('computador');
+  toggleLoadingMessage(items, false);
   products.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const productSection = createProductItemElement({ sku, name, image });
