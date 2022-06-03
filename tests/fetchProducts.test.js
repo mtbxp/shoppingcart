@@ -21,4 +21,11 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts(queryTerm);
     expect(fetch).toHaveBeenCalledWith(url);
   });
+
+  it('Deveria receber como resposta computadorSearch.', async () => {
+    expect.assertions(1);
+    const queryTerm = 'computador';
+    const response = await fetchProducts(queryTerm);
+    expect(response).toEqual(computadorSearch);
+  });
 });

@@ -3,7 +3,9 @@ const createUrlToGetProductsList = (queryTerm) => `${BASE_URL}/search?q=${queryT
 
 const fetchProducts = async (queryTerm) => {
   const url = createUrlToGetProductsList(queryTerm);
-  await fetch(url);
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 };
 
 if (typeof module !== 'undefined') {
