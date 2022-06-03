@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const addDataHtml = async () => {
   const dataComputers = await fetchProducts('computador');
   console.log(dataComputers);
