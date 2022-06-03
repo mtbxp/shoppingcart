@@ -1,4 +1,4 @@
-const { log } = require("mochawesome/src/utils");
+const { log } = require('mochawesome/src/utils');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
