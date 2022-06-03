@@ -9,7 +9,7 @@ describe('2 - Teste a função fetchItem', () => {
 
   it('4 - Com o argumento "MLB1615760527", a função fetch é chamada', async () => {
     await fetchItem('MLB1615760527');
-    
+
     expect(fetch).toHaveBeenCalled;
   });
 
@@ -24,5 +24,11 @@ describe('2 - Teste a função fetchItem', () => {
     const response = await fetchItem('MLB1615760527');
 
     expect(response).toEqual(item);
+  });
+
+  it('7 - Ao chamar a função sem argumento, retorna um error', async () => {
+    const response = await fetchItem();
+
+    expect(response).toEqual(new Error('You must provide an url'));
   })
 });
