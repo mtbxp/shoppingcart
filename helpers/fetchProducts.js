@@ -1,14 +1,15 @@
-// const fetchProductsUrl = (product) =>
-//   `https://api.mercadolibre.com/sites/MLB/search?q=$QUERY/${product}`;
+const fetchProductsUrl = (product) =>
+`https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
 const fetchProducts = async (product) => {
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-  
-  const result = await fetch(url)
-    .then((response) => response.json())
-    // .then((data) => data.)
-    .catch((error) => `You must provide an url \n${error}`);
-  return result;
+  try {
+    const url = fetchProductsUrl(product);
+    const response = await fetch(url);
+    const data = response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
