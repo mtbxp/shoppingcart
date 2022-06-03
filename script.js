@@ -1,5 +1,6 @@
 // Project <Pixels art> from <Larissa Menezes> done in 22.06.03 for the Trybe course, ninth week. It has been used as reference the notes from the class an external links indicated along the code line
 
+const { list } = require("mocha/lib/reporters/base");
 const { create } = require("mochawesome-report-generator");
 const { fetchItem } = require("./helpers/fetchItem");
 const { fetchProducts } = require("./helpers/fetchProducts");
@@ -29,6 +30,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const createProductList = () => {
+  const displayOfItems = document.querySelector('.items');
   const listOfProducts = fetchProducts('computador');
   listOfProducts.forEach((product) => {
     const productObject = {
@@ -36,7 +38,7 @@ const createProductList = () => {
       name: product.title,
       image: product.thumbnail,
     };
-    createProductItemElement(productObject);
+    displayOfItems.appendChild(createProductItemElement(productObject));
   });
 };
 
@@ -66,7 +68,26 @@ const getItem = (event) => {
   createCartItemElement(itemObject);
 };
 
+const buttonsAddItem = document.querySelectorAll('item__add');
+buttonsAddItem.addEventListener('click', getItem);
 const buttonsToAdd = document.querySelectorAll('item__add');
-buttonsToAdd.addEventListener('click', getItem);
+buttonsremoveItem.addEventListener('click', cartItemClickListener);
 
-window.onload = () => { createProductList(); getItem(); };
+const listOfItems = document.querySelector('.cart__item')[0];
+
+const calculatePrice = () => {
+  const priceTag = document.querySelector('.total-price');
+  const finalPrice = listOfItems.reduce((acc, item) => acc + item.innerText.split('$')[1], 0);
+  priceTag.innerText = `RS: ${finalPrice}`;
+};
+
+const clearCart = () => {
+  listOfItems.innerText = '';
+};
+
+const clearListButton = document.querySelector('.empty-cart');
+clearListButton.addEventListener('click', clearCart);
+
+listOfItems.addEventListener('change', calculatePrice);
+
+window.onload = () => { createProductList(); };

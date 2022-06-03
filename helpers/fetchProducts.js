@@ -7,6 +7,13 @@ const getURL = (product) => `https://api.mercadolibre.com/sites/MLB/search?q=${p
 const fetchProducts = async (productName) => {
   const response = await fetch(getURL(productName));
   const data = await response.json();
+  while (typeof data === 'undefined') {
+    const displayOfItems = document.querySelector('.items');
+    const loadingStatus = document.createElement('p');
+    loadingStatus.className = 'loading';
+    loadingStatus.innerText('carregando...');
+    displayOfItems.appendChild(loadingStatus);
+  }
   const list = data.results;
   return list;
 };
