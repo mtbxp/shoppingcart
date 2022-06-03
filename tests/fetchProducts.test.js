@@ -9,7 +9,7 @@ describe('1 - Teste a função fetchProducts', () => {
 
   it('Should call fetch when fetchProducts(\'computador\') is called.', async () => {
     await fetchProducts('computador');
-    expect(fetch).tohaveBeenCalled();
+    expect(fetch).toHaveBeenCalled();
   });
 
   it('Should use url when fetchProducts(\'computador\') is called.', async () => {
@@ -22,7 +22,11 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(await fetchProducts('computador')).toEqual(computadorSearch);
   });
 
-  it('Should return new Error (\You must provide an url\') when fetchProducts(\'\') is called.', async () => {
-    expect(await fetchProducts('computador')).toThrow(new Error('You must provide an url'));
+  it('Should return new Error (\'You must provide an url\') when fetchProducts(\'\') is called.', async () => {
+    expect(await fetchProducts('')).toEqual(new Error('You must provide an url'));
+  });
+
+  it('Should return new Error (\'An error occurred\') when fetchProducts(\'undefined\') is called.', async () => {
+    expect(await fetchProducts(undefined)).toEqual(new Error('An error occurred. :c'));
   });
 });
