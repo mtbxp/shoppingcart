@@ -1,4 +1,5 @@
 const fetchProducts = () => {
+  return 1;
   // seu código aqui
 };
 
