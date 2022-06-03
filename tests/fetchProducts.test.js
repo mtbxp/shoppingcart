@@ -15,9 +15,15 @@ describe('test the function fetchProducts', () => {
 
   it('function fetch use the endpoint "url"', async () => {
     const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-    
+
     await fetchProducts('computador');
 
     expect(fetch).toHaveBeenCalledWith(url);
+  });
+
+  it('function return a object equal to comutadorSearch', async () => {
+    const product = await fetchProducts('computador');
+
+    expect(product).toEqual(computadorSearch);
   });
 });
