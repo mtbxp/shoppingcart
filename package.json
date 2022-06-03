@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js",
@@ -43,6 +44,7 @@
     "mochawesome": "5.0.0",
     "mochawesome-merge": "4.0.3",
     "mochawesome-report-generator": "4.1.0",
+    "node-fetch": "^2.6.7",
     "stylelint": "13.8.0",
     "stylelint-config-standard": "20.0.0"
   },
