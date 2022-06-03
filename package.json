@@ -11,7 +11,7 @@
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js",
     "lint:styles": "stylelint *.css --config .stylelintrc.json --ignore-disables --allow-empty-input",
     "serialize": "node -e 'require(\"./cypress/utils/testCoverage.js\").testCoverage()'",
-    "tailwind": "npx tailwindcss -i ./libs/main.css -o ./libs/output.css --watch"
+    "tailwind": "npx tailwindcss -i ./mocks/main.css -o ./mocks/output.css --watch"
   },
   "jest": {
     "coverageReporters": [
