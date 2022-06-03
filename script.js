@@ -53,6 +53,15 @@ const adicionarElementosNoHtml = async () => {
 };
 adicionarElementosNoHtml();
 
+const adicionarAoCarrinho = async (itemId) => {
+  const fetchItemsReturn = await fetchItems(itemId);
+  const { id, title, price } = fetchItemsReturn;
+  const li = createCartItemElement({ id, title, price });
+  const cartItems = document.querySelectorAll('.cart__items')[0];
+  cartItems.appendChild(li);
+};
+adicionarAoCarrinho('MLB1341706310');
+
 window.onload = () => {
-  adicionarElementosNoHtml();
+  // adicionarElementosNoHtml();
 };
