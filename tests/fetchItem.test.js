@@ -26,10 +26,11 @@ describe('test the function fetchItem', () => {
   
     expect(product).toEqual(item);
   });
+
+  it('function without argument returns Error', async () => {
+    const product = await fetchItem('');
+  
+    expect(product).toEqual(new Error('You must provide an url'));
+  });
 });
 
-/* it('function without argument returns Error', async () => {
-  const product = await fetchProducts('');
-
-  expect(product).toEqual(new Error('You must provide an url'));
-}); */
