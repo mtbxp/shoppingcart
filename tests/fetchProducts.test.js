@@ -4,7 +4,7 @@ const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
+  /* fail('Teste vazio'); */
   test('Deve ser uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   });
@@ -29,5 +29,4 @@ describe('1 - Teste a função fetchProducts', () => {
     const error = new Error('You must provide an url');
     await expect(fetchProducts()).resolves.toThrow(error);
   });
-
 });
