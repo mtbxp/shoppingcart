@@ -16,4 +16,13 @@ describe('1 - Teste a função fetchProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveReturnedWith(url);
   });
+  test(`passando o argumento "computador", retorna uma estrutura semelhante
+    a computadorSearch`, async () => {
+      expect(fetchProducts('computador')).toEqual(computadorSearch);
+  });
+  test(` sem argumento, retorna um erro com a mensagem: 'You must provide 
+    an url'.`, async () => {
+      const errorM = 'erro';
+      expect(fetchProducts('computador')).toThrow(errorM);
+  });
 });
