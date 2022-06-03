@@ -6,7 +6,7 @@ const createProductImageElement = (imageSource) => {
 };
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -43,7 +43,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  section.addEventListener('click', (event) => {
+  section.children[3].addEventListener('click', (event) => {
     const father = event.target.parentNode;
     const childrenValue = father.children[0].innerText;
     getProduct(childrenValue);
