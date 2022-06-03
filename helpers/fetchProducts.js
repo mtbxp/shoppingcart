@@ -10,5 +10,5 @@ const fetchProducts = (arg) => {
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
-  }
+  };
 }
