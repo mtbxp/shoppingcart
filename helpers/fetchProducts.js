@@ -4,7 +4,7 @@ const fetchProducts = async (productsType) => {
     const apiResponse = await fetch(url);
     const productsData = await apiResponse.json();
 
-    if (productsData.results.length === 0) return new Error('Invalid product');
+    if (productsData.results.length === 0) return new Error('Invalid product type');
 
     return productsData;
   } catch (error) {

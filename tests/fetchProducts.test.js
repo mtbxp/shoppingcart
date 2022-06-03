@@ -27,9 +27,9 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(responseNoParam).toEqual(new Error('You must provide an url'));
   });
 
-  test('Se a função fetchProducts retorna um erro com a mensagem "Invalid product", quando chamada com agumento inválido', async () => {
+  test('Se a função fetchProducts retorna um erro com a mensagem "Invalid product type", quando chamada com agumento inválido', async () => {
     expect.assertions(1);
     const responseWrongParam = await fetchProducts('InvalidProduct');
-    expect(responseWrongParam).toEqual(new Error('Invalid product'));
+    expect(responseWrongParam).toEqual(new Error('Invalid product type'));
   });
 });
