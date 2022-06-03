@@ -4,7 +4,6 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-// primeiro commit
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -12,7 +11,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -38,4 +37,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const createProductList = () => {
+  fetchProducts('computador').then((data) => {
+    const items = document.querySelector('.items');
+    const arrayProducts = data.results;
+    arrayProducts.forEach((element) => {
+      const item = createProductItemElement(element);
+      items.appendChild(item);
+    });
+    console.log(arrayProducts);
+  });
+};
+
+window.onload = () => { createProductList(); };
