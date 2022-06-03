@@ -1,3 +1,5 @@
+const sectionProduct = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +14,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+  fetchProducts();
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -37,7 +40,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const getProduct = () => {
+ fetchProducts('computador')
+ .then((element) => element.results
+ .forEach((product) => sectionProduct.appendChild(createProductItemElement(product))));
+};
 
-/// 
-
-window.onload = () => { };
+window.onload = () => {
+  getProduct();
+ };
