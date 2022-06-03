@@ -4,7 +4,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-/* change */
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -15,7 +15,6 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-  console.log(sku, name, image);
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
@@ -25,23 +24,10 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const appendElement = (element) => {
+const appendElementToItems = (element) => {
   const elementSectionItems = document.getElementsByClassName('items')[0];
   elementSectionItems.appendChild(element);
 };
-
-const runCreateProduct = async () => {
-  const results = await fetchProducts('computador');
-
-  results.forEach((item) => {
-    const { id, title, thumbnail } = item;
-    const obj = { sku: id, name: title, image: thumbnail };
-    const elementItem = createProductItemElement(obj);
-    appendElement(elementItem);
-  });
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
@@ -55,4 +41,42 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { runCreateProduct(); };
+const appendElementCart = (element) => {
+  const elementCartItems = document.getElementsByClassName('cart__items')[0];
+  elementCartItems.appendChild(element);
+};
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const getItemID = async (ev) => {
+  if (ev.target.nodeName === 'BUTTON') {
+    const skuID = getSkuFromProductItem(ev.target.parentElement);
+    const infoItem = await fetchItem(skuID);
+    const itemCartElement = createCartItemElement(infoItem);
+    appendElementCart(itemCartElement);
+  }
+};
+
+const addEventToButtonsItems = () => {
+  const elementsItems = document.getElementsByClassName('items')[0].children;
+  console.log(elementsItems.length);
+  for (let index = 0; index < elementsItems.length; index += 1) {
+    elementsItems[index].addEventListener('click', getItemID);
+  }
+};
+
+const runCreateProduct = async () => {
+  const results = await fetchProducts('computador');
+
+  results.forEach((item) => {
+    const { id, title, thumbnail } = item;
+    const obj = { sku: id, name: title, image: thumbnail };
+    const elementItem = createProductItemElement(obj);
+    appendElementToItems(elementItem);
+  });
+  addEventToButtonsItems();
+};
+
+window.onload = () => { 
+  runCreateProduct(); 
+};

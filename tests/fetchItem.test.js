@@ -2,7 +2,7 @@ require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
 
-describe('2 - Teste a função fetchItem', async () => {
+describe('2 - Teste a função fetchItem', () => {
   // implemente seus testes aqui
   it('Deve ser uma função', () => {
     expect(typeof fetchItem).toBe('function');
@@ -15,6 +15,11 @@ describe('2 - Teste a função fetchItem', async () => {
   })
   it('Deve retornar um erro ao não receber argumento', async () => {
     const error = new Error('You must provide an url');
-    await expect(fetchProducts()).rejects.toEqual(error);
+    await expect(fetchItem()).rejects.toEqual(error);
+  })
+  it('Deve retornar um objeto com 3 chaves', async () => {
+    expect(typeof fetchItem('MLB1615760527')).toBe('object');
+    const lengthOfObject = Object.keys(await fetchItem('MLB1615760527'));
+    expect(lengthOfObject.length).toBe(3);
   })
 });
