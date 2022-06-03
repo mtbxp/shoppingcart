@@ -12,4 +12,12 @@ describe('test the function fetchProducts', () => {
 
     expect(fetch).toHaveBeenCalledTimes(1);
   });
+
+  it('function fetch use the endpoint "url"', async () => {
+    const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+    
+    await fetchProducts('computador');
+
+    expect(fetch).toHaveBeenCalledWith(url);
+  });
 });
