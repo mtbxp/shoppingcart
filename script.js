@@ -55,6 +55,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 clearCartBtn.addEventListener('click', () => {
   olCartItems.textContent = '';
   spanTotalPrice.innerText = 0;
+  saveCartItems(olCartItems.innerHTML);
 });
 
 olCartItems.addEventListener('click', cartItemClickListener);
