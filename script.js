@@ -62,7 +62,7 @@ const addProductsToSite = async () => {
 const emptyCart = () => {
   const cart = document.querySelector('.cart__items');
   cart.innerHTML = '';
-}
+};
 
 const emptyCartButton = document.querySelector('.empty-cart');
 
