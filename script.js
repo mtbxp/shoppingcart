@@ -1,3 +1,7 @@
+// declarations
+// movecart
+
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,17 +42,34 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const moveToCart = async (event) => {
+  const fatherElement = event.target.parentElement;
+  const itemSku = fatherElement.getElementsByClassName('item__sku')[0].innerText;
+  const itemInfos = await fetchItem(itemSku);
+  const cartItems = document.getElementsByClassName('cart__items')[0];
+  const obj = {
+    sku: await itemInfos.id,
+    name: await itemInfos.title,
+    salePrice: await itemInfos.price,
+  };
+  cartItems.appendChild(createCartItemElement(obj));
+};
+
 const init = async () => {
   const obj = await fetchProducts('computador');
   const secItems = document.getElementsByClassName('items')[0];
+  const buttons = document.getElementsByClassName('item__add');
   Object.values(obj).forEach((element) => {
     const newObj = {
       sku: element.id,
       name: element.title,
       image: element.thumbnail,
     };
-    secItems.appendChild(createProductItemElement(newObj)); 
+    secItems.appendChild(createProductItemElement(newObj));
   });
+  for (let index = 0; index < buttons.length; index += 1) {
+    buttons[index].addEventListener('click', moveToCart);
+  }
 };
 
 window.onload = init;
