@@ -49,7 +49,7 @@ body {
   right: 61.5%;
   width: 39.5%;
   height: 15px;
-  background: rgb(10, 118, 79);
+  background: rgb(10, 118, 78);
   transform: skew(-45deg);
   z-index: 0;
 }
