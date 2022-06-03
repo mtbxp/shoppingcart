@@ -2,7 +2,8 @@ require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
 
-describe('2 - Teste a função fetchItem', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+describe('test the function fetchItem', () => {
+  it('a function', () => {
+    expect(typeof fetchItem).toEqual('function');
+  });
 });
