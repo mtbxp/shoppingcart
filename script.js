@@ -31,7 +31,7 @@ const getProduct = (id) => fetchItem(id).then((produto) => {
   const baseObj = {
     sku: produto.id,
     name: produto.title,
-    preco: produto.price,
+    salePrice: produto.price,
   };
   createCartItemElement(baseObj);
 });
