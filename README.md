@@ -974,4 +974,5 @@ Uma requisição à API gasta um certo tempo e durante esse processo a pessoa qu
 
 - Verifica se adiciona um texto de "carregando" durante uma requisição à API.
 
+
 </details>
