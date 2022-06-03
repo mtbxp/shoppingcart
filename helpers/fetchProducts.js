@@ -1,18 +1,15 @@
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
 const fetchProducts = async (product) => {
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-  
   try {
-    const promiseFetch = await fetch(url);
-    const results = await promiseFetch.json();
-    console.log(results);
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
   } catch (error) {
-    console.log(`Algo deu errado: \n${error}`);
+    return error;
   }
 };
-
-fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {
