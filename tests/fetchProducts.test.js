@@ -3,7 +3,6 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fecthProducts', () => {
-  // implemente seus testes aqui
   test('Testa se o objeto fetchProducts é do tipo function', () => {
     const objectType = typeof fetchProducts;
     expect(objectType).toBe('function');
