@@ -78,7 +78,7 @@ const populatePage = async () => {
 const addToCart = async (event) => {
   const olCartItems = document.getElementsByClassName('cart__items')[0];
   const productCard = event.target.parentElement;
-  const productId = productCard.getElementsByClassName('item__sku')[0].innerText;
+  const productId = getSkuFromProductItem(productCard);
   const { id: sku, title: name, price: salePrice } = await fetchItem(productId);
 
   calculateCartPrice(salePrice);
