@@ -45,7 +45,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const cartItems = async () => {
+const cartItems = async (event) => {
   const id = event.target.parentElement.firstChild.innerHTML;
   const products = await fetchItem(id);
   const createItem = createCartItemElement(products);
