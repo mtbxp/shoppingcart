@@ -1,16 +1,16 @@
-// const createProductImageElement = (imageSource) => {
-//   const img = document.createElement('img');
-//   img.className = 'item__image';
-//   img.src = imageSource;
-//   return img;
-// };
+const createProductImageElement = (imageSource) => {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+};
 
-// const createCustomElement = (element, className, innerText) => {
-//   const e = document.createElement(element);
-//   e.className = className;
-//   e.innerText = innerText;
-//   return e;
-// };
+const createCustomElement = (element, className, innerText) => {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+};
 
 // const createProductItemElement = ({ sku, name, image }) => {
 //   const section = document.createElement('section');
@@ -38,4 +38,4 @@
 //   return li;
 // };
 
-// window.onload = () => { };
+window.onload = () => { };
