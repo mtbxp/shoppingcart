@@ -10,7 +10,8 @@
     "cypress:open": "cypress open",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js",
     "lint:styles": "stylelint *.css --config .stylelintrc.json --ignore-disables --allow-empty-input",
-    "serialize": "node -e 'require(\"./cypress/utils/testCoverage.js\").testCoverage()'"
+    "serialize": "node -e 'require(\"./cypress/utils/testCoverage.js\").testCoverage()'",
+    "tailwind": "npx tailwindcss -i ./libs/main.css -o ./libs/output.css --watch"
   },
   "jest": {
     "coverageReporters": [
@@ -45,5 +46,8 @@
     "mochawesome-report-generator": "4.1.0",
     "stylelint": "13.8.0",
     "stylelint-config-standard": "20.0.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
   }
 }
