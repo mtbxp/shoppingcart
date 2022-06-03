@@ -12,13 +12,13 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id, title, thumbnail }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -38,4 +38,22 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+// preciso criar o item html
+const products = async () => {
+  const produtos = await fetchProducts('computador');
+  const { results } = produtos;
+  return results;
+};
+// preciso dar aṕpendChild em uma section com class = items
+const creatProduct = async () => {
+  const productList = document.querySelector('.items');
+  const produtos = await products();
+  const childs = produtos.map((produt) => {
+    const child = createProductItemElement(produt); 
+    return productList.appendChild(child);
+  });
+  // console.log(produtos);
+};
+window.onload = () => {
+  creatProduct();
+};

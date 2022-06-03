@@ -1,9 +1,7 @@
-const fetchSimulator = require('../mocks/fetchSimulator');
-
 const fetchProducts = async () => {
-  const api = await fetchSimulator('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  const api = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const response = await api.json();
-  console.log(response);
+  return response;
 };
 
 fetchProducts();
