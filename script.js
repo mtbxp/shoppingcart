@@ -26,8 +26,27 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const saveCartPrice = (newPrice) => localStorage.setItem('cartPrice', newPrice);
+
+const getCartPrice = () => JSON.parse(localStorage.getItem('cartPrice'));
+
+const calculateCartPrice = (newItemPrice = 0) => {
+  const cartCurrentPrice = getCartPrice();
+  if (!getCartPrice) saveCartPrice(newItemPrice);
+  saveCartPrice(cartCurrentPrice + newItemPrice);
+};
+
+const loadCartPrice = () => {
+  const cartPrice = getCartPrice();
+  const cartPriceElement = document.querySelector('.total-price');
+  cartPriceElement.innerText = cartPrice;
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
+  const price = event.target.innerText.match(/PRICE: \$([\d.]+)/)[1];
+  calculateCartPrice(-1 * price);
+  loadCartPrice();
   const newOlCartItems = document.getElementsByClassName('cart__items')[0];
   saveCartItems(newOlCartItems.innerHTML);
 };
@@ -60,10 +79,14 @@ const addToCart = async (event) => {
   const productCard = event.target.parentElement;
   const productId = productCard.getElementsByClassName('item__sku')[0].innerText;
   const { id: sku, title: name, price: salePrice } = await fetchItem(productId);
+
+  calculateCartPrice(salePrice);
+
   const newCartItem = createCartItemElement({ sku, name, salePrice });
   olCartItems.appendChild(newCartItem);
   const newOlCartItems = document.getElementsByClassName('cart__items')[0];
   saveCartItems(newOlCartItems.innerHTML);
+  loadCartPrice();
 };
 
 const loadCartItems = () => {
@@ -84,6 +107,7 @@ const loadCartItems = () => {
 window.onload = async () => {
   await populatePage();
   loadCartItems();
+  loadCartPrice();
   const addToCartButtons = document.querySelectorAll('.item__add');
   addToCartButtons.forEach((button) => {
     button.addEventListener('click', addToCart);
