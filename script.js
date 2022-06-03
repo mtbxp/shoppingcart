@@ -37,21 +37,34 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const item = async () => {
+const product = async () => {
   const items = await fetchProducts();
-  const result = items.results.map((product) => ({
-    sku: product.id,
-    name: product.title,
-    image: product.thumbnail,
+  const result = items.results.map((prod) => ({
+    sku: prod.id,
+    name: prod.title,
+    image: prod.thumbnail,
   }));
   return result;
 };
 
+const productCart = async (id) => {
+  const productSearch = await product();
+  const [search] = productSearch.filter((element) => element.sku === id);
+  const productResult = await fetchItem(search.sku);
+  return ({
+    sku: productResult.id,
+    name: productResult.title,
+    salePrice: productResult.price,
+  });
+};
+
 window.onload = async () => {
-  const products = await item();
-  products.forEach((product) => {
+  const products = await product();
+  products.forEach((prod) => {
     const divItems = document.querySelector('.items');
-    const section = createProductItemElement(product);
+    const section = createProductItemElement(prod);
     divItems.appendChild(section);
   });
+  const card = createCartItemElement();
+  productCart('MLB1983288732');
 };
