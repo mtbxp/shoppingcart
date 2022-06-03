@@ -26,8 +26,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+const cartItemClickListener = () => {
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -38,6 +37,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const addItemClickListener = async (event) => {
+  const cart = document.querySelector('.cart__items');
+  const itemId = getSkuFromProductItem(event.target.parentElement);
+  const item = await fetchItem(itemId);
+  const { id: sku, title: name, price: salePrice } = item;
+  const cartItem = createCartItemElement({ sku, name, salePrice });
+  cart.append(cartItem);
+};
+
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
   const products = await fetchProducts('computador');
@@ -46,6 +54,8 @@ const addProductsToSite = async () => {
     const productSection = createProductItemElement({ sku, name, image });
     items.append(productSection);
   });
+  const addItemButtons = document.querySelectorAll('.item__add');
+  addItemButtons.forEach((button) => button.addEventListener('click', addItemClickListener));
 };
 
 addProductsToSite();
