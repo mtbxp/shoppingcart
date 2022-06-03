@@ -1,5 +1,14 @@
-const fetchProducts = () => {
-  // seu código aqui
+const getFetchProductURL = (id) => `https://api.mercadolibre.com/sites/MLB/search?q=${id}`;
+
+const fetchProducts = async (id) => {
+  try {
+    const url = getFetchProductURL(id);
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
