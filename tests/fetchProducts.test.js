@@ -17,6 +17,14 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts('computador');
     expect(fetch).toBeCalledWith(endpoint);
   })
+  test('Com o argumento (computador) fetchProducts retorna uma estrutura de dados igual ao objeto computadorSearch', async () => {
+    const response = await fetchProducts('computador');
+    expect(response).toEqual(computadorSearch);
+  })
+  test('Ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: (You must provide an url)', async () => {
+    const response = await fetchProducts();
+    expect(response).toEqual(new Error('You must provide an url'));
+  })
 
   fail('Teste vazio');
 });
