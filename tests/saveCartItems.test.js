@@ -10,7 +10,7 @@ describe('test the function saveCartItems', () => {
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 
-  it('when executing saveCartItems, method [] is called', async () => {
+  it('when executing saveCartItems, method is called with arguments', async () => {
     const arg = '<ol><li>Item</li></ol>';
     await saveCartItems(arg);
 
