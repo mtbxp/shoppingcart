@@ -13,4 +13,24 @@ describe('test the function fetchItem', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  it('function fetch use the endpoint "url"', async () => {
+    const url = 'https://api.mercadolibre.com/items/MLB1615760527';
+
+    await fetchItem('MLB1615760527');
+
+    expect(fetch).toHaveBeenCalledWith(url);
+  });
 });
+
+/* 
+it('function return a object equal to comutadorSearch', async () => {
+  const product = await fetchProducts('computador');
+
+  expect(product).toEqual(computadorSearch);
+});
+
+it('function without argument returns Error', async () => {
+  const product = await fetchProducts('');
+
+  expect(product).toEqual(new Error('You must provide an url'));
+}); */
