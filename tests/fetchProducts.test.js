@@ -17,7 +17,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(await fetchProducts()).toEqual(computadorSearch);
   })
   it('fetchProducts deve retornar um erro ao não receber argumento', async () => {
-    expect(fetchProducts()).rejects.toMatch('Error');
+    await expect(fetchProducts()).rejects.toMatch('Error');
   })
   
 });
