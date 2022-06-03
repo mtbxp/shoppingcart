@@ -3,7 +3,7 @@ const fetchProducts = async (query) => {
     const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
     const resonse = await fetch(url);
     const data = await resonse.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (err) {
     // console.log(err);
