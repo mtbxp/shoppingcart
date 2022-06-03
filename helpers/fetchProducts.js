@@ -1,4 +1,4 @@
-const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
+const endPoint = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 const fetchProducts = async (product) => {
   try {
     const response = await fetch(`${endPoint}${product}`);
@@ -9,6 +9,8 @@ const fetchProducts = async (product) => {
     throw new Error('You must provide an url');
   }
 };
+
+fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {
