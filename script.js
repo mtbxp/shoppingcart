@@ -1,9 +1,9 @@
 // Project <Pixels art> from <Larissa Menezes> done in 22.06.03 for the Trybe course, ninth week. It has been used as reference the notes from the class an external links indicated along the code line
 
-const { list } = require("mocha/lib/reporters/base");
-const { create } = require("mochawesome-report-generator");
-const { fetchItem } = require("./helpers/fetchItem");
-const { fetchProducts } = require("./helpers/fetchProducts");
+// const { list } = require('mocha/lib/reporters/base');
+// const { create } = require('mochawesome-report-generator');
+const { fetchItem } = require('./helpers/fetchItem');
+const { fetchProducts } = require('./helpers/fetchProducts');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -29,6 +29,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+//  Essa função foi craiada para receber a lista de produtos requerida e adicioná-la ao site (exibindo mensagem 'carregando' durante a requisição);
 const createProductList = () => {
   const displayOfItems = document.querySelector('.items');
   const listOfProducts = fetchProducts('computador');
@@ -48,6 +49,9 @@ const cartItemClickListener = (event) => {
   event.parentNode.removeChild(event);
 };
 
+const buttonRemoveItem = document.querySelectorAll('item__add');
+buttonRemoveItem.addEventListener('click', cartItemClickListener);
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -56,6 +60,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+//  Essa função foi criada para ser disparada ao clicar em 'Adicionar item'. Nesse momento, ela recuperará o id do item, fará uma nova requisição sobre aquele produto específico e o adicionará à lista de compras
 const getItem = (event) => {
   const itemSearched = getSkuFromProductItem(event.target.parentNode);
   const itemInfo = fetchItem(itemSearched);
@@ -70,24 +75,23 @@ const getItem = (event) => {
 
 const buttonsAddItem = document.querySelectorAll('item__add');
 buttonsAddItem.addEventListener('click', getItem);
-const buttonsToAdd = document.querySelectorAll('item__add');
-buttonsremoveItem.addEventListener('click', cartItemClickListener);
 
 const listOfItems = document.querySelector('.cart__item')[0];
 
+// Essa função calculará o preço dos itens da lista e o atualizará
 const calculatePrice = () => {
   const priceTag = document.querySelector('.total-price');
   const finalPrice = listOfItems.reduce((acc, item) => acc + item.innerText.split('$')[1], 0);
   priceTag.innerText = `RS: ${finalPrice}`;
 };
+listOfItems.addEventListener('change', calculatePrice);
 
+// Essa função limpará o carrinho de compras
 const clearCart = () => {
   listOfItems.innerText = '';
 };
 
 const clearListButton = document.querySelector('.empty-cart');
 clearListButton.addEventListener('click', clearCart);
-
-listOfItems.addEventListener('change', calculatePrice);
 
 window.onload = () => { createProductList(); };
