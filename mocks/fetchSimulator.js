@@ -9,7 +9,7 @@ const ENDPOINTS = {
 const TIME_IN_MILLISECONDS = 200;
 
 const fetchSimulator = (url) => {
-  if (url.endsWith('undefined')) {
+  if (!url) {
     return Promise.reject(new Error('You must provide an url'));
   }
   const validUrl = Object.values(ENDPOINTS).includes(url);
