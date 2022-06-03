@@ -1,6 +1,7 @@
 // Project <Pixels art> from <Larissa Menezes> done in 22.06.03 for the Trybe course, ninth week. It has been used as reference the notes from the class an external links indicated along the code line
 
 const { create } = require("mochawesome-report-generator");
+const { fetchItem } = require("./helpers/fetchItem");
 const { fetchProducts } = require("./helpers/fetchProducts");
 
 const createProductImageElement = (imageSource) => {
@@ -53,4 +54,19 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { createProductList(); };
+const getItem = (event) => {
+  const itemSearched = getSkuFromProductItem(event.target.parentNode);
+  const itemInfo = fetchItem(itemSearched);
+  const { id, title, price } = itemInfo;
+  const itemObject = {
+    sku: id,
+    name: title,
+    salePrice: price,
+  };
+  createCartItemElement(itemObject);
+};
+
+const buttonsToAdd = document.querySelectorAll('item__add');
+buttonsToAdd.addEventListener('click', getItem);
+
+window.onload = () => { createProductList(); getItem(); };
