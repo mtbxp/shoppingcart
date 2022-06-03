@@ -59,6 +59,15 @@ const addProductsToSite = async () => {
   addItemButtons.forEach((button) => button.addEventListener('click', addItemClickListener));
 };
 
+const emptyCart = () => {
+  const cart = document.querySelector('.cart__items');
+  cart.innerHTML = '';
+}
+
+const emptyCartButton = document.querySelector('.empty-cart');
+
+emptyCartButton.addEventListener('click', emptyCart);
+
 addProductsToSite();
 
 window.onload = () => { };
