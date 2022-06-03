@@ -26,6 +26,6 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(response).toEqual(new Error('You must provide an url'));
   })
 
-  fail('Teste vazio');
+  // fail('Teste vazio');
 });
 
