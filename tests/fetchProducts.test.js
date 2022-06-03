@@ -8,7 +8,7 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Verifica se o fetch é chamado na função fetchProducts', async () => {
-    await fetchProducts('compu');
+    await fetchProducts('computador');
     expect(fetch).toBeCalled();
   });
 
@@ -25,6 +25,6 @@ describe('1 - Teste a função fetchProducts', () => {
 
   it('Verificas se a função sem parametros retorna um erro', async () => {
     const response = await fetchProducts();
-    expect(response).toEqual(new Error('You must provide an url'))
+    expect(response).toEqual(new Error('You must provide an url'));
   });
 });
