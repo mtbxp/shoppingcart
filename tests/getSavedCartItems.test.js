@@ -11,7 +11,7 @@ describe('4 - Teste a função getSavedCartItems', () => {
   });
 
   it('when executing getSavedCartItems, method is called with arguments', async () => {
-    await getSavedCartItems(arg);
+    await getSavedCartItems();
 
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
