@@ -1,15 +1,14 @@
-const fetchProducts = async (str) => {
+const fetchProducts = async (computador) => {
   // seu código aqui
   try {
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${str}`;
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${computador}`;
     const response = await fetch(url);
     const data = await response.json();
-    return data;
+    return data.results;
   } catch (error) {
     return error;
   }
 };
-// fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {
