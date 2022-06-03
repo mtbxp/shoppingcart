@@ -76,11 +76,23 @@ sectionItems.addEventListener('click', (event) => {
   }
 });
 
+const toggleLoading = () => {
+  if (document.querySelector('.loading')) {
+    sectionItems.removeChild(document.querySelector('.loading'));
+  } else {
+    const div = document.createElement('div');
+    div.classList.add('loading');
+    sectionItems.appendChild(div);
+  }
+};
+
+toggleLoading();
 fetchProducts('computador')
 .then((products) => {
 products.results.forEach((product) => {
   sectionItems.appendChild(createProductItemElement(product));
 });
+toggleLoading();
 });
 
 window.onload = () => {
