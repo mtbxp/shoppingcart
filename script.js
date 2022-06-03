@@ -24,11 +24,16 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+console.log(createProductItemElement);
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+console.log(getSkuFromProductItem);
+
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  console.log(event);
 };
+cartItemClickListener('test');
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -37,5 +42,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+console.log(createCartItemElement);
 
 window.onload = () => { };
