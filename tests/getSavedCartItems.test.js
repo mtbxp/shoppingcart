@@ -9,4 +9,10 @@ describe('4 - Teste a função getSavedCartItems', () => {
 
     expect(localStorage.getItem).toHaveBeenCalled();
   });
+
+  it('when executing getSavedCartItems, method is called with arguments', async () => {
+    await getSavedCartItems(arg);
+
+    expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
+  });
 });
