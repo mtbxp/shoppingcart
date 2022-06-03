@@ -12,6 +12,6 @@ describe('1 - Teste a função fetchProducts', () => {
   })
 
   it('Testa se é uma estrutura igual ao computadorSearch', async () => {
-    await expect(fetchProducts('computador')).resolves.toEqual(computadorSearch)
+    await expect(fetchProducts('computador')).resolves.toEqual(computadorSearch.results)
   })
-});
+}); 

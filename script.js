@@ -1,3 +1,16 @@
+// const { fetchProducts } = require("./helpers/fetchProducts");
+
+const resultsComputador = fetchProducts('computador');
+const arrayCerta = () => {
+  const arraycertissima = [];
+  resultsComputador.forEach((element) => {
+   const { id: sku, title: name, thumbnail: image } = element;
+   arraycertissima.push({ id: sku, title: name, thumbnail: image });
+  });
+  return arraycertissima;
+};
+console.log(arrayCerta());
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
