@@ -1,5 +1,5 @@
 require('../mocks/fetchSimulator');
-const { fetchProducts } = require('../helpers/fetchProducts');
+const { fetchProducts, createUrlToGetProductsList } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
@@ -13,5 +13,12 @@ describe('1 - Teste a função fetchProducts', () => {
     const queryTerm = 'computador';
     await fetchProducts(queryTerm);
     expect(fetch).toHaveBeenCalled();
+  });
+
+  it('Deveria ser capaz de invocar a função fecth com a URL correta.', async () => {
+    const queryTerm = 'computador';
+    const url = createUrlToGetProductsList(queryTerm);
+    await fetchProducts(queryTerm);
+    expect(fetch).toHaveBeenCalledWith(url);
   });
 });

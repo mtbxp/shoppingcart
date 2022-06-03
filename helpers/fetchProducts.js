@@ -9,5 +9,6 @@ const fetchProducts = async (queryTerm) => {
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
+    createUrlToGetProductsList,
   };
 }
