@@ -25,12 +25,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const productsList = async () => {
-  const getProducts = await fetchProducts('computador')
-  .then((flag) => flag.results);
-  getProducts.forEach((acc) => getItems.appendChild(createProductItemElement(acc)));
-};
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -45,4 +39,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { productsList(); };
+window.onload = () => { };
