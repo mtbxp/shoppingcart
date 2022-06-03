@@ -3,7 +3,10 @@ const saveCartItems = require('../helpers/saveCartItems');
 
 localStorageSimulator('setItem');
 
-describe('3 - Teste a função saveCartItems', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+describe('test the function saveCartItems', () => {
+  it('when executing saveCartItems, method [] is called', async () => {
+    await saveCartItems('<ol><li>Item</li></ol>');
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
 });
