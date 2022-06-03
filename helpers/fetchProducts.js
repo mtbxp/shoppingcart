@@ -1,6 +1,7 @@
 const fetchProducts = async (parm) => {
-  try {  
-    const result = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${parm}`);
+  try {
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${parm}`;
+    const result = await fetch(url);
     const data = result.json();
     return data;
   } catch (error) {
