@@ -20,9 +20,9 @@ describe('1 - Teste a função fetchProducts', () => {
     a computadorSearch`, async () => {
       expect(fetchProducts('computador')).toEqual(computadorSearch);
   });
-  test(` sem argumento, retorna um erro com a mensagem: 'You must provide 
+  test(`sem argumento, retorna um erro com a mensagem: 'You must provide 
     an url'.`, async () => {
-      const errorM = 'erro';
+      const errorM = 'You must provide an url';
       expect(fetchProducts('computador')).toThrow(errorM);
   });
 });
