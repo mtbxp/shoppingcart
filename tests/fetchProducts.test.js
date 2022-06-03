@@ -28,4 +28,13 @@ describe('1 - Teste a função fetchProducts', () => {
     const response = await fetchProducts(queryTerm);
     expect(response).toEqual(computadorSearch);
   });
+
+  it('Deveria retornar um erro se nenhum parametro for fornecido.', async () => {
+    expect.assertions(1);
+    try {
+      await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    }
+  });
 });
