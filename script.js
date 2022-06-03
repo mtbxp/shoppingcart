@@ -47,16 +47,11 @@ const product = async () => {
   return result;
 };
 
-const productCart = async (id) => {
-  const productSearch = await product();
-  const [search] = productSearch.filter((element) => element.sku === id);
-  const productResult = await fetchItem(search.sku);
-  return ({
-    sku: productResult.id,
-    name: productResult.title,
-    salePrice: productResult.price,
-  });
-};
+const productFormat = async (productResult) => ({
+  sku: productResult.id,
+  name: productResult.title,
+  salePrice: productResult.price,
+});
 
 window.onload = async () => {
   const products = await product();
@@ -65,6 +60,15 @@ window.onload = async () => {
     const section = createProductItemElement(prod);
     divItems.appendChild(section);
   });
-  const card = createCartItemElement();
-  productCart('MLB1983288732');
+  const divCart = document.querySelectorAll('.item__add');
+  divCart.forEach((prod) => {
+    prod.addEventListener('click', async (event) => {
+      const cartItems = document.querySelector('.cart__items');
+      const prodId = event.target.parentNode.firstChild.innerText;
+      const resultItem = await fetchItem(prodId);
+      const resultItemFormat = await productFormat(resultItem);
+      const result = createCartItemElement(resultItemFormat);
+      cartItems.appendChild(result);
+    });
+  });
 };
