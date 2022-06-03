@@ -49,7 +49,9 @@ const adicionarElementosNoHtml = async () => {
     const itemsSection = document.querySelectorAll('.items')[0];
     itemsSection.appendChild(section);
   });
+  // console.log(fetchProductsReturn[0].id);
 };
+adicionarElementosNoHtml();
 
 window.onload = () => {
   adicionarElementosNoHtml();
