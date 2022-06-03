@@ -1,4 +1,4 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
+// const { fetchItems } = require("./helpers/fetchItems");
 
 // const fetchProductsReturn = fetchProducts('computador');
 
@@ -44,12 +44,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const adicionarElementosNoHtml = async () => {
   const fetchProductsReturn = await fetchProducts('computador');
-  fetchProductsReturn.forEach(({ id, title, thumbnail }) => {
+  fetchProductsReturn.results.forEach(({ id, title, thumbnail }) => {
     const section = createProductItemElement({ id, title, thumbnail });
     const itemsSection = document.querySelectorAll('.items')[0];
     itemsSection.appendChild(section);
   });
-  // console.log(fetchProductsReturn[0].id);
+  console.log(fetchProductsReturn[0].id);
 };
 adicionarElementosNoHtml();
 
