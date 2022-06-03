@@ -55,7 +55,7 @@ const toggleLoadingMessage = (parentElement, bool) => {
     parentElement.append(addLoading);
   } else {
     const removeLoading = document.querySelector('.loading');
-    removeLoading.remove() 
+    removeLoading.remove();
   }
 };
 
