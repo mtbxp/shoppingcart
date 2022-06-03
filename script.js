@@ -28,6 +28,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  console.log(event);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -37,5 +38,9 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+console.log(createProductItemElement);
+console.log(getSkuFromProductItem);
+console.log(createCartItemElement);
 
 window.onload = () => { };
