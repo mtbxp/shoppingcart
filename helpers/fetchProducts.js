@@ -1,3 +1,5 @@
+const computadorSearch = require('../mocks/search');
+
 const fetchProducts = () => {
   
 };
