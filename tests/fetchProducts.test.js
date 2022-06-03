@@ -15,14 +15,14 @@ describe('1 - Teste a função fetchProducts', () => {
     fetchProducts('computador');
    await expect(fetch).toHaveBeenCalled();
   });
-  it('04- se a função e igual a computador search', () => {
-    const expec = fetchProducts('computador')
+  it('04- se a função e igual a computador search', async() => {
+    const expec = await fetchProducts('computador')
     const retorno = computadorSearch
     expect(expec).toEqual(retorno)
   })
-  it('05-Se chamar a função sem parametro retorna erro', () => {
-    const func = fetchProducts('');
+  it('05-Se chamar a função sem parametro retorna erro', async () => {
+    const func = await fetchProducts('');
     const msg = 'You must provide an url'
-    expect(func).toBe(new console.error(msg))
+   await expect(func).toEqual(new Error(msg))
   })
 });
