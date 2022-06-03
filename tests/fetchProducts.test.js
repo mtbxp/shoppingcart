@@ -6,7 +6,7 @@ describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
   // fail('Teste vazio');
   it('deve ser um função', () => {
-    expect(typeof fetchProducts()).toEqual('function');
+    expect(typeof fetchProducts).toEqual('function');
   });
   it('deve passar o argumento computador chamar o fetch', async () => {
     await fetchProducts('computador');
