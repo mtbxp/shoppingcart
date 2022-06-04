@@ -16,12 +16,12 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (e) => {
-  cartItems.removeChild(e.target);
+  e.target.remove();
 };
 
 const reloadCartItemListener = () => {
-  getSavedCartItems();
-  cartItems.addEventListener('click', cartItemClickListener);
+  const load = getSavedCartItems();
+  console.log(load)
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -29,7 +29,6 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  saveCartItems(li);
   return li;
 };
 
@@ -37,6 +36,8 @@ const buttonItemClickListener = async (e) => {
   const itemID = e.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemID);
   cartItems.appendChild(createCartItemElement(item));
+  console.log(cartItems.innerHTML)
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createProductItemElement = (sku, name, image) => {
@@ -64,3 +65,13 @@ window.onload = () => {
   showItems();
   reloadCartItemListener();
 };
+
+//=================
+// const ol = document.querySelector('.cart__items');
+// if (reload) {
+//   reload.forEach((el) => {
+//     const li = document.createElement('li');
+//     li.innerText = el.text;
+//     li.className = el.class;
+//     ol.appendChild(li);
+//   });
