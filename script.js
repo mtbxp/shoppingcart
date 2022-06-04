@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -38,8 +38,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+// Minhas funções
+
+const addProductToCart = async (itemId) => {
+  const { id, title, price } = await fetchItem(itemId);
+  const cartItemObj = { 
+    sku: id,
+    name: title,
+    salePrice: price,
+  };
+  const carItem = createCartItemElement(cartItemObj);
+  carItem.addEventListener('click', cartItemClickListener);
+  document.querySelector('.cart__items').appendChild(carItem);
+};
+
+const addEventButton = () => {
+  const elements = document.querySelectorAll('.item');
+  elements.forEach((element) => {
+    const elementButton = element.querySelector('button.item__add');
+    elementButton.addEventListener('click', () => {
+      const itemId = getSkuFromProductItem(element);
+      addProductToCart(itemId);
+    });
+  });
+};
+
 const renderProducts = async () => {
-  const { results } = await fetchProducts('computador');
+  const { results } = await fetchProducts('computaador');
   results.forEach((product) => {
     const { id, title, thumbnail } = product;
     const productObj = {
@@ -50,6 +75,7 @@ const renderProducts = async () => {
     const item = createProductItemElement(productObj);
     document.querySelector('.items').appendChild(item);
   });
+  addEventButton();
 };
 
 window.onload = () => {
