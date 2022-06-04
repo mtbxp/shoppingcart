@@ -14,12 +14,16 @@ const createCustomElement = (element, className, innerText) => {
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
+  const products = document.querySelector('.items')
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  section.appendChild(createCustomElement(''))
+
 
   return section;
 };
@@ -38,4 +42,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => {
+  fetchProducts();
+ };
