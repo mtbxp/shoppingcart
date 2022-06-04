@@ -127,6 +127,8 @@ fetchProducts('computador').then((item) => {
 const clearCart = () => {
   getPaiCart.innerHTML = '';
   saveItem(getPaiCart);
+  priceOfCart = 0;
+  sumAllPrices();
 };
 
 // 5 a 17
