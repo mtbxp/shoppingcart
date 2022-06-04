@@ -1,5 +1,16 @@
+function loadSavedCartItems(item) {
+  const limaker = document.createElement('li');
+  limaker.className = 'cart__item';
+  limaker.innerText = item;
+  document.querySelector('.cart__items').appendChild(limaker);
+}
+
 const getSavedCartItems = () => {
-  // seu código aqui
+  if (localStorage.length > 0) {
+    const storageItemsString = localStorage.getItem('savedItems');
+    const storageItemsObj = JSON.parse(storageItemsString);
+    storageItemsObj.forEach((item) => loadSavedCartItems(item));
+  }
 };
 
 if (typeof module !== 'undefined') {
