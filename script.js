@@ -7,7 +7,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-
+console.log(results);
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -41,5 +41,5 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
+createCartItemElement();
 window.onload = () => { };
