@@ -1,5 +1,5 @@
-const BASE_URL = 'https://api.mercadolibre.com';
-const createUrlToGetProductItem = (productId) => `${BASE_URL}/items/${productId}`;
+const ENDPOINT_ITEMS = 'https://api.mercadolibre.com/items';
+const createUrlToGetProductItem = (productId) => `${ENDPOINT_ITEMS}/${productId}`;
 
 const fetchItem = async (productId) => {
   const url = createUrlToGetProductItem(productId);
