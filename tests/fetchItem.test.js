@@ -22,4 +22,11 @@ describe('2 - Teste a função fetchItem', () => {
     await fetchItem(productId);
     expect(fetch).toHaveBeenCalledWith(url);
   });
+
+  it('deveria retornar o objeto correto "item"', async () => {
+    expect.assertions(1);
+    const productId = 'MLB1615760527';
+    const result = await fetchItem(productId);
+    expect(result).toEqual(item);
+  });
 });

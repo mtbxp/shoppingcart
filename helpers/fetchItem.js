@@ -3,7 +3,9 @@ const createUrlToGetProductItem = (productId) => `${BASE_URL}/items/${productId}
 
 const fetchItem = async (productId) => {
   const url = createUrlToGetProductItem(productId);
-  await fetch(url);
+  const response = await fetch(url);
+  const productItem = response.json();
+  return productItem;
 };
 
 if (typeof module !== 'undefined') {
