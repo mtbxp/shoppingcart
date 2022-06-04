@@ -3,7 +3,7 @@ const fetchProducts = async (elmentSearch) => {
   if (!elmentSearch) { throw new Error('You must provide an url'); }
 
   const promise = await fetch(url);
-  promise.then((elm) => elm.json())
+  promise.json()
     .then((env) => env.results);  
   return promise;
 };
