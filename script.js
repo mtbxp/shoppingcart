@@ -1,3 +1,5 @@
+const cartItems = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,7 +21,9 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const buttom = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttom.setAttribute('data-sku', sku);
+  section.appendChild(buttom);
 
   return section;
 };
@@ -28,23 +32,33 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const cartItemClickListener = (event) => {
 //   // coloque seu código aqui
-//   console.log(event);
 // };
 
-// const createCartItemElement = ({ sku, name, salePrice }) => {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// };
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  return li;
+};
 
 const appendProducts = (productList) => {
-  const sectionItem = document.querySelector('.items');
+  const sectionItems = document.querySelector('.items');
   productList.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const section = createProductItemElement({ sku, name, image });
-    sectionItem.append(section);
+    sectionItems.append(section);
+  });
+};
+
+const addItemToCart = (element, sku) => {
+  element.addEventListener('click', async () => {
+    const { title: name, price: salePrice } = await fetchItem(sku);
+
+    const li = createCartItemElement({ sku, name, salePrice });
+    console.log(li);
+    // trabalhar aqui localStorage ???
+    // verificar se já existe o produto, add, remover 
+    cartItems.append(li);
   });
 };
 
@@ -52,5 +66,12 @@ window.onload = async () => {
   const data = await fetchProducts('computador').then((response) => response);
   const { results: productList } = data;
 
-  appendProducts(productList);  
+  appendProducts(productList);
+
+  // referencia sobre Data Attributes : https://www.youtube.com/watch?v=ri-xkk9PuDU
+  const buttonsAddCart = document.querySelectorAll('[data-sku]');
+  buttonsAddCart.forEach((buttonAddCart) => {
+    const { sku } = buttonAddCart.dataset;
+    addItemToCart(buttonAddCart, sku);
+  });
 };

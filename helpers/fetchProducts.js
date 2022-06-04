@@ -1,5 +1,5 @@
-const ENPOINT_SEARCH = 'https://api.mercadolibre.com/sites/MLB';
-const createUrlToGetProductsList = (queryTerm) => `${ENPOINT_SEARCH}/search?q=${queryTerm}`;
+const ENDPOINT_SEARCH = 'https://api.mercadolibre.com/sites/MLB';
+const createUrlToGetProductsList = (queryTerm) => `${ENDPOINT_SEARCH}/search?q=${queryTerm}`;
 
 const fetchProducts = async (queryTerm) => {
   const url = createUrlToGetProductsList(queryTerm);
