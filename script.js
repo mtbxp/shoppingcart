@@ -104,21 +104,22 @@ document.addEventListener('click', (e) => {
 });
 
 const createLoading = () => {
-  const div = document.createElement('div');
+  const div = document.createElement('span');
   div.className = 'loading';
   div.innerHTML = 'carregando...';
 
-  items.appendChild(div);
+  document.querySelector('.items').appendChild(div);
 };
 
 const deleteLoading = () => document.querySelector('.loading').remove();
 
-window.onload = () => {
+window.onload = async () => {
   createPriceElement(getSavedPrice());
   cartItems.innerHTML = getSavedCartItems();
   createLoading();
-  fetchProducts('computador').then((data) => {
-    data.results.forEach((element) =>
+  const data = await fetchProducts('computador');
+  deleteLoading();
+  // document.querySelector('.loading').remove();
+  data.results.forEach((element) =>
     items.appendChild(createProductItemElement(element)));
-  }).then(deleteLoading());  
 };
