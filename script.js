@@ -1,13 +1,10 @@
-const { results } = require('./cypress/mocks/computerCategory');
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 };
-console.log(results);
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -15,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -26,7 +23,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
   return section;
 };
-createProductItemElement(fetchProducts('computador'));
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -41,5 +37,5 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-createCartItemElement();
+
 window.onload = () => { };
