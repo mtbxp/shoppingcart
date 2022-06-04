@@ -26,9 +26,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const createProduct = () => {
   fetchProducts('computador')
-  .then((element) => element.results.forEach(e => itemProduct.appendChild(createProductItemElement(e))))
+  .then((element) => element.results
+  .forEach(e => itemProduct.appendChild(createProductItemElement(e))));
 }
-
 createProduct();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
