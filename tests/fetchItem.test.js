@@ -4,5 +4,8 @@ const item = require('../mocks/item');
 
 describe('2 - Teste a função fetchItem', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
+  //fail('Teste vazio');
+  test('Testar se fetchItem se é uma "função"', () => {
+    expect(typeof fetchItem).toEqual("function");
+   });
 });
