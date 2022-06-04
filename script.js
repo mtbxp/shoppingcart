@@ -1,6 +1,5 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
 const getSection = document.querySelector('.items');
+const getListCarts = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -34,12 +33,25 @@ const cartItemClickListener = (event) => {
   // coloque seu código aquii
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+};
+
+const addEventItem = () => {
+  getSection.addEventListener('click', (event) => {
+    if (event.target.classList.contains('item__add')) {
+      const id = getSkuFromProductItem(event.target.parentNode);
+      fetchItem(id).then((data) => {
+        console.log(getListCarts);
+        const creatElementItem = createCartItemElement(data);
+        getListCarts.appendChild(creatElementItem);
+      });
+    }
+  });
 };
 
 window.onload = () => {
@@ -48,4 +60,7 @@ window.onload = () => {
     const createDivsItens = createProductItemElement(product);
     getSection.appendChild(createDivsItens);
   }));
+
+  addEventItem();
+  // fetchItem('MLB161576052');
 };
