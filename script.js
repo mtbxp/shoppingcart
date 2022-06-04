@@ -1,10 +1,4 @@
 let priceOfCart = 0;
-const sumTotal = (number) => {
-  const getPriceArea = document.querySelector('.total-price');
-  priceOfCart += number;
-  const nowValue = priceOfCart;
-  getPriceArea.innerText = `${nowValue}`;
-};
 
 const formatStringPrice = (data) => {
   let nowPrice = '';
@@ -17,16 +11,19 @@ const formatStringPrice = (data) => {
       nowPrice += data[index];
     }
   }
-  sumTotal(parseFloat(nowPrice));
+  return parseFloat(nowPrice);
 };
 
 const sumAllPrices = () => {
   const getAllCartItems = document.querySelectorAll('.cart__item');
-  const totalValue = 0;
+  let totalValue = 0;
   getAllCartItems.forEach((product) => {
-    formatStringPrice(product.innerText);
+    totalValue += formatStringPrice(product.innerText);
   });
-  return totalValue;
+  const getPriceArea = document.querySelector('.total-price');
+  priceOfCart += totalValue;
+  const nowValue = priceOfCart;
+  getPriceArea.innerText = `${nowValue}`;
 };
 
 const addLoading = () => {
@@ -130,8 +127,6 @@ const clearCart = () => {
   priceOfCart = 0;
   sumAllPrices();
 };
-
-// 5 a 17
 
 window.onload = () => {
   const btnClear = document.querySelector('.empty-cart');
