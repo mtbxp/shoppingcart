@@ -11,7 +11,8 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-
+// ___________________________________________________________________
+// Para um unico requisito!!!!
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -30,11 +31,27 @@ function putElementInSection({ sku, name, image }) {
   sectionFather.appendChild(section);
 }
 
+const createItems = async () => {
+  const array = [];
+    const data = await fetchProducts();
+    data.results.forEach((item) => {
+     array.push({ sku: item.id, name: item.title, image: item.thumbnail });
+   });
+   array.forEach((item) => {
+   createProductItemElement(item);
+   putElementInSection(item);
+   });
+ };
+ // __________________________________________________________________
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
+
+// ___________________________________________________________________
+// Para um unico requisito!!!
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -44,18 +61,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const createItems = async () => {
- const array = [];
-   const data = await fetchProducts();
-   data.results.forEach((item) => {
-    array.push({ sku: item.id, name: item.title, image: item.thumbnail });
+function putElementInOl({ sku, name, salePrice }) {
+  const olFather = document.getElementsByClassName('cart__items')[0];
+  const li = createCartItemElement({ sku, name, salePrice });
+  olFather.appendChild(li);
+}
+
+function getID(event) {
+  const button = event.target;
+  const parent = button.parentNode;
+  fetchItem(getSkuFromProductItem(parent))
+  .then((data) => {
+  const obj = { sku: data.id, name: data.title, salePrice: data.price };
+  createCartItemElement(obj);
+  putElementInOl(obj);
   });
-  array.forEach((item) => {
-  createProductItemElement(item);
-  putElementInSection(item);
-  });
+}
+
+const getButtons = () => {
+  let buttons = [];
+  buttons = document.getElementsByClassName('item__add');
+  for (let index = 0; index < buttons.length; index += 1) {
+  buttons[index].addEventListener('click', getID);
+  }
 };
+// ___________________________________________________________________
 
 window.onload = () => { 
-  createItems();
+  createItems()
+  .then(getButtons);
 };
