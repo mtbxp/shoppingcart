@@ -1,3 +1,5 @@
+const cartItems = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -53,9 +55,7 @@ const productFormat = async (productResult) => ({
   salePrice: productResult.price,
 });
 
-const cartDiv = document.querySelector('.cart__items');
-
-cartDiv.addEventListener('change', () => {
+cartItems.addEventListener('change', () => {
   console.log(element);
 });
 
@@ -73,19 +73,20 @@ const window2 = async () => {
   divAdd.forEach((prod) => {
     prod.addEventListener('click', async (event) => {
       getSavedCartItems();
-      const cartItems = document.querySelector('.cart__items');
       const prodId = event.target.parentNode.firstChild.innerText;
       const resultItem = await fetchItem(prodId);
       const resultItemFormat = await productFormat(resultItem);
       const result = createCartItemElement(resultItemFormat);
       cartItems.appendChild(result);
-      saveCartItems(cartDiv.innerHTML);
+      saveCartItems(cartItems.innerHTML);
     });
   });
 };
 
 window.onload = async () => {
-  cartDiv.innerHTML = getSavedCartItems();
+  cartItems.innerHTML = getSavedCartItems();
+  document.querySelectorAll('.cart__item')
+    .forEach((element) => element.addEventListener('click', cartItemClickListener));
   await window1();
   await window2();
 };
