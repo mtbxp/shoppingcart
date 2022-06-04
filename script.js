@@ -72,7 +72,8 @@ async function loadProducts() {
 
 function setClickEvent() {
   if (cartItemsUl.childElementCount > 0) {
-    cartItemsUl.childNodes.forEach((child) => child.addEventListener('click', cartItemClickListener));
+    cartItemsUl.childNodes.forEach((child) =>
+      child.addEventListener('click', cartItemClickListener));
   }
 }
 
