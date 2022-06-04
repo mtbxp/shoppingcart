@@ -27,8 +27,26 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const calc = () => {
+  let value = 0;
+  // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+  const array = Array.from(document.getElementsByClassName('cart__item'));
+  if (array.length === 0) {
+    price.innerHTML = parseFloat(value, 10);
+  } else {
+    array.forEach(async (element) => {
+    const e = element.innerHTML.split('|')[0].split(' ')[1];
+    const data = await fetchItem(e);
+    value += parseFloat(data.price, 10);
+    price.innerHTML = parseFloat(value, 10);
+    });
+  }
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
+  calc();
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -64,15 +82,6 @@ const window1 = async () => {
   });
 };
 
-const calc = async () => {
-  let value = 0;
-  document.querySelectorAll('.cart__item')
-    .forEach((element) => {
-      value += parseInt(element.innerHTML.split('$')[1], 10);
-    });
-  price.innerHTML = `${value}$`;
-};
-
 const window2 = async () => {
   const divAdd = document.querySelectorAll('.item__add');
   divAdd.forEach((prod) => {
@@ -95,7 +104,7 @@ empty.addEventListener('click', () => {
   price.innerHTML = '0R$';
 });
 
-const loading = async () => {
+const load = async () => {
   const main = document.querySelector('.items');
   const p = document.createElement('p');
   p.className = 'loading';
@@ -112,7 +121,7 @@ window.onload = async () => {
   cartItems.innerHTML = getSavedCartItems();
   document.querySelectorAll('.cart__item')
     .forEach((element) => element.addEventListener('click', cartItemClickListener));
-  loading();
+  load();
   await window1();
   await window2();
   calc();
