@@ -1,5 +1,3 @@
-/* const computadorSearch = require("../mocks/search"); */
-
 const fetchProducts = async (produto) => {
   try {
     const url = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${produto}`);
@@ -9,17 +7,6 @@ const fetchProducts = async (produto) => {
     return error;
   }
 };
-
-
-
-
-
-
-
-
-
-
-
 
 if (typeof module !== 'undefined') {
   module.exports = {
