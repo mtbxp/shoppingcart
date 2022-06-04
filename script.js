@@ -21,7 +21,7 @@ const cartItemClickListener = (e) => {
 
 const reloadCartItemListener = () => {
   const load = getSavedCartItems();
-  console.log(load)
+  console.log(load);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -36,7 +36,7 @@ const buttonItemClickListener = async (e) => {
   const itemID = e.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemID);
   cartItems.appendChild(createCartItemElement(item));
-  console.log(cartItems.innerHTML)
+  console.log(cartItems.innerHTML);
   saveCartItems(cartItems.innerHTML);
 };
 
@@ -66,7 +66,7 @@ window.onload = () => {
   reloadCartItemListener();
 };
 
-//=================
+// =================
 // const ol = document.querySelector('.cart__items');
 // if (reload) {
 //   reload.forEach((el) => {
