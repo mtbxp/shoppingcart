@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const cartItemClickListener = (event) => {
   event.srcElement.remove();
-  saveCartItems();
+  saveCartItems(cartItemsUl);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -37,7 +37,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = itemTxt;
   cartItemsUl.appendChild(li);
   li.addEventListener('click', cartItemClickListener);
-  saveCartItems();
+  saveCartItems(cartItemsUl);
 };
 
 function fetchItemInfo(itemData) {

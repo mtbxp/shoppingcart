@@ -7,7 +7,7 @@ function loadSavedCartItems(item) {
 
 const getSavedCartItems = () => {
   if (localStorage.length > 0) {
-    const storageItemsString = localStorage.getItem('savedItems');
+    const storageItemsString = localStorage.getItem('cartItems');
     const storageItemsObj = JSON.parse(storageItemsString);
     storageItemsObj.forEach((item) => loadSavedCartItems(item));
   }

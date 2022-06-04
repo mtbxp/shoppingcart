@@ -1,8 +1,11 @@
-const saveCartItems = () => {
-  const allItems = document.querySelector('.cart__items').childNodes;
-  const itemsToSave = [];
-  allItems.forEach((item) => itemsToSave.push(item.innerText));
-  localStorage.setItem('savedItems', JSON.stringify(itemsToSave));
+const saveCartItems = (list) => {
+  try {
+    const itemsToSave = [];
+    list.childNodes.forEach((child) => itemsToSave.push(child.innerText));
+    localStorage.setItem('cartItems', JSON.stringify(itemsToSave));
+  } catch (err) {
+    return new Error(`Um erro ocorreu. :c\n${err}`);
+  }
 };
 
 if (typeof module !== 'undefined') {
