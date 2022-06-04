@@ -55,10 +55,6 @@ const productFormat = async (productResult) => ({
   salePrice: productResult.price,
 });
 
-cartItems.addEventListener('change', () => {
-  console.log(element);
-});
-
 const window1 = async () => {
   const products = await product();
   products.forEach((prod) => {
@@ -66,6 +62,16 @@ const window1 = async () => {
     const section = createProductItemElement(prod);
     divItems.appendChild(section);
   });
+};
+
+const calc = async () => {
+  const price = document.querySelector('.total-price');
+  let value = 0;
+  document.querySelectorAll('.cart__item')
+    .forEach((element) => {
+      value += parseInt(element.innerHTML.split('$')[1], 10);
+    });
+  price.innerHTML = `${value}$`;
 };
 
 const window2 = async () => {
@@ -79,6 +85,7 @@ const window2 = async () => {
       const result = createCartItemElement(resultItemFormat);
       cartItems.appendChild(result);
       saveCartItems(cartItems.innerHTML);
+      calc();
     });
   });
 };
@@ -89,4 +96,5 @@ window.onload = async () => {
     .forEach((element) => element.addEventListener('click', cartItemClickListener));
   await window1();
   await window2();
+  calc();
 };
