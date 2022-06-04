@@ -29,8 +29,11 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+fetchItem('MLB1341706310').then((data) => console.log(data));
+fetchProducts('computador').then((data) => console.log(data));
+
 const cartItemClickListener = (event) => {
-  // coloque seu código aquii
+  event.target.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -46,7 +49,6 @@ const addEventItem = () => {
     if (event.target.classList.contains('item__add')) {
       const id = getSkuFromProductItem(event.target.parentNode);
       fetchItem(id).then((data) => {
-        console.log(getListCarts);
         const creatElementItem = createCartItemElement(data);
         getListCarts.appendChild(creatElementItem);
       });
@@ -62,5 +64,4 @@ window.onload = () => {
   }));
 
   addEventItem();
-  // fetchItem('MLB161576052');
 };
