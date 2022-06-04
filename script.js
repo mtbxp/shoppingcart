@@ -90,11 +90,18 @@ fetchProducts('computador').then((item) => {
   removeLoading();
 });
 
+const clearCart = () => {
+  getPaiCart.innerHTML = '';
+  saveItem(getPaiCart);
+};
+
 window.onload = () => {
+  const btnClear = document.querySelector('.empty-cart');
+  btnClear.addEventListener('click', clearCart);
   const items = getSavedCartItems();
   const newHtml = new DOMParser().parseFromString(items, 'text/html');
-  const allLis = newHtml.querySelectorAll('.cart__item');
-  allLis.forEach((produto) => {
+  const allList = newHtml.querySelectorAll('.cart__item');
+  allList.forEach((produto) => {
     produto.addEventListener('click', cartItemClickListener);
     getPaiCart.appendChild(produto);
   });
