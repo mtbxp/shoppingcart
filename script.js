@@ -53,25 +53,39 @@ const productFormat = async (productResult) => ({
   salePrice: productResult.price,
 });
 
-const divItems = document.querySelector('.items');
+const cartDiv = document.querySelector('.cart__items');
 
-window.onload = async () => {
-  getSavedCartItems();
+cartDiv.addEventListener('change', () => {
+  console.log(element);
+});
+
+const window1 = async () => {
   const products = await product();
-  const divCart = document.querySelectorAll('.item__add');
   products.forEach((prod) => {
+    const divItems = document.querySelector('.items');
     const section = createProductItemElement(prod);
     divItems.appendChild(section);
   });
-  divCart.forEach((prod) => {
+};
+
+const window2 = async () => {
+  const divAdd = document.querySelectorAll('.item__add');
+  divAdd.forEach((prod) => {
     prod.addEventListener('click', async (event) => {
+      getSavedCartItems();
       const cartItems = document.querySelector('.cart__items');
       const prodId = event.target.parentNode.firstChild.innerText;
       const resultItem = await fetchItem(prodId);
       const resultItemFormat = await productFormat(resultItem);
       const result = createCartItemElement(resultItemFormat);
-      saveCartItems(result);
       cartItems.appendChild(result);
+      saveCartItems(result.innerHTML);
     });
   });
+};
+
+window.onload = async () => {  
+  cartDiv.innerHTML = getSavedCartItems();
+  await window1();
+  await window2();
 };
