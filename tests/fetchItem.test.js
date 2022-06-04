@@ -1,5 +1,5 @@
 require('../mocks/fetchSimulator');
-const { fetchItem } = require('../helpers/fetchItem');
+const { fetchItem, createUrlToGetProductItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
 
 describe('2 - Teste a função fetchItem', () => {
@@ -13,5 +13,13 @@ describe('2 - Teste a função fetchItem', () => {
     const productid = 'MLB1615760527';
     await fetchItem(productid);
     expect(fetch).toHaveBeenCalled();
+  });
+
+  it('Deveria invocar a função fetch com a URL correta', async () => {
+    expect.assertions(1);
+    const productId = 'MLB1615760527';
+    const url = createUrlToGetProductItem(productId);
+    await fetchItem(productId);
+    expect(fetch).toHaveBeenCalledWith(url);
   });
 });
