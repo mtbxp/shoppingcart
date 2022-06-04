@@ -18,7 +18,7 @@ it('Teste fetchProducts "computador" com endpoint correto', async () => {
   expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
 });
 
-test('Teste se fetchProducts(computador) é um objeto igual a computadorSearch',async () => {
+it('Teste se fetchProducts(computador) é um objeto igual a computadorSearch',async () => {
   const result = await fetchProducts('computador');
   expect(result).toBe(computadorSearch);
 });
