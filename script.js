@@ -79,7 +79,7 @@ const window2 = async () => {
       const resultItemFormat = await productFormat(resultItem);
       const result = createCartItemElement(resultItemFormat);
       cartItems.appendChild(result);
-      saveCartItems(result.innerHTML);
+      saveCartItems(cartDiv.innerHTML);
     });
   });
 };
