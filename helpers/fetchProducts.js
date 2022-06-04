@@ -12,4 +12,3 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
-fetchProducts('computador').then((data) => console.log(data.results));
