@@ -15,15 +15,21 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClickListener = (event) => {
-  cartItems.removeChild(event.target);
+const cartItemClickListener = (e) => {
+  cartItems.removeChild(e.target);
 };
+
+const reloadCartItemListener = () => {
+  getSavedCartItems();
+  cartItems.addEventListener('click', cartItemClickListener);
+}
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  saveCartItems(li);
   return li;
 };
 
@@ -56,4 +62,5 @@ const showItems = async () => {
 
 window.onload = () => { 
   showItems();
+  reloadCartItemListener();
 };
