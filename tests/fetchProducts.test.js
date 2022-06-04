@@ -28,6 +28,11 @@ describe('1 - Teste a função fetchProducts', () => {
     }catch(e){
       expect(e).toEqual(new Error('You must provide an url'))
     }
+  })
+  
+  it('QUERY endpoint -> computador ', async() =>{
+    const computador = await fetchProducts('computador')
+     expect(computador.query).toEqual('computador')
   })  
 });
 
