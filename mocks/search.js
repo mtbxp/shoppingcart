@@ -12041,5 +12041,4 @@ const computadorSearch = {
     }
   ]
 }
-
 module.exports = computadorSearch;
