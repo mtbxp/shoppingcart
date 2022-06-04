@@ -1,5 +1,9 @@
-const saveCartItems = (component) => {
-  // const componenteStringficado = JSON.stringify(component);
+const saveCartItems = async (component) => {
+  // metodo usando objetos
+  // const nowObjSTR = await localStorage.getItem('cartItems');
+  // const data = JSON.parse(nowObjSTR);
+  // data.push(component);
+  // localStorage.setItem('cartItems', JSON.stringify(data));
   localStorage.setItem('cartItems', component);
 };
 
