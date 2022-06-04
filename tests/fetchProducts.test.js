@@ -5,13 +5,11 @@ const computadorSearch = require('../mocks/search');
 describe('1 - Teste a função fetchProducts', () => {
   
   it('Teste se fetchProducts é uma função', async () => {
-    const response = await fetchProducts;
-    expect(typeof response).toBe('function');
+    expect(typeof fetchProducts).toBe('function');
   });
 
-  it('Execute a função fetchProducts com o argumento computador e teste se fetch foi chamada', () => {
+  it('Execute a função fetchProducts com o argumento computador e teste se fetch foi chamada', async () => {
     await fetchProducts('computador');
-    expect.assertions(1);
     expect(fetch).toHaveBeenCalled();
   });
 
@@ -24,10 +22,14 @@ describe('1 - Teste a função fetchProducts', () => {
 
   it('Teste fetchProducts(computador) retorna um opjeto igual computadorSearch', async () => {
     const resp = await fetchProducts('computador');
-    expect(typeof resp).toBe(typeof computadorSearch);
+    expect(typeof resp).toEqual(typeof computadorSearch);
   });
 
   it('Teste fetchProducts() retorna erro', async () => {
-    expect(await fetchProducts()).toThow(new Error('You must provide an url'));
+    try {
+      await fetchProducts();
+    } catch (err) {
+      expect(err).toEqual(new Error('You must provide an url'));
+    }
   });
 });

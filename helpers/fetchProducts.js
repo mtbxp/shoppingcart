@@ -1,6 +1,6 @@
 const fetchProducts = async (elmentSearch) => {
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${elmentSearch}`;
-  if (elmentSearch !== 'computador' || elmentSearch === undefined) { throw new Error('You must provide an url'); }
+  if (!elmentSearch) { throw new Error('You must provide an url'); }
 
   const promise = await fetch(url);
   promise.then((elm) => elm.json())
