@@ -18,7 +18,7 @@ describe('2 - Teste a função fetchItem', () => {
   it('When fetchItem is run with MLB1615760527 as an argument, the return had the same struture as item', async () => {
     expect(typeof await fetchItem('MLB1615760527')).toBe(typeof item);
   });
-  it('When fetchProdcts is called without argument, return error', async () => {
+  it('When fetchItem is called without argument, return error', async () => {
     try {
       await fetchItem();
     } catch(error) {
