@@ -45,7 +45,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
+console.log(getSkuFromProductItem());
 const getProduct = () => {
   fetchProducts('computador')
   .then((element) => element.results
