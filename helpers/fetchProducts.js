@@ -1,5 +1,5 @@
-const BASE_URL = 'https://api.mercadolibre.com/sites/MLB';
-const createUrlToGetProductsList = (queryTerm) => `${BASE_URL}/search?q=${queryTerm}`;
+const BASE_URL = 'https://api.mercadolibre.com';
+const createUrlToGetProductsList = (queryTerm) => `${BASE_URL}/sites/MLB/search?q=${queryTerm}`;
 
 const fetchProducts = async (queryTerm) => {
   const url = createUrlToGetProductsList(queryTerm);
