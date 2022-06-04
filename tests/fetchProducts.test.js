@@ -15,7 +15,7 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts('computador')
     expect(fetch).toHaveBeenCalledWith(url);
   })
-  it(`Teste se o retorno da função fetchProducts com o argumento 'computador' é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.`, async () => {
+  it(`Teste se o retorno da função fetchProducExecute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada 'computador' é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.`, async () => {
     const search = await fetchProducts('computador')
     expect(search).toEqual(computadorSearch);
 })
