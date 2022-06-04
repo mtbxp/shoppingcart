@@ -3,9 +3,9 @@ const fetchProducts = async (elmentSearch) => {
   if (!elmentSearch) { throw new Error('You must provide an url'); }
 
   const promise = await fetch(url);
-  promise.json()
-    .then((env) => env.results);  
-  return promise;
+  const resolveProm = promise.json();
+  resolveProm.then((env) => env.results);  
+  return resolveProm;
 };
 
 /* console.log(fetchProducts('computador')); */
