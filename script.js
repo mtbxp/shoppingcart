@@ -1,3 +1,34 @@
+let priceOfCart = 0;
+const sumTotal = (number) => {
+  const getPriceArea = document.querySelector('.total-price');
+  priceOfCart += number;
+  const nowValue = priceOfCart;
+  getPriceArea.innerText = `${nowValue}`;
+};
+
+const formatStringPrice = (data) => {
+  let nowPrice = '';
+  for (let index = data.length - 20; index <= data.length - 1; index += 1) {
+    const verify = parseInt(data[index], 10);
+    if (verify) {
+      nowPrice += data[index];
+    }
+    if (data[index] === '.') {
+      nowPrice += data[index];
+    }
+  }
+  sumTotal(parseFloat(nowPrice));
+};
+
+const sumAllPrices = () => {
+  const getAllCartItems = document.querySelectorAll('.cart__item');
+  const totalValue = 0;
+  getAllCartItems.forEach((product) => {
+    formatStringPrice(product.innerText);
+  });
+  return totalValue;
+};
+
 const addLoading = () => {
   const itemContainer = document.querySelector('.items');
   itemContainer.innerHTML = '<div class="loading">carregando...</div>';
@@ -26,6 +57,8 @@ const cartItemClickListener = (event) => {
   const elemento = event.target;
   elemento.parentNode.removeChild(elemento);
   saveItem(getPaiCart);
+  priceOfCart = 0;
+  sumAllPrices();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -35,6 +68,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   const componentePai = getPaiCart;
   componentePai.appendChild(li);
+  priceOfCart = 0;
+  sumAllPrices();
   return li;
 };
 
@@ -52,7 +87,6 @@ const getProduct = (id) => fetchItem(id).then((produto) => {
     salePrice: produto.price,
   };
   const getOl = document.querySelector('.cart__items');
-  console.log(baseObj);
   createCartItemElement(baseObj);
   saveItem(getOl);
 });
@@ -95,6 +129,8 @@ const clearCart = () => {
   saveItem(getPaiCart);
 };
 
+// 5 a 17
+
 window.onload = () => {
   const btnClear = document.querySelector('.empty-cart');
   btnClear.addEventListener('click', clearCart);
@@ -105,4 +141,5 @@ window.onload = () => {
     produto.addEventListener('click', cartItemClickListener);
     getPaiCart.appendChild(produto);
   });
+  sumAllPrices();
 };
