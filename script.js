@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -61,5 +61,5 @@ window.onload = async () => {
     const section = createProductItemElement({ sku: id, name: title, image: thumbnail });
     htmlSection.appendChild(section);
   });
-  addItemCart();
+  await addItemCart();
 };
