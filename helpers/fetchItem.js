@@ -1,13 +1,14 @@
-const url = 'https://api.mercadolibre.com/items/MLB1615760527';
-
-const fetchItem = async (item) => {
-    try { 
-     const response = await fetch(url);
-     const data = await response.json(item); 
-     return data;
-    } catch (error) {
-     console.log('You must provide an url');
-    } 
+const fetchItem = async (searchItem) => {
+  try {
+    const fetchItemUrl = `https://api.mercadolibre.com/items/${searchItem}`;
+    const response = await fetch(fetchItemUrl);
+    if (!response) {
+      throw new Error('You must provide an url');
+    }
+    return await response.json();
+  } catch (error) {
+    return error.message;
+  }
 };
 
 if (typeof module !== 'undefined') {
