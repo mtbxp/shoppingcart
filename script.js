@@ -38,26 +38,13 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const getProducts = async () => {
-  const reponse = await fetchProducts('computador');
-  return reponse.results;
-};
-
-const productsListing = async () => {
+window.onload = async () => {
+  const data = await fetchProducts('computador');
+  const produtos = data.results;
   const htmlSection = document.querySelector('.items');
-  const produtos = await getProducts();
-  console.log(produtos);
   produtos.forEach((element) => {
-    const newObject = {
-      id: element.id,
-      title: element.title,
-      thumbnail: element.thumbnail,
-    };
-    const section = createProductItemElement(newObject);
+    const { id, title, thumbnail } = element;
+    const section = createProductItemElement({ sku: id, name: title, image: thumbnail });
     htmlSection.appendChild(section);
   });
 };
-
-productsListing();
-
-window.onload = () => { };

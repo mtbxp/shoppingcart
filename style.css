@@ -39,7 +39,7 @@ body {
 }
 
 .container-cartTitle span {
-  z-index: 1; 
+  z-index: 1;
 }
 
 .container-cartTitle:after {
