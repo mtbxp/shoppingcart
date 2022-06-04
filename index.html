@@ -18,7 +18,7 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <header class="header">
+    <header class="header relative bg-be-trybe">
       <div class="container-title">
         <span class="title"><strong>trybe</strong>shopping</span>
       </div>
@@ -27,12 +27,13 @@
         <span class="cart__title">Meu carrinho</span>
       </div>
     </header>
-    <section class="container bg-slate-800">
-      <section class="items"></section>
-      <section class="cart">
-        <div class="cart-total">R$ <span class="total-price">0</span></div>
-        <ol class="cart__items"></ol>
-        <button class="empty-cart">Esvaziar carrinho</button>
+    <section class="flex justify-between w-full">
+      <section class="items flex justify-center flex-wrap basis-3/4 p-4"></section>
+      <section class="cart h-[calc(100vh-60px)] flex flex-col basis-1/4 bg-be-trybe items-center justify-between p-4 sticky top-0">
+        <div class="cart-total bg-[#054d42] text-white font-bold w-full rounded-md text-center py-1 text-lg">
+          R$ <span class="total-price">0</span></div>
+        <div class="cart__items grow m-1 overflow-y-auto w-full scrollbar"></div>
+        <button class="empty-cart flex font-bold w-full justify-center items-center text-white text-[16px] align-middle py-2 px-4 bg-[#054d42] rounded-md cursor-pointer hover:bg-red-500">Esvaziar carrinho</button>
       </section>
     </section>
   </body>
