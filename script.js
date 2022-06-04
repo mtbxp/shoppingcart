@@ -15,26 +15,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = (sku, name, image) => {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-};
-
-const showItems = async () => {
-  const arg = await fetchProducts('computador');
-  arg.forEach(({ id, title, thumbnail}) => 
-    itemSection.appendChild(createProductItemElement(id, title, thumbnail)));
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 const cartItemClickListener = (event) => {
   cartItems.removeChild(event.target);
 };
@@ -47,11 +27,33 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const getItemInfo = async (param) => {
-  const item = await fetchItem(param);
-  cartItems.appendChild(createCartItemElement(item));
+const buttonItemClickListener = async () => {
+  const itemID = document.querySelector('.item__sku').innerText;
+  const item = await fetchItem(itemID);
+  cartItems.appendChild(createCartItemElement(item))
 };
-getItemInfo('MLB1615760527')
+
+const createProductItemElement = (sku, name, image) => {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', buttonItemClickListener);
+
+  return section;
+};
+
+const showItems = async () => {
+  const arg = await fetchProducts('computador');
+  await arg.forEach(({ id, title, thumbnail}) => {
+    itemSection.appendChild(createProductItemElement(id, title, thumbnail))
+  });
+};
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { 
   showItems();
