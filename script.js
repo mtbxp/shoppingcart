@@ -22,7 +22,7 @@ const cartItemClickListener = (e) => {
 const reloadCartItemListener = () => {
   getSavedCartItems();
   cartItems.addEventListener('click', cartItemClickListener);
-}
+};
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');

@@ -3,7 +3,7 @@ const saveCartItems = (param) => {
     localStorage.setItem('cartItems', '[]');
   }
   const itemArr = JSON.parse(localStorage.getItem('cartItems'));
-  itemArr.push({ text: param.innerText, class: param.className })
+  itemArr.push({ text: param.innerText, class: param.className });
   
   localStorage.setItem('cartItems', JSON.stringify(itemArr));
 };

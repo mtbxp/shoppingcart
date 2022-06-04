@@ -7,7 +7,7 @@ const getSavedCartItems = () => {
       li.innerText = el.text;
       li.className = el.class;
       ol.appendChild(li);
-    })
+    });
   }
 };
 
