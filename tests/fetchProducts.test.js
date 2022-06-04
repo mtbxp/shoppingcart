@@ -25,8 +25,8 @@ describe('1 - Teste a função fetchProducts', () => {
   it('Deveria receber como resposta computadorSearch.', async () => {
     expect.assertions(1);
     const queryTerm = 'computador';
-    const response = await fetchProducts(queryTerm);
-    expect(response).toEqual(computadorSearch);
+    const productList = await fetchProducts(queryTerm);
+    expect(productList).toEqual(computadorSearch);
   });
 
   it('Deveria retornar um erro se nenhum parametro for fornecido.', async () => {

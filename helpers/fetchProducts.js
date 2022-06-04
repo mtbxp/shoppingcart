@@ -4,8 +4,8 @@ const createUrlToGetProductsList = (queryTerm) => `${ENPOINT_SEARCH}/search?q=${
 const fetchProducts = async (queryTerm) => {
   const url = createUrlToGetProductsList(queryTerm);
   const response = await fetch(url);
-  const data = await response.json();
-  return data;
+  const productList = await response.json();
+  return productList;
 };
 
 if (typeof module !== 'undefined') {

@@ -39,9 +39,9 @@ const createProductItemElement = ({ sku, name, image }) => {
 //   return li;
 // };
 
-const appendProducts = (productsList) => {
+const appendProducts = (productList) => {
   const sectionItem = document.querySelector('.items');
-  productsList.forEach((product) => {
+  productList.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const section = createProductItemElement({ sku, name, image });
     sectionItem.append(section);
@@ -50,7 +50,7 @@ const appendProducts = (productsList) => {
 
 window.onload = async () => { 
   const data = await fetchProducts('computador').then((response) => response);
-  const { results: productsList } = data;
+  const { results: productList } = data;
 
-  appendProducts(productsList);  
+  appendProducts(productList);  
 };
