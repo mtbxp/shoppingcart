@@ -1,5 +1,3 @@
-const getItems = document.getElementsByClassName('items')[0];
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -39,4 +37,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const createListProducts = async () => {
+  const getItems = await fetchProducts('computador');
+  const elementsItem = getItems.forEach((flag) => {
+    const setItems = createProductItemElement(flag);
+    document.querySelector('.items').appendChild(setItems);
+  });
+};
+
+window.onload = () => { createListProducts(); };
