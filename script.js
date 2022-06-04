@@ -95,10 +95,24 @@ empty.addEventListener('click', () => {
   price.innerHTML = '0R$';
 });
 
+const loading = async () => {
+  const main = document.querySelector('.items');
+  const p = document.createElement('p');
+  p.className = 'loading';
+  p.innerText = 'carregando...';
+
+  main.appendChild(p);
+
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 2000);
+};
+
 window.onload = async () => {
   cartItems.innerHTML = getSavedCartItems();
   document.querySelectorAll('.cart__item')
     .forEach((element) => element.addEventListener('click', cartItemClickListener));
+  loading();
   await window1();
   await window2();
   calc();
