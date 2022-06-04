@@ -1,3 +1,6 @@
+const { results } = require('./cypress/mocks/computerCategory');
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +15,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -23,6 +26,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+createProductItemElement(fetchProducts('computador'));
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
