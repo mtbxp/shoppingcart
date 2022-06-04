@@ -27,8 +27,8 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const buttonItemClickListener = async () => {
-  const itemID = document.querySelector('.item__sku').innerText;
+const buttonItemClickListener = async (e) => {
+  const itemID = e.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemID);
   cartItems.appendChild(createCartItemElement(item));
 };
@@ -52,7 +52,7 @@ const showItems = async () => {
     itemSection.appendChild(createProductItemElement(id, title, thumbnail)));
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { 
   showItems();
