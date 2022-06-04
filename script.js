@@ -53,14 +53,16 @@ const productFormat = async (productResult) => ({
   salePrice: productResult.price,
 });
 
+const divItems = document.querySelector('.items');
+
 window.onload = async () => {
+  getSavedCartItems();
   const products = await product();
+  const divCart = document.querySelectorAll('.item__add');
   products.forEach((prod) => {
-    const divItems = document.querySelector('.items');
     const section = createProductItemElement(prod);
     divItems.appendChild(section);
   });
-  const divCart = document.querySelectorAll('.item__add');
   divCart.forEach((prod) => {
     prod.addEventListener('click', async (event) => {
       const cartItems = document.querySelector('.cart__items');
@@ -68,6 +70,7 @@ window.onload = async () => {
       const resultItem = await fetchItem(prodId);
       const resultItemFormat = await productFormat(resultItem);
       const result = createCartItemElement(resultItemFormat);
+      saveCartItems(result);
       cartItems.appendChild(result);
     });
   });
