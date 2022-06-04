@@ -1,3 +1,4 @@
+const sectionItems = document.getElementsByClassName('items')[0];
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +13,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -23,7 +24,12 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+const callCreateProductItemElement = () => {
+  fetchProducts('computador').then((i) => i.results
+  .forEach((j) => sectionItems.append(createProductItemElement(j))));
+};
 
+callCreateProductItemElement();
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
