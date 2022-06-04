@@ -7,8 +7,8 @@ describe('2 - Teste a função fetchItem', () => {
     expect(typeof fetchItem).toEqual('function');
   });
 
-  it('Verifique se ao receber ao receber a função fetchProducts ao receber o argumento computador chama a fetch', async () => {
-    fetchProducts('MLB1615760527');
+  it('Verifique se ao receber ao receber a função fetchItem ao receber o argumento MLB1615760527 chama a fetch', async () => {
+  await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalled();
   });
 
