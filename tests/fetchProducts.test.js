@@ -15,13 +15,15 @@ describe('1 - Teste a função fetchProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(url);
   });
-  it('Testa se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch', () => {
-    const response = fetchProducts('computador')
+  it('Testa se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch', async () => {
+    const response = await fetchProducts('computador')
     expect(response).toEqual(computadorSearch);
   });
-  it('Testa se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: "You must provide an url"', () => {
-    const failRequset = fetchProducts();
-    expect(failRequset).toEqual(new Error('You must provide an url'))
+  it('Testa se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: "You must provide an url"', async () => {
+    try {
+      await fetchProducts();
+    } catch (error){
+      expect(error).toEqual(new Error('You must provide an url'));
+    }
   });
-  // it('', () => {});
 });
