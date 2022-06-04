@@ -84,7 +84,7 @@ const window2 = async () => {
   });
 };
 
-window.onload = async () => {  
+window.onload = async () => {
   cartDiv.innerHTML = getSavedCartItems();
   await window1();
   await window2();
