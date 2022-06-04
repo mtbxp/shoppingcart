@@ -1,5 +1,5 @@
 const itemSection = document.querySelector('.items');
-const cartItems = document.querySelector('.cart__items')
+const cartItems = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -30,7 +30,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 const buttonItemClickListener = async () => {
   const itemID = document.querySelector('.item__sku').innerText;
   const item = await fetchItem(itemID);
-  cartItems.appendChild(createCartItemElement(item))
+  cartItems.appendChild(createCartItemElement(item));
 };
 
 const createProductItemElement = (sku, name, image) => {
@@ -48,9 +48,8 @@ const createProductItemElement = (sku, name, image) => {
 
 const showItems = async () => {
   const arg = await fetchProducts('computador');
-  await arg.forEach(({ id, title, thumbnail}) => {
-    itemSection.appendChild(createProductItemElement(id, title, thumbnail))
-  });
+  await arg.forEach(({ id, title, thumbnail }) =>
+    itemSection.appendChild(createProductItemElement(id, title, thumbnail)));
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
