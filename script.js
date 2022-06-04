@@ -56,7 +56,7 @@ const addCardCar = async (id) => {
   const productCard = createCartItemElement(product);
   const carList = document.querySelector('.cart__items');
   carList.appendChild(productCard);
-  console.log('car', productCard);
+  // console.log('car', productCard);
 };
 
 const eventButton = (child) => {
