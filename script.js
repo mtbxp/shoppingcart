@@ -27,8 +27,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-// const ref = createCustomElement('click');
-
 const callCreateProductItemElement = () => {
   fetchProducts('computador').then((i) => i.results
   .forEach((j) => sectionItems.append(createProductItemElement(j))));
@@ -36,17 +34,6 @@ const callCreateProductItemElement = () => {
 
 callCreateProductItemElement();
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-// async function cartItemClickListener(event) {
-//   const el = event.parentNode;
-//   const item = await fetchItem(el.firstChild.innerText).then((i) => olCartItems.appendChild(createCartItemElement(i)));
-// }
-
-// document.addEventListener('click', (event)=>{
-//   if(event.target.classList.contains('cart__item'){
-//     cartItemClickListener(event.target)
-//   })
-// })
 
 const cartItemClickListener = async (arg) => {
   if (arg) arg.parentNode.removeChild(arg);
