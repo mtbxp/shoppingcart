@@ -1,9 +1,12 @@
 const fetchItem = async (flag) => {
   const getUrl = `https://api.mercadolibre.com/items/${flag}`;
-    const getResponse = await fetch(getUrl).then((response) => response.json())
-    .then((date) => date.results)
-    .catch((error) => error);
-    return getResponse;
+  try {
+    const response = await fetch(getUrl);
+    const itemProduct = await response.json();
+    return itemProduct;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
