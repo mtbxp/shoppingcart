@@ -1,6 +1,9 @@
+const cartItems = document.querySelector('.cart__items');
+
 const saveCartItems = () => {
-  // seu código aqui
 };
+
+
 
 if (typeof module !== 'undefined') {
   module.exports = saveCartItems;

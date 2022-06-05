@@ -1,5 +1,4 @@
 const itemProduct = document.querySelector('.items');
-const cartItems = document.querySelector('.cart__items');
 const cartItem = document.querySelector('.cart__item');
 
 const createProductImageElement = (imageSource) => {
@@ -54,7 +53,7 @@ const itemsCart = (element) => {
 };
 
 document.addEventListener('click', async (event) => {
-  if(event.target.classList.contains('item__add')) {
+  if (event.target.classList.contains('item__add')) {
    const idElement = event.target.parentNode.firstChild.innerText;
    await itemsCart(idElement);
   }
