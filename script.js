@@ -31,12 +31,10 @@ const controlAfterPonto = (numero) => {
 
 const formatNumer = (preco) => {
   let priceOfCart = preco;
-  console.log(preco);
   const getPriceArea = document.querySelector('.total-price');
-  const precoFormated = JSON.stringify(priceOfCart).split('.');
-  priceOfCart = controlAfterPonto(precoFormated);
+  const precoFormatedSeperadoporponto = JSON.stringify(priceOfCart).split('.');
+  priceOfCart = controlAfterPonto(precoFormatedSeperadoporponto);
   getPriceArea.innerHTML = parseFloat(priceOfCart);
-  console.log(precoFormated);
 };
 
 const sumAllPrices = async () => {
@@ -51,10 +49,8 @@ const sumAllPrices = async () => {
       const itemId = element.innerHTML.split('|')[0].split(' ')[1];
       const response = await fetchItem(itemId);
       priceOfCart += parseFloat(response.price);
-    });
-    setTimeout(() => {
       formatNumer(priceOfCart);
-    }, 1000);
+    });
 };
 
 const addLoading = () => {
