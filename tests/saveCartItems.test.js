@@ -15,7 +15,7 @@ describe('3 - Teste a função saveCartItems', () => {
   })
 
   it('Should call localStorage.setItem with two params, cartItems and the list text.', async () => {
-    const response = await saveCartItems(ol);
+    await saveCartItems(ol);
     expect(localStorage.setItem).toBeCalledWith('cartItems', '["Item"]');
   })
 
