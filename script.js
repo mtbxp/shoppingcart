@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,16 +20,16 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item__sku', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
-  // alteraçao no button
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('.item__sku');
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+const cartItemClickListener = ({ target }) => {
+  const naoEtarget = target;
+  naoEtarget.innerHTML = '';
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -40,51 +41,61 @@ const createCartItemElement = ({ id, title, price }) => {
 };
 // functions adicionais
 
-const SearchDetailsProduct = async (id) => {
-  const card = await fetchItem(id); 
-  return card;
-};
-
+// fecth nos produtos
 const SearchProducts = async () => {
+  // chama
   const produtos = await fetchProducts('computador');
+  // destroi
   const { results } = produtos;
   return results;
 };
 
-const addCardCar = async (id) => {
-  const product = JSON.parse(localStorage.getItem(id));
-  const productCard = createCartItemElement(product);
-  const carList = document.querySelector('.cart__items');
-  carList.appendChild(productCard);
-  // console.log('car', productCard);
+// fetch nos cards do carrinho
+const SearchItems = async (id) => {
+  // chama
+  const items = await fetchItem(id);
+  return items;
 };
 
-const eventButton = (child) => {
-  child.addEventListener('click', async ({ path }) => {
-    const id = [path[1].querySelector('.item__sku').innerText];
-    const details = await SearchDetailsProduct(id);
-    localStorage.setItem(id, JSON.stringify(details));
-    
-    addCardCar(id);
-    // console.log(id, 'ok', details);
-  });
+// renderiza produtos no shopcard
+const renderCartItemElement = async (id) => {
+  // cria os elementos 
+  const item = await SearchItems(id);
+  const createCard = createCartItemElement(item);
+  // chama a section
+  const sectionItems = document.querySelector('.cart__items');
+  // adicia o elemento
+  sectionItems.appendChild(createCard);
+  console.log('render', item);
 };
 
-const createCardProduct = async () => {
-  const produtos = await SearchProducts();
-  produtos.map((produt) => {
-    const productList = document.querySelector('.items');
-    const child = createProductItemElement(produt);
-    eventButton(child);
-    return productList.appendChild(child);
+// adiciona produtos ao shopcard
+const addShopCard = ({ path }) => {
+  // pega o id do prduto
+  const id = getSkuFromProductItem(path[1]).innerText;
+  // renderiza no carrinho
+  renderCartItemElement(id);
+  console.log('add', id);
+};
+
+// renderiza produtos na tela principal
+const renderProductItemElement = async () => {
+  // chamo a section
+  const sectionProducts = document.querySelector('.items');
+  // chamo produtos
+  const products = await SearchProducts();
+  // renderizo cada item na tela
+  products.map((product) => {
+    // crio o card
+    const cardProducts = createProductItemElement(product);
+    // add evento
+    cardProducts.addEventListener('click', addShopCard);
+    // renderizo
+    return sectionProducts.appendChild(cardProducts);
   });
 };
-// preciso dar aṕpendChild em uma section com class = items
 
 window.onload = () => {
-  // localStorage.setItem('items', JSON.stringify([]));
-  // buttonEvent();
-  // createCard();
-  createCardProduct();
-  // SearchDetailsProduct('MLB1615760527');
+  SearchProducts();
+  renderProductItemElement();
 };
