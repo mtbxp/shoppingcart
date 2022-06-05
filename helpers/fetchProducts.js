@@ -9,7 +9,7 @@ const fetchProducts = async (endpoint) => {
     return error;
   }
 };
-//fetchProducts('endpoint').then((data) => console.log(data));
+fetchProducts('endpoint').then((data) => console.log(data));
 
 if (typeof module !== 'undefined') {
   module.exports = {
