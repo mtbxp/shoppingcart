@@ -12,7 +12,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toHaveBeenCalled();
   })
   
-  it('Testa se, ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint ', async() => {
+  it('Testa se, ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint https://api.mercadolibre.com/sites/MLB/search?q=computador', async() => {
     const chamaUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith(chamaUrl);
