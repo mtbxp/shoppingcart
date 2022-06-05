@@ -32,7 +32,7 @@ const cartItemClickListener = (li, rmId) => {
     // ...
     const naoEtarget = target;
     naoEtarget.innerHTML = '';
-    
+    // removendo do localstorage
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     const filtro = storage.filter((id) => id !== rmId);
     saveCartItems(filtro);
@@ -114,6 +114,24 @@ renderLocalStorage = async () => {
   storage.map((id) => renderCartItemElement(id));
   // console.log('renderStorage', storage);
 };
+
+/*
+referencia:https://developer.mozilla.org/pt-BR/docs/Web/API/Node/removeChild
+referencia2:https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/while
+utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
+*/
+// button esvaziar carrinho
+  const buttonClear = document.querySelector('.empty-cart');
+  buttonClear.addEventListener('click', () => {
+    // limpar o local localStorage
+    localStorage.clear();
+    // limpar o carrinho de compras
+    const sectionItems = document.querySelector('.cart__items');
+    while (sectionItems.firstChild) {
+      sectionItems.removeChild(sectionItems.firstChild);
+    }
+    // console.log('clear');
+  }); 
 
 window.onload = () => {
   renderLocalStorage();
