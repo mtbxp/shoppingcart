@@ -50,7 +50,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = async (arg) => {
   if (arg) arg.parentNode.removeChild(arg);
-  await fetchItem(arg.id)
+  await fetchItem(arg.id);
 };
 
 document.addEventListener('click', (event) => {
