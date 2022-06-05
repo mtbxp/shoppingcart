@@ -1,8 +1,8 @@
 const cartItems = document.querySelector('.cart__items');
 
-const saveCartItems = () => {
+const saveCartItems = (savelist) => {
+  localStorage.setItem('cartItems', savelist);
 };
-
 
 
 if (typeof module !== 'undefined') {
