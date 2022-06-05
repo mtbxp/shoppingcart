@@ -1,3 +1,4 @@
+// const { fetchProducts } = require("./helpers/fetchProducts");
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +13,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -38,4 +39,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const adicionarProdutosPratileira = async (tipoItem) => {
+  const pratileiraDeItems = document.querySelector('.items');
+  const arrayDeProdutos = (await fetchProducts(tipoItem)).results;
+  arrayDeProdutos.forEach((eachProduto) => {
+    const { id, title, thumbnail } = eachProduto;
+    const objetoContendoProduto = createProductItemElement({ 
+      id, 
+      title, 
+      thumbnail,
+     });
+     pratileiraDeItems.appendChild(objetoContendoProduto);
+  }); 
+};
+
+window.onload = () => { 
+  adicionarProdutosPratileira('computador');
+};
