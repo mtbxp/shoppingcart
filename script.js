@@ -1,6 +1,5 @@
 const sectionItems = document.getElementsByClassName('items')[0];
 const olCartItems = document.getElementsByClassName('cart__items')[0];
-const buttonAdd = document.querySelector('.item__add');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -57,14 +56,21 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  
   return li;
 };
 
-const callCreateCartItemElement = (event) => {
-  fetchItem('MLB1341706310').then((i) => olCartItems.appendChild(createCartItemElement(i)));
+const callCreateCartItemElement = (arg) => {
+  fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i)));
 };
 
-callCreateCartItemElement();
+document.addEventListener('click', async (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const el = event.target.parentNode.firstChild.innerText;
+    await callCreateCartItemElement(el);
+  }
+});
+
 cartItemClickListener();
 
 window.onload = () => { };

@@ -1,4 +1,4 @@
-const getSavedCartItems = (arg) => {
+const getSavedCartItems = () => {
   localStorage.setItem('cartItems');
 };
 
