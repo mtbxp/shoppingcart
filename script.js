@@ -1,5 +1,4 @@
 const itemProduct = document.querySelector('.items');
-const cartItem = document.querySelector('.cart__item');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -49,7 +48,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 const itemsCart = (element) => {
   fetchItem(element) 
-  .then((el) => cartItems.appendChild(createCartItemElement(el)))
+  .then((el) => cartItems.appendChild(createCartItemElement(el)));
 };
 
 document.addEventListener('click', async (event) => {
