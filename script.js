@@ -29,10 +29,12 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// FEITO POR MIM
 const cartItemClickListener = (event) => {
   const itemCart = document.querySelector('.cart__item');
   if (event.target.classList.contains('cart__item')) {
     itemCart.remove();
+    saveCartItems(olCartItems.innerHTML);
   }
 };
 
@@ -44,20 +46,37 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+// DAQUI PRA BAIXO É MEU CÓDIGO:
+
+// Resgatando itens dela FetchAPI
 const getProducts = () => {
-  fetchProducts().then((products) =>
+  fetchProducts('computador').then((products) =>
   products.results.forEach((product) =>
   sectionItems.appendChild(createProductItemElement(product))));
 };
 
+// Evento de click que adiciona ao carrinho
 sectionItems.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
   const sectionItem = event.target.parentElement;
   const idFound = getSkuFromProductItem(sectionItem);
-  fetchItem(idFound).then((produto) => olCartItems.appendChild(createCartItemElement(produto)));
+  fetchItem(idFound).then((produto) => olCartItems.appendChild(createCartItemElement(produto)))
+  .then(
+    const precoTotal = document.createElement('div');
+    precoTotal.className = 'total-price';
+    precoTotal.innerText = 
+  )
+  
+  saveCartItems(olCartItems.innerHTML);
+
   }
 });
 
+// STORAGES
+// função para adicionar items do carrinho ao localStorage
+
+// função para resgatar items do carrinho
+
 getProducts();
 
-window.onload = () => { };
+window.onload = () => { getProducts(); };
