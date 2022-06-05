@@ -134,28 +134,32 @@ const addShopCard = ({ path }) => {
   saveCartItems(id);
   // console.log('add', id);
 };
-// renderiza produtos na tela principal
-// chamo a section
-// chamo produtos
-// renderizar por um tempo antes de renderiza a pagina um texto de lold
-// renderizo cada item na tela
-// crio o card
-// add evento
-// renderizo
 
-const renderProductItemElement = async () => {
-  const sectionProducts = document.querySelector('.items');
-  const products = await SearchProducts();
+const carregando = (clas) => {
+  const section = document.querySelector(clas);
   const carregamento = document.createElement('spam');
   carregamento.innerText = 'carregando...';
   carregamento.className = 'loading';
-  sectionProducts.appendChild(carregamento);
+  section.appendChild(carregamento);
+};
+
+// renderiza produtos na tela principal
+const renderProductItemElement = async () => {
+  carregando('.items');
+  // chamo a section
+  const sectionProducts = document.querySelector('.items');
+  // chamo produtos
+  const products = await SearchProducts();
   setTimeout(() => {
     const elemento = document.querySelector('.loading');
     elemento.innerHTML = '';
+    // renderizo cada item na tela
     products.map((product) => {
+    // crio o card
       const cardProducts = createProductItemElement(product);
+      // add evento
       cardProducts.addEventListener('click', addShopCard);
+      // renderizo
       return sectionProducts.appendChild(cardProducts);
     });
   }, 1000);
