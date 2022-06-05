@@ -79,6 +79,6 @@ function setClickEvent() {
 
 window.onload = () => { 
   loadProducts();
-  getSavedCartItems();
+  getSavedCartItems('cartItems');
   setClickEvent();
 };
