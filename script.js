@@ -1,7 +1,3 @@
-// declarations
-// movecart
-
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,7 +27,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  const elementTouch = event.target;
+  elementTouch.parentElement.removeChild(elementTouch);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
