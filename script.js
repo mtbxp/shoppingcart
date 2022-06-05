@@ -37,11 +37,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (arg) => {
   arg.target.remove();
-  // .then(localStorage.remove(arg))
-  // saveCartItems(olCartItems.innerHTML);
+  saveCartItems(olCartItems.innerHTML);
 };
 
-// olCartItems.addEventListener('click', cartItemClickListener);
+olCartItems.addEventListener('click', cartItemClickListener);
 
 // document.addEventListener('click', (event) => {
 //   // if (event.target.classList.contains('cart__item')) {
@@ -56,7 +55,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
