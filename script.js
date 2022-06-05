@@ -1,3 +1,4 @@
+// Todo esse trecho comentado é o metodo sincrono que fiz por curiosidade!
 // const formatStringPrice = (data) => {
 //   let nowPrice = '';
 //   for (let index = data.length - 20; index <= data.length - 1; index += 1) {
@@ -23,23 +24,28 @@
 //   getPriceArea.innerText = `${nowValue}`;
 // };
 
-const sumAllPrices = () => {
+const controlAfterPonto = (numero) => {
+  console.log(numero);
+  return `${numero[0]}.${numero[1][0]}${numero[1][1]}`;
+};
+
+const sumAllPrices = async () => {
   const getPriceArea = document.querySelector('.total-price');
   let priceOfCart = 0;
   // Referencia do metodo Array.form().
   // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/from
   const components = Array.from(document.getElementsByClassName('cart__item'));
-
   if (!components.length) getPriceArea.innerHTML = parseFloat(priceOfCart, 10);
-    
     components.forEach(async (element) => {
       // Referencia do metodo split.
       // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split
       const itemId = element.innerHTML.split('|')[0].split(' ')[1];
       const response = await fetchItem(itemId);
-      priceOfCart += parseFloat(response.price, 10);
-      getPriceArea.innerHTML = parseFloat(priceOfCart, 10);
+      priceOfCart += parseFloat(response.price);
+      getPriceArea.innerHTML = parseFloat(priceOfCart);
     });
+    const separarPorPonto = JSON.stringify(priceOfCart).split('.');
+    priceOfCart = controlAfterPonto(separarPorPonto);
 };
 
 const addLoading = () => {
