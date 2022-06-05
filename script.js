@@ -27,16 +27,24 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('.item__sku');
 
-const cartItemClickListener = ({ target }) => {
-  const naoEtarget = target;
-  naoEtarget.innerHTML = '';
+const cartItemClickListener = (li, rmId) => {
+  li.addEventListener('click', ({ target }) => {
+    // ...
+    const naoEtarget = target;
+    naoEtarget.innerHTML = '';
+    
+    const storage = JSON.parse(localStorage.getItem('cartItems'));
+    const filtro = storage.filter((id) => id !== rmId);
+    saveCartItems(filtro);
+    console.log(rmId, 'delet', filtro);
+  });
 };
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  cartItemClickListener(li, id);
   return li;
 };
 // functions adicionais
@@ -66,7 +74,7 @@ const renderCartItemElement = async (id) => {
   const sectionItems = document.querySelector('.cart__items');
   // adicia o elemento
   sectionItems.appendChild(createCard);
-  console.log('render', item);
+  // console.log('render', item);
 };
 
 // adiciona produtos ao shopcard
@@ -75,7 +83,9 @@ const addShopCard = ({ path }) => {
   const id = getSkuFromProductItem(path[1]).innerText;
   // renderiza no carrinho
   renderCartItemElement(id);
-  console.log('add', id);
+  // armazena no local storage
+  saveCartItems(id);
+  // console.log('add', id);
 };
 
 // renderiza produtos na tela principal
@@ -95,7 +105,18 @@ const renderProductItemElement = async () => {
   });
 };
 
+renderLocalStorage = async () => {
+  // chama os ids
+  const storage = getSavedCartItems();
+  // chama a section
+  const sectionItems = document.querySelector('.cart__items');
+  // renderiza
+  storage.map((id) => renderCartItemElement(id));
+  // console.log('renderStorage', storage);
+};
+
 window.onload = () => {
+  renderLocalStorage();
   SearchProducts();
   renderProductItemElement();
 };
