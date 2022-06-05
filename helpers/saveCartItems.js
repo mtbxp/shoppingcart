@@ -9,7 +9,7 @@ const saveCartItems = (card) => {
   } else if (typeof card === 'string') { 
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     localStorage.setItem('cartItems', JSON.stringify([...storage, card]));
-  console.log('save', storage);
+  // console.log('save', storage);
   } else {
     localStorage.setItem('cartItems', JSON.stringify(card));
   }
