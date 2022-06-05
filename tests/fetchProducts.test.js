@@ -16,15 +16,11 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toBeCalledWith(url);
   });
   test('Deve se a função retorna a mesma estrutura de dados do objeto `computadorSearch`', async () => {
-    const dados = computadorSearch;
-    expect(await fetchProducts('computador')).toBe(dados);
+    const dados = await fetchProducts('computador');
+    expect(dados).toEqual(computadorSearch);
   });
   test('Deve retornar uma mensagem de error ao passar a função sem nenhum argumento', async () => {
-    try{
-      await fetchProducts()
-    }catch (error){
-    expect(error).toThrowError(new Error('You must provide an url'));
-    }
+    expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
   });
 
 });
