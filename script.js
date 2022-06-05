@@ -61,14 +61,13 @@ sectionItems.addEventListener('click', (event) => {
   const sectionItem = event.target.parentElement;
   const idFound = getSkuFromProductItem(sectionItem);
   fetchItem(idFound).then((produto) => olCartItems.appendChild(createCartItemElement(produto)))
-  .then(
-    const precoTotal = document.createElement('div');
-    precoTotal.className = 'total-price';
-    precoTotal.innerText = 
-  )
+  // .then(
+  //   const precoTotal = document.createElement('div');
+  //   precoTotal.className = 'total-price';
+  //   precoTotal.innerText = 
+  // )
   
   saveCartItems(olCartItems.innerHTML);
-
   }
 });
 
