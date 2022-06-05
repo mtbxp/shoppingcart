@@ -8,21 +8,8 @@ const fetchProducts = async (param) => {
   return resultado;
 };
 
-const creatList = async () => {
-  const obj = await fetchProducts('computador');
-  const section = document.getElementsByClassName('items');
-  return obj.results.map((item) => {
-    const { id, title, thumbnail } = item
-    const obj2 = { sku: id, name: title, image: thumbnail };
-    return section.appendChild(createProductItemElement(obj2))
-  });
-};
-creatList()
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
   };
 }
-
-window.onload = () => creatList();
