@@ -7,7 +7,7 @@ describe('2 - Teste a função fetchItem', () => {
     expect(typeof fetchItem).toBe('function')
   });
   test('Deve chamar `fetch` quando o argumento `computador` for passado', async () => {
-    await fetchItem('MLB161576527');
+    await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalled();
   });
   test('Deve retornar o endpoiont correto ao passar o argumento `MLB161576527` para a função', async () => {
@@ -20,8 +20,7 @@ describe('2 - Teste a função fetchItem', () => {
     expect(response).toEqual(item);
   });
   test('Deve retornar uma mensagem de error ao passar a função sem nenhum argumento', async () => {
-    const response = await fetchItem();
-    expect(response).toEqual('You must provide an url');
+    expect(await fetchItem()).toEqual(new Error('You must provide an url'));
   });
 
 });
