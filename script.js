@@ -1,5 +1,4 @@
 let total = [0];
-const spam = document.querySelector('.total-price');
 /* eslint-disable sonarjs/no-duplicate-string */
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -39,7 +38,8 @@ const removePrice = (price) => {
 };
 // renderiza o total do produto
 const renderRemovePrice = (price) => {
-  const valor = removePrice(price); 
+  const valor = removePrice(price);
+  const spam = document.querySelector('.total-price');  
   // renderizar price
   spam.innerText = `valor total:$${valor}`;
   console.log('renderRemove', valor);
@@ -96,7 +96,8 @@ const somaPrice = (price) => {
 };
 // renderiza o total do produto
 const renderTotalPrice = (price) => {
-  const valor = somaPrice(price); 
+  const valor = somaPrice(price);
+  const spam = document.querySelector('.total-price');  
   // se o spam ainda nao existir criar
   if (!spam) {
     const createSpam = document.createElement('spam');
@@ -133,22 +134,31 @@ const addShopCard = ({ path }) => {
   saveCartItems(id);
   // console.log('add', id);
 };
-
 // renderiza produtos na tela principal
+// chamo a section
+// chamo produtos
+// renderizar por um tempo antes de renderiza a pagina um texto de lold
+// renderizo cada item na tela
+// crio o card
+// add evento
+// renderizo
+
 const renderProductItemElement = async () => {
-  // chamo a section
   const sectionProducts = document.querySelector('.items');
-  // chamo produtos
   const products = await SearchProducts();
-  // renderizo cada item na tela
-  products.map((product) => {
-    // crio o card
-    const cardProducts = createProductItemElement(product);
-    // add evento
-    cardProducts.addEventListener('click', addShopCard);
-    // renderizo
-    return sectionProducts.appendChild(cardProducts);
-  });
+  const carregamento = document.createElement('spam');
+  carregamento.innerText = 'carregando...';
+  carregamento.className = 'loading';
+  sectionProducts.appendChild(carregamento);
+  setTimeout(() => {
+    const elemento = document.querySelector('.loading');
+    elemento.innerHTML = '';
+    products.map((product) => {
+      const cardProducts = createProductItemElement(product);
+      cardProducts.addEventListener('click', addShopCard);
+      return sectionProducts.appendChild(cardProducts);
+    });
+  }, 1000);
 };
 
 /*
@@ -161,6 +171,7 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
   buttonClear.addEventListener('click', () => {
     // limpar o total
     total = [0];
+  const spam = document.querySelector('.total-price');  
   spam.innerText = `valor total:$${total}`;
     // limpar o local localStorage
     localStorage.clear();
