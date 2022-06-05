@@ -20,7 +20,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(response).toEqual(computadorSearch);
   });
   it('com o argumento vazio, retorna um erro com a mensagem esperada', async () =>{
-    const response = await getMagicCard();
+    const response = await fetchProducts();
     expect(response).toEqual(new Error('You must provide an url'));
   });
   // fail('Teste vazio');

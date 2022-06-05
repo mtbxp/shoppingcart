@@ -1,4 +1,4 @@
-const createProductImageElement = (imageSource) => {
+  const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -37,5 +37,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+const itensList = document.querySelector('.items');
+fetchProducts('computador')
+  .then((products) => {
+    products.results
+      .forEach((element) => {
+        itensList.appendChild(createProductItemElement(element));
+      });
+});
 
 window.onload = () => { };
