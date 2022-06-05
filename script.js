@@ -1,29 +1,45 @@
-let priceOfCart = 0;
-
-const formatStringPrice = (data) => {
-  let nowPrice = '';
-  for (let index = data.length - 20; index <= data.length - 1; index += 1) {
-    const verify = parseInt(data[index], 10);
-    if (verify) {
-      nowPrice += data[index];
-    }
-    if (data[index] === '.') {
-      nowPrice += data[index];
-    }
-  }
-  return parseFloat(nowPrice);
-};
+// const formatStringPrice = (data) => {
+//   let nowPrice = '';
+//   for (let index = data.length - 20; index <= data.length - 1; index += 1) {
+//     const verify = parseInt(data[index], 10);
+//     if (verify) {
+//       nowPrice += data[index];
+//     }
+//     if (data[index] === '.') {
+//       nowPrice += data[index];
+//     }
+//   }
+//   return parseFloat(nowPrice);
+// };
+// const sumAllPrices = () => {
+//   const getAllCartItems = document.querySelectorAll('.cart__item');
+//   let totalValue = 0;
+//   getAllCartItems.forEach((product) => {
+//     totalValue += formatStringPrice(product.innerText);
+//   });
+//   const getPriceArea = document.querySelector('.total-price');
+//   priceOfCart += totalValue;
+//   const nowValue = priceOfCart;
+//   getPriceArea.innerText = `${nowValue}`;
+// };
 
 const sumAllPrices = () => {
-  const getAllCartItems = document.querySelectorAll('.cart__item');
-  let totalValue = 0;
-  getAllCartItems.forEach((product) => {
-    totalValue += formatStringPrice(product.innerText);
-  });
   const getPriceArea = document.querySelector('.total-price');
-  priceOfCart += totalValue;
-  const nowValue = priceOfCart;
-  getPriceArea.innerText = `${nowValue}`;
+  let priceOfCart = 0;
+  // Referencia do metodo Array.form().
+  // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+  const components = Array.from(document.getElementsByClassName('cart__item'));
+
+  if (!components.length) getPriceArea.innerHTML = parseFloat(priceOfCart, 10);
+    
+    components.forEach(async (element) => {
+      // Referencia do metodo split.
+      // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split
+      const itemId = element.innerHTML.split('|')[0].split(' ')[1];
+      const response = await fetchItem(itemId);
+      priceOfCart += parseFloat(response.price, 10);
+      getPriceArea.innerHTML = parseFloat(priceOfCart, 10);
+    });
 };
 
 const addLoading = () => {
