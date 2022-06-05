@@ -48,9 +48,9 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 //     cartItemClickListener(event.target)
 //   })
 // })
-// const cartItemClickListener = (event) => {
+const cartItemClickListener = (event) => {
  
-// };
+};
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
@@ -64,7 +64,7 @@ const callCreateCartItemElement = (event) => {
   fetchItem('MLB1341706310').then((i) => olCartItems.appendChild(createCartItemElement(i)));
 };
 
-// callCreateCartItemElement();
+callCreateCartItemElement();
 cartItemClickListener();
 
 window.onload = () => { };
