@@ -24,10 +24,7 @@
 //   getPriceArea.innerText = `${nowValue}`;
 // };
 
-const controlAfterPonto = (numero) => {
-  console.log(numero);
-  return `${numero[0]}.${numero[1][0]}${numero[1][1]}`;
-};
+const controlAfterPonto = (numero) => `${numero[0]}.${numero[1][0]}${numero[1][1]}`;
 
 const formatNumer = (preco) => {
   let priceOfCart = preco;
@@ -49,8 +46,10 @@ const sumAllPrices = async () => {
       const itemId = element.innerHTML.split('|')[0].split(' ')[1];
       const response = await fetchItem(itemId);
       priceOfCart += parseFloat(response.price);
-      formatNumer(priceOfCart);
     });
+    setTimeout(() => {
+      formatNumer(priceOfCart);
+    }, 1000);
 };
 
 const addLoading = () => {
