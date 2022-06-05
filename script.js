@@ -1,4 +1,5 @@
 let total = [0];
+const spam = document.querySelector('.total-price');
 /* eslint-disable sonarjs/no-duplicate-string */
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -38,8 +39,7 @@ const removePrice = (price) => {
 };
 // renderiza o total do produto
 const renderRemovePrice = (price) => {
-  const valor = removePrice(price);
-  const spam = document.querySelector('.total-price');  
+  const valor = removePrice(price); 
   // renderizar price
   spam.innerText = `valor total:$${valor}`;
   console.log('renderRemove', valor);
@@ -96,8 +96,7 @@ const somaPrice = (price) => {
 };
 // renderiza o total do produto
 const renderTotalPrice = (price) => {
-  const valor = somaPrice(price);
-  const spam = document.querySelector('.total-price');  
+  const valor = somaPrice(price); 
   // se o spam ainda nao existir criar
   if (!spam) {
     const createSpam = document.createElement('spam');
@@ -162,7 +161,6 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
   buttonClear.addEventListener('click', () => {
     // limpar o total
     total = [0];
-  const spam = document.querySelector('.total-price');  
   spam.innerText = `valor total:$${total}`;
     // limpar o local localStorage
     localStorage.clear();
