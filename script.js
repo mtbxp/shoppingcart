@@ -28,10 +28,12 @@ const controlAfterPonto = (numero) => `${numero[0]}.${numero[1][0]}${numero[1][1
 
 const formatNumer = (preco) => {
   let priceOfCart = preco;
+  console.log(preco);
   const getPriceArea = document.querySelector('.total-price');
-  const precoFormatedSeperadoporponto = JSON.stringify(priceOfCart).split('.');
-  priceOfCart = controlAfterPonto(precoFormatedSeperadoporponto);
+  const precoFormated = JSON.stringify(priceOfCart).split('.');
+  priceOfCart = controlAfterPonto(precoFormated);
   getPriceArea.innerHTML = parseFloat(priceOfCart);
+  console.log(precoFormated);
 };
 
 const sumAllPrices = async () => {
