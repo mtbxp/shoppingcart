@@ -1,6 +1,7 @@
 // Elementos HTML
 const cartItemsUl = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const clearBtn = document.querySelector('.empty-cart');
 
 // Formata o valor total a pagar e exibe ele na tela.
 function setTotalPrice(price) {
@@ -115,10 +116,19 @@ function setClickEvent() {
   }
 }
 
+function clearCart() {
+  do {
+    cartItemsUl.childNodes[0].remove();
+  } while (cartItemsUl.childElementCount > 0);
+  saveCartItems(cartItemsUl);
+  calculateTotalPrice();
+}
+
 // Executa funções ao carregar a página.
 window.onload = () => { 
   loadProducts();
   getSavedCartItems('cartItems');
   setClickEvent();
   calculateTotalPrice();
+  clearBtn.addEventListener('click', clearCart);
 };
