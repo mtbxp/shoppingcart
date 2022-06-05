@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(246, 246, 246);
+  background-color: rgba(46, 59, 42, 0.281);
 }
 
 .header {
@@ -92,14 +92,20 @@ body {
 }
 
 .item {
+  color: rgb(99, 83, 61);
   display: flex;
   flex-direction: column;
   height: auto;
   margin: 5px;
   width: 200px;
   border: 2px solid rgb(234, 234, 233);
-  border-radius: 5px;
+  border-radius: 10px;
   box-sizing: border-box;
+  box-shadow: 1px 1px 30px 2px black;
+}
+
+.item:hover {
+  border: 2px solid black;
 }
 
 .item .item__sku {
@@ -119,12 +125,18 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
+  background-color: rgb(82, 94, 54);
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 10px;
   color: white;
+  border-radius: 10px;
+}
+
+.item .item__add:hover {
+  background-color: rgb(70, 160, 11);
+
 }
 
 .cart {
@@ -141,9 +153,43 @@ body {
 }
 
 .empty-cart {
+  color: black;
   width: 170px;
   height: 35px;
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  background-color: rgba(17, 238, 28, 0.397);
+}
+
+.empty-cart:hover {
+  background-color: rgb(5, 52, 219);
+  border: 5px solid rgba(17, 238, 28, 0.397);
+  color: white;
+}
+
+.itemNoCarrinho {
+  text-align: center;
+  display: flex;
+  background-color: rgba(0, 99, 69, 0.404);
+  padding: 15px;
+  gap: 5px;
+  margin-top: 3px;
+  color: rgb(59, 59, 8);
+  box-shadow: 1px 1px 10px rgba(0, 128, 0, 0.377);
+  align-items: center;
+}
+
+.itemNoCarrinho:hover {
+  border: 2px solid black;
+}
+
+.total-price {
+  margin-top: 15px;
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(0, 99, 69, 0.404);
+  color: white;
+  font-weight: 500;
+  box-shadow: 2px 5px 10px black;
+  border-radius: 10px;
 }
