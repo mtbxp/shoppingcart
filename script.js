@@ -12,7 +12,10 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+// 2
+const classItems = document.querySelector('.items');
+
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -23,6 +26,13 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+
+function listProducts() {
+  fetchProducts('computador').then((element) => element.results
+  .forEach((object) => classItems.appendChild(createProductItemElement(object))));
+}
+listProducts();
+// end 2
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
