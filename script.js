@@ -1,4 +1,5 @@
 const sectionItens = document.querySelector('.items');
+const cartItens = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -39,10 +40,10 @@ const cartItemClickListener = (event) => {
   // coloque seu código a
 };
 
-const createCartItemElement = ({ id, title, salePrice }) => {
+const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: $ id} | NAME: $ title} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -53,5 +54,17 @@ fetchProducts('computador').then((data) =>
   data.results.forEach((product) => {
     sectionItens.appendChild(createProductItemElement(product));
   }));
+
+// fetchItem('MLB1341706310').then((data) => console.log(data));
+
+document.addEventListener('click', (event) => {
+ if (event.target.className === 'item__add') {
+   const id = event.target.parentElement.firstChild.innerHTML;   
+   // fetchItem(id).then((data) => console.log(data));
+
+   fetchItem(id).then((data) =>
+   cartItens.appendChild(createCartItemElement(data)));  
+ }
+});
 
 window.onload = () => {};

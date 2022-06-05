@@ -23,6 +23,5 @@ describe("1 - Teste a função fetchProducts", () => {
   test("Verifica se a função fetchProducts sem argumento, retorna um erro com a mensagem You must provide an url", () => {
     expect(() => fetchProducts()).toThrow("You must provide an url");
     expect(fetchProducts).toThrow("You must provide an url");
-
   });
 });
