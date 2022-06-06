@@ -30,7 +30,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = () => {
   // coloque seu código aqui
 };
 
@@ -44,23 +44,32 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const adicionarElementosNoHtml = async () => {
   const fetchProductsReturn = await fetchProducts('computador');
-  fetchProductsReturn.results.forEach(({ id, title, thumbnail }) => {
-    const section = createProductItemElement({ id, title, thumbnail });
+  fetchProductsReturn.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
+    const section = createProductItemElement({ sku, name, image });
     const itemsSection = document.querySelectorAll('.items')[0];
     itemsSection.appendChild(section);
   });
-  console.log(fetchProductsReturn[0].id);
+  // console.log(fetchProductsReturn[0].id);
 };
 adicionarElementosNoHtml();
 
-const adicionarAoCarrinho = async (itemId) => {
-  const fetchItemsReturn = await fetchItems(itemId);
-  const { id, title, price } = fetchItemsReturn;
-  const li = createCartItemElement({ id, title, price });
-  const cartItems = document.querySelectorAll('.cart__items')[0];
-  cartItems.appendChild(li);
+const adicionarAoCarrinho = async (event) => {
+  const eTarget = event.target;
+  if (eTarget.classList.contains('item__add')) {
+    const itemSku = getSkuFromProductItem(eTarget.parentNode);
+    const response = await fetchItem(itemSku);
+    const { id: sku, title: name, price: salePrice } = response;
+    const li = createCartItemElement({ sku, name, salePrice });
+    const ol = document.querySelectorAll('.cart__items')[0];
+    ol.appendChild(li);
+  }
 };
-adicionarAoCarrinho('MLB1341706310');
+
+const buttonsAddEvent = () => {
+const itemsSection = document.querySelectorAll('.items')[0];
+itemsSection.addEventListener('click', adicionarAoCarrinho);
+};
+buttonsAddEvent();
 
 window.onload = () => {
   // adicionarElementosNoHtml();
