@@ -1,12 +1,10 @@
 const saveCartItems = (obj, array) => {
   // seu código aqui
-  // const myCart = document.querySelector('.cart__items');
-  // console.log('Objeto: ', obj)
-  const myObjString = (obj);
-  array.push(myObjString);
-  localStorage.setItem('cartItems', JSON.stringify(array));
-  // console.log('Aray: ', array);
-  // console.log('Array no localstorage: ', localStorage.getItem('cartItems'));
+  if (obj !== undefined && array !== undefined) {
+    const myObjString = (obj);
+    array.push(myObjString);
+    localStorage.setItem('cartItems', JSON.stringify(array));
+  }
   // localStorage.clear();
 };
 
