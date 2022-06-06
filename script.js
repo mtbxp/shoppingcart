@@ -1,6 +1,7 @@
 const sectionItems = document.getElementsByClassName('items')[0];
 const olCartItems = document.getElementsByClassName('cart__items')[0];
 const totalPrice = document.getElementsByClassName('total-price')[0];
+// const emptyCart = document.getElementsByClassName('empty-cart')[0]
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -34,11 +35,13 @@ const callCreateProductItemElement = () => {
 };
 
 callCreateProductItemElement();
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (arg) => {
+const cartItemClickListener = async (arg) => {
   arg.target.remove();
-  saveCartItems(olCartItems.innerHTML);
+  await saveCartItems(olCartItems.innerHTML);
+  totalPriceSubtracao(getSkuFromProductItem(arg.target));
 };
 
 olCartItems.addEventListener('click', cartItemClickListener);
@@ -51,7 +54,13 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const price = async (arg) => {
+const totalPriceSubtracao = async (arg) => {
+  const item = await fetchItem(arg);
+  const valorRelativo = parseFloat(totalPrice.innerText) - parseFloat(item.price);
+  totalPrice.innerText = valorRelativo;
+};
+
+const totalPriceSoma = async (arg) => {
   const item = await fetchItem(arg);
   if (totalPrice.innerText) {
     const valorRelativo = parseFloat(totalPrice.innerText) + parseFloat(item.price);
@@ -64,7 +73,7 @@ const price = async (arg) => {
 const callCreateCartItemElement = (arg) => {
   fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i))
     .then(saveCartItems(olCartItems.innerHTML)));
-  price(arg);
+  totalPriceSoma(arg);
 };
 // let valor = 0;
 // const callTotalPrice = (arg) => {
@@ -78,7 +87,11 @@ document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
     const el = event.target.parentNode.firstChild.innerText;
     await callCreateCartItemElement(el);
-    // saveCartItems(olCartItems.innerHTML);
+  }
+  if (event.target.classList.contains('empty-cart')) {
+    olCartItems.innerHTML = '';
+    totalPrice.innerHTML = '';
+    localStorage.clear();
   }
 });
 
