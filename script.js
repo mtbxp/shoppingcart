@@ -40,7 +40,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const callCreateProductItemElement = () => {
   fetchProducts('computador').then((i) => i.results
   .forEach((j) => sectionItems.append(createProductItemElement(j))));
-  //loading.remove();
+  // loading.remove();
 };
 
 callCreateProductItemElement();
@@ -57,7 +57,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 const totalPriceSubtracao = async (arg) => {
   const item = await fetchItem(arg);
-  const valorRelativo = (100 * parseFloat(totalPrice.innerText) - 100 * parseFloat(item.price)) / 100;
+  const valorRelativo = parseFloat(totalPrice.innerText) - parseFloat(item.price);
   totalPrice.innerText = valorRelativo;
   console.log(totalPrice, totalPrice.innerText);
 };
@@ -65,7 +65,7 @@ const totalPriceSubtracao = async (arg) => {
 const totalPriceSoma = async (arg) => {
   const item = await fetchItem(arg);
   if (totalPrice.innerText) {
-    const valorRelativo = (100 * parseFloat(totalPrice.innerText) + 100 * parseFloat(item.price)) / 100;
+    const valorRelativo = parseFloat(totalPrice.innerText) + parseFloat(item.price);
     totalPrice.innerText = valorRelativo;
   } else {
     totalPrice.innerText = item.price;
@@ -114,4 +114,4 @@ const localStorageGetItem = () => {
   olCartItems.innerHTML = getSavedCartItems();
 };  
 
-window.onload = () => { localStorageGetItem();loadingCreate() };
+window.onload = () => { localStorageGetItem(); loadingCreate(); };
