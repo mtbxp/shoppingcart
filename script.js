@@ -1,5 +1,6 @@
 const sectionItems = document.getElementsByClassName('items')[0];
 const olCartItems = document.getElementsByClassName('cart__items')[0];
+const totalPrice = document.getElementsByClassName('total-price')[0];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -42,15 +43,6 @@ const cartItemClickListener = (arg) => {
 
 olCartItems.addEventListener('click', cartItemClickListener);
 
-// document.addEventListener('click', (event) => {
-//   // if (event.target.classList.contains('cart__item')) {
-//   //   cartItemClickListener(event.target);
-//   // }
-//   if (event.target.classList.contains('empty-cart')) {
-//     saveCartItems(cartContainer.innerHTML);
-//   }
-// });
-
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -63,6 +55,13 @@ const callCreateCartItemElement = (arg) => {
   fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i))
     .then(saveCartItems(olCartItems.innerHTML)));
 };
+// let valor = 0;
+// const callTotalPrice = (arg) => {
+//   fetchItem(arg).then((i) => {
+//     valor += i.price;
+//     totalPrice.innerText = valor;
+//   });
+// };
 
 document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
