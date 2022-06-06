@@ -65,7 +65,30 @@ const addButton = () => {
   });
 };
 
+// const localStorage = () => {
+//   const items = document.querySelectorAll('.cart__item');
+//   const cart = document.querySelector('.cart__items');
+//   cart.innerHTML = getSavedCartItems();
+//   items.forEach((item) => {
+//     item.addEventListener('click', cartItemClickListener);
+//   });
+// };
+
+const removeItems = () => {
+  const items = document.querySelectorAll('.cart__item');
+  items.forEach((item) => {
+    item.remove();
+  });
+};
+
+const eraseCart = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', removeItems);
+};
+
 window.onload = async () => {
   await functionReturn();
   addButton();
+  // localStorage();
+  eraseCart();
  };
