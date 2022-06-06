@@ -12,12 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const chamaFetchProducts = async () => {
-  const { results } = await fetchProducts('computador');
-  return results;
-};
-
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -29,10 +24,16 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const chamaFetchProducts = async () => {
+  const { results } = await fetchProducts('computador');
+  const classItems = document.querySelector('.items');
+  results.forEach((data) => classItems.appendChild(createProductItemElement(data)));
+};
 
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+console.log(getSkuFromProductItem);
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+console.log(event);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -42,5 +43,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+console.log(createCartItemElement);
 
-window.onload = async () => { };
+window.onload = async () => { 
+  chamaFetchProducts();
+};
