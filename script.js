@@ -51,9 +51,20 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+const price = async (arg) => {
+  const item = await fetchItem(arg);
+  if (totalPrice.innerText) {
+    const valorRelativo = parseFloat(totalPrice.innerText) + parseFloat(item.price);
+    totalPrice.innerText = valorRelativo;
+  } else {
+    totalPrice.innerText = item.price;
+  }
+};
+
 const callCreateCartItemElement = (arg) => {
   fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i))
     .then(saveCartItems(olCartItems.innerHTML)));
+  price(arg);
 };
 // let valor = 0;
 // const callTotalPrice = (arg) => {
