@@ -7,7 +7,7 @@ const fetchProducts = async (product) => {
   const data = await response.json();
   const dataResults = data.results;
   return dataResults;  
-};
+  };
 
 if (typeof module !== 'undefined') {
   module.exports = {

@@ -1,10 +1,14 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
 const resultsComputador = async () => {
   const mostraCertinho = await fetchProducts('computador');
   return mostraCertinho;  
 };
+
 const classItems = document.querySelector('.items');
+const classCartItems = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -35,7 +39,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  return { event.target.id, event.target.title, event.target.price};
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -57,5 +61,15 @@ const arrayCerta = async () => {
 };
 
 arrayCerta();
+
+const addToCart = async (id) => {
+  const constF = await fetchItem(id);
+  constF.forEach((element) => {
+    createCartItemElement({ sky: element.id, name: element.title, salePrice: element.price });
+    classCartItems.appendChild(
+      createCartItemElement({ sky: element.id, name: element.title, salePrice: element.price }),
+    );
+  });
+};
 
 window.onload = () => { };
