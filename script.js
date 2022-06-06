@@ -29,16 +29,6 @@ const createItems = (item) => {
   items.append(item);
 };
 
-fetchProducts('computador').then((result) => result.forEach((product) => {
-  const obj = {
-    sku: product.id,
-    name: product.title,
-    image: product.thumbnail,
-  };
-  const myElement = createProductItemElement(obj);
-  createItems(myElement);
-}));
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -52,5 +42,40 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+const createItemElement = (item) => {
+  const cart = document.querySelector('.cart');
+  cart.append(item);
+};
+
+const addToCartListener = () => {
+  const addToCart = document.querySelectorAll('.item__add');
+  addToCart.forEach((item) => item.addEventListener('click', (event) => {
+    idElement = event.target.parentElement.firstChild.innerText;
+    fetchItem(idElement).then((result) => {
+      const obj = {
+        sku: result.id,
+        name: result.title,
+        salePrice: result.price,
+      };
+      const myLi = createCartItemElement(obj);
+      createItemElement(myLi);
+    });
+  }));
+};
+
+fetchProducts('computador').then((result) => {
+  result.forEach((product) => {
+  const obj = {
+    sku: product.id,
+    name: product.title,
+    image: product.thumbnail,
+  };
+  const myElement = createProductItemElement(obj);
+  createItems(myElement);
+  });
+
+  addToCartListener();
+});
 
 window.onload = () => { };
