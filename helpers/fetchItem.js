@@ -1,5 +1,12 @@
-const fetchItem = () => {
-  // seu código aqui
+const fetchItem = async (ItemID) => {
+  const url = `https://api.mercadolibre.com/items/${ItemID}`; // abertura de uma variável com a url(API) que vamos trabalhar
+  try {
+    const itemURL = await fetch(url); // aguardando a promise da url
+    const response = await itemURL.json(); // em caso de sucesso converte a promise para json
+    return response;
+   } catch (error) {
+     return error; // em caso de não sucesso retorne o erro
+  }
 };
 
 if (typeof module !== 'undefined') {
