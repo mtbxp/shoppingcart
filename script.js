@@ -46,12 +46,13 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 // Cria containers de itens carregados pela API.
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ sku, name, image, price }) => {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', price));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   document.querySelector('.items').appendChild(section);
 };
@@ -123,7 +124,8 @@ async function loadProducts() {
     const sku = product.id;
     const name = product.title;
     const image = product.thumbnail;
-    createProductItemElement({ sku, name, image });
+    const price = `$ ${product.price}`;
+    createProductItemElement({ sku, name, image, price });
     });
     turnBuyButtonOn();
     doneLoading('loaded');
