@@ -14,9 +14,11 @@ describe('1 - Teste a função fetchProducts', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
+
   it('Testa se a funçao fetchProductos retorna um objeto igual ao objeto computadorSearch, quando recebe "computador"', async() => {
     expect(await fetchProducts('computador')).toEqual(computadorSearch);
   });
+
   it('Testa se a função fecthProducts retonar msg de erro: "you must provide an url", quando chamada sem argumento', async () => {
     expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
   });
