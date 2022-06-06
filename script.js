@@ -57,7 +57,7 @@ const cartItemClickListener = (li, rmId, price) => {
     // removendo do localstorage
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     const filtro = storage.filter((id) => id !== rmId);
-    saveCartItems(filtro);
+    localStorage.setItem('cartItems', JSON.stringify(filtro));
     // console.log(rmId, 'delet', filtro);
     // remover valor do total price
     renderRemovePrice(price);
@@ -134,8 +134,10 @@ const addShopCard = ({ path }) => {
   // renderiza no carrinho
   renderCartItemElement(id);
   // armazena no local storage
-  saveCartItems(id);
-  // console.log('add', id);
+
+  const storage = JSON.parse(localStorage.getItem('cartItems'));
+  console.log('add', storage);
+  // saveCartItems(id, storage);
 };
 
 const carregando = (clas) => {
@@ -181,7 +183,7 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
     const spam = returnSpam();  
   spam.innerText = `valor total:$${total}`;
     // limpar o local localStorage
-    localStorage.clear();
+    localStorage.setItem('cartItems', JSON.stringify([]));
     // limpar o carrinho de compras
     const sectionItems = document.querySelector('.cart__items');
     while (sectionItems.firstChild) {
@@ -192,6 +194,9 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
   
   // renderiza localstorage
   renderLocalStorage = async () => {
+    if (localStorage.getItem('cartItems') === null) {
+      localStorage.setItem('cartItems', JSON.stringify([]));
+    }
     // chama os ids
     const storage = getSavedCartItems();
     const storageTratado = JSON.parse(storage);
