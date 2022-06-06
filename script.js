@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const productsList = async () => {
-  const getFunctionResult = fetchProducts('computador');
+  const getFunctionResult = fetchProducts('computador').results;
   getFunctionResult.forEach((element) => {
     createProductItemElement(element);
   });
