@@ -9,4 +9,12 @@ describe('3 - Teste a função saveCartItems', () => {
     saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalled();
   });
+
+  it('Deveria chamar localStorage.setItem com dois parâmetros "keyName", "cartData"', () => {
+    expect.assertions(1);
+    const cartData = '<ol><li>Item</li></ol>';
+    const keyName = 'cartItems';
+    saveCartItems(cartData);
+    expect(localStorage.setItem).toHaveBeenCalledWith(keyName, cartData);
+  });
 });
