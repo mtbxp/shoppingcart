@@ -19,7 +19,7 @@ describe('1 - Teste a função fetchProducts', () => {
   it('check if you pass the argument \'computador\' a data structure is returned equal to the computer objectsearch', async () => {
     expect(await fetchProducts('computador')).toEqual(computadorSearch);
   });
-  it('check if by calling the function without argument it returns the error with the message \'You must provide an url\'', async () =>{
-    expect(await fetchProducts()).toThrow('You must provide an url');
+  it('check if by calling the function without argument it returns the error with the message \'You must provide an url\'', async () => {await fetchProducts()
+    expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
   });
 });

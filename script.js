@@ -1,3 +1,5 @@
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,6 +30,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -37,5 +40,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+// const products = (param) => {
+//   const { results } = fetchProducts(param);
+//   return results.map((item) => {
+//     const { id: sku, title: name, thumbnail: image } = item;
+//     console.log(sku);
+//     return createProductItemElement({ sku, name, image });
+//   });
+// };
 
 window.onload = () => { };
