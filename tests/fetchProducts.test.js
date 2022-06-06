@@ -20,7 +20,10 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(expected).toEqual(computadorSearch);
   });
   it('should throw an error when called without parameters', async () => {
-    const expected = await fetchProducts();
-    expect(expected).toEqual(new Error('You must provide an url'));
+    try {
+      await fetchProducts();
+    } catch(error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    }
   });
 });
