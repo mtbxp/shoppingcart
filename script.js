@@ -97,6 +97,7 @@ function turnBuyButtonOn() {
   });
 }
 
+// Cria texto de loading.
 function createLoading() {
   const h2Maker = document.createElement('h2');
   h2Maker.className = 'loading';
@@ -104,6 +105,7 @@ function createLoading() {
   itemSection.appendChild(h2Maker);
 }
 
+// Remove texto de loading ou o altera em caso de erros.
 function doneLoading(status) {
   if (status === 'loaded') {
     document.querySelector('.loading').remove();
