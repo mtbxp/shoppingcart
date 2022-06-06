@@ -47,7 +47,7 @@ const insereLista = async () => {
       image: thumbnail,
     };
     const inner = createProductItemElement(obj);
-    document.getElementsByClassName('items').appendChild(inner);
+    document.getElementsByClassName('items')[0].appendChild(inner);
   });
 };
 window.onload = () => {
