@@ -42,7 +42,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 window.onload = async () => {
   const data = await fetchProducts('computador');
-  data.forEach((element) => {
+  data.results.forEach((element) => {
     const product = {
       sku: element.id,
       name: element.title,
