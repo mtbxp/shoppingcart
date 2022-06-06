@@ -94,12 +94,13 @@ const loadCartItems = () => {
   const cartItems = getSavedCartItems();
   const olCartItems = document.getElementsByClassName('cart__items')[0];
   const cart = document.querySelector('.cart');
+
   olCartItems.remove();
   const newOlCartItems = document.createElement('ol');
   newOlCartItems.className = 'cart__items';
   newOlCartItems.innerHTML = cartItems;
+
   const newLiCartItems = newOlCartItems.querySelectorAll('.cart__item');
-  console.log(newLiCartItems);
   newLiCartItems.forEach((item) => item.addEventListener('click', cartItemClickListener));
   cart.prepend(newOlCartItems);
 };
