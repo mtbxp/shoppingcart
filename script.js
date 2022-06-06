@@ -28,7 +28,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 function removeLoading() {
   const h1 = document.getElementsByClassName('loading')[0];
   h1.remove();
-
 }
 
 function putElementInSection({ sku, name, image }) {
@@ -119,7 +118,7 @@ function createLoading() {
   const section = document.getElementsByClassName('cart')[0];
   section.appendChild(h1);
   h1.className = 'loading';
-  h1.innerText = 'loading';
+  h1.innerText = 'carregando...';
 }
 
 window.onload = () => { 
