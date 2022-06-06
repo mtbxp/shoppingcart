@@ -2,6 +2,7 @@ const getClassCartItems = '.cart__items';
 const getClassItems = document.querySelector('.items');
 const getElement = document.querySelector(getClassCartItems);
 const button = document.querySelector('.empty-cart');
+const getListOl = document.querySelector('ol');
 const addMessage = document.createElement('aside');
 addMessage.innerHTML = 'carregando...';
 addMessage.classList.add('loading');
@@ -78,18 +79,14 @@ const createListProducts = async () => {
 };
 
 const addLocalStorage = () => {
-  const getListOl = document.querySelector('ol');
   getListOl.innerHTML = getSavedCartItems();
   const getLi = document.querySelectorAll('li');
   getLi.forEach((flag) => flag.addEventListener('click', cartItemClickListener));
 };
 
 button.addEventListener('click', () => {
-  getListOl.innerHTML = '';
-});
-
-button.addEventListener('click', () => {
-  localStorage.clear();
+    localStorage.clear();
+    getListOl.innerHTML = '';
 });
 
 window.onload = () => { createListProducts(); eventItems(); addLocalStorage(); };
