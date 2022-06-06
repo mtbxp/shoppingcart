@@ -29,11 +29,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-fetchItem('MLB1341706310').then((data) => console.log(data));
-fetchProducts('computador').then((data) => console.log(data));
-
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(getListCarts.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -51,6 +49,7 @@ const addEventItem = () => {
       fetchItem(id).then((data) => {
         const creatElementItem = createCartItemElement(data);
         getListCarts.appendChild(creatElementItem);
+        saveCartItems(getListCarts.innerHTML);
       });
     }
   });
