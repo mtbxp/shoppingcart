@@ -15,8 +15,9 @@ const createCustomElement = (element, className, innerText) => {
 };
 // .....................................................................................
 
-// Requisito ?? - Escuta a ação de clicar em um item no carrinho:
+// Requisito 5 - Escuta a ação de clicar em um item no carrinho:
 const cartItemClickListener = ('click', (event) => {
+  event.target.remove();
 });
 // .....................................................................................(USADO)
 // Requisito 4 - Cria os elementos do carrinho: 
