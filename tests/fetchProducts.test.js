@@ -16,11 +16,11 @@ test('Passando o argumento "computador", se a fetch utiliza o endpoint', async (
   expect(fetch).toHaveBeenCalledWith(endpoint);
 });
 test('Testando se o retorno da função fetchProducts com o argumento "computador" tem estrutura de dados igual ao objeto computadorSearch', async () => {
-  const expect = await fetchProducts('computador');
-  expect(() => expect).toEqual(computadorSearch);
+  const expectObject = await fetchProducts('computador');
+  expect(expectObject).toEqual(computadorSearch);
 });
 test('Ao chamar a função fetchProducts sem argumento, retorna um erro', async () => {
-  const expect = fetchProducts();
-  expect(expect).toEqual(new Error('You ,ust provide an url'));
+  const expectError = await fetchProducts();
+  expect(expectError).toEqual(new Error('You must provide an url'));
 });
 });
