@@ -14,6 +14,9 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts("computador")
     expect(window.fetch).toHaveBeenLastCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   })
+  it("Teste se o retorno da função fetchProducts com o argumento 'computador' é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.", async () => {
+    expect(await fetchProducts("computador")).toBe(computadorSearch)
+  })
   it("testa se a função retorna um erro se chamada sem argumento", async () => {
     expect(fetchProducts()).rejects.toEqual(new Error('You must provide an url'))
   })
