@@ -1,4 +1,9 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
+const teste = async () => {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  const fProduto = await fetch(url);
+  const data = await fProduto.json();
+  return data.results;
+};
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -14,13 +19,13 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = (objeto) => {
   const section = document.createElement('section');
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__sku', objeto.sku));
+  section.appendChild(createCustomElement('span', 'item__title', objeto.name));
+  section.appendChild(createProductImageElement(objeto.image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -40,9 +45,29 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const teste = () => {
-  console.log('oi');
+const separaDados = async () => {
+  const todosDados = await teste();
+  const dadosParaItem = todosDados.map((element) => {
+    return {
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    };
+  });
+  return dadosParaItem;
 };
-teste();
 
-window.onload = () => { };
+const adicionaItem = async () => {
+  const sectionPai = document.getElementsByClassName('items');
+  const dadosParaItem = await separaDados();
+  dadosParaItem.forEach((element) => {
+    const sectionFilho = createProductItemElement(element);
+    sectionPai[0].appendChild(sectionFilho);
+  }); 
+};
+
+window.onload = () => {
+  teste();
+  separaDados();
+  adicionaItem();
+ };
