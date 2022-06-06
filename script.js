@@ -9,6 +9,7 @@ const loadingCreate = async () => {
   el.innerText = 'carregando...';
   cart.appendChild(el);
   await fetchProducts('computador');
+  totalPrice.innerText = localStorage.getItem('totalPrice');
   el.remove();
 };
 const createProductImageElement = (imageSource) => {
@@ -40,12 +41,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const callCreateProductItemElement = () => {
   fetchProducts('computador').then((i) => i.results
   .forEach((j) => sectionItems.append(createProductItemElement(j))));
-  // loading.remove();
 };
 
 callCreateProductItemElement();
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
@@ -53,13 +51,6 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   // li.addEventListener('click', cartItemClickListener);
   return li;
-};
-
-const totalPriceSubtracao = async (arg) => {
-  const item = await fetchItem(arg);
-  const valorRelativo = parseFloat(totalPrice.innerText) - parseFloat(item.price);
-  totalPrice.innerText = valorRelativo;
-  console.log(totalPrice, totalPrice.innerText);
 };
 
 const totalPriceSoma = async (arg) => {
@@ -73,10 +64,11 @@ const totalPriceSoma = async (arg) => {
 };
 
 const cartItemClickListener = async (arg) => {
-  console.log(arg.target.parentNode);
+  const string = Number(arg.target.innerText.split('$')[1]);
+  totalPrice.innerText = Number(totalPrice.innerText) - string;
+  localStorage.setItem('totalPrice', totalPrice.innerText);
   arg.target.remove();
   await saveCartItems(olCartItems.innerHTML);
-  await totalPriceSubtracao(getSkuFromProductItem(arg.target));
 };
 
 olCartItems.addEventListener('click', cartItemClickListener);
@@ -85,18 +77,10 @@ const callCreateCartItemElement = (arg) => {
   fetchItem(arg).then((i) => {
     olCartItems.appendChild(createCartItemElement(i));
     saveCartItems(olCartItems.innerHTML);
-    totalPriceSoma(arg); 
-});
-  //   .then(saveCartItems(olCartItems.innerHTML));
-  // totalPriceSoma(arg);
+    totalPriceSoma(arg);
+    localStorage.setItem('totalPrice', totalPrice.innerText); 
+}); 
 };
-// let valor = 0;
-// const callTotalPrice = (arg) => {
-//   fetchItem(arg).then((i) => {
-//     valor += i.price;
-//     totalPrice.innerText = valor;
-//   });
-// };
 
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
