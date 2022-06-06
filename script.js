@@ -24,6 +24,28 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+// Final Value
+
+const sumTotalValue = () => {
+  const infoProducts = JSON.parse(getSavedCartItems());
+  let finalValue = 0;
+   if (infoProducts) {
+    const values = infoProducts.map((product) => ((product.split('$'))[1]));
+    values.forEach((value) => {
+      if (value) {
+        finalValue += JSON.parse(value);
+        console.log((value));
+      }
+    }); 
+  } 
+  return finalValue;
+};
+
+const totalValue = async () => {
+  const elementTotalPrice = document.getElementsByClassName('total-price')[0];
+  elementTotalPrice.innerText = (sumTotalValue());
+};
+
 const appendElementToItems = (element) => {
   const elementSectionItems = document.getElementsByClassName('items')[0];
   elementSectionItems.appendChild(element);
@@ -33,15 +55,16 @@ const refreshSave = () => {
   const elementCartChildren = document.getElementsByClassName('cart__items')[0].children;
   const arrayOfTextItems = ['0'];
   for (let index = 0; index < elementCartChildren.length; index += 1) {
-  const infoItem = elementCartChildren[index].innerText;
-  arrayOfTextItems.push(infoItem);
+    const infoItem = elementCartChildren[index].innerText;
+    arrayOfTextItems.push(infoItem);
   }
   saveCartItems(JSON.stringify(arrayOfTextItems));
+  totalValue();
 };
 
 const removeItemCart = (event) => {
-    event.target.remove();
-    refreshSave();
+  event.target.remove();
+  refreshSave();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -65,14 +88,12 @@ const getItemByIDButton = async (ev) => {
     const infoItem = await fetchItem(skuID);
     const itemCartElement = createCartItemElement(infoItem);
     appendElementCart(itemCartElement);
-    console.log('a');
     refreshSave();
   }
 };
 
 const addEventToButtonsItems = () => {
   const elementsItems = document.getElementsByClassName('items')[0].children;
-  console.log(elementsItems.length);
   for (let index = 0; index < elementsItems.length; index += 1) {
     elementsItems[index].addEventListener('click', getItemByIDButton);
   }
@@ -80,7 +101,6 @@ const addEventToButtonsItems = () => {
 
 const runCreateProduct = async () => {
   const results = await fetchProducts('computador');
-  console.log(results.length);
   results.forEach((item) => {
     const { id, title, thumbnail } = item;
     const obj = { sku: id, name: title, image: thumbnail };
@@ -104,11 +124,12 @@ const appendSavedItemsCart = (arrayOfInnerTexts) => {
 const loadSave = () => {
   const savedItems = JSON.parse(getSavedCartItems());
   if (savedItems) {
-  appendSavedItemsCart(savedItems);
-}
+    appendSavedItemsCart(savedItems);
+  }
+  totalValue();
 };
 
-window.onload = () => { 
-  runCreateProduct(); 
+window.onload = () => {
+  runCreateProduct();
   loadSave();
 };
