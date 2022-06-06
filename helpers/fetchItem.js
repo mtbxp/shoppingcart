@@ -8,8 +8,6 @@ const fetchItem = async (ItemID) => {
   return data;
 };
 
-console.log(fetchItem('MLB1615760527'));
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
