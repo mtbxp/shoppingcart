@@ -9,7 +9,7 @@ describe('1 - Teste a função fecthProducts', () => {
   });
 
   test('Testa se quando fetchProducts("computador") é executada, o fetch é chamado.', () => {
-    fetchProducts();
+    fetchProducts('computador');
     fetch('url');
     expect(fetch).toHaveBeenCalled();
   });
