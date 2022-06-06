@@ -164,8 +164,14 @@ body {
 }
 
 .cart .cart__item {
+  cursor: pointer;
   margin-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
+
+.cart .cart__item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .empty-cart {
