@@ -1,9 +1,16 @@
 const sectionItems = document.getElementsByClassName('items')[0];
 const olCartItems = document.getElementsByClassName('cart__items')[0];
 const totalPrice = document.getElementsByClassName('total-price')[0];
-const loading = document.getElementsByClassName('loading')[0];
-// const emptyCart = document.getElementsByClassName('empty-cart')[0]
+const cart = document.getElementsByClassName('cart')[0];
 
+const loadingCreate = async () => {
+  const el = document.createElement('p');
+  el.className = 'loading';
+  el.innerText = 'carregando...';
+  cart.appendChild(el);
+  await fetchProducts('computador');
+  el.remove();
+};
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -33,6 +40,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const callCreateProductItemElement = () => {
   fetchProducts('computador').then((i) => i.results
   .forEach((j) => sectionItems.append(createProductItemElement(j))));
+  //loading.remove();
 };
 
 callCreateProductItemElement();
@@ -49,14 +57,15 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 const totalPriceSubtracao = async (arg) => {
   const item = await fetchItem(arg);
-  const valorRelativo = parseFloat(totalPrice.innerText) - parseFloat(item.price);
+  const valorRelativo = (100 * parseFloat(totalPrice.innerText) - 100 * parseFloat(item.price)) / 100;
   totalPrice.innerText = valorRelativo;
+  console.log(totalPrice, totalPrice.innerText);
 };
 
 const totalPriceSoma = async (arg) => {
   const item = await fetchItem(arg);
   if (totalPrice.innerText) {
-    const valorRelativo = parseFloat(totalPrice.innerText) + parseFloat(item.price);
+    const valorRelativo = (100 * parseFloat(totalPrice.innerText) + 100 * parseFloat(item.price)) / 100;
     totalPrice.innerText = valorRelativo;
   } else {
     totalPrice.innerText = item.price;
@@ -64,17 +73,22 @@ const totalPriceSoma = async (arg) => {
 };
 
 const cartItemClickListener = async (arg) => {
+  console.log(arg.target.parentNode);
   arg.target.remove();
   await saveCartItems(olCartItems.innerHTML);
-  totalPriceSubtracao(getSkuFromProductItem(arg.target));
+  await totalPriceSubtracao(getSkuFromProductItem(arg.target));
 };
 
 olCartItems.addEventListener('click', cartItemClickListener);
 
 const callCreateCartItemElement = (arg) => {
-  fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i))
-    .then(saveCartItems(olCartItems.innerHTML)));
-  totalPriceSoma(arg);
+  fetchItem(arg).then((i) => {
+    olCartItems.appendChild(createCartItemElement(i));
+    saveCartItems(olCartItems.innerHTML);
+    totalPriceSoma(arg); 
+});
+  //   .then(saveCartItems(olCartItems.innerHTML));
+  // totalPriceSoma(arg);
 };
 // let valor = 0;
 // const callTotalPrice = (arg) => {
@@ -84,10 +98,10 @@ const callCreateCartItemElement = (arg) => {
 //   });
 // };
 
-document.addEventListener('click', async (event) => {
+document.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
     const el = event.target.parentNode.firstChild.innerText;
-    await callCreateCartItemElement(el);
+    callCreateCartItemElement(el);
   }
   if (event.target.classList.contains('empty-cart')) {
     olCartItems.innerHTML = '';
@@ -100,4 +114,4 @@ const localStorageGetItem = () => {
   olCartItems.innerHTML = getSavedCartItems();
 };  
 
-window.onload = () => { localStorageGetItem(); };
+window.onload = () => { localStorageGetItem();loadingCreate() };
