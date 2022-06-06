@@ -21,7 +21,7 @@ const cartItemClickListener = (event) => {
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
-  li.className = 'cart__items';
+  li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -47,14 +47,14 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
 const addItems = async (name) => {
   const data = await fetchProducts(name);
-  const info = data.results[0];
+  const info = data[0];
   itemsSection.appendChild(createProductItemElement(info));
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => {
-  for (let index = 0; index < 8; index += 1) {
+  for (let index = 0; index < 50; index += 1) {
   addItems('computador');
   }
 };
