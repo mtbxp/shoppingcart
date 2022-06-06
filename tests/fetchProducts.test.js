@@ -2,8 +2,8 @@ require('../mocks/fetchSimulator');
 const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
-describe('1 - Teste a função fetchProducts', () => {
-  it('Deve ser uma função', () => {
+describe('Teste a função fetchProducts', () => {
+  it('1 - Deve ser uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   });
   it('2 - Com o argumento "computador", a função fetch deve ser chamada', async () => {
