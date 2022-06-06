@@ -21,4 +21,12 @@ describe('3 - Teste a função saveCartItems', () => {
   it('Teste se localStorageSimulator é uma função', async () => {
     expect(typeof localStorageSimulator).toBe('function');
   });
+
+  it('Teste erro function SaveCartItems', async () => {
+    try {
+      await saveCartItems()
+    } catch (err) {
+      expect(err).toEqual(new Error('you make any error'));
+    }
+  });
 });
