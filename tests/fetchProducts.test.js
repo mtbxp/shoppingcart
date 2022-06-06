@@ -15,7 +15,7 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   test('Verifica se o retorno de fetchProducts com o argumento "computador" é o objeto de computadorSearch', async () => {
     const responseFromAPI = await fetchProducts('computador');
-    expect(responseFromAPI).toStrictEqual(computadorSearch);
+    expect(responseFromAPI).toStrictEqual(computadorSearch.results);
   });
   test('Verifica se fetchProducts retorna erro quando nenhum argumento é passado', async () => {
     const responseFromAPI = await fetchProducts();
