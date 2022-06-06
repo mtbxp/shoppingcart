@@ -1,5 +1,13 @@
 const itemSection = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
+const cart = document.querySelector('.cart');
+
+const createTotalCostElement = () => {
+  const sectionPrice = document.createElement('section');
+  sectionPrice.className = 'total-price';
+  cart.appendChild(sectionPrice);
+  return sectionPrice;  
+};
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -19,9 +27,22 @@ const cartItemClickListener = (e) => {
   e.target.remove();
 };
 
+const pricesFixed = (str) => {
+  const toString = str.toString();
+  const priceFixed = toString.slice(0, (toString.indexOf('.')) + 3);
+  return parseFloat(priceFixed);
+};
+
 const reloadCartItemListener = () => {
   cartItems.addEventListener('click', cartItemClickListener);
   cartItems.innerHTML = getSavedCartItems();
+  if (document.querySelector('.total-price')) {
+    cart.lastChild.remove();
+  }
+  const reloadPrices = localStorage.getItem('totalPrice');
+  if (reloadPrices) {
+    createTotalCostElement().innerHTML = `Total: ${pricesFixed(reloadPrices)}`;
+  }
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -31,10 +52,29 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+const showTotalCost = (price) => {
+  const showPrices = document.querySelector('.total-price');
+  let prices = 0; 
+  price.forEach((el) => {
+    prices += el;
+  });
+  showPrices.innerText = `Total: ${pricesFixed(prices)}`;
+  localStorage.setItem('totalPrice', prices);
+};
+
+const pricesArr = [];
 const buttonItemClickListener = async (e) => {
   const itemID = e.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemID);
   cartItems.appendChild(createCartItemElement(item));
+  if (localStorage.getItem('totalPrice')) {
+    pricesArr.splice(0, pricesArr.length);
+    pricesArr.push(parseFloat(localStorage.getItem('totalPrice')));
+  } 
+  pricesArr.push(await item.price);
+  
+  createTotalCostElement();
+  showTotalCost(pricesArr);
   saveCartItems(cartItems.innerHTML);
 };
 
