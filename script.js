@@ -44,7 +44,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const createItemElement = (item) => {
-  const cart = document.querySelector('.cart');
+  const cart = document.querySelector('.cart__items');
   cart.append(item);
 };
 
@@ -74,7 +74,6 @@ fetchProducts('computador').then((result) => {
   const myElement = createProductItemElement(obj);
   createItems(myElement);
   });
-
   addToCartListener();
 });
 
