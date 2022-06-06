@@ -1,6 +1,7 @@
 const sectionItems = document.getElementsByClassName('items')[0];
 const olCartItems = document.getElementsByClassName('cart__items')[0];
 const totalPrice = document.getElementsByClassName('total-price')[0];
+const loading = document.getElementsByClassName('loading')[0];
 // const emptyCart = document.getElementsByClassName('empty-cart')[0]
 
 const createProductImageElement = (imageSource) => {
@@ -38,14 +39,6 @@ callCreateProductItemElement();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = async (arg) => {
-  arg.target.remove();
-  await saveCartItems(olCartItems.innerHTML);
-  totalPriceSubtracao(getSkuFromProductItem(arg.target));
-};
-
-olCartItems.addEventListener('click', cartItemClickListener);
-
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -69,6 +62,14 @@ const totalPriceSoma = async (arg) => {
     totalPrice.innerText = item.price;
   }
 };
+
+const cartItemClickListener = async (arg) => {
+  arg.target.remove();
+  await saveCartItems(olCartItems.innerHTML);
+  totalPriceSubtracao(getSkuFromProductItem(arg.target));
+};
+
+olCartItems.addEventListener('click', cartItemClickListener);
 
 const callCreateCartItemElement = (arg) => {
   fetchItem(arg).then((i) => olCartItems.appendChild(createCartItemElement(i))
