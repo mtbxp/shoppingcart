@@ -43,9 +43,9 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-// Abaixo estão as funções criadas para implementação no HTML: 
+// Abaixo estão as funções criadas para implementação no HTML (Funções criadas por mim);
 
-// As funções abaixo colocam os dados da Api do ML no html
+// As funções abaixo colocam os dados da Api do ML no html;
 
 const products = async () => {
   const produtos = await fetchProducts('computador');
@@ -62,14 +62,12 @@ const sendApiToSite = async () => {
   });
 };
 
-// As funções abaixo colocam os dados da Api do ML no html
+// A função abaixo coloca o produto selecionado no carrinho de compras;
 
-const getId = () => {
+const sendToCartItem = () => {
   document.addEventListener('click', async (e) => {
     if (e.target.classList.contains('item__add')) {
       const idProduct = getSkuFromProductItem((e.target.parentNode));
-      /* console.log(idProduct); */
-      /* return fetchItem(idProduct); */
       const obj = await fetchItem(idProduct);
       const li = createCartItemElement(obj);
       cartItems.appendChild(li);
@@ -78,6 +76,6 @@ const getId = () => {
 };
 
 window.onload = () => {
-  getId();
+  sendToCartItem();
   sendApiToSite();
 };
