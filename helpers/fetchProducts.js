@@ -6,7 +6,6 @@ const fetchProducts = async (QUERY) => {
     .catch((error) => error);
   return result;
 };
-fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {

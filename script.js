@@ -1,3 +1,4 @@
+const chamaClasse = document.getElementsByClassName('items')[0];
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +13,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -23,6 +24,12 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+
+function listaProdutos() {
+  fetchProducts('computador').then((resposta) => 
+  resposta.results.forEach((item) => chamaClasse.appendChild(createProductItemElement(item))));
+}
+listaProdutos();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -39,3 +46,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => { };
+
+// criar uma função que chama a create com os parametros
+// chamar a função fetchProducts, tratando a promessa
+// 
