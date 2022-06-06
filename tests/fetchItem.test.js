@@ -13,7 +13,7 @@ describe('2 - Teste a função fetchItem', () => {
     expect(fetch).toHaveBeenCalledWith(url);
   });
   test('retorno esperado da função', async (done) => {
-    const expected = await fetchProducts();
+    const expected = await fetchItem();
     done();
     expect(await fetchItem('MLB1615760527')).toEqual(item);
     expect(() => expected).toEqual(new Error('You must provide an url'));
