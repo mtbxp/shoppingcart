@@ -38,9 +38,6 @@ const removeFromStorage = (target) => {
   const text = target.innerText;
   const newStorage = storage.filter((obj) => !text.includes(obj.sku));
   localStorage.setItem('cartItems', JSON.stringify(newStorage));
-  console.log(newStorage);
-  console.log(storage[0])
-  console.log(target.innerText);
 };
 
 const cartItemClickListener = (list) => {
