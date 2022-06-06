@@ -1,11 +1,7 @@
 const getClassCartItems = '.cart__items';
 const getClassItems = document.querySelector('.items');
 const getElement = document.querySelector(getClassCartItems);
-const getElementOl = document.querySelector(getClassCartItems).innerHTML;
 const button = document.querySelector('.empty-cart');
-const getListOl = document.querySelector('ol');
-const getLi = document.querySelectorAll('li');
-getListOl.innerHTML = getSavedCartItems();
 const addMessage = document.createElement('aside');
 addMessage.innerHTML = 'carregando...';
 addMessage.classList.add('loading');
@@ -40,6 +36,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  const getElementOl = document.querySelector(getClassCartItems).innerHTML;
   saveCartItems(getElementOl);
 };
 
@@ -81,12 +78,18 @@ const createListProducts = async () => {
 };
 
 const addLocalStorage = () => {
-  getLi.forEach((acc) => acc.addEventListener('click', cartItemClickListener));
+  const getListOl = document.querySelector('ol');
+  getListOl.innerHTML = getSavedCartItems();
+  const getLi = document.querySelectorAll('li');
+  getLi.forEach((flag) => flag.addEventListener('click', cartItemClickListener));
 };
 
 button.addEventListener('click', () => {
-  localStorage.clear();
   getListOl.innerHTML = '';
+});
+
+button.addEventListener('click', () => {
+  localStorage.clear();
 });
 
 window.onload = () => { createListProducts(); eventItems(); addLocalStorage(); };
