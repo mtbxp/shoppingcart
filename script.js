@@ -30,8 +30,11 @@ const createCustomElement = (element, className, innerText) => {
 
 const pricesFixed = (str) => {
   const toString = str.toString();
-  const priceFixed = toString.slice(0, (toString.indexOf('.')) + 3);
-  return parseFloat(priceFixed);
+  if (toString.indexOf('.') > 0) {
+    const priceFixed = parseFloat(toString.slice(0, (toString.indexOf('.')) + 3));
+    return parseFloat(priceFixed);
+  }
+  return str;
 };
 
 const subPrices = (str) => {
