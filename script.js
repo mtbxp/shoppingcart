@@ -1,4 +1,6 @@
 const classItems = document.getElementById('itemsList');
+const btnAddToCart = document.getElementsByClassName('item__add');
+console.log(btnAddToCart);
 
 const getProducts = async (product) => {
   const list = fetchProducts(product)
