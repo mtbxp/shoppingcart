@@ -1,11 +1,11 @@
 const fetchProducts = async (product) => {
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
   try {
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
     const resposta = await fetch(url);
-    const data = await resposta.json;
+    const data = await resposta.json();
     return data;
 } catch (error) {
-    return error;
+    return new Error('You must provide an url');
   }
 };
 
