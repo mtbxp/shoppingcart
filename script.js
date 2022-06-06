@@ -29,11 +29,12 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+console.log(getSkuFromProductItem);
 
-// const cartItemClickListener = (event) => { 
-//   // event
-// };
+const cartItemClickListener = (event) => { 
+  console.log(event);
+};
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
