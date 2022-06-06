@@ -2,6 +2,7 @@ const sectionProduct = document.querySelector('.items');
 const listCart = document.querySelector('.cart__items');
 const sectionCart = document.querySelector('.cart');
 const span = document.createElement('span');
+const btnRemove = document.querySelector('.empty-cart');
 let total = 0;
 
 const createProductImageElement = (imageSource) => {
@@ -86,6 +87,14 @@ const itensCart = getSavedCartItems();
 listCart.innerHTML = itensCart;
 };
 
+const removeItemsCart = (event) => {
+  listCart.innerHTML = '';
+  cartItemClickListener(event);
+  total = 0;
+  insertTotal();
+};
+
+btnRemove.addEventListener('click', removeItemsCart);
 getToLocal();
 
 window.onload = () => {
