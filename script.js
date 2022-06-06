@@ -12,13 +12,15 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = (sku, name, image) => {
   const section = document.createElement('section');
   section.className = 'item';
 
+  console.log(name);
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -39,11 +41,19 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = async () => {
-  const data = await fetchProducts('computador');
-  const itens = document.getElementsByClassName('section .items');
-  data.results.forEach((item) => {
+  const func = await fetchProducts('computador');
+  const result = func.results;
+  result.forEach((item) => {
     const { id, title, thumbnail } = item;
-    const section = createProductItemElement({ id, title, thumbnail });
-    itens.appendChild(section);
+    let smallerTitle = '';
+    for (let index = 0; index < 37; index += 1) {
+      smallerTitle += title[index];
+      if (index === 36) {
+        smallerTitle += ' ...';
+      }
+    }
+    const section = createProductItemElement(id, smallerTitle, thumbnail);
+    const items = document.querySelector('.items');
+    items.appendChild(section);
   });
 };
