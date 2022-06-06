@@ -1,8 +1,10 @@
 const getClassCartItems = '.cart__items';
 const getClassItems = document.querySelector('.items');
-const getTagOl = document.querySelector(getClassCartItems).textContent;
 const getElement = document.querySelector(getClassCartItems);
 const button = document.querySelector('.empty-cart');
+const getListOl = document.querySelector('ol');
+const getLi = document.querySelectorAll('li');
+getListOl.innerHTML = getSavedCartItems();
 const addMessage = document.createElement('aside');
 addMessage.innerHTML = 'carregando...';
 addMessage.classList.add('loading');
@@ -59,6 +61,7 @@ const eventItems = () => {
       const getCode = getSkuFromProductItem(e.target.parentNode);
       fetchItem(getCode).then((dados) => {
         addingItems(dados);
+        const getTagOl = document.querySelector(getClassCartItems).innerHTML;
         saveCartItems(getTagOl);
       });  
     }
@@ -71,12 +74,20 @@ const createListProducts = async () => {
   getClassLoading.remove();
   const elementsItem = getItems.forEach((flag) => {
     const setItems = createProductItemElement(flag);
-    document.querySelector('.items').appendChild(setItems);
+    getClassItems.appendChild(setItems);
   });
 };
 
+const addLocalStorage = () => {
+  getLi.forEach((acc) => acc.addEventListener('click', cartItemClickListener));
+};
+
 button.addEventListener('click', () => {
-  document.querySelector('ol').innerHTML = '';
+  getListOl.innerHTML = '';
 });
 
-window.onload = () => { createListProducts(); eventItems(); };
+button.addEventListener('click', () => {
+  localStorage.clear();
+});
+
+window.onload = () => { createListProducts(); eventItems(); addLocalStorage(); };
