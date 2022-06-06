@@ -1,5 +1,9 @@
 const sectionProduct = document.querySelector('.items');
 const listCart = document.querySelector('.cart__items');
+const sectionCart = document.querySelector('.cart');
+const span = document.createElement('span');
+let total = 0;
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,30 +17,48 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-const cartItemClickListener = (event) => {
-  event.target.remove();
-  saveCartItems(listCart.innerHTML);
-};
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-
+  
   return li;
 };
 
+const insertTotal = () => {
+  span.className = 'total-price';
+  span.innerText = total;
+  sectionCart.appendChild(span);
+};
+
+const getPrice = (price) => {
+  total += parseFloat(price);
+  insertTotal();
+  return total;
+};
+
+const minusTotal = (event) => {
+  const teste = event.target.innerText.split('$');
+  total -= parseFloat(teste[1]);
+  insertTotal();
+};
+
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  saveCartItems(listCart.innerHTML);
+  minusTotal(event);
+};
 listCart.addEventListener('click', cartItemClickListener);
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 const eventList = (event) => {
   const productId = getSkuFromProductItem(event.target.parentNode);
   fetchItem(productId).then((item) => {
+    getPrice(item.price);
     listCart.appendChild(createCartItemElement(item));
     saveCartItems(listCart.innerHTML);
   });
- 
-  console.log(listCart);
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
