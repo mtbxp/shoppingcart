@@ -3,6 +3,10 @@ const getClassItems = document.querySelector('.items');
 const getTagOl = document.querySelector(getClassCartItems).textContent;
 const getElement = document.querySelector(getClassCartItems);
 const button = document.querySelector('.empty-cart');
+const addMessage = document.createElement('aside');
+addMessage.innerHTML = 'carregando...';
+addMessage.classList.add('loading');
+getClassItems.appendChild(addMessage);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -62,7 +66,9 @@ const eventItems = () => {
 };
 
 const createListProducts = async () => {
+  const getClassLoading = document.querySelector('.loading');
   const getItems = await fetchProducts('computador');
+  getClassLoading.remove();
   const elementsItem = getItems.forEach((flag) => {
     const setItems = createProductItemElement(flag);
     document.querySelector('.items').appendChild(setItems);

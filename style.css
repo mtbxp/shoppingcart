@@ -148,3 +148,7 @@ body {
   background-color: rgb(249, 249, 246);
   cursor: pointer;
 }
+
+.loading {
+  color: red;
+}
