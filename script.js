@@ -1,12 +1,17 @@
 const itemSection = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const cart = document.querySelector('.cart');
+const clearButton = document.querySelector('.empty-cart');
+const classPrice = '.total-price';
 
 const createTotalCostElement = () => {
-  const sectionPrice = document.createElement('section');
-  sectionPrice.className = 'total-price';
-  cart.appendChild(sectionPrice);
-  return sectionPrice;  
+  if (!document.querySelector(classPrice)) {
+    const sectionPrice = document.createElement('section');
+    sectionPrice.className = 'total-price';
+    cart.appendChild(sectionPrice);
+    return sectionPrice;  
+  }
+  return document.querySelector(classPrice);
 };
 
 const createProductImageElement = (imageSource) => {
@@ -30,14 +35,13 @@ const pricesFixed = (str) => {
 };
 
 const subPrices = (str) => {
-  const priceSec = document.querySelector('.total-price');
+  const priceSec = document.querySelector(classPrice);
   const indexToNumbers = str.indexOf('$');
   const getNumbers = parseFloat(str.slice(indexToNumbers + 1));
   const prices = localStorage.getItem('totalPrice');
   let newPrice = prices - getNumbers;
   if (newPrice < 10) newPrice = 0;
   localStorage.setItem('totalPrice', newPrice);
-  console.log(newPrice);
   priceSec.innerText = `Total: ${pricesFixed(newPrice)}`;
 };
 
@@ -63,7 +67,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 };
 
 const showTotalCost = (price) => {
-  const showPrices = document.querySelector('.total-price');
+  const showPrices = document.querySelector(classPrice);
   let prices = 0; 
   price.forEach((el) => {
     prices += el;
@@ -107,9 +111,18 @@ const showItems = async () => {
     itemSection.appendChild(createProductItemElement(id, title, thumbnail)));
 };
 
+const clearCartButton = () => {
+  clearButton.addEventListener('click', () => {
+    cartItems.innerHTML = '';
+    localStorage.setItem('cartItems', '');
+    localStorage.setItem('totalPrice', 0);
+    document.querySelector(classPrice).innerText = `Total: ${0}`;
+  });
+};
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { 
   showItems();
+  clearCartButton();
   reloadCartItemListener();
 };
