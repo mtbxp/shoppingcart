@@ -61,7 +61,7 @@ const addAllComputers = async () => {
 
 const addComputerCart = async (event) => {
   const clic = event.target;
-  const sku = getSkuFromProductItem(clic.parentNode);
+  const sku = clic.parentElement.firstChild.innerText;
   const data = await fetchItem(sku);
   const results = ({
     sku: data.id,
