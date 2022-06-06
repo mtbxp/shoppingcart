@@ -1,6 +1,3 @@
-const { createPlugin } = require('stylelint');
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,11 +12,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const teste = {
-  id: fetchProducts('computador').results[0].id,
-  title: fetchProducts('computador').results[0].title,
-  image: fetchProducts('computador').results[0].thumbnail,
-};
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -31,7 +23,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
-createProductImageElement(teste);
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {

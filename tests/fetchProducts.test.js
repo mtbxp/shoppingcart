@@ -3,23 +3,16 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
-  test('testa se é uma função', () => {
+  test('testa se realmente é uma funçao', () => {
     expect(typeof fetchProducts).toBe('function');
   });
-
-  test('testa se a função fecth() foi chamada', () => {
-    fetchProducts();
+  test('testa se a função fetch() foi chamada ao usar o argumento "computador"', async () => {
+    await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
+    expect(fetch).toBeCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
-
-  test('testa se ao chamar a função fetchProducts com o argumento "computador", a função fetch possui o url correto', () => {
-    const urlComputador = 'https://api.mercadolibre.com/sites/MLB/search?q=computador'
-    fetchProducts('computador')
-    expect(fetch).toHaveBeenCalledWith(urlComputador);
+  test('testa se a função retorna o objeto correto', async () => {
+    const fPComputador = await fetchProducts('computador');
+    expect(fPComputador).toEqual(computadorSearch);
   });
-
-  test('testa se o retorno da função está correto', async () => {
-    const dataComputador = await fetchProducts('computador');
-    expect(dataComputador).toEqual(computadorSearch);
-  })
 });
