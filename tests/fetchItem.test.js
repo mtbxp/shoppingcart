@@ -13,12 +13,10 @@ describe('2 - Teste a função fetchItem', () => {
   });
 
   it('Teste se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.', async () => {
-    const itemObject = await fetchItem('MLB1615760527');
-    expect(itemObject).toEqual(item);
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
 
   it('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: "You must provide an url"', async () => {
-    const itemObject = await fetchItem();
-    expect(itemObject).toEqual(new Error('You must provide an url'));
+    expect(await fetchItem()).toEqual(new Error('You must provide an url'));
   });
 });
