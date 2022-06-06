@@ -3,13 +3,12 @@ const fetch = require('node-fetch');
 const fetchProducts = async (product) => {
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
-  try {  
+  if (product) {  
   const response = await fetch(url);
   const data = await response.json();
   return data;
-} catch (error) {
-  return error;
-}
+} 
+  throw new Error('You must provide an url');
 };
 
 if (typeof module !== 'undefined') {
