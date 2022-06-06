@@ -75,10 +75,10 @@ adicionarElementosNoHtml();
 const adicionarAoCarrinho = async (event) => {
   const eTarget = event.target;
   if (eTarget.classList.contains('item__add')) {
-    cart.appendChild(loading);
+    // cart.appendChild(loading);
     const itemSku = getSkuFromProductItem(eTarget.parentNode);
     const response = await fetchItem(itemSku);
-    document.querySelectorAll('.loading')[0].remove();
+    // document.querySelectorAll('.loading')[0].remove();
     const { id: sku, title: name, price: salePrice } = response;
     const li = createCartItemElement({ sku, name, salePrice });
     cart.appendChild(li);
