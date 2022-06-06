@@ -1,3 +1,5 @@
+const section = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,28 +15,29 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  return section;
+  const newSection = document.createElement('section');
+  newSection.className = 'item';
+  newSection.appendChild(createCustomElement('span', 'item__sku', sku));
+  newSection.appendChild(createCustomElement('span', 'item__title', name));
+  newSection.appendChild(createProductImageElement(image));
+  newSection.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  return newSection;
 };
 
 const functionReturn = async () => {
   const products = await fetchProducts('computador');
-  const section = document.querySelector('.items');
   products.results.forEach((argument) => {
     const child = createProductItemElement(argument);
     section.appendChild(child);
+    saveCartItems(section.innerHTML);
   });
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // modificando para o primeiro commit
+  event.target.remove();
+  saveCartItems(section.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
