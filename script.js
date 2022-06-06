@@ -1,3 +1,5 @@
+const classCartItems = '.cart__items';
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,7 +28,11 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => event.target.remove();
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  const cartItemsList = document.querySelector(classCartItems);
+  saveCartItems(JSON.stringify(cartItemsList.innerHTML));
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -57,20 +63,29 @@ const addToCart = async (event) => {
     name: itemData.title,
     salePrice: itemData.price,
   };
-  const cartItemsList = document.querySelector('.cart__items');
+  const cartItemsList = document.querySelector(classCartItems);
   cartItemsList.appendChild(createCartItemElement(itemExtractedData));
+  saveCartItems(JSON.stringify(cartItemsList.innerHTML));
 };
 
-const activateComputersBtns = async () => {
-  await createComputersList();
+const activateComputersBtns = () => {
   const addToCartBtns = document.querySelectorAll('.item__add');
   addToCartBtns.forEach((btn) => btn.addEventListener('click', addToCart));
 };
 
-const activateRemoveItemToCart = async () => {
-  await activateComputersBtns();
-  const cartItemsList = document.querySelector('.cart__items');
+const activateRemoveItemToCart = () => {
+  const cartItemsList = document.querySelector(classCartItems);
   cartItemsList.addEventListener('click', cartItemClickListener);
 };
 
-window.onload = () => { activateRemoveItemToCart(); };
+const initializePage = async () => {
+  await createComputersList();
+  activateComputersBtns();
+  activateRemoveItemToCart();
+  const cartItemsList = document.querySelector(classCartItems);
+  if (localStorage.getItem('cartItems') !== null) {
+    cartItemsList.innerHTML = JSON.parse(getSavedCartItems());
+  }
+};
+
+window.onload = () => { initializePage(); };
