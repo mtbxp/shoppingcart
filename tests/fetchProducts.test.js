@@ -15,4 +15,9 @@ describe('1 - Teste a função fetchProducts', () => {
     const fPComputador = await fetchProducts('computador');
     expect(fPComputador).toEqual(computadorSearch);
   });
+  test('testa se ou receber um produto invalido envia uma mensagem de erro', async () => {
+    const teste =  await fetchProducts();
+    console.log(teste)
+    expect(teste).toEqual(new Error('Produto invalido'))
+  });
 });

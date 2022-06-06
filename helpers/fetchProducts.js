@@ -5,7 +5,7 @@ const fetchProducts = async (produto) => {
     const data = await fProduto.json();
     return data;
   } catch (error) {
-    console.log('Produto não encontrado');
+    return new Error('Produto invalido');
   }
 };
 
