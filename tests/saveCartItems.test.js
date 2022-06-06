@@ -8,8 +8,7 @@ describe('3 - Teste a função saveCartItems', async () => {
     expect(typeof saveCartItems).toBe('function')
   });
   test('o que é chamado na função', () => {
-    const parm = <ol><li>Item</li></ol>
-    expect(saveCartItems(parm)).toHaveBeenCalled(localStorage.setItem);
-    expect(saveCartItems(parm)).toHaveBeenCalled(localStorage.setItem('cartItems', parm));
+    expect(saveCartItems('<ol><li>Item</li></ol>')).toHaveBeenCalled(localStorage.setItem);
+    expect(saveCartItems('<ol><li>Item</li></ol>')).toHaveBeenCalled(localStorage.setItem('cartItems', '<ol><li>Item</li></ol>'));
   });
 });
