@@ -30,9 +30,9 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// const cartItemClickListener = (event) => {
-//   // coloque seu código aqui
-// };
+const cartItemClickListener = (event) => {
+  cartItems.removeChild(event.target);
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -55,9 +55,8 @@ const addItemToCart = (element, sku) => {
     const { title: name, price: salePrice } = await fetchItem(sku);
 
     const li = createCartItemElement({ sku, name, salePrice });
-    console.log(li);
-    // trabalhar aqui localStorage ???
-    // verificar se já existe o produto, add, remover 
+    
+    li.addEventListener('click', cartItemClickListener);
     cartItems.append(li);
   });
 };
