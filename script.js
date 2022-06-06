@@ -31,7 +31,7 @@ const createCustomElement = (element, className, innerText) => {
 const pricesFixed = (str) => {
   const toString = str.toString();
   if (toString.indexOf('.') > 0) {
-    const priceFixed = parseFloat(toString.slice(0, (toString.indexOf('.')) + 3));
+    const priceFixed = toString.slice(0, (toString.indexOf('.')) + 3);
     return parseFloat(priceFixed);
   }
   return str;
@@ -50,6 +50,7 @@ const subPrices = (str) => {
 
 const cartItemClickListener = (e) => {
   e.target.remove();
+  saveCartItems(cartItems.innerHTML);
   subPrices(e.target.innerHTML);
 };
 
@@ -109,7 +110,12 @@ const createProductItemElement = (sku, name, image) => {
 };
 
 const showItems = async () => {
+  const loading = document.createElement('div');
+  loading.innerText = 'carregando...';
+  loading.className = 'loading';
+  itemSection.appendChild(loading);
   const productsInfo = await fetchProducts('computador');
+  itemSection.firstChild.remove();
   await productsInfo.forEach(({ id, title, thumbnail }) =>
     itemSection.appendChild(createProductItemElement(id, title, thumbnail)));
 };
@@ -122,7 +128,6 @@ const clearCartButton = () => {
     document.querySelector(classPrice).innerText = 0;
   });
 };
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { 
   showItems();
