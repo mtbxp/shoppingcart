@@ -5,11 +5,17 @@ const fetch = require('node-fetch');
 const getURL = (id) => `https://api.mercadolibre.com/items/${id}`;
 
 const fetchItem = async (id) => {
-  const response = await fetch(getURL(id));
-  const data = await response.json();
-  return data;
+  try {
+    if (!id) throw new Error('You must provide an url');
+    const result = await fetch(getURL(id))
+      .then((response) => response.json())
+      .then((data) => data);
+    return result;
+  } catch (error) {
+    return error;
+  }
 };
-
+// fetchItem('MLB1615760527');
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,

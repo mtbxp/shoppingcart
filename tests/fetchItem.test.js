@@ -10,15 +10,15 @@ describe('2 - Teste a função fetchItem', () => {
     await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalled();
   });
-  it('should uses an specific endpoint when calling fetch', () => {
-    fetchItem('MLB1615760527');
+  it('should uses an specific endpoint when calling fetch', async () => {
+    await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
   });
   it('should return the correct item', async () => {
-    expect(fetchItem('MLB1615760527')).toEqual(item);
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
   it('should return an error when called without arguments', async () => {
-    expect(fetchItem()).toEqual(new Error ('You must provide an url'));
+    expect(await fetchItem()).toEqual(new Error ('You must provide an url'));
   });
-  fail('Teste vazio');
+  // fail('Teste vazio');
 });
