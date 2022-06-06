@@ -1,6 +1,6 @@
 const classItems = document.getElementById('itemsList');
 const btnAddToCart = document.getElementsByClassName('item__add');
-console.log(btnAddToCart);
+// console.log(btnAddToCart);
 
 const getProducts = async (product) => {
   const list = fetchProducts(product)
@@ -48,6 +48,8 @@ const createProductItemElement = ({ sku, name, image }) => {
   // console.log(section);
   return classItems.appendChild(section);
 };
+
+fetchItem('MLB1341706310');
 
 const createProductList = async () => {
   const getElementsList = await createProductObject('computer');
