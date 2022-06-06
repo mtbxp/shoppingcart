@@ -30,7 +30,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -41,13 +41,32 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = async () => { 
+const addCartItemClickListener = () => {
+  document.querySelectorAll('.item__add').forEach((item) => {
+    item.addEventListener('click', async (e) => {
+      const itemCart = e.target.parentNode.firstChild.innerText;
+      const { id: sku, 
+              title: name, 
+              price: salePrice } = await fetchItem(itemCart);
+      console.log(sku, name, salePrice);
+      cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
+    });
+  });
+};
+
+const showList = async () => {
   const data = await fetchProducts('computador');
   data.map((item) => {
     const { id: sku, title: name, thumbnail: image } = item;
     const element = createProductItemElement({ sku, name, image });
     return itemsList[0].appendChild(element);
   });
-  const { id: sku, title: name, price: salePrice } = await fetchItem('MLB1615760527');
-  cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
+  addCartItemClickListener();
+};
+
+window.onload = () => { 
+  showList();
+
+  /* const { id: sku, title: name, price: salePrice } = await fetchItem('MLB1341706310');
+  cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice })); */
 };
