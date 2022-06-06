@@ -106,6 +106,10 @@ body {
   display: none;
 }
 
+.item__price {
+  display: none;
+}
+
 .item .item__title {
   display: flex;
   align-items: center;

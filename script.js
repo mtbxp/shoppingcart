@@ -28,13 +28,20 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   const click = event.target;
+  const total = document.querySelector('.total-price').innerText;
+  const itemPice = click.querySelector('.item__price').innerText;
+  document.querySelector('.total-price').innerText = parseFloat(total) - parseFloat(itemPice);
   click.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
+  const span = document.createElement('span');
+  span.className = 'item__price';
+  span.innerText = salePrice;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.append(span);
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -54,13 +61,15 @@ const addAllComputers = async () => {
 
 const addComputerCart = async (event) => {
   const clic = event.target;
-  const sku = clic.parentElement.firstChild.innerText;
+  const sku = getSkuFromProductItem(clic.parentNode);
   const data = await fetchItem(sku);
   const results = ({
     sku: data.id,
     name: data.title,
     salePrice: data.price,
   });
+  const total = document.querySelector('span.total-price').innerText;
+  document.querySelector('span.total-price').innerText = parseFloat(total) + data.price;
   const elemPai = document.querySelector('.cart__items');
   return elemPai.appendChild(createCartItemElement(results));
 };
@@ -72,6 +81,7 @@ const emptyCart = () => {
   for (let i = 0; i < allItems.length; i += 1) {
     allItems[i].remove();
   }
+  document.querySelector('span[class="total-price"]').innerText = '0.00';
 };
 const btnEmpty = document.querySelector('button[class="empty-cart"]');
 btnEmpty.addEventListener('click', emptyCart);
