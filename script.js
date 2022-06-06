@@ -1,6 +1,7 @@
 const getClassCartItems = '.cart__items';
 const getClassItems = document.querySelector('.items');
 const getElement = document.querySelector(getClassCartItems);
+const getElementOl = document.querySelector(getClassCartItems).innerHTML;
 const button = document.querySelector('.empty-cart');
 const getListOl = document.querySelector('ol');
 const getLi = document.querySelectorAll('li');
@@ -39,6 +40,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(getElementOl);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -83,11 +85,8 @@ const addLocalStorage = () => {
 };
 
 button.addEventListener('click', () => {
-  getListOl.innerHTML = '';
-});
-
-button.addEventListener('click', () => {
   localStorage.clear();
+  getListOl.innerHTML = '';
 });
 
 window.onload = () => { createListProducts(); eventItems(); addLocalStorage(); };
