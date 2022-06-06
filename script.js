@@ -15,6 +15,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -26,38 +27,48 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 };
 
 const createProduct = () => {
-  fetchProducts('computador')
-  .then((element) => element.results
+  fetchProducts('computador').then((element) => element.results
   .forEach((e) => itemProduct.appendChild(createProductItemElement(e))));
 };
 createProduct();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+window.onload = () => { }
 const cartItemClickListener = (event) => {
   const selected = event.target;
   selected.parentNode.removeChild(selected);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
+cartItems.addEventListener('click', cartItemClickListener);
+
 const itemsCart = (element) => {
-  fetchItem(element) 
-  .then((el) => cartItems.appendChild(createCartItemElement(el)));
+  fetchItem(element).then((i) => {
+    cartItems.appendChild(createCartItemElement(i));
+    saveCartItems(cartItems.innerHTML);
+  })
 };
 
 document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
-   const idElement = event.target.parentNode.firstChild.innerText;
+   const idElement = event.target.parentNode.firstChild.innerHTML
    itemsCart(idElement);
   }
 });
 
+const getLocalStorage = () => {
+  cartItems.innerHTML = getSavedCartItems();
+};
+
+
 window.onload = () => {
- };
+  getLocalStorage();
+}
