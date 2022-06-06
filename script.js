@@ -26,6 +26,16 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const saveCartPrice = (newPrice) => localStorage.setItem('cartPrice', newPrice);
+
+const getCartPrice = () => JSON.parse(localStorage.getItem('cartPrice'));
+
+const calculatePrice = (newItemPrice = 0) => {
+  const currentPrice = getCartPrice();
+  if (!getCartPrice) saveCartPrice(newItemPrice);
+  saveCartPrice(currentPrice + newItemPrice);
+};
+
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
