@@ -1,7 +1,7 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
 const productsList = document.querySelector('.items');
-const cartList = document.querySelector(".cart__items");
+const cartList = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -15,6 +15,25 @@ const createCustomElement = (element, className, innerText) => {
   e.className = className;
   e.innerText = innerText;
   return e;
+};
+
+const cartItemClickListener = (event) => {
+  // coloque seu código aqui
+};
+
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+const addItemToCart = (event) => {
+  const productId = event.target.parentNode.firstChild.innerText;
+  fetchItem(productId).then((product) => {
+    cartList.appendChild(createCartItemElement(product));
+  });
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
@@ -37,25 +56,6 @@ const createProductList = async () => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
-
-const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
-const addItemToCart = (event) => {
-  const productId = event.target.parentNode.firstChild.innerText;
-  fetchItem(productId).then((product) => {
-    cartList.appendChild(createCartItemElement(product));
-  });
-};
 
 window.onload = () => { 
   createProductList();
