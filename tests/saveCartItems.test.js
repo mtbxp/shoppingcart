@@ -17,4 +17,10 @@ describe('3 - Teste a função saveCartItems', () => {
     saveCartItems(cartData);
     expect(localStorage.setItem).toHaveBeenCalledWith(keyName, cartData);
   });
+
+  it('Deveria retornar um Error se nenhum parâmetro for passado', () => {
+    expect.assertions(1);
+    const result = saveCartItems();
+    expect(result).toEqual(new Error('Você deve providenciar o parâmetro "data"'));
+  });
 });
