@@ -1,3 +1,5 @@
+const itemsSection = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,7 +21,7 @@ const cartItemClickListener = (event) => {
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
-  li.className = 'cart__item';
+  li.className = 'cart__items';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -43,12 +45,16 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const itemsSection = document.querySelector('.items');
-
-window.onload = async () => {
-  const data = await fetchProducts('computador');
+const addItems = async (name) => {
+  const data = await fetchProducts(name);
   const info = data.results[0];
   itemsSection.appendChild(createProductItemElement(info));
+};
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+window.onload = () => {
+  for (let index = 0; index < 8; index += 1) {
+  addItems('computador');
+  }
 };
