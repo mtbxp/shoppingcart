@@ -47,9 +47,26 @@ const createComputersList = async () => {
   }));
   const computersList = document.querySelector('.items');
   computersExtractedData.forEach((computer) => {
-    const computerElement = createProductItemElement(computer);
-    computersList.appendChild(computerElement);
+    computersList.appendChild(createProductItemElement(computer));
   });
 };
 
-window.onload = () => { createComputersList(); };
+const addToCart = async (event) => {
+  const itemID = event.target.parentElement.firstElementChild.innerText;
+  const itemData = await fetchItem(itemID);
+  const itemExtractedData = {
+    sku: itemData.id,
+    name: itemData.title,
+    salePrice: itemData.price,
+  };
+  const cartItemsList = document.querySelector('.cart__items');
+  cartItemsList.appendChild(createCartItemElement(itemExtractedData));
+};
+
+const addListenerToComputersBtns = async () => {
+  await createComputersList();
+  const addToCartBtns = document.querySelectorAll('.item__add');
+  addToCartBtns.forEach((btn) => btn.addEventListener('click', addToCart));
+};
+
+window.onload = () => { addListenerToComputersBtns(); };
