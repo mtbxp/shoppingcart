@@ -2,7 +2,8 @@
 
 // const fetchProductsReturn = fetchProducts('computador');
 
-const cart = document.querySelectorAll('.cart__items')[0];
+const itemsSection = document.querySelectorAll('.items')[0];
+const cart = document.getElementsByClassName('cart__items')[0];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -32,9 +33,22 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const sumProducts = () => {
+  const cartItems = document.getElementsByClassName('cart__item');
+  const pricesArr = [];
+  if (cartItems.length > 0) {
+    cartItems.forEach((element) => {
+    pricesArr.push(parseFloat(element.innerHTML.split('$')[1]));
+    });
+  }
+  console.log(pricesArr);
+};
+// sumProducts();
+
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
+  sumProducts();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -46,13 +60,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const adicionarElementosNoHtml = async () => {
+  const loading = createCustomElement('span', 'loading', 'carregando...');
+  itemsSection.appendChild(loading);
   const fetchProductsReturn = await fetchProducts('computador');
+  document.querySelectorAll('.loading')[0].remove();
   fetchProductsReturn.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const section = createProductItemElement({ sku, name, image });
-    const itemsSection = document.querySelectorAll('.items')[0];
     itemsSection.appendChild(section);
   });
-  // console.log(fetchProductsReturn[0].id);
 };
 adicionarElementosNoHtml();
 
@@ -69,7 +84,6 @@ const adicionarAoCarrinho = async (event) => {
 };
 
 const buttonsAddEvent = () => {
-const itemsSection = document.querySelectorAll('.items')[0];
 itemsSection.addEventListener('click', adicionarAoCarrinho);
 };
 buttonsAddEvent();
@@ -79,8 +93,8 @@ const emptyCart = () => {
 };
 document.querySelectorAll('.empty-cart')[0].addEventListener('click', emptyCart);
 
-// cart.addEventListener('change', sumProducts);
+
 
 window.onload = () => {
-  // adicionarElementosNoHtml();
+  getSavedCartItems();
 };
