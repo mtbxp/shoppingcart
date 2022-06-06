@@ -12,6 +12,14 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const chamaFetchProducts = async () => {
+  const { results } = await fetchProducts('computador');
+  console.log(results)
+  return createProductItemElement(results);
+};
+
+chamaFetchProducts();
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -23,6 +31,11 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+
+createProductItemElement
+
+const criaListaDeProdutos = async () => {
+}
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -38,4 +51,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = async () => {
+
+};
