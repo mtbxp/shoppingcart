@@ -1,4 +1,4 @@
-const teste = async () => {
+const fetchComputador = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const fProduto = await fetch(url);
   const data = await fProduto.json();
@@ -46,7 +46,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const separaDados = async () => {
-  const todosDados = await teste();
+  const todosDados = await fetchComputador();
   const dadosParaItem = todosDados.map((element) => {
     const idComputador = element.id;
     const titleComputador = element.title;
@@ -70,7 +70,7 @@ const adicionaItem = async () => {
 };
 
 window.onload = () => {
-  teste();
+  fetchComputador();
   separaDados();
   adicionaItem();
  };
