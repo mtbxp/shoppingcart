@@ -13,32 +13,13 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-// .....................................................................................(USADO)
-// Requisito 2 - Cria a lista de produtos:
-const createProductItemElement = ({ sku, name, image }) => {
-  const section = document.createElement('section');
-  section.className = 'item';
+// .....................................................................................
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  
-  return section;
-};
-// .....................................................................................
-// Requisito 3 - Pega o id de um produto:
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-// .....................................................................................
-// Requisito 3 - Escuta a ação de clicar em um item no carrinho:
-const cartItemClickListener = () => {
-  const button = document.querySelector('.item__add');
-  button.addEventListener('click', () => {
-    console.log('cliquei');
-  });
-};
+// Requisito ?? - Escuta a ação de clicar em um item no carrinho:
+const cartItemClickListener = ('click', (event) => {
+});
 // .....................................................................................(USADO)
-// Requisito 3 - Cria os elementos do carrinho: 
+// Requisito 4 - Cria os elementos do carrinho: 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -47,23 +28,47 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 // .....................................................................................(MINHA)
-// Requisito 2 Função que recebe e saída do fetch trabalha ela e o resultado usao como parâmetro da função "createProductItemElement".
-const filterData = async () => {
-const item = document.querySelector('.items');
-const data = await fetchProducts('computador');
-data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
-  item.appendChild(createProductItemElement({ sku, name, image }));
-});
-}; 
-// .....................................................................................(MINHA)
-// Requisito 3 - Função que recebe um id e usa o fetchItem para buscar as informações do produto, e após isso usa a createCartItemElement pra adicionar ao carrinho. ---- Falta pegar o ID de cada item -----
+// Requisito 4 - Função que recebe um id e usa o fetchItem para buscar as informações do produto, e após isso usa a createCartItemElement pra adicionar ao carrinho. ---- Falta pegar o ID de cada item -----
 const filterCart = async (id) => {
   const ol = document.querySelector('.cart__items');
   const itemDet = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = itemDet;
   ol.appendChild(createCartItemElement({ sku, name, salePrice }));
-}; filterCart('MLB1615760527');
+};
+// .....................................................................................
+// Requisito 4 - Pega o id de um produto:
+const getSkuFromProductItem = (item) => item.querySelector('.item__sku').innerText;
+// .....................................................................................(USADO)
+// Requisito 2 - Cria a lista de produtos: Tbm usado no quesito 4 para adicionar o evento de clique no botão!
+const createProductItemElement = ({ sku, name, image }) => {
+  const section = document.createElement('section');
+  section.className = 'item';
 
-window.onload = () => { 
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  // section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const button = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(button);
+  button.addEventListener('click', (event) => {
+  const cada = event.target.parentNode;
+  const id = getSkuFromProductItem(cada);
+  filterCart(id);
+  });
+  return section;
+};
+// .....................................................................................(MINHA)
+// Requisito 2 Função que recebe e saída do fetch trabalha ela e o resultado usa como parâmetro da função "createProductItemElement" pra adicionar ao carrinho, e adiciona o evento de click em cada botão.
+const filterData = async () => {
+  const item = document.querySelector('.items');
+  const data = await fetchProducts('computador');
+  data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
+    item.appendChild(createProductItemElement({ sku, name, image }));
+  });
+};
+
+// .....................................................................................
+
+window.onload = () => {
   filterData();
 };
