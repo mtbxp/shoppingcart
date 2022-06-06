@@ -17,12 +17,36 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const cartItemClickListener = (event) => {
+
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  if (innerText === 'Adicionar ao Carrinho!') {
+    e.addEventListener('click', async (event) => {
+      const idCerto = event.target.parentElement.firstChild.innerHTML;
+      console.log('oi por favor funciona');
+      const constF = await fetchItem(idCerto);
+      classCartItems.appendChild(
+         createCartItemElement({ sky: constF.id, name: constF.title, salePrice: constF.price }),
+        );
+    });
+  }
   return e;
 };
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
@@ -36,40 +60,15 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  return { event.target.id, event.target.title, event.target.price};
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
 const arrayCerta = async () => { 
   const teste = await resultsComputador();
   teste.forEach((element) => {
-    createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail });
     classItems.appendChild(
       createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail }),
       );
   });
 };
 
-arrayCerta();
-
-const addToCart = async (id) => {
-  const constF = await fetchItem(id);
-  constF.forEach((element) => {
-    createCartItemElement({ sky: element.id, name: element.title, salePrice: element.price });
-    classCartItems.appendChild(
-      createCartItemElement({ sky: element.id, name: element.title, salePrice: element.price }),
-    );
-  });
+window.onload = () => { 
+  arrayCerta();
 };
-
-window.onload = () => { };

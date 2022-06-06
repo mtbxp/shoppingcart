@@ -1,4 +1,5 @@
 const fetchItem = async (id) => {
+  console.log(id, "oi");
   if (id === undefined) {
     throw new Error('You must provide an url');
   }
@@ -7,7 +8,7 @@ const fetchItem = async (id) => {
   const data = await response.json();
   return data;
 };
-console.log(fetchItem('MLB1341706310'));
+
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
