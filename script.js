@@ -27,7 +27,8 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 function listaProdutos() {
   fetchProducts('computador').then((resposta) => 
-  resposta.results.forEach((item) => chamaClasse.appendChild(createProductItemElement(item))));
+  resposta.results.forEach((item) => 
+  chamaClasse.appendChild(createProductItemElement(item))));
 }
 listaProdutos();
 
