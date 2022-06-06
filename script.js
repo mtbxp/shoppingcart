@@ -48,10 +48,13 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const separaDados = async () => {
   const todosDados = await teste();
   const dadosParaItem = todosDados.map((element) => {
+    const idComputador = element.id;
+    const titleComputador = element.title;
+    const thumbnailComputador = element.thumbnail;
     return {
-      sku: element.id,
-      name: element.title,
-      image: element.thumbnail,
+      sku: idComputador,
+      name: titleComputador,
+      image: thumbnailComputador,
     };
   });
   return dadosParaItem;
