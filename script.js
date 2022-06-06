@@ -194,8 +194,9 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
   renderLocalStorage = async () => {
     // chama os ids
     const storage = getSavedCartItems();
+    const storageTratado = JSON.parse(storage);
     // renderiza
-    storage.map((id) => renderCartItemElement(id));
+    storageTratado.map((id) => renderCartItemElement(id));
     // console.log('renderStorage', storage);
   };
 
