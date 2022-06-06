@@ -1,7 +1,6 @@
 const itemsList = document.getElementsByClassName('items');
 const cartItems = document.getElementsByClassName('cart__items');
 
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
