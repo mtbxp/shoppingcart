@@ -38,4 +38,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => {
+  // CHAMADA DA FUNÇÃO fetchProducts
+  fetchProducts('computador')
+    .then((result) => result
+      .results
+      .forEach((item) => {
+      const { id: sku, title: name, thumbnail: image } = item;
+      createProductItemElement({ sku, name, image });
+      }));
+  // FIM CHAMADA fetchProducts
+};
