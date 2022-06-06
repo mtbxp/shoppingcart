@@ -28,9 +28,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   const click = event.target;
-  // const total = document.querySelector('.total-price').innerText;
+  const total = document.querySelector('.total-price').innerText;
   // const itemPice = click.querySelector('.item__price').innerText;
-  // document.querySelector('.total-price').innerText = parseFloat(total) - parseFloat(itemPice);
+  const itemPrice = click.innerText.split('$');
+  document.querySelector('.total-price').innerText = parseFloat(total) - parseFloat(itemPrice[1]);
   click.remove();
 };
 
