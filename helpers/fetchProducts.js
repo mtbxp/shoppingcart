@@ -1,8 +1,8 @@
-const fetchProducts = async () => {
+const fetchProducts = async (product) => {
   // seu código aqui
   try {
-    const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-    const response = await fetch(url);
+    const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+    const response = await fetch(endpoint);
     const data = response.json();
     return data;
   } catch (error) {
