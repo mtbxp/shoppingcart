@@ -17,7 +17,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = () => {
   // coloque seu código aqui
 };
 
@@ -55,7 +55,7 @@ const createProductList = async () => {
     .forEach((product) => productsList.appendChild(createProductItemElement(product))));
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { 
   createProductList();
