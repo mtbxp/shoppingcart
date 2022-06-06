@@ -1,13 +1,41 @@
-const fetchProducts = async () => {
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$QUERY';
+/* const listProd = (data) => {
+  data.results.map((item) => {
+    const res = {
+      id: item.id,
+      title: item.title,
+    };
+    return res;
+  });
+}; */
 
-  await fetch(url)
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => `Algo deu errado :( \n${error}`);
-};
+/* const fetchProducts = async (item) => {
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${item}`;
 
-fetchProducts();
+  try {
+    const result = await fetch(url);
+    const data = await result.json();
+    const res = [];
+    data.results.map((el) => {
+      const { id, title, price } = el;
+      res.push({ id, title, price });
+    });
+    console.log(res);
+  } catch (error) {
+    throw new Error('You must provide an url');
+  }
+}; */
+
+const fetchProducts = async (item) => {
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${item}`;
+
+  try {
+    const result = await fetch(url);
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    return new Error('You must provide an url');
+  }
+}; 
 
 if (typeof module !== 'undefined') {
   module.exports = {
