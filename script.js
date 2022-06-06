@@ -62,21 +62,31 @@ function appendProductInCart(obj) {
   return cartContainer;
 }
 
-function editCart(event) {
-  event.preventDefault();
-  const item = getProduct(event);
-  if (!item) return;
-  const id = getSkuFromProductItem(item);
-  fetchItem(id)
-    .then((fetchedProduct) => appendProductInCart(fetchedProduct))
-    .then((selectedItemsContainer) => console.log(selectedItemsContainer));
+function renderItemInCart(id) {
+  return fetchItem(id)
+    .then((fetchedProduct) => appendProductInCart(fetchedProduct));
+}
+
+function editCart(nodeContainer) {
+  nodeContainer.addEventListener('click', (event) => {
+    event.preventDefault();
+    const item = getProduct(event);
+    if (!item) return;
+    const id = getSkuFromProductItem(item);
+    renderItemInCart(id)
+      .then((selectedItemsContainer) => console.log(selectedItemsContainer));
+  });
+}
+
+function renderProducts() {
+  return fetchProducts('computador')
+    .then((fetchedProducts) => appendProducts(fetchedProducts));
 }
 
 window.onload = () => {
-  fetchProducts('computador')
-    .then((fetchedProducts) => appendProducts(fetchedProducts))
+  renderProducts()
     .then((products) => {
-      products.addEventListener('click', editCart);
+      editCart(products);
       console.log(products);
     });
 };
