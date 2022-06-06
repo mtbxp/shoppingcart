@@ -39,12 +39,13 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = async () => {
+  const [sectionItens] = document.getElementsByClassName("items")
   const items = await fetchProducts('computador');
   items.results.forEach((produto) => {
-    createProductItemElement({
+    sectionItens.appendChild(createProductItemElement({
       sku: produto.id,
       name: produto.title,
       image: produto.thumbnail,
-    });
+    }));
   });
 };
