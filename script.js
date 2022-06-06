@@ -30,7 +30,9 @@ const appendElementToItems = (element) => {
 };
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  if (event.target.nodeName === 'LI') {
+    event.target.remove();
+  }
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
