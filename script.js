@@ -33,16 +33,19 @@ const removePrice = (price) => {
   total = filtro;
   const totalPrice = total.reduce((acc, value) => acc + value, 0);
   const valorArredondado = Math.round(totalPrice);
-  console.log(total, 'removePrice', totalPrice);
+  // console.log(total, 'removePrice', totalPrice);
   return valorArredondado;
 };
+// retorna o valor total
+const returnSpam = () => document.querySelector('.total-price'); 
+
 // renderiza o total do produto
 const renderRemovePrice = (price) => {
   const valor = removePrice(price);
-  const spam = document.querySelector('.total-price');  
+  const spam = returnSpam();
   // renderizar price
   spam.innerText = `valor total:$${valor}`;
-  console.log('renderRemove', valor);
+  // console.log('renderRemove', valor, spam);
 };
 
 // remove o item do shopcard
@@ -55,7 +58,7 @@ const cartItemClickListener = (li, rmId, price) => {
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     const filtro = storage.filter((id) => id !== rmId);
     saveCartItems(filtro);
-    console.log(rmId, 'delet', filtro);
+    // console.log(rmId, 'delet', filtro);
     // remover valor do total price
     renderRemovePrice(price);
   });
@@ -97,7 +100,7 @@ const somaPrice = (price) => {
 // renderiza o total do produto
 const renderTotalPrice = (price) => {
   const valor = somaPrice(price);
-  const spam = document.querySelector('.total-price');  
+  const spam = returnSpam();  
   // se o spam ainda nao existir criar
   if (!spam) {
     const createSpam = document.createElement('spam');
@@ -175,7 +178,7 @@ utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
   buttonClear.addEventListener('click', () => {
     // limpar o total
     total = [0];
-  const spam = document.querySelector('.total-price');  
+    const spam = returnSpam();  
   spam.innerText = `valor total:$${total}`;
     // limpar o local localStorage
     localStorage.clear();
