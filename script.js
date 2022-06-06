@@ -38,4 +38,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const insereLista = async () => {
+  const itens = await fetchPrgitoducts('computador');
+  itens.forEach(({ id, title, thumbnail }) => {
+    const obj = {
+      sku: id,
+      name: title,
+      image: thumbnail,
+    };
+    const inner = createProductItemElement(obj);
+    document.getElementsByClassName('items').appendChild(inner);
+  });
+};
+window.onload = () => {
+  insereLista();
+};
