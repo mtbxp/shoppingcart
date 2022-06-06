@@ -1,4 +1,4 @@
-//const { fetchProducts } = require("./helpers/fetchProducts");
+// const { fetchProducts } = require("./helpers/fetchProducts");
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -17,7 +17,6 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -44,13 +43,9 @@ const productList = document.querySelector('.items');
 
 const createListProduct = async () => {
   const valeu = await fetchProducts('computador');
-  valeu.map((item) => {
-    const list = {
-      sku: item.id,
-      name: item.title,
-      imagem: item.thumbnail,
-    };
-    const objec = createProductItemElement(list);
+  valeu.results.forEach((item) => {
+    const { id: sku, title: name, thumbnail: image } = item;
+    const objec = createProductItemElement({ sku, name, image });
     productList.appendChild(objec);
   });
 };
