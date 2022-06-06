@@ -12,8 +12,21 @@ describe('1 - Teste a função fetchProducts', () => {
     fetchProducts('computador');
     expect(fetch).toBeCalled();
   });
-  it('Teste se, ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint correto', () => {
+  it('Teste se ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint correto', () => {
     fetchProducts('computador');
     expect(fetch).toHaveBeenLastCalledWith(endPoint);
+  });
+  it('Teste se o retorno da função fetchProducts com o argumento computador é uma estrutura de dados igual ao objeto computadorSearch', async () => {
+    const testFetch = await fetchProducts('computador')
+    expect(testFetch).toEqual(computadorSearch);
+  });
+  it('Teste se ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
+    const errorUrl = new Error('You must provide an url');
+    try {
+      await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(errorUrl);
+    }
+
   });
 });
