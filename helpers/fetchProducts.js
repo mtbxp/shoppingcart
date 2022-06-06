@@ -4,7 +4,6 @@ const fetchProducts = async (product) => {
  const response = await fetch(url(product));
  const computers = await response.json();
  if (response) {
-  const computadores = computers.results;
      return computers;
    }
  
