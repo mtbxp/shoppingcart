@@ -1,3 +1,5 @@
+const cartItems = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -9,6 +11,9 @@ const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+/*   if (element === 'button') {
+    console.log('oi');
+  } */
   return e;
 };
 
@@ -30,13 +35,17 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
+  const li = document.createElement('li');  
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+// Abaixo estão as funções criadas para implementação no HTML: 
+
+// As funções abaixo colocam os dados da Api do ML no html
 
 const products = async () => {
   const produtos = await fetchProducts('computador');
@@ -44,15 +53,31 @@ const products = async () => {
   return results;
 };
 
-const senApiToSite = async () => {
+const sendApiToSite = async () => {
   const listaDeItems = document.querySelector('.items');
   const produtos = await products();
-  const produtosMap = produtos.map((element) => {
+  produtos.map((element) => {
     const map = createProductItemElement(element);
   return listaDeItems.appendChild(map);
   });
 };
 
-window.onload = () => { 
-  senApiToSite();
+// As funções abaixo colocam os dados da Api do ML no html
+
+const getId = () => {
+  document.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('item__add')) {
+      const idProduct = getSkuFromProductItem((e.target.parentNode));
+      /* console.log(idProduct); */
+      /* return fetchItem(idProduct); */
+      const obj = await fetchItem(idProduct);
+      const li = createCartItemElement(obj);
+      cartItems.appendChild(li);
+    }
+  });
+};
+
+window.onload = () => {
+  getId();
+  sendApiToSite();
 };
