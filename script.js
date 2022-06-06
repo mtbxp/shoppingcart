@@ -1,6 +1,7 @@
 // Elementos HTML
 const cartItemsUl = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const itemSection = document.querySelector('.items');
 const clearBtn = document.querySelector('.empty-cart');
 
 // Formata o valor total a pagar e exibe ele na tela.
@@ -96,16 +97,37 @@ function turnBuyButtonOn() {
   });
 }
 
+function createLoading() {
+  const h2Maker = document.createElement('h2');
+  h2Maker.className = 'loading';
+  h2Maker.innerText = 'carregando...';
+  itemSection.appendChild(h2Maker);
+}
+
+function doneLoading(status) {
+  if (status === 'loaded') {
+    document.querySelector('.loading').remove();
+  } else {
+    document.querySelector('.loading').innerText = 'Ocorreu um erro no carregamento. :(';
+  }
+}
+
 // Carrega itens da API.
 async function loadProducts() {
-  const allProdructs = await fetchProducts('computador');
-  allProdructs.results.forEach((product) => {
+  createLoading();
+  try {
+    const allProdructs = await fetchProducts('computador');
+    allProdructs.results.forEach((product) => {
     const sku = product.id;
     const name = product.title;
     const image = product.thumbnail;
     createProductItemElement({ sku, name, image });
-  });
-  turnBuyButtonOn();
+    });
+    turnBuyButtonOn();
+    doneLoading('loaded');
+  } catch (err) {
+    doneLoading('fail');
+  }
 }
 
 // Adiciona escutadors após carregamento aos itens do carrinho criados de forma dinâmica.
