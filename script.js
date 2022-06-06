@@ -52,7 +52,15 @@ const products = () => {
 };
 
 productSection.addEventListener('click', (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const itemSection = event.target.parentNode;
+    const idItem = getSkuFromProductItem(itemSection);
+    fetchItem(idItem).then((product) => {
+      itemCart.appendChild(createCartItemElement(product));
 
+      saveCartItems(itemCart, innerHTML);
+    }); 
+  }
 });
 
 window.onload = () => { 
