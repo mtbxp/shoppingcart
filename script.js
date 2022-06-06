@@ -50,9 +50,17 @@ const createProductItemElement = ({ sku, name, image }) => {
 //   return li;
 // };
 
-window.onload = async () => {
-  for (let index = 0; index < 12; index += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    sectionItems.appendChild(createProductItemElement(await listagem(index)));
+const teste = () => {
+  for (let index = 0; index < 50; index += 1) {
+    listagem(index)
+    .then((response) => sectionItems.appendChild(createProductItemElement(response)));
+    // .catch((error) => console.log(`Algo deu errado :( \n${error}`));
   }
+};
+
+// Algo deu errado :(
+// TypeError: Only absolute URLs are supported
+
+window.onload = async () => {
+  teste();
 };
