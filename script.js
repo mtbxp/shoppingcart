@@ -29,7 +29,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = (sku, name, salePrice) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -50,4 +50,23 @@ const preparingFunction = async (productName) => {
   }
 };
 
-window.onload = () => { preparingFunction(); };
+const timeOut = () => {
+  setTimeout(() => {
+    const allButtons = document.querySelectorAll('.item__add');
+    const allIds = document.querySelectorAll('.item__sku');
+    allButtons.forEach((button, index) => {
+      button.addEventListener('click', async () => {
+        const selectedProduct = await fetchItem(allIds[index].innerText);
+        const parameters = [selectedProduct.id, selectedProduct.title, selectedProduct.price];
+        console.log(parameters);
+        const createCartItem = createCartItemElement(...parameters);
+        const ol = document.querySelector('.cart__items');
+        ol.appendChild(createCartItem);
+      });
+    });
+  }, 1000);
+};
+
+timeOut();
+
+window.onload = () => { preparingFunction('computador'); };
