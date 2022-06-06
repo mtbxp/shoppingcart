@@ -1,12 +1,6 @@
 const url = (busca) => `https://api.mercadolibre.com/sites/MLB/search?q=${busca}`;
-
 const fetchProducts = async (product) => {
- const request = {
-   header: {
-     Accept: 'application/json',
-   },
- };
- const response = await fetch(url(product), request);
+ const response = await fetch(url(product));
  const computers = await response.json();
  if (response) {
    return computers;
@@ -15,8 +9,6 @@ const fetchProducts = async (product) => {
    throw new Error('You must provide an url');
  }
 };
-
-console.log(fetchProducts('computador').then(data => data.site_id));
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
