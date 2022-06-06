@@ -66,7 +66,4 @@ const showList = async () => {
 
 window.onload = () => { 
   showList();
-
-  /* const { id: sku, title: name, price: salePrice } = await fetchItem('MLB1341706310');
-  cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice })); */
 };
