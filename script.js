@@ -23,11 +23,21 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
   return section;
 };
-const items = document.querySelector('.items');
-const createItems = () => {
-  fetchProducts('computador').then((data) => data.result)
-    .forEach((element) => {
-      items.appendChild(createProductItemElement(element));
+
+const createItems = async (param) => {
+  const items = document.querySelector('.items');
+  // await fetchProducts('computador').then((data) => data.result);
+  // console.log((await fetchProducts('computador')).results);
+  const productArray = (await fetchProducts(param)).results;
+    productArray.forEach((element) => {
+      const { id, title, thumbnail } = element;
+      const elementoProduto = createProductItemElement({
+        id,
+        title,
+        thumbnail,
+      });
+      // console.log(elementoProduto);
+      items.appendChild(elementoProduto);
     });
 };
 
@@ -45,4 +55,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { createItems(); };
+window.onload = () => { createItems('computador'); };
