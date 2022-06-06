@@ -3,10 +3,10 @@
 // const fetch = require('node-fetch');
 
 const fetchProducts = async (productName) => {
-  const getURL = `https://api.mercadolibre.com/sites/MLB/search?q=${productName}`;
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${productName}`;
   try {
     if (!productName) throw new Error('You must provide an url');
-    const result = await fetch(getURL)
+    const result = await fetch(url)
       .then((response) => response.json())
       .then((data) => data);
     return result;
@@ -14,7 +14,7 @@ const fetchProducts = async (productName) => {
     return error;
   }
 };
-// console.log(fetchProducts('computador'));
+
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
