@@ -1,43 +1,60 @@
-// const createProductImageElement = (imageSource) => {
-//   const img = document.createElement('img');
-//   img.className = 'item__image';
-//   img.src = imageSource;
-//   return img;
-// };
+const bunda = document.getElementsByClassName('items')[0]
 
-// const createCustomElement = (element, className, innerText) => {
-//   const e = document.createElement(element);
-//   e.className = className;
-//   e.innerText = innerText;
-//   return e;
-// };
+const createProductImageElement = (imageSource) => {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+};
 
-// const createProductItemElement = ({ sku, name, image }) => {
-//   const section = document.createElement('section');
-//   section.className = 'item';
+const createCustomElement = (element, className, innerText) => {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+};
 
-//   section.appendChild(createCustomElement('span', 'item__sku', sku));
-//   section.appendChild(createCustomElement('span', 'item__title', name));
-//   section.appendChild(createProductImageElement(image));
-//   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
-//   return section;
-// };
+const teste = async (index) => {
+  const data = await fetchProducts('computadores')
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+  const sku = data.results[index].id;
+  const name = data.results[index].title;
+  const image = data.results[index].thumbnail;
 
-// const cartItemClickListener = (event) => {
-//   // coloque seu código aqui
-// };
+  return {sku, name, image};
+}
 
-// const createCartItemElement = ({ sku, name, salePrice }) => {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// };
 
-// window.onload = () => { };
+const createProductItemElement = ({ sku, name, image }) => {
+  const section = document.createElement('section');
+  section.className = 'item';
 
-// Olá este é um teste de funcionalidade no github em outro pc!
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  return section;
+};
+
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => {
+  // coloque seu código aqui
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+window.onload = async () => {
+  for(let index = 0; index < 48; index += 1){
+    bunda.appendChild(createProductItemElement(await teste(index)))
+  }
+}
