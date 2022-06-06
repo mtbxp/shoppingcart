@@ -136,6 +136,9 @@ body {
 }
 
 .cart .cart__items {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
   height: 500px;
   overflow-y: scroll;
 }
