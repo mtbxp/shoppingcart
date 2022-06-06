@@ -1,6 +1,5 @@
 const sectionProduct = document.querySelector('.items');
 const listCart = document.querySelector('.cart__items');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,20 +14,29 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
   event.target.remove();
+  saveCartItems(listCart.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+
   return li;
 };
+
+listCart.addEventListener('click', cartItemClickListener);
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 const eventList = (event) => {
-  const productId = event.target.parentNode.firstChild.innerText;
-  fetchItem(productId).then((item) => listCart.appendChild(createCartItemElement(item)));
+  const productId = getSkuFromProductItem(event.target.parentNode);
+  fetchItem(productId).then((item) => {
+    listCart.appendChild(createCartItemElement(item));
+    saveCartItems(listCart.innerHTML);
+  });
+ 
+  console.log(listCart);
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
@@ -44,13 +52,19 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   
   return section;
 };
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-console.log(getSkuFromProductItem());
+
 const getProduct = () => {
   fetchProducts('computador')
   .then((element) => element.results
   .forEach((product) => sectionProduct.appendChild(createProductItemElement(product)))); 
 };
+
+const getToLocal = () => {
+const itensCart = getSavedCartItems();
+listCart.innerHTML = itensCart;
+};
+
+getToLocal();
 
 window.onload = () => {
   getProduct();
