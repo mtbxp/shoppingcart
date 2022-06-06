@@ -14,17 +14,13 @@ describe('1 - Teste a função fetchProducts', () => {
     const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador'
     await fetchProducts('computador');
   });
-  it('4 - Com o argumento "computador", a função fetch deve ser chamada com o endpoint correto', async () => {
-    const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=computador'
-    await fetchProducts('computador');
-  });
-  it('5 - Deve retornar um objeto com as propriedades esperadas', async () => {
+  it('4 - Deve retornar um objeto com as propriedades esperadas', async () => {
     const response = await fetchProducts('computador');
 
     expect(response).toEqual(computadorSearch);
   });
-  it('6 - Sem argumento, deve retornar um erro com a mensagem esperada', async () => {
-    const response = await getMagicCard();
+  it('5 - Sem argumento, deve retornar um erro com a mensagem esperada', async () => {
+    const response = await fetchProducts();
 
     expect(response).toEqual(new Error('You must provide an url'));
   });
