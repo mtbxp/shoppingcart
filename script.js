@@ -19,6 +19,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const loading = createCustomElement('span', 'loading', 'carregando...');
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -60,7 +62,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const adicionarElementosNoHtml = async () => {
-  const loading = createCustomElement('span', 'loading', 'carregando...');
   itemsSection.appendChild(loading);
   const fetchProductsReturn = await fetchProducts('computador');
   document.querySelectorAll('.loading')[0].remove();
@@ -74,12 +75,13 @@ adicionarElementosNoHtml();
 const adicionarAoCarrinho = async (event) => {
   const eTarget = event.target;
   if (eTarget.classList.contains('item__add')) {
+    cart.appendChild(loading);
     const itemSku = getSkuFromProductItem(eTarget.parentNode);
     const response = await fetchItem(itemSku);
+    document.querySelectorAll('.loading')[0].remove();
     const { id: sku, title: name, price: salePrice } = response;
     const li = createCartItemElement({ sku, name, salePrice });
-    const ol = document.querySelectorAll('.cart__items')[0];
-    ol.appendChild(li);
+    cart.appendChild(li);
   }
 };
 
@@ -93,8 +95,6 @@ const emptyCart = () => {
 };
 document.querySelectorAll('.empty-cart')[0].addEventListener('click', emptyCart);
 
-
-
-window.onload = () => {
-  getSavedCartItems();
-};
+// window.onload = () => {
+//   getSavedCartItems();
+// };
