@@ -3,7 +3,7 @@ const fetchItem = async (item) => {
     const api = `https://api.mercadolibre.com/items/${item}`;
     const dados = await fetch(api);
     const data = await dados.jason();
-    return data;
+    return data.reults;
   } catch (error) {
     return error;
   }
