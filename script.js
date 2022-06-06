@@ -31,8 +31,9 @@ const createItems = (item) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = (li) => {
   // coloque seu código aqui
+  li.addEventListener('click', (event) => event.target.remove());
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -59,6 +60,7 @@ const addToCartListener = () => {
         salePrice: result.price,
       };
       const myLi = createCartItemElement(obj);
+      cartItemClickListener(myLi);
       createItemElement(myLi);
     });
   }));
