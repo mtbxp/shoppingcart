@@ -9,13 +9,13 @@ describe('2 - Teste a função fetchItem', () => {
   });
 
   test('fetch deve ser chamada caso a função fetchItem seja chamada com o argumento \'MLB1615760527\'', async () => {
-    expect.assertion(1);
+    expect.assertions(1);
     await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalled();
   });
 
   test('a função fetch deve utilizar o endpoint \'https://api.mercadolibre.com/items/MLB1615760527\' ao ser chamada com o argumento \'MLB1615760527\'', async () => {
-    expect.assertion(1);
+    expect.assertions(1);
     const url = 'https://api.mercadolibre.com/items/MLB1615760527';
     await fetchItem('MLB1615760527');
     expect(fetch).toHaveBeenCalledWith(url);
@@ -30,7 +30,7 @@ describe('2 - Teste a função fetchItem', () => {
   test('se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: \'You must provide an url\'', async () => {
     expect.assertions(1);
     try {
-      await fetchProducts();
+      await fetchItem();
     } catch (err) {
       expect(err).toEqual(new Error('You must provide an url'));
     }
