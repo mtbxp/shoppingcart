@@ -34,15 +34,16 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const sumTotal = (element) => {
   let sum = 0;
   if (element.innerHTML !== '') {
-    document.querySelectorAll('section').forEach(async (cart) => {
-      const Idproduct = getSkuFromProductItem(cart);
-      const priceProduct = await fetchItem(Idproduct);
-      sum += Number(priceProduct.price);
-      totalPrice.innerText = Math.round(sum * 100) / 100;
+    document.querySelectorAll('li').forEach(async (cart) => {
+      const p = cart.innerText.split('$')[1];
+      const b = parseFloat(p) * 100;
+      sum += b / 100;
+      totalPrice.innerText = sum;
     });
   } else {
     totalPrice.innerText = 0;
   }
+  console.log(sum);
 };
 
 const cartItemClickListener = (event) => {
