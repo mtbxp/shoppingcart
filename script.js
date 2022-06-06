@@ -43,7 +43,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  console.log(section);
+  // console.log(section);
   return classItems.appendChild(section);
 };
 
@@ -70,6 +70,5 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 // console.log(fetchProducts('computer'));
-
 
 window.onload = () => { };
