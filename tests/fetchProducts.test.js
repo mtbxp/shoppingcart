@@ -14,7 +14,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toBeCalledWith(url);
   })
   test('Se quando o argumento é \'computador\' retorna um arquivo igual ao esperado', async () => {
-    expect(await fetchProducts('computador')).toEqual(computadorSearch);
+    expect(await fetchProducts('computador')).toStrictEqual(computadorSearch);
   })
   test('Deve retornar a mensagem \'You must provide an url\' quando a função é chamda sem argumento', async () => {
     expect(await fetchProducts()).toBe('You must provide an url');
