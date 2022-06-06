@@ -28,20 +28,20 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   const click = event.target;
-  const total = document.querySelector('.total-price').innerText;
-  const itemPice = click.querySelector('.item__price').innerText;
-  document.querySelector('.total-price').innerText = parseFloat(total) - parseFloat(itemPice);
+  // const total = document.querySelector('.total-price').innerText;
+  // const itemPice = click.querySelector('.item__price').innerText;
+  // document.querySelector('.total-price').innerText = parseFloat(total) - parseFloat(itemPice);
   click.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
-  const span = document.createElement('span');
-  span.className = 'item__price';
-  span.innerText = salePrice;
+  // const span = document.createElement('span');
+  // span.className = 'item__price';
+  // span.innerText = salePrice;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.append(span);
+  // li.append(span);
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -61,7 +61,7 @@ const addAllComputers = async () => {
 
 const addComputerCart = async (event) => {
   const clic = event.target;
-  const sku = clic.parentElement.firstChild.innerText;
+  const sku = getSkuFromProductItem(clic.parentElement);
   const data = await fetchItem(sku);
   const results = ({
     sku: data.id,
