@@ -12,6 +12,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const loadingElement = createCustomElement('span', 'loading', 'carregando...');
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -62,6 +64,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const populatePage = async () => {
   const itemsSection = document.getElementsByClassName('items')[0];
+  itemsSection.appendChild(loadingElement);
   const { results } = await fetchProducts('computador');
   results.forEach((result) => {
     const { id: sku, title: name, thumbnail: image } = result;
@@ -73,6 +76,7 @@ const populatePage = async () => {
     const newItem = createProductItemElement(productInfo);
     itemsSection.appendChild(newItem);
   });
+  itemsSection.firstChild.remove();
 };
 
 const addToCart = async (event) => {
