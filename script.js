@@ -1,3 +1,5 @@
+getSavedCartItems();
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,9 +33,20 @@ const createItems = (item) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const removeFromStorage = (target) => {
+  const storage = getSavedCartItems();
+  const text = target.innerText;
+  const newStorage = storage.filter((obj) => !text.includes(obj.sku));
+  localStorage.setItem('cartItems', JSON.stringify(newStorage));
+  console.log(newStorage);
+  console.log(storage[0])
+  console.log(target.innerText);
+};
+
 const cartItemClickListener = (list) => {
   // coloque seu código aqui
   if (list.target !== undefined) {
+    removeFromStorage(list.target);
     list.target.remove();
   }
 };
@@ -51,6 +64,19 @@ const createItemElement = (item) => {
   cart.append(item);
 };
 
+const initialRender = () => {
+  const cartArray = getSavedCartItems(); // lista
+  if (cartArray !== null) {
+    [...cartArray].forEach((obj) => {
+      const myLi = createCartItemElement(obj);
+      cartItemClickListener(myLi);
+      createItemElement(myLi);
+    });
+  }
+};
+
+const objsArray = getSavedCartItems() || [];
+
 const addToCartListener = () => {
   const addToCart = document.querySelectorAll('.item__add');
   addToCart.forEach((item) => item.addEventListener('click', (event) => {
@@ -61,6 +87,7 @@ const addToCartListener = () => {
         name: result.title,
         salePrice: result.price,
       };
+      saveCartItems(obj, objsArray);
       const myLi = createCartItemElement(obj);
       cartItemClickListener(myLi);
       createItemElement(myLi);
@@ -81,4 +108,5 @@ fetchProducts('computador').then((result) => {
   addToCartListener();
 });
 
+window.addEventListener('load', initialRender);
 window.onload = () => { };
