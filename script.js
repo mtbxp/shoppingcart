@@ -39,7 +39,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = async () => {
-  const [sectionItens] = document.getElementsByClassName("items")
+  const [sectionItens] = document.getElementsByClassName('items');
   const items = await fetchProducts('computador');
   items.results.forEach((produto) => {
     sectionItens.appendChild(createProductItemElement({
