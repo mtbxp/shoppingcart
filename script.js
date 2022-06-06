@@ -55,7 +55,7 @@ const addItemToCart = (element, sku) => {
     const { title: name, price: salePrice } = await fetchItem(sku);
 
     const li = createCartItemElement({ sku, name, salePrice });
-    
+    console.log(li);
     li.addEventListener('click', cartItemClickListener);
     cartItems.append(li);
   });
