@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 const fetchProducts = async (product) => {
   try {
     const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
