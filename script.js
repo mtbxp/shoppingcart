@@ -17,17 +17,22 @@ const loadingElement = createCustomElement('carregando...');
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
   return section;
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
 const saveCartPrice = (newPrice) => localStorage.setItem('cartPrice', newPrice);
+
 const getCartPrice = () => JSON.parse(localStorage.getItem('cartPrice'));
-const calculatePrice = (newItemPrice = 0) => {
+
+const calculateCartPrice = (newItemPrice = 0) => {
   const cartCurrentPrice = getCartPrice();
   if (!getCartPrice) saveCartPrice(newItemPrice);
   saveCartPrice(cartCurrentPrice + newItemPrice);
@@ -43,7 +48,7 @@ const loadCartPrice = () => {
 const cartItemClickListener = (event) => {
   event.target.remove();
   const price = event.target.innerText.match(/PRICE: \$([\d.]+)/)[1];
-  calculatePrice(-1 * price);
+  calculateCartPrice(-1 * price);
   loadCartPrice();
   const newOlCartItems = document.getElementsByClassName('cart__items')[0];
   saveCartItems(newOlCartItems.innerHTML);
@@ -79,7 +84,9 @@ const addToCart = async (event) => {
   const productCard = event.target.parentElement;
   const productId = getSkuFromProductItem(productCard);
   const { id: sku, title: name, price: salePrice } = await fetchItem(productId);
-  calculatePrice(salePrice);
+
+  calculateCartPrice(salePrice);
+
   const newCartItem = createCartItemElement({ sku, name, salePrice });
   olCartItems.appendChild(newCartItem);
   const newOlCartItems = document.getElementsByClassName('cart__items')[0];
@@ -91,10 +98,12 @@ const loadCartItems = () => {
   const cartItems = getSavedCartItems();
   const olCartItems = document.getElementsByClassName('cart__items')[0];
   const cart = document.querySelector('.cart');
+
   olCartItems.remove();
   const newOlCartItems = document.createElement('ol');
   newOlCartItems.className = 'cart__items';
   newOlCartItems.innerHTML = cartItems;
+
   const newLiCartItems = newOlCartItems.querySelectorAll('.cart__item');
   newLiCartItems.forEach((item) => item.addEventListener('click', cartItemClickListener));
   cart.prepend(newOlCartItems);
