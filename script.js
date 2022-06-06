@@ -50,7 +50,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 //   return li;
 // };
 
-const teste = () => {
+const allList = () => {
   for (let index = 0; index < 50; index += 1) {
     listagem(index)
     .then((response) => sectionItems.appendChild(createProductItemElement(response)));
@@ -61,6 +61,6 @@ const teste = () => {
 // Algo deu errado :(
 // TypeError: Only absolute URLs are supported
 
-window.onload = async () => {
-  teste();
+window.onload = () => {
+  allList();
 };
