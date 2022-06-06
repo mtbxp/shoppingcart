@@ -69,10 +69,10 @@ btn.addEventListener('click', addComputerCart);
 
 const emptyCart = () => {
   const allItems = document.querySelectorAll('li');
-  for (let value of allItems) {
-    value.remove();
+  for (let i = 0; i < allItems.length; i += 1) {
+    allItems[i].remove();
   }
-}
+};
 const btnEmpty = document.querySelector('button[class="empty-cart"]');
 btnEmpty.addEventListener('click', emptyCart);
 
