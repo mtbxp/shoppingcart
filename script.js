@@ -58,7 +58,7 @@ productSection.addEventListener('click', (event) => {
     fetchItem(idItem).then((product) => {
       itemCart.appendChild(createCartItemElement(product));
 
-      saveCartItems(itemCart, innerHTML);
+      saveCartItems(itemCart.innerHTML);
     }); 
   }
 });
