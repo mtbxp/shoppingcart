@@ -23,22 +23,32 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClickListener = (e) => {
-  e.target.remove();
-};
-
 const pricesFixed = (str) => {
   const toString = str.toString();
   const priceFixed = toString.slice(0, (toString.indexOf('.')) + 3);
   return parseFloat(priceFixed);
 };
 
+const subPrices = (str) => {
+  const priceSec = document.querySelector('.total-price');
+  const indexToNumbers = str.indexOf('$');
+  const getNumbers = parseFloat(str.slice(indexToNumbers + 1));
+  const prices = localStorage.getItem('totalPrice');
+  let newPrice = prices - getNumbers;
+  if (newPrice < 10) newPrice = 0;
+  localStorage.setItem('totalPrice', newPrice);
+  console.log(newPrice);
+  priceSec.innerText = `Total: ${pricesFixed(newPrice)}`;
+};
+
+const cartItemClickListener = (e) => {
+  e.target.remove();
+  subPrices(e.target.innerHTML);
+};
+
 const reloadCartItemListener = () => {
   cartItems.addEventListener('click', cartItemClickListener);
   cartItems.innerHTML = getSavedCartItems();
-  if (document.querySelector('.total-price')) {
-    cart.lastChild.remove();
-  }
   const reloadPrices = localStorage.getItem('totalPrice');
   if (reloadPrices) {
     createTotalCostElement().innerHTML = `Total: ${pricesFixed(reloadPrices)}`;
