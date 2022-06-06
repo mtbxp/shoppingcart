@@ -4,14 +4,12 @@ https://medium.com/@lameckanao/armazenando-e-manipulando-dados-no-localstorage-7
 descobri q a resposta de um localStorage vazio e null
 */
 const saveCartItems = (card) => {
-  if (localStorage.getItem('cartItems') === null) {
+  if (document.querySelector('.total-price') === null) {
     localStorage.setItem('cartItems', JSON.stringify([card]));
-  } else if (typeof card === 'string') { 
+  } else { 
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     localStorage.setItem('cartItems', JSON.stringify([...storage, card]));
-  // console.log('save', storage);
-  } else {
-    localStorage.setItem('cartItems', JSON.stringify(card));
+  console.log('save', storage);
   }
 };
 
