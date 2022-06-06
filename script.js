@@ -25,6 +25,12 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+function removeLoading() {
+  const h1 = document.getElementsByClassName('loading')[0];
+  h1.remove();
+
+}
+
 function putElementInSection({ sku, name, image }) {
   const sectionFather = document.getElementsByClassName('items')[0];
   const section = createProductItemElement({ sku, name, image });
@@ -41,6 +47,7 @@ const createItems = async () => {
    createProductItemElement(item);
    putElementInSection(item);
    });
+   removeLoading();
  };
  // __________________________________________________________________
 
@@ -96,6 +103,7 @@ const getButtons = () => {
 };
 // ___________________________________________________________________
 
+// ___________________________________________________________________
 const emptyCarty = document.getElementsByClassName('empty-cart')[0];
 
 function emptyCartyFunction() {
@@ -104,9 +112,19 @@ function emptyCartyFunction() {
 }
 
 emptyCarty.addEventListener('click', emptyCartyFunction);
+// ______________________________________________________________________
+
+function createLoading() {
+  const h1 = document.createElement('h1');
+  const section = document.getElementsByClassName('cart')[0];
+  section.appendChild(h1);
+  h1.className = 'loading';
+  h1.innerText = 'loading';
+}
 
 window.onload = () => { 
   createItems()
   .then(getButtons);
   getSavedCartItems();
+  createLoading();
 };
