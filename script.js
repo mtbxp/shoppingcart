@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const itemList = document.querySelector('.itens');
 
 const createProductImageElement = (imageSource) => {
