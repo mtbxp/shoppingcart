@@ -1,4 +1,5 @@
 const listaDeItens = document.querySelector('.items');
+const carrinho = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
