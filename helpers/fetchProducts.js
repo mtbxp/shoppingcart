@@ -2,12 +2,11 @@
 
 // const fetch = require('node-fetch');
 
-const getURL = (product) => `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-
 const fetchProducts = async (productName) => {
+  const getURL = `https://api.mercadolibre.com/sites/MLB/search?q=${productName}`;
   try {
     if (!productName) throw new Error('You must provide an url');
-    const result = await fetch(getURL(productName))
+    const result = await fetch(getURL)
       .then((response) => response.json())
       .then((data) => data);
     return result;
