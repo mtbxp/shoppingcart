@@ -42,7 +42,7 @@ const subPrices = (str) => {
   let newPrice = prices - getNumbers;
   if (newPrice < 10) newPrice = 0;
   localStorage.setItem('totalPrice', newPrice);
-  priceSec.innerText = `Total: ${pricesFixed(newPrice)}`;
+  priceSec.innerText = pricesFixed(newPrice);
 };
 
 const cartItemClickListener = (e) => {
@@ -55,7 +55,7 @@ const reloadCartItemListener = () => {
   cartItems.innerHTML = getSavedCartItems();
   const reloadPrices = localStorage.getItem('totalPrice');
   if (reloadPrices) {
-    createTotalCostElement().innerHTML = `Total: ${pricesFixed(reloadPrices)}`;
+    createTotalCostElement().innerHTML = pricesFixed(reloadPrices);
   }
 };
 
@@ -72,7 +72,7 @@ const showTotalCost = (price) => {
   price.forEach((el) => {
     prices += el;
   });
-  showPrices.innerText = `Total: ${pricesFixed(prices)}`;
+  showPrices.innerText = pricesFixed(prices);
   localStorage.setItem('totalPrice', prices);
 };
 
@@ -116,7 +116,7 @@ const clearCartButton = () => {
     cartItems.innerHTML = '';
     localStorage.setItem('cartItems', '');
     localStorage.setItem('totalPrice', 0);
-    document.querySelector(classPrice).innerText = `Total: ${0}`;
+    document.querySelector(classPrice).innerText = 0;
   });
 };
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
