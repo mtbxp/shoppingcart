@@ -1,9 +1,9 @@
 const fetchItem = (itemId) => {
     const url = `https://api.mercadolibre.com/items/${itemId}`;
-  const response = fetch(url)
+  const require = fetch(url)
   .then((response) => response.json())
   .then((data) => data);
-  return response;
+  return require;
 };
 
 if (typeof module !== 'undefined') {

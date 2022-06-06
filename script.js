@@ -15,7 +15,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -34,7 +33,7 @@ createProduct();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-window.onload = () => { }
+window.onload = () => { };
 const cartItemClickListener = (event) => {
   const selected = event.target;
   selected.parentNode.removeChild(selected);
@@ -54,12 +53,12 @@ const itemsCart = (element) => {
   fetchItem(element).then((i) => {
     cartItems.appendChild(createCartItemElement(i));
     saveCartItems(cartItems.innerHTML);
-  })
+  });
 };
 
 document.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
-   const idElement = event.target.parentNode.firstChild.innerHTML
+   const idElement = event.target.parentNode.firstChild.innerHTML;
    itemsCart(idElement);
   }
 });
@@ -68,7 +67,6 @@ const getLocalStorage = () => {
   cartItems.innerHTML = getSavedCartItems();
 };
 
-
 window.onload = () => {
   getLocalStorage();
-}
+};
