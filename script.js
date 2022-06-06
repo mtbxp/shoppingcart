@@ -1,5 +1,6 @@
 const sectionItens = document.querySelector('.items');
 const cartItens = document.querySelector('.cart__items');
+// const cartSection = document.querySelector('.cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -37,7 +38,9 @@ const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código a
+  if (event.target.className === 'cart__item') {
+    cartItens.removeChild(event.target);
+  }
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -48,23 +51,26 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
-// fetchProducts('computador').then((data) => console.log(data));
-
 fetchProducts('computador').then((data) =>
-  data.results.forEach((product) => {
-    sectionItens.appendChild(createProductItemElement(product));
-  }));
+data.results.forEach((product) => {
+  sectionItens.appendChild(createProductItemElement(product));
+}));
+
+function addItemToCart() {
+  document.addEventListener('click', (event) => {
+    if (event.target.className === 'item__add') {
+      const id = event.target.parentElement.firstChild.innerHTML;   
+      
+      fetchItem(id).then((data) =>
+      cartItens.appendChild(createCartItemElement(data)));  
+    }
+  });
+}
 
 // fetchItem('MLB1341706310').then((data) => console.log(data));
+// fetchItem(id).then((data) => console.log(data));
+// fetchProducts('computador').then((data) => console.log(data));
 
-document.addEventListener('click', (event) => {
- if (event.target.className === 'item__add') {
-   const id = event.target.parentElement.firstChild.innerHTML;   
-   // fetchItem(id).then((data) => console.log(data));
-
-   fetchItem(id).then((data) =>
-   cartItens.appendChild(createCartItemElement(data)));  
- }
-});
-
-window.onload = () => {};
+window.onload = () => {
+  addItemToCart();
+};
