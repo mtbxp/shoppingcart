@@ -1,8 +1,6 @@
 require('../mocks/fetchSimulator');
 const { fetchItem } = require('../helpers/fetchItem');
 const item = require('../mocks/item');
-const messageError = new Error('Você deve fornecer um url');
-
 describe('2 - Teste a função fetchItem', () => {
   it('Testa se fetchItem é funçao', () => {
     expect(typeof fetchItem).tobe('function');
