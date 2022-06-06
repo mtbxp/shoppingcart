@@ -48,7 +48,15 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  const li = event.target;
+  li.remove();
 };
+
+const cartItem = document.getElementsByClassName('cart__item');
+
+for (let index = 0; index < cartItem.length; index += 1) {
+  cartItem[index].addEventListener('click', cartItemClickListener);
+}
 
 // ___________________________________________________________________
 // Para um unico requisito!!!
