@@ -1,15 +1,10 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
-const resultsComputador = fetchProducts('computador');
-const arrayCerta = () => {
-  const arraycertissima = [];
-  resultsComputador.forEach((element) => {
-   const { id: sku, title: name, thumbnail: image } = element;
-   arraycertissima.push({ id: sku, title: name, thumbnail: image });
-  });
-  return arraycertissima;
+const resultsComputador = async () => {
+  const mostraCertinho = await fetchProducts('computador');
+  return mostraCertinho;  
 };
-console.log(arrayCerta());
+const classItems = document.querySelector('.items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -50,5 +45,17 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+const arrayCerta = async () => { 
+  const teste = await resultsComputador();
+  teste.forEach((element) => {
+    createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail });
+    classItems.appendChild(
+      createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail }),
+      );
+  });
+};
+
+arrayCerta();
 
 window.onload = () => { };
