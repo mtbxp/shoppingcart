@@ -73,6 +73,7 @@ function putElementInOl({ sku, name, salePrice }) {
   const olFather = document.getElementsByClassName('cart__items')[0];
   const li = createCartItemElement({ sku, name, salePrice });
   olFather.appendChild(li);
+  saveCartItems();
 }
 
 function getID(event) {
@@ -95,7 +96,17 @@ const getButtons = () => {
 };
 // ___________________________________________________________________
 
+const emptyCarty = document.getElementsByClassName('empty-cart')[0];
+
+function emptyCartyFunction() {
+  const olFather = document.getElementsByClassName('cart__items')[0];
+  olFather.innerHTML = '';
+}
+
+emptyCarty.addEventListener('click', emptyCartyFunction);
+
 window.onload = () => { 
   createItems()
   .then(getButtons);
+  getSavedCartItems();
 };
