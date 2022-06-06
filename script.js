@@ -41,13 +41,11 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 const itemsContainer = document.querySelector('.items');
 const cartContainer = document.querySelector('.cart__items');
 
-function appendProducts() {
-  return (obj) => {
-    obj.results.forEach((item) => {
-      itemsContainer.append(createProductItemElement(item));
-    });
-    return itemsContainer;
-  };
+function appendProducts(obj) {
+  obj.results.forEach((item) => {
+    itemsContainer.append(createProductItemElement(item));
+  });
+  return itemsContainer;
 }
 
 function getProduct(event) {
@@ -57,26 +55,26 @@ function getProduct(event) {
   return item;
 }
 
-function appendProductInCart() {
-  return (obj) => {
-    cartContainer.append(createCartItemElement(obj));
-    return cartContainer;
-  };
+function appendProductInCart(obj) {
+  cartContainer.append(createCartItemElement(obj));
+  return cartContainer;
+}
+
+function editCart(event) {
+  event.preventDefault();
+  const item = getProduct(event);
+  if (!item) return;
+  const id = getSkuFromProductItem(item);
+  fetchItem(id)
+    .then((fetchedProduct) => appendProductInCart(fetchedProduct))
+    .then((selectedItemsContainer) => console.log(selectedItemsContainer));
 }
 
 window.onload = () => {
   fetchProducts('computador')
-    .then(appendProducts())
+    .then((fetchedProducts) => appendProducts(fetchedProducts))
     .then((products) => {
-      products.addEventListener('click', (event) => {
-        event.preventDefault();
-        const item = getProduct(event);
-        if (!item) return;
-        const id = getSkuFromProductItem(item);
-        fetchItem(id)
-          .then(appendProductInCart())
-          .then((node) => console.log(node));
-      });
+      products.addEventListener('click', editCart);
       console.log(products);
     });
 };
