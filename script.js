@@ -25,8 +25,10 @@ const createProductItemElement = (sku, name, image) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// Lógica para retirar do carrinho
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  const parentNode = document.querySelector('.cart__items');
+  parentNode.removeChild(event.path[0]);
 };
 
 const createCartItemElement = (sku, name, salePrice) => {
@@ -37,6 +39,15 @@ const createCartItemElement = (sku, name, salePrice) => {
   return li;
 };
 
+// Lógica para adicionar no carrinho
+const buttonListener = async (event) => {
+  const selectedProduct = await fetchItem(event.path[1].childNodes[0].innerText);
+  const parameters = [selectedProduct.id, selectedProduct.title, selectedProduct.price];
+  const createCartItem = createCartItemElement(...parameters);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(createCartItem);
+};
+
 const preparingFunction = async (productName) => {
   if (productName === 'computador') {
     const data = await fetchProducts(productName);
@@ -45,28 +56,10 @@ const preparingFunction = async (productName) => {
       const sectionContainer = document.querySelector('.items');
       const parameters = [product.id, product.title, product.thumbnail];
       const sectionProducts = createProductItemElement(...parameters);
+      sectionProducts.addEventListener('click', buttonListener);
       sectionContainer.appendChild(sectionProducts);
     });
   }
 };
-
-const timeOut = () => {
-  setTimeout(() => {
-    const allButtons = document.querySelectorAll('.item__add');
-    const allIds = document.querySelectorAll('.item__sku');
-    allButtons.forEach((button, index) => {
-      button.addEventListener('click', async () => {
-        const selectedProduct = await fetchItem(allIds[index].innerText);
-        const parameters = [selectedProduct.id, selectedProduct.title, selectedProduct.price];
-        console.log(parameters);
-        const createCartItem = createCartItemElement(...parameters);
-        const ol = document.querySelector('.cart__items');
-        ol.appendChild(createCartItem);
-      });
-    });
-  }, 1000);
-};
-
-timeOut();
 
 window.onload = () => { preparingFunction('computador'); };
