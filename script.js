@@ -40,7 +40,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const productList = document.getElementsByClassName('items');
+const productList = document.getElementsByClassName('product');
 
 const createListProduct = async () => {
   const valeu = await fetchProducts('computador');
