@@ -67,4 +67,13 @@ const addComputerCart = async (event) => {
 const btn = document.querySelector('.items');
 btn.addEventListener('click', addComputerCart);
 
+const emptyCart = () => {
+  const allItems = document.querySelectorAll('li');
+  for (let value of allItems) {
+    value.remove();
+  }
+}
+const btnEmpty = document.querySelector('button[class="empty-cart"]');
+btnEmpty.addEventListener('click', emptyCart);
+
 window.onload = () => { addAllComputers(); };
