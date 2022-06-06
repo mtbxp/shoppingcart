@@ -4,6 +4,11 @@ const getSavedCartItems = require('../helpers/getSavedCartItems');
 localStorageSimulator('getItem');
 
 describe('4 - Teste a função getSavedCartItems', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  it('Verifica se getSavedCartItems é uma função', () => {
+    expect(typeof getSavedCartItems).toBe()
+  })
+  
+  it('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado', () => {
+
+  });
 });
