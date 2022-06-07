@@ -14,6 +14,8 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
   // REMOVER O PRODUTO DO CARRINHO!
+  const remove = event.target;
+  remove.parentNode.removeChild(remove);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
