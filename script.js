@@ -24,8 +24,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// Final Value
-
 const sumTotalValue = () => {
   const infoProducts = JSON.parse(getSavedCartItems());
   let finalValue = 0;
@@ -43,7 +41,7 @@ const sumTotalValue = () => {
 
 const totalValue = async () => {
   const elementTotalPrice = document.getElementsByClassName('total-price')[0];
-  elementTotalPrice.innerText = (sumTotalValue());
+  elementTotalPrice.innerText = sumTotalValue();
 };
 
 const appendElementToItems = (element) => {
@@ -99,7 +97,7 @@ const addEventToButtonsItems = () => {
   }
 };
 
-const runCreateProduct = async () => {
+const renderProducts = async () => {
   const results = await fetchProducts('computador');
   results.forEach((item) => {
     const { id, title, thumbnail } = item;
@@ -121,7 +119,25 @@ const appendSavedItemsCart = (arrayOfInnerTexts) => {
   });
 };
 
-const loadSave = () => {
+const removeChildren = (childrenCart) => {
+  while (childrenCart[0]) {
+    childrenCart[0].remove();
+  }
+  refreshSave();
+  totalValue();
+};
+
+const addEventToBTNEmptyCart = () => {
+  const elementButtonEmptyCart = document.getElementsByClassName('empty-cart')[0];
+  elementButtonEmptyCart.addEventListener('click', () => {
+    const elementCart = document.getElementsByClassName('cart__items')[0];
+    const childrenCart = elementCart.children;
+
+    removeChildren(childrenCart);
+  });
+};
+
+const renderItemsSaved = () => {
   const savedItems = JSON.parse(getSavedCartItems());
   if (savedItems) {
     appendSavedItemsCart(savedItems);
@@ -130,6 +146,7 @@ const loadSave = () => {
 };
 
 window.onload = () => {
-  runCreateProduct();
-  loadSave();
+  renderProducts();
+  renderItemsSaved();
+  addEventToBTNEmptyCart();
 };
