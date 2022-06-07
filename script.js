@@ -1,4 +1,3 @@
-const eachItem = document.getElementsByClassName('item'); /* Represents each item of the list */
 const itemsList = document.querySelector('.items'); /* Represents the list with items to be selected */
 const cartItemsList = document.querySelector('.cart__items'); /* Represents the list of selected items */
 
@@ -39,24 +38,25 @@ const generateFetchedProducts = async () => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = async (event) => {
+const removeCartProduct = (selectedProduct) => {
+  selectedProduct.target.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', removeCartProduct);
   return li;
 };
 
-const generateCartProduct = async () => {
+const generateCartProduct = () => {
   const addProductButtons = document.querySelectorAll('.item__add');
   addProductButtons.forEach((button) => {
     button.addEventListener('click', async () => {
       const productId = getSkuFromProductItem(button.parentElement);
       const { id: sku, title: name, price: salePrice } = await fetchItem(productId);
-      const selectedProductInfo = await createCartItemElement({
+      const selectedProductInfo = createCartItemElement({
         id: sku,
         title: name,
         price: salePrice });
