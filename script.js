@@ -90,11 +90,11 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const prepareSite = async () => {
   const data = await fetchProducts('computador');
-  const dataLength = data.results;
-  const index = Math.round(Math.random() * dataLength.length);
-  const sku = await data.results[index].id;
-  const name = await data.results[index].title;
-  const image = await data.results[index].thumbnail;
+  // const dataLength = data.results;
+  // const index = Math.round(Math.random() * dataLength.length);
+  const sku = await data.results[36].id;
+  const name = await data.results[36].title;
+  const image = await data.results[36].thumbnail;
   const result = {
     sku,
     name,
