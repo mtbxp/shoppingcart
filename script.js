@@ -39,7 +39,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -47,6 +47,23 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const renderCartItem = async (itemID) => {
+  const cartItems = document.querySelector('.cart__items');
+  const data = await fetchItem(itemID);
+  cartItems.appendChild(createCartItemElement(data));
+};
+
+function addCartEvent() {
+  const addBtn = document.querySelector('.items');
+  addBtn.addEventListener('click', async (event) => {
+    if (event.target.className === 'item__add') {
+    const id = event.target.parentElement.firstChild.innerHTML;
+    renderCartItem(id);
+    }
+  });
+} 
+
 window.onload = () => {
   renderProducts();
+  addCartEvent();
 };
