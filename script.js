@@ -1,4 +1,6 @@
-const chamaClasse = document.getElementsByClassName('items')[0];
+const classeItems = document.getElementsByClassName('items')[0];
+const classeCartItems = document.getElementsByClassName('cart__items')[0];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,7 +30,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 function listaProdutos() {
   fetchProducts('computador').then((resposta) => 
   resposta.results.forEach((item) => 
-  chamaClasse.appendChild(createProductItemElement(item))));
+  classeItems.appendChild(createProductItemElement(item))));
 }
 listaProdutos();
 
@@ -38,7 +40,7 @@ const cartItemClickListener = (event) => {
   /* coloque seu código aqui! */
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -46,8 +48,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+function adicionaProdutos(produto) {
+  fetchItem(produto).then((response) => 
+  classeCartItems.appendChild(createCartItemElement(response)));
+}
 
-// criar uma função que chama a create com os parametros
-// chamar a função fetchProducts, tratando a promessa
-// 
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const acessaProduto = event.target.parentNode.firstChild.innerText;
+    adicionaProdutos(acessaProduto);
+  }
+});
+
+window.onload = () => { };
