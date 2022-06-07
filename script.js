@@ -65,13 +65,13 @@ const cartItemClickListener = async (event) => {
     await saveCartItems(itemCart.innerHTML);
 };
 
-// itemCart.addEventListener('click', cartItemClickListener);
+itemCart.addEventListener('click', cartItemClickListener);
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
