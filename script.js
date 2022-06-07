@@ -1,10 +1,30 @@
 const lista = document.querySelector('.cart__items');
+const totalPrice = document.createElement('p');
+totalPrice.classList.add('total-price');
+const secaoCarrinho = document.querySelector('.cart');
+secaoCarrinho.appendChild(totalPrice);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+};
+
+const cartPrice = async () => {
+  const data = await fetchProducts('computador');
+  const produtos = data.results;
+  let soma = 0;
+  const id = [];
+  for (let i = 0; i < lista.children.length; i += 1) {
+    id.push(lista.children[i].innerText.split(' ')[1]);
+    console.log(id);
+  }
+  id.forEach((element) => {
+    const preco = produtos.find((element2) => element2.id === element).price;
+    soma += preco;
+  });
+  totalPrice.innerText = Math.round(soma);
 };
 
 const saveItems = () => {
@@ -39,6 +59,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const cartItemClickListener = (event) => {
   event.target.remove();
   saveItems();
+  cartPrice();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -71,6 +92,7 @@ const addItemCart = async () => {
       const item = newLi.innerText;
       lista.appendChild(newLi);
       saveItems();
+      cartPrice();
     });
   }
 };
