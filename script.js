@@ -29,7 +29,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const mostraProdutos = async () => {
   const { results } = await fetchProducts();
   console.log(results);
-}
+};
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
