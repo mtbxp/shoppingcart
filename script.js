@@ -66,6 +66,15 @@ for (let index = 0; index < cartItem.length; index += 1) {
 }
 };
 
+function saveCartItems2() {
+  const cartItem = document.getElementsByClassName('cart__item');
+  const array = [];
+  for (let index = 0; index < cartItem.length; index += 1) {
+   array.push(cartItem[index].innerHTML);
+  }
+ localStorage.setItem('cartItems', JSON.stringify(array));
+}
+
 // ___________________________________________________________________
 // Para um unico requisito!!!
 
@@ -81,7 +90,7 @@ function putElementInOl({ sku, name, salePrice }) {
   const olFather = document.getElementsByClassName('cart__items')[0];
   const li = createCartItemElement({ sku, name, salePrice });
   olFather.appendChild(li);
-  saveCartItems();
+  saveCartItems2();
 }
 
 function getID(event) {
@@ -123,9 +132,23 @@ function createLoading() {
   h1.innerText = 'carregando...';
 }
 
+function loadLocalStorage() {
+  if (getSavedCartItems() === null) {
+    return null;
+  }
+  const newArray = JSON.parse(getSavedCartItems());
+  const olFather = document.getElementsByClassName('cart__items')[0];
+  for (let index = 0; index < newArray.length; index += 1) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerHTML = newArray[index];
+  olFather.appendChild(li);
+}
+}
+
 window.onload = () => { 
   createItems()
   .then(getButtons);
-  getSavedCartItems();
+  loadLocalStorage();
   createLoading();
 };
