@@ -18,6 +18,7 @@ const createCustomElement = (element, className, innerText) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// Deleta os elementos
 const cartItemClickListener = (event) => {
   // Referência:https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
   listShop.removeChild(event.target);
@@ -37,7 +38,7 @@ const putCart = async (elm) => {
   const response = await fetchItem(idI);
   const itemsC = createCartItemElement(response);
   listShop.appendChild(itemsC);
-  /* saveCartItems(cartItems.innerHTML); */
+  saveCartItems(JSON.stringify(itemsC.innerHTML));
 };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
@@ -83,9 +84,16 @@ const sumValShop = () => {
 const buttom = document.querySelector('.empty-cart');
 buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
+  localStorage.clear();
 });
+
+// Carregando o localStorage
+const serchMemori = () => {
+  const response = JSON.parse(getSavedCartItems());
+  listShop.innerHTML = response;
+};
 
 window.onload = () => {
   listProdct();
-  getSavedCartItems();
+  serchMemori();
 };
