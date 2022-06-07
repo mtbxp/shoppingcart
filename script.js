@@ -86,8 +86,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   document.querySelector('.items').appendChild(section);
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 window.onload = () => {
   // CHAMADA DA FUNÇÃO fetchProducts
   document.querySelector(ordenadList)
