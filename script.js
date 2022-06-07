@@ -13,12 +13,14 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
+
+const cartItem = document.querySelector('.cart__items');
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const cartItem = document.querySelector('.cart__items');
   cartItem.appendChild(li);
 };
 
@@ -79,7 +81,6 @@ for (let index = 0; index < addItem.length; index += 1) {
 const salePrices = () => {
   const counter = document.createElement('p');
   counter.className = 'cart__item';
-  const cartItem = document.querySelector('.cart__items');
   cartItem.appendChild(counter);
   arr.push(salePrice);
   counter.innerText = arr.reduce((acc, cur) => acc + cur);
@@ -110,8 +111,7 @@ const prepareSite = async () => {
 
 const btn = document.querySelector('.empty-cart');
 btn.addEventListener('click', () => {
-const list = document.querySelector('.cart__items');
-list.innerHTML = '';
+cartItem.innerHTML = '';
 });
 
 window.onload = () => {
