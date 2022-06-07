@@ -74,6 +74,11 @@ document.addEventListener('click', (event) => {
     const itemlocalStorage = document.querySelector('.cart__items');
     saveCartItems(itemlocalStorage.innerHTML);
  }
+
+  if (event.target.classList.contains('empty-cart')) {
+    ol.innerHTML = '';
+    localStorage.clear();
+  }
 });
 
 getItemLocalStorage = () => {
