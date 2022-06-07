@@ -34,6 +34,16 @@ const appendChildItems = () => {
   return results;
 };
 // appendChildItems();
+const createTextLoading = async () => {
+  const sectionText = document.querySelector('.textLoading');
+  const paragrafo = document.createElement('p');
+  paragrafo.innerText = 'carregando...';
+  paragrafo.className = 'loading';
+  sectionText.appendChild(paragrafo);
+  await appendChildItems();
+  paragrafo.remove();
+};
+createTextLoading();
 
 const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
@@ -52,20 +62,15 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 const appendChildCreateCart = (param) => {
   fetchItem(param).then((el) => cartItems.appendChild(createCartItemElement(el)));
 };
-document.addEventListener('click', (event) => {
+  document.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
     const section = event.target.parentNode.firstChild.innerText;
     appendChildCreateCart(section);
-}
+  }
 });
-const createTextLoading = async () => {
-  const sectionText = document.querySelector('.textLoading');
-  const paragrafo = document.createElement('p');
-  paragrafo.innerText = 'carregando...';
-  paragrafo.className = 'loading';
-  sectionText.appendChild(paragrafo);
-  await appendChildItems();
-  paragrafo.remove();
-};
-
-window.onload = () => { createTextLoading(); };
+const buttonEsvaziarCarrinho = document.querySelector('.empty-cart');
+buttonEsvaziarCarrinho.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  localStorage.clear();
+});
+window.onload = () => { };
