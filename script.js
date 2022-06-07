@@ -26,21 +26,22 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
   return section;
 };
+
 const appendChildItems = () => {
   const results = fetchProducts('computador')
     .then((element) => element.results
       .forEach((el) => items.appendChild(createProductItemElement(el))));
   return results;
 };
-appendChildItems();
+// appendChildItems();
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) =>
+  item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
-
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -57,4 +58,14 @@ document.addEventListener('click', (event) => {
     appendChildCreateCart(section);
 }
 });
-window.onload = () => { };
+const createTextLoading = async () => {
+  const sectionText = document.querySelector('.textLoading');
+  const paragrafo = document.createElement('p');
+  paragrafo.innerText = 'carregando...';
+  paragrafo.className = 'loading';
+  sectionText.appendChild(paragrafo);
+  await appendChildItems();
+  paragrafo.remove();
+};
+
+window.onload = () => { createTextLoading(); };
