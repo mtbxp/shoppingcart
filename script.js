@@ -119,6 +119,7 @@ const addItemCart = async () => {
 const loadingScreen = () => {
   const newDiv = document.createElement('div');
   newDiv.id = 'carregando';
+  newDiv.classList.add('loading');
   newDiv.innerHTML = 'carregando...';
   const secao = document.getElementsByClassName('items')[0];
   secao.appendChild(newDiv);
