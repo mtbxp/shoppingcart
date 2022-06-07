@@ -26,10 +26,35 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
-/* const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText; */
+
+const addItemCartList = (item) => {
+  let dados = getSavedCartItems();
+  if (dados === null) dados = [];
+  dados.push(item);
+  saveCartItems(dados);
+};
+
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const getSkuFromProductItem = (event) => {
+  const str = event.target.innerText;
+  return str.slice(5, str.indexOf('|') - 1);
+};
+
+/* const clearList = (classItem) => {
+  let childimg = classItem[0].lastElementChild;
+  while (childimg) {
+    classItem[0].removeChild(childimg);
+    childimg = classItem[0].lastElementChild;
+  }
+}; */
 
 const cartItemClickListener = (event) => {
+  const dados = getSavedCartItems('cartItems');
+  const element = getSkuFromProductItem(event);
+  dados.splice(dados.indexOf(element), 1);
   event.target.remove();
+  saveCartItems(dados);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -47,13 +72,30 @@ const addCartItemClickListener = () => {
       const { id: sku, 
               title: name, 
               price: salePrice } = await fetchItem(itemCart);
-      console.log(sku, name, salePrice);
+      addItemCartList(sku);
       cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
     });
   });
 };
 
-const showList = async () => {
+/* const updateListCartItems = () => {
+  const dados = getSavedCartItems('cartItems');
+  const N = cartItems[0].childElementCount;
+
+  if (dados !== null && dados.lenght !== N) {
+    clearList(cartItems);
+    const totalPrice = [];
+
+    dados.map(async (item) => {
+      const { id: sku, title: name, price: salePrice } = await fetchItem(item);
+      totalPrice.push(salePrice);
+      console.log(totalPrice);
+      cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
+    });
+  }
+}; */
+
+const showListProducts = async () => {
   const data = await fetchProducts('computador');
   data.map((item) => {
     const { id: sku, title: name, thumbnail: image } = item;
@@ -63,6 +105,8 @@ const showList = async () => {
   addCartItemClickListener();
 };
 
+// updateListCartItems();
+
 window.onload = () => { 
-  showList();
+  showListProducts();
 };
