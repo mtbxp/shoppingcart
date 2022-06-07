@@ -1,5 +1,5 @@
-const { log } = require('mochawesome/src/utils');
-
+const sectionPai = document.querySelector('.items');
+console.log(sectionPai);
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,6 +26,11 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const mostraProdutos = async () => {
+  const { results } = await fetchProducts();
+  console.log(results);
+}
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -40,4 +45,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => {
+  mostraProdutos();
+ };

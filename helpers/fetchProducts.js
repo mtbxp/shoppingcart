@@ -1,5 +1,7 @@
-const fetchProducts = () => {
-  // seu código aqui
+const fetchProducts = async (computador) => {
+ const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${computador}`);
+ const result = await response.json();
+ return result;
 };
 
 if (typeof module !== 'undefined') {
@@ -7,4 +9,3 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
-fetchProducts('computador');
