@@ -1,4 +1,4 @@
-getSavedCartItems();
+// getSavedCartItems();
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');

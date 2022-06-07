@@ -17,13 +17,10 @@ describe('3 - Teste a função saveCartItems', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '<ol><li>Item</li></ol>');
   });
 
-  // test('', () => {
-  //   const obj = {teste: 'entrada'};
-  //   const array = [];
-  //   array.push(obj);
-  //   // localStorage.setItem('cartItems', JSON.stringify(array));
-  //   saveCartItems(obj, array);
-  //   const storage = localStorage.getItem('cartItems');
-  //   expect(storage).toEqual(0);
-  // });
+  test('', () => {
+    const obj = {teste: 'entrada'};
+    const array = [];
+    saveCartItems(obj, array);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '[{"teste":"entrada"}]');
+  });
 });
