@@ -1,6 +1,6 @@
-const fetchProducts = async (computador) => {
+const fetchProducts = async (ItemID) => {
   try {
-  const site = `https://api.mercadolibre.com/sites/MLB/search?q=${computador}`;
+  const site = `https://api.mercadolibre.com/sites/MLB/search?q=${ItemID}`;
 
   const response = await fetch(site);
   const information = await response.json();
