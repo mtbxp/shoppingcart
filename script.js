@@ -22,9 +22,26 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
+};
+
+const listProdct = async () => {
+  const divs = document.createElement('div');
+  const prodct = document.querySelector('.items');
+
+  divs.className = 'loading';
+  divs.innerHTML = 'carregando...';
+  prodct.appendChild(divs);
+  
+  const data = await fetchProducts('computador');
+  const load = document.querySelector('.loading');
+  load.remove();
+
+  data.results.forEach((elm) => {
+    const element = createProductItemElement(elm);
+    prodct.appendChild(element);
+  });
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -42,7 +59,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// Somando os valores totais
+const putCart = (pdr) => {
+  const cards = document.querySelectorAll(listShop);
+  const itemsC = createCartItemElement(pdr);
+  itemsC.addEventListener('click', cartItemClickListener);
+  cards.appendChild(itemsC);
+};
+
+// Somando os valores totais!
 const sumValShop = () => {
   if (listShop.length === 0) {
     totPrice.innerHTML = 'Total: $0';
@@ -57,6 +81,6 @@ buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
 });
 
-window.onload = async () => {
-  listShop.innerHTML = await getSavedCartItems();
+window.onload = () => {
+  listProdct();
 };

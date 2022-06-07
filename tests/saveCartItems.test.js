@@ -4,27 +4,27 @@ const saveCartItems = require('../helpers/saveCartItems');
 localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
-  it('Ao  executar saveCartItems(<ol><li>Item</li></ol>) localStorage.setItem é chamado', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>');
+  it('Ao  executar saveCartItems(<ol><li>Item</li></ol>) localStorage.setItem é chamado', () => {
+    saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 
-  it('Ao  executar saveCartItems(<ol><li>Item</li></ol>) localStorage.setItem é chamado com os parametros corrtos', async () => {
-    const response = await saveCartItems('<ol><li>Item</li></ol>');
+  it('Ao  executar saveCartItems(<ol><li>Item</li></ol>) localStorage.setItem é chamado com os parametros corrtos', () => {
+    const response = saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '<ol><li>Item</li></ol>');
   });
 
-  it('Teste se saveCartItems é uma função', async () => {
+  it('Teste se saveCartItems é uma função', () => {
     expect(typeof saveCartItems).toBe('function');
   });
 
-  it('Teste se localStorageSimulator é uma função', async () => {
+  it('Teste se localStorageSimulator é uma função', () => {
     expect(typeof localStorageSimulator).toBe('function');
   });
 
-  it('Teste erro function SaveCartItems', async () => {
+  it('Teste erro function SaveCartItems', () => {
     try {
-      await saveCartItems();
+      saveCartItems();
     } catch (err) {
       expect(err).toEqual(new Error('you make any error'));
     }
