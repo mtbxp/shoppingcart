@@ -46,16 +46,31 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+/* Made to generate a quick loading sentence centered in 
+the screen. The phrase is removed after the first product
+is fetched */
+
+const generateLoading = () => {
+  const loading = document.createElement('span');
+  loading.innerText = 'Carregando...';
+  loading.style.display = 'center';
+  loading.className = 'loading';
+  itemsList.appendChild(loading);
+};
+
 /* It gets all the fetched products according to the data
 base. As productData.results is an array with objects, forEach
 was selected to created an element for each product found */
 
 const generateFetchedProducts = async () => {
+  generateLoading();
   const productsData = await fetchProducts('computador');
   const allFetchedProducts = productsData.results;
   allFetchedProducts.forEach((fetchedProduct) => {
     const generateProduct = createProductItemElement(fetchedProduct);
     itemsList.appendChild(generateProduct);
+    const allLoadings = document.querySelectorAll('.loading');
+    allLoadings.forEach((loading) => loading.remove());
   });
 };
 
