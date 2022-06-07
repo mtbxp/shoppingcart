@@ -1,6 +1,7 @@
 const lista = document.querySelector('.cart__items');
 const totalPrice = document.createElement('p');
 totalPrice.classList.add('total-price');
+totalPrice.innerText = '$0';
 const secaoCarrinho = document.querySelector('.cart');
 secaoCarrinho.appendChild(totalPrice);
 
@@ -18,13 +19,18 @@ const cartPrice = async () => {
   const id = [];
   for (let i = 0; i < lista.children.length; i += 1) {
     id.push(lista.children[i].innerText.split(' ')[1]);
-    console.log(id);
   }
   id.forEach((element) => {
     const preco = produtos.find((element2) => element2.id === element).price;
     soma += preco;
   });
-  totalPrice.innerText = Math.round(soma);
+  totalPrice.innerText = `$${soma.toFixed(2)}`;
+  localStorage.setItem('price', JSON.stringify(soma));
+};
+
+const setPrice = () => {
+  const price = JSON.parse(localStorage.getItem('price'));
+  totalPrice.innerHTML = `$${price.toFixed(2)}`;
 };
 
 const saveItems = () => {
@@ -54,6 +60,18 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const limparCarrinho = () => {
+  const button = document.getElementsByClassName('empty-cart')[0];
+  button.addEventListener('click', () => {
+    const temp = lista.children.length;
+    for (let i = 0; i < temp; i += 1) {
+      lista.lastChild.remove();
+    }
+    cartPrice();
+    localStorage.clear('cartItems');
+  });
+};
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -71,13 +89,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const getItems = () => {
+  if (JSON.parse(getSavedCartItems()) !== null) {
   const produtos = JSON.parse(getSavedCartItems());
-  produtos.forEach((element) => {
+  for (let i = 0; i < produtos.length; i += 1) {
     const li = document.createElement('li');
-    li.innerHTML = element;
+    li.innerHTML = produtos[i];
     li.addEventListener('click', cartItemClickListener);
     lista.appendChild(li);
-  });
+  }
+}
 };
 
 const addItemCart = async () => {
@@ -107,4 +127,7 @@ window.onload = async () => {
   });
   await addItemCart();
   getItems();
+  setPrice();
 };
+
+limparCarrinho();
