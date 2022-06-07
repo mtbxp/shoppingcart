@@ -8,16 +8,16 @@ describe('2 - Teste a função fetchItem', () => {
   });
   it('Should fetch with URL', async () => {
     const URL = 'https://api.mercadolibre.com/items/MLB1615760527';
-    fetchItem('MLB1615760527');
+    await fetchItem('MLB1615760527');
 
     expect(fetch).toBeCalledWith(URL);
   });
   it('Should equals item', async () => {
-    expect(fetchItem('MLB1615760527')).toEqual(item);
+    expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
   it('Should error message "You must provide an url"', async () => {
     const expectedError = new Error('You must provide an url');
     
-    expect(fetchItem()).toEqual(expectedError);
+    expect(await fetchItem()).toEqual(expectedError);
   });
 });
