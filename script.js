@@ -95,8 +95,19 @@ const removeItemsCart = (event) => {
 };
 
 btnRemove.addEventListener('click', removeItemsCart);
+
+const load = async () => {
+const li = document.createElement('li');
+li.innerText = 'carregando...';
+li.className = 'loading';
+listCart.appendChild(li);
+await fetchProducts();
+li.remove();
+};
+
 getToLocal();
 
 window.onload = () => {
+  load();
   getProduct();
  };
