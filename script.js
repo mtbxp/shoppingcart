@@ -56,11 +56,13 @@ const cartItemClickListener = (event) => {
   // }
 };
 
+olCartItems.addEventListener('click', cartItemClickListener);
+
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
@@ -72,7 +74,7 @@ const getProducts = () => {
     products.results.forEach((product) =>
       sectionItems.appendChild(createProductItemElement(product))));
 };
-//
+// 
 
 function getLocalStorage() {
   olCartItems.innerHTML = getSavedCartItems();
@@ -83,6 +85,7 @@ btnClear.addEventListener('click', () => {
   olCartItems.innerHTML = '';
   // limpar innerHTML da section (elementos que constituem a lista de produtos) e o innerText do elemento que recebe o preço.
   totalPrice.innerText = '';
+  saveCartItems(olCartItems.innerHTML);
 });
 
 // Evento de click que adiciona ao carrinho
@@ -103,7 +106,14 @@ sectionItems.addEventListener('click', (event) => {
 // innerText = 'carregando...'
 // className = 'loading'
 // o elemento deve aparecer DURANTE a chamada da API
+async function loadingMsg() {
+  const loadMsg = document.createElement('div');
+  loadMsg.innerText = 'carregando...';
+  loadMsg.className = 'loading';
+  sectionItems.appendChild(loadMsg);
+  await fetchProducts();
+  loadMsg.remove();
+}
+// getProducts();
 
-getProducts();
-
-window.onload = () => { getProducts(); getLocalStorage(); };
+window.onload = () => { getProducts(); getLocalStorage(); loadingMsg(); };
