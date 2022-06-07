@@ -59,8 +59,6 @@ function addListenerToSavedItems(newList, list) {
   }
 }
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 window.onload = () => {
   const itemsSection = document.querySelector('.items');
   const list = document.querySelector('ol');
