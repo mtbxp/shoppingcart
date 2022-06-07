@@ -117,7 +117,7 @@ const createPage = async () => {
 // };
 
 window.onload = async () => {
-  // await createPage();
+  await createPage();
   // loadCartItems();
   // loadCartPrice();
   // const addToCartButtons = document.querySelectorAll('.item__add');
