@@ -1,5 +1,3 @@
-const getSavedCartItems = require("./helpers/getSavedCartItems");
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -18,6 +16,7 @@ const cartItemClickListener = (event) => {
   // REMOVER O PRODUTO DO CARRINHO!
   const remove = event.target;
   remove.parentNode.removeChild(remove);
+  saveCartItems(document.querySelector('body > section > section.cart > ol'));
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -64,7 +63,14 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 window.onload = () => {
   // CHAMADA DA FUNÇÃO fetchProducts
-  getSavedCartItems();
+  document.querySelector('body > section > section.cart > ol')
+    .innerHTML = JSON.parse(getSavedCartItems());
+  
+  const response = document.querySelectorAll('body > section > section.cart > ol > li');
+
+  response.forEach((item) => item.addEventListener('click', cartItemClickListener));
+    // .addEventListener('click', cartItemClickListener);
+
   fetchProducts('computador')
     .then((result) => result
       .results

@@ -1,9 +1,7 @@
-const saveCartItems = (product) => {
+const saveCartItems = (ordenadList) => {
   // seu código aqui
-  
-  const response = product;
-
-  localStorage.setItem('cartItems', response);
+  console.log(JSON.stringify(ordenadList.innerHTML));
+  localStorage.setItem('cartItems', JSON.stringify(ordenadList.innerHTML));
 };
 
 if (typeof module !== 'undefined') {
