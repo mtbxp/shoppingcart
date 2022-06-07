@@ -1,7 +1,7 @@
 const lista = document.querySelector('.cart__items');
 const totalPrice = document.createElement('p');
 totalPrice.classList.add('total-price');
-totalPrice.innerHTML = '$0.00';
+totalPrice.innerHTML = '0';
 const secaoCarrinho = document.querySelector('.cart');
 secaoCarrinho.appendChild(totalPrice);
 
@@ -24,13 +24,13 @@ const cartPrice = async () => {
     const preco = produtos.find((element2) => element2.id === element).price;
     soma += preco;
   });
-  totalPrice.innerText = `$${soma.toFixed(2).toString()}`;
+  totalPrice.innerText = `${Math.round(soma).toString()}`;
   localStorage.setItem('price', JSON.stringify(soma));
 };
 
 const setPrice = () => {
   const price = JSON.parse(localStorage.getItem('price'));
-  totalPrice.innerHTML = `$${price.toFixed(2).toString()}`;
+  totalPrice.innerHTML = `${Math.round(price).toString()}`;
 };
 // Funções do preco
 const saveItems = () => {
