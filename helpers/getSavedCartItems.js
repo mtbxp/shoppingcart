@@ -6,7 +6,7 @@ const getSavedCartItems = () => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerHTML = newArray[index];
-  olFather.appendChild(li);
+  olFather.appendChild(li); 
 }
 };
 if (typeof module !== 'undefined') {
