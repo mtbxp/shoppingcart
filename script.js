@@ -45,14 +45,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const sumValShop = () => {
   const listShop = document.getElementsByClassName('cart__items');
   if (listShop.length === 0) {
-    totPrice.innerText = 'Total: $0';
+    totPrice.innerHTML = 'Total: $0';
   }
-  const totalVal = listShop.reduce((arr, val) => {
-    let result = 0;
-    result += arr.salePrice + val.salePrice;
-    return result;
-  }, 0);
-  totPrice.innerText = `Total: $${Math.round(totalVal)}`;
+  const totalVal = listShop.reduce((arr, val) => arr.salePrice + val.salePrice, 0);
+  totPrice.innerHTML = `Total: $${Math.round(totalVal)}`;
 };
 
 const listItems = document.querySelector('.cart__items');
