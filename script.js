@@ -41,18 +41,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const renderProduct = async () => {
-  const computadorProduct = document.querySelector('.items');
-  try {
-  const product = await fetchProducts('computador');
-  product.results.forEach((element) => {
-    const productCard = createProductItemElement(element);
-    computadorProduct.appendChild(productCard);
-  });
-  } catch (error) {
-    computadorProduct.innerHTML = `<h2>${error}</h2>`;
-  }
-};
+// const renderProduct = async () => {
+//   const computadorProduct = document.querySelector('.items');
+//   try {
+//   const product = await fetchProducts('computador');
+//   product.results.forEach((element) => {
+//     const productCard = createCustomElement(element);
+//     computadorProduct.appendChild(productCard);
+//   });
+//   } catch (error) {
+//     computadorProduct.innerHTML = `<h2>${error}</h2>`;
+//   }
+// };
 
 const renderImg = async () => {
   const computadorProduct = document.querySelector('.items');
@@ -73,6 +73,6 @@ const renderImg = async () => {
 };
 
 window.onload = () => {
-  renderProduct();
+  // renderProduct();
   renderImg();
 };
