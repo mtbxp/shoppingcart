@@ -68,5 +68,4 @@ window.onload = async () => {
   // Adicionando o Botao na captura dos items
   const addButtonsItem = document.querySelectorAll('.item__add');
   addButtonsItem.forEach((button) => button.addEventListener('click', addProductsToCarrinho));
-  
 };
