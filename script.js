@@ -1,3 +1,5 @@
+const getSavedCartItems = require("./helpers/getSavedCartItems");
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -24,6 +26,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.style.margin = '30px';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  
   return li;
 };
 
@@ -36,9 +39,9 @@ const readerProductChoosed = async (element) => {
   const response = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = response;
   const itemList = createCartItemElement({ sku, name, salePrice });
-  saveCartItems(response);
-
   document.querySelector('.cart__items').appendChild(itemList);
+
+  saveCartItems(itemList.parentNode);
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -61,6 +64,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 window.onload = () => {
   // CHAMADA DA FUNÇÃO fetchProducts
+  getSavedCartItems();
   fetchProducts('computador')
     .then((result) => result
       .results
