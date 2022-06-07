@@ -1,6 +1,6 @@
 /* const { list } = require('mocha/lib/reporters/base'); */
 const totPrice = document.querySelector('.total-price');
-const listShop = document.getElementsByClassName('cart__items');
+const listShop = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -16,16 +16,42 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => {
+  // Referência:https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
+  listShop.removeChild(event.target);
+};
+
+const createCartItemElement = ({ id, title, price }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+// Adicinando ao carrinho
+const putCart = async (elm) => {
+  const idI = elm.target.parentNode.firstChild.innerText;
+  const response = await fetchItem(idI);
+  const itemsC = createCartItemElement(response);
+  listShop.appendChild(itemsC);
+  /* saveCartItems(cartItems.innerHTML); */
+};
+
+const createProductItemElement = ({ id, title, thumbnail }) => {
   const section = document.createElement('section');
   section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('span', 'item__sku', id));
+  section.appendChild(createCustomElement('span', 'item__title', title));
+  section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+    .addEventListener('click', putCart);
   return section;
 };
 
+// Criando lista de produtos
 const listProdct = async () => {
   const divs = document.createElement('div');
   const prodct = document.querySelector('.items');
@@ -42,28 +68,6 @@ const listProdct = async () => {
     const element = createProductItemElement(elm);
     prodct.appendChild(element);
   });
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // Referência:https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
-  listShop.removeChild(event.target);
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
-const putCart = (pdr) => {
-  const cards = document.querySelectorAll(listShop);
-  const itemsC = createCartItemElement(pdr);
-  itemsC.addEventListener('click', cartItemClickListener);
-  cards.appendChild(itemsC);
 };
 
 // Somando os valores totais!
@@ -83,4 +87,5 @@ buttom.addEventListener('click', () => {
 
 window.onload = () => {
   listProdct();
+  getSavedCartItems();
 };

@@ -77,6 +77,7 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  
 }
 
 .title strong {
@@ -131,7 +132,7 @@ body {
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
-  background-color: rgb(241, 241, 238);
+  background-color: rgb(221, 221, 221);
   height: 100vh;
 }
 
