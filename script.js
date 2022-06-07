@@ -23,12 +23,12 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+const cartItemClickListener = (event) => { 
+const o = event.target;
+o.innerText = '';
+};
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -46,9 +46,10 @@ fetchProducts('computador').then((pc) =>
 
  const meuCarrinho = async () => {
   const cartItem = document.getElementsByClassName('cart__items')[0];
-  const la = await fetchItem('MLB1615760527').then((trem) => 
+  const carrinho = await fetchItem('MLB1615760527').then((trem) => 
   ({ sku: trem.id, name: trem.title, salePrice: trem.price }));
-  cartItem.appendChild(createCartItemElement(la));
+  cartItem.appendChild(createCartItemElement(carrinho));
  };
 meuCarrinho();
+
 window.onload = () => {};
