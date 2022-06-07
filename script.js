@@ -21,7 +21,9 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createCustomElement('span', 'item__sku', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
+  );
   return section;
 };
 
@@ -37,7 +39,7 @@ const removePrice = (price) => {
   return valorArredondado;
 };
 // retorna o valor total
-const returnSpam = () => document.querySelector('.total-price'); 
+const returnSpam = () => document.querySelector('.total-price');
 
 // renderiza o total do produto
 const renderRemovePrice = (price) => {
@@ -49,20 +51,38 @@ const renderRemovePrice = (price) => {
 };
 
 // remove o item do shopcard
+const filtroRemovedor = (rmId) => {
+  const storage = JSON.parse(localStorage.getItem('cartItems'));
+  const itensRemove = storage.filter((id) => id === rmId);
+  if (itensRemove.length > 1) {
+    const results = storage.reduce((_acc, _value) => {
+      const itensfiltrado = storage.filter((id) => id !== rmId);
+      for (let index = 0; index < itensRemove.length - 1; index += 1) {
+        itensfiltrado.push(itensRemove[0]);
+      }
+      return itensfiltrado;
+    });
+    localStorage.setItem('cartItems', JSON.stringify(results));
+    console.log('deu certo', results);
+  } else {
+    const itens = storage.filter((id) => id !== rmId);
+    localStorage.setItem('cartItems', JSON.stringify(itens));
+    console.log('1');
+  }
+};
+
 const cartItemClickListener = (li, rmId, price) => {
   li.addEventListener('click', ({ target }) => {
     // ...
     const naoEtarget = target;
     naoEtarget.innerHTML = '';
     // removendo do localstorage
-    const storage = JSON.parse(localStorage.getItem('cartItems'));
-    const filtro = storage.filter((id) => id !== rmId);
-    localStorage.setItem('cartItems', JSON.stringify(filtro));
-    // console.log(rmId, 'delet', filtro);
-    // remover valor do total price
+    filtroRemovedor(rmId);
     renderRemovePrice(price);
   });
+  // console.log(rmId, 'delet', filtro);
 };
+// remover valor do total price
 
 // cria card para shopcart
 const createCartItemElement = ({ id, title, price }) => {
@@ -100,22 +120,22 @@ const somaPrice = (price) => {
 // renderiza o total do produto
 const renderTotalPrice = (price) => {
   const valor = somaPrice(price);
-  const spam = returnSpam();  
+  const spam = returnSpam();
   // se o spam ainda nao existir criar
   if (!spam) {
     const createSpam = document.createElement('spam');
     createSpam.innerText = `valor total:$${valor}`;
     createSpam.className = 'total-price';
-  const section = document.querySelector('.cart'); 
-  section.appendChild(createSpam);
+    const section = document.querySelector('.cart');
+    section.appendChild(createSpam);
   } else {
-  spam.innerText = `valor total:$${valor}`;
+    spam.innerText = `valor total:$${valor}`;
   }
 };
 
 // renderiza produtos no shopcard
 const renderCartItemElement = async (id) => {
-  // cria os elementos 
+  // cria os elementos
   const item = await SearchItems(id);
   const createCard = createCartItemElement(item);
   // chama a section
@@ -134,40 +154,42 @@ const addShopCard = ({ path }) => {
   // renderiza no carrinho
   renderCartItemElement(id);
   // armazena no local storage
-
-  const storage = JSON.parse(localStorage.getItem('cartItems'));
-  console.log('add', storage);
-  // saveCartItems(id, storage);
+  if (localStorage.getItem('cartItems') === null) {
+    localStorage.setItem('cartItems', JSON.stringify([id]));
+  } else {
+    const storage = JSON.parse(localStorage.getItem('cartItems'));
+    const results = [...storage, id];
+    saveCartItems(results);
+    console.log('add', results);
+  }
 };
 
-const carregando = (clas) => {
-  const section = document.querySelector(clas);
-  const carregamento = document.createElement('spam');
-  carregamento.innerText = 'carregando...';
-  carregamento.className = 'loading';
-  section.appendChild(carregamento);
-};
+// const carregando = (clas) => {
+//   const section = document.querySelector(clas);
+//   const carregamento = document.createElement('spam');
+//   carregamento.innerText = 'carregando...';
+//   carregamento.className = 'loading';
+//   section.appendChild(carregamento);
+// };
 
 // renderiza produtos na tela principal
 const renderProductItemElement = async () => {
-  carregando('.items');
+  // carregando('.items');
   // chamo a section
   const sectionProducts = document.querySelector('.items');
   // chamo produtos
   const products = await SearchProducts();
-  setTimeout(() => {
-    const elemento = document.querySelector('.loading');
-    elemento.innerHTML = '';
+    // const elemento = document.querySelector('.loading');
+    // elemento.innerHTML = '';
     // renderizo cada item na tela
     products.map((product) => {
-    // crio o card
+      // crio o card
       const cardProducts = createProductItemElement(product);
       // add evento
       cardProducts.addEventListener('click', addShopCard);
       // renderizo
       return sectionProducts.appendChild(cardProducts);
     });
-  }, 1000);
 };
 
 /*
@@ -176,36 +198,34 @@ referencia2:https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/St
 utilizer while que cria um laco de repetiçao ate q a validaçao seja falsa
 */
 // button esvaziar carrinho
-  const buttonClear = document.querySelector('.empty-cart');
-  buttonClear.addEventListener('click', () => {
-    // limpar o total
-    total = [0];
-    const spam = returnSpam();  
+const buttonClear = document.querySelector('.empty-cart');
+buttonClear.addEventListener('click', () => {
+  // limpar o total
+  total = [0];
+  const spam = returnSpam();
   spam.innerText = `valor total:$${total}`;
-    // limpar o local localStorage
-    localStorage.setItem('cartItems', JSON.stringify([]));
-    // limpar o carrinho de compras
-    const sectionItems = document.querySelector('.cart__items');
-    while (sectionItems.firstChild) {
-      sectionItems.removeChild(sectionItems.firstChild);
-    }
-    // console.log('clear');
-  });
-  
-  // renderiza localstorage
-  renderLocalStorage = async () => {
-    if (localStorage.getItem('cartItems') === null) {
-      localStorage.setItem('cartItems', JSON.stringify([]));
-    }
-    // chama os ids
-    const storage = getSavedCartItems();
-    const storageTratado = JSON.parse(storage);
-    // renderiza
-    storageTratado.map((id) => renderCartItemElement(id));
-    // console.log('renderStorage', storage);
-  };
+  // limpar o local localStorage
+  localStorage.clear();
+  // limpar o carrinho de compras
+  const sectionItems = document.querySelector('.cart__items');
+  while (sectionItems.firstChild) {
+    sectionItems.removeChild(sectionItems.firstChild);
+  }
+  // console.log('clear');
+});
+
+// renderiza localstorage
+renderLocalStorage = async () => {
+  // chama os ids
+  const storage = getSavedCartItems();
+  const storageTratado = JSON.parse(storage);
+  // renderiza
+  storageTratado.map((id) => renderCartItemElement(id));
+  // console.log('renderStorage', storage);
+};
 
 window.onload = () => {
+  localStorage.setItem('cartItems', JSON.stringify([]));
   renderLocalStorage();
   renderProductItemElement();
 };
