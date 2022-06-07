@@ -96,12 +96,13 @@ window.onload = () => {
   calculateValueList();
   document.querySelector('.loading').innerText = 'carregando...';
   fetchProducts('computador')
-    .then((result) => result
-      .results
+    .then((result) => {
+      document.querySelector('.loading').remove();
+      result.results
       .forEach((item) => {
       const { id: sku, title: name, thumbnail: image } = item;
       createProductItemElement({ sku, name, image });
-      }));
-  document.querySelector('.loading').remove();
+      });
+    });
   // FIM CHAMADA fetchProducts
 };
