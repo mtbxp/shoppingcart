@@ -1,7 +1,6 @@
 const saveCartItems = (ordenadList) => {
   // seu código aqui
-  console.log(JSON.stringify(ordenadList.innerHTML));
-  localStorage.setItem('cartItems', JSON.stringify(ordenadList.innerHTML));
+  localStorage.setItem('cartItems', ordenadList);
 };
 
 if (typeof module !== 'undefined') {
