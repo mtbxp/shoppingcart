@@ -36,8 +36,6 @@ const loadingShow = () => {
   setTimeout(loadingHide, 1000);
 };
 
-
-
 const arr = [];
 
 const prepareCartList = async (itemId) => {
