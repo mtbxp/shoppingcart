@@ -5,7 +5,7 @@ try {
   const url = getUrl(product);
   const result = await fetch(url);
   const data = await result.json();
-  return data.results;
+  return data;
 } catch (error) {
   return error;
 }
