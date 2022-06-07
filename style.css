@@ -88,7 +88,9 @@ body {
   flex-basis: 70%;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 40px 0;
+  margin: 30px 0;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .item {
@@ -112,6 +114,7 @@ body {
   flex-grow: 1;
   padding: 10px;
   line-height: 1.5;
+  font-size: 0.97em;
 }
 
 .item .item__price {
@@ -146,7 +149,7 @@ body {
 }
 
 .cart .cart__items {
-  max-height: 500px;
+  max-height: 490px;
   overflow-y: scroll;
   width: 100%;
 }
@@ -178,7 +181,7 @@ body {
 
 .cart_fixed_elements {
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .cart_fixed_elements span {
