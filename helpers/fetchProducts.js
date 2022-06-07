@@ -1,4 +1,4 @@
-const url = `https://api.mercadolibre.com/sites/MLB/search?q=`;
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=';
 
 const montaUrl = (produto) => url + produto;
 
@@ -9,8 +9,8 @@ const fetchProducts = async (produto = '') => {
   
   if (produto === 'computador') {
     const fullUrl = montaUrl(produto);
-    response = await fetch(fullUrl);
-    compData = await response.json();
+    const response = await fetch(fullUrl);
+    const compData = await response.json();
     return compData;
   }
 };
