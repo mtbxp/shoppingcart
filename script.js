@@ -45,9 +45,9 @@ const toLoad = async () => {
   const toSellThem = await fetchProducts('computador');
   console.log(toSellThem);
   toSellThem.forEach(({ id, title, thumbnail }) => itensSection
-  .appendChild(createProductItemElement({sku: id, name: title, image: thumbnail})));
-}
+  .appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail })));
+};
 
 window.onload = async () => {
-  await toLoad()
+  await toLoad();
 };
