@@ -102,7 +102,7 @@ body {
   box-sizing: border-box;
 }
 
-.item .item__sku {
+.item__sku {
   display: none;
 }
 
@@ -147,5 +147,14 @@ body {
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
-  margin-bottom: 150px;
+  margin-top: 20px;
+}
+
+.cart_fixed_elements {
+  margin-bottom: 100px;
+  padding-top: 20px;
+}
+
+.total-price {
+  font-weight: 700;
 }
