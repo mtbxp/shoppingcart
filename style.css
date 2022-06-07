@@ -43,7 +43,7 @@ body {
 }
 
 .container-cartTitle:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 15px;
   right: 61.5%;
@@ -55,7 +55,7 @@ body {
 }
 
 .container-cartTitle:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 30px;
   right: 61.5%;
@@ -126,7 +126,7 @@ body {
   margin: 0;
   padding: 10px;
   color: white;
-  font-weight: 700px;
+  font-weight: 700;
   font-size: 0.9rem;
   border-radius: 10px;
 }
@@ -153,7 +153,6 @@ body {
   padding: 30px;
   list-style: none;
   overflow-y: scroll;
-  list-style: none;
 }
 
 .empty-cart {
@@ -166,8 +165,7 @@ body {
   cursor: pointer;
 }
 
-.empty-cart:hover,
-.item__add:hover {
+.empty-cart:hover , .item__add:hover {
   background-color: rgb(40, 119, 80);
   cursor: pointer;
 }
