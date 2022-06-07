@@ -29,3 +29,5 @@ describe('1 - Teste a função fetchProducts', () => {
     };
   });
 });
+
+//teste
