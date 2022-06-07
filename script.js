@@ -19,7 +19,6 @@ const cartItemClickListener = (event) => {
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
-  console.log(sku, name, salePrice);
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.style.margin = '30px';
@@ -37,6 +36,7 @@ const readerProductChoosed = async (element) => {
   const response = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = response;
   const itemList = createCartItemElement({ sku, name, salePrice });
+  saveCartItems(response);
 
   document.querySelector('.cart__items').appendChild(itemList);
 };
