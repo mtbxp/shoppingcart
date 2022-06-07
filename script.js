@@ -89,12 +89,12 @@ const createProductItemElement = ({ sku, name, image }) => {
 window.onload = () => {
   // CHAMADA DA FUNÇÃO fetchProducts
   document.querySelector(ordenadList)
-    .innerHTML = getSavedCartItems();
+    .innerHTML = JSON.parse(getSavedCartItems());
   const response = document.querySelectorAll('body > section > section.cart > ol > li');
   response.forEach((item) => item.addEventListener('click', cartItemClickListener));
 
   calculateValueList();
-
+  document.querySelector('.loading').innerText = 'carregando...';
   fetchProducts('computador')
     .then((result) => result
       .results
@@ -102,5 +102,6 @@ window.onload = () => {
       const { id: sku, title: name, thumbnail: image } = item;
       createProductItemElement({ sku, name, image });
       }));
+  document.querySelector('.loading').remove();
   // FIM CHAMADA fetchProducts
 };
