@@ -1,6 +1,7 @@
 const lista = document.querySelector('.cart__items');
 const totalPrice = document.createElement('p');
 totalPrice.classList.add('total-price');
+totalPrice.innerHTML = '$0.00';
 const secaoCarrinho = document.querySelector('.cart');
 secaoCarrinho.appendChild(totalPrice);
 
@@ -10,7 +11,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-
+// Funcões do preço
 const cartPrice = async () => {
   const data = await fetchProducts('computador');
   const produtos = data.results;
@@ -31,7 +32,7 @@ const setPrice = () => {
   const price = JSON.parse(localStorage.getItem('price'));
   totalPrice.innerHTML = `$${price.toFixed(2).toString()}`;
 };
-
+// Funções do preco
 const saveItems = () => {
     const items = [];
     for (let i = 0; i < lista.children.length; i += 1) {
@@ -61,22 +62,22 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const limparCarrinho = () => {
   const button = document.getElementsByClassName('empty-cart')[0];
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     const temp = lista.children.length;
     for (let i = 0; i < temp; i += 1) {
       lista.lastChild.remove();
     }
-    cartPrice();
+    await cartPrice();
     localStorage.clear('cartItems');
   });
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = async (event) => {
   event.target.remove();
   saveItems();
-  cartPrice();
+  await cartPrice();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -104,14 +105,14 @@ const addItemCart = async () => {
   const produtos = data.results;
   const buttons = document.getElementsByClassName('item__add');
   for (let i = 0; i < buttons.length; i += 1) {
-    buttons[i].addEventListener('click', () => {
+    buttons[i].addEventListener('click', async () => {
       const ids = document.getElementsByClassName('item__sku')[i].innerText;
       const { id, title, price } = produtos.find((element) => element.id === ids);
       const newLi = createCartItemElement({ sku: id, name: title, salePrice: price });
       const item = newLi.innerText;
       lista.appendChild(newLi);
       saveItems();
-      cartPrice();
+      await cartPrice();
     });
   }
 };
