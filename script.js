@@ -40,12 +40,16 @@ const createCartItemElement = (sku, name, salePrice) => {
 };
 
 // Lógica para adicionar no carrinho
+const addingElementToCart = (createCartItem) => {
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(createCartItem);
+};
+
 const buttonListener = async (event) => {
   const selectedProduct = await fetchItem(event.path[1].childNodes[0].innerText);
   const parameters = [selectedProduct.id, selectedProduct.title, selectedProduct.price];
-  const createCartItem = createCartItemElement(...parameters);
-  const ol = document.querySelector('.cart__items');
-  ol.appendChild(createCartItem);
+  saveCartItems(parameters);
+  addingElementToCart(createCartItemElement(...parameters));
 };
 
 const preparingFunction = async (productName) => {
@@ -62,4 +66,16 @@ const preparingFunction = async (productName) => {
   }
 };
 
-window.onload = () => { preparingFunction('computador'); };
+const gettingSavedCartItems = () => {
+  const arrayOfParameters = getSavedCartItems(localStorage.getItem('cartItems'));
+  if (arrayOfParameters) {
+    arrayOfParameters.forEach((cartItem) => {
+      addingElementToCart(createCartItemElement(...cartItem));
+    });
+  }
+};
+
+window.onload = () => {
+  preparingFunction('computador');
+  gettingSavedCartItems();
+};
