@@ -1,5 +1,10 @@
-const itemsList = document.querySelector('.items'); /* Represents the list with items to be selected */
-const cartItemsList = document.querySelector('.cart__items'); /* Represents the list of selected items */
+/* Represents the list with items to be selected */
+
+const itemsList = document.querySelector('.items');
+
+/* Represents the list of selected items */
+
+const cartItemsList = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -27,15 +32,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const generateFetchedProducts = async () => {
-  const productsData = await fetchProducts('computador');
-  const allFetchedProducts = productsData.results;
-  allFetchedProducts.forEach((fetchedProduct) => {
-    const generateProduct = createProductItemElement(fetchedProduct);
-    itemsList.appendChild(generateProduct);
-  });
-};
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const removeCartProduct = (selectedProduct) => {
@@ -50,6 +46,39 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+/* It gets all the fetched products according to the data
+base. As productData.results is an array with objects, forEach
+was selected to created an element for each product found */
+
+const generateFetchedProducts = async () => {
+  const productsData = await fetchProducts('computador');
+  const allFetchedProducts = productsData.results;
+  allFetchedProducts.forEach((fetchedProduct) => {
+    const generateProduct = createProductItemElement(fetchedProduct);
+    itemsList.appendChild(generateProduct);
+  });
+};
+
+/* Created to remove all products selected previously. Only called
+inside the function generateCartProduct, since it only can remove 
+an element after its selection as a desired product */
+
+const removeAllCartProducts = () => {
+  const cartItem = document.querySelectorAll('.cart__item');
+  const emptyCartButton = document.querySelectorAll('.empty-cart');
+  emptyCartButton.forEach((button) => {
+    button.addEventListener('click', () => {
+      cartItem.forEach((item) => {
+        item.remove();
+    });
+  });
+  });
+};
+
+/* After clicking, getSkuFromProductItem gets the product id. That
+id is used as argument to the async function fetchItem, which
+returns the product info found in the data base. */
+
 const generateCartProduct = () => {
   const addProductButtons = document.querySelectorAll('.item__add');
   addProductButtons.forEach((button) => {
@@ -61,6 +90,7 @@ const generateCartProduct = () => {
         title: name,
         price: salePrice });
       cartItemsList.appendChild(selectedProductInfo);
+      removeAllCartProducts();
     });
   });
 };
