@@ -30,14 +30,24 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const removeSavedItemInTheStorage = (skuCart) => {
+  const storageCartData = getSavedCartItems('cartItems');
+  const cartData = JSON.parse(storageCartData);
+  const filteredStorage = cartData.filter((item) => item.sku !== skuCart);
+  saveCartItems(JSON.stringify(filteredStorage));
+  console.log(filteredStorage);
+};
+
 const cartItemClickListener = (event) => {
   cartItems.removeChild(event.target);
+  const { skuCart } = event.target.dataset;
+  removeSavedItemInTheStorage(skuCart);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
-  li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.setAttribute('data-sku-cart', sku);
   return li;
 };
 
@@ -50,12 +60,39 @@ const appendProducts = (productList) => {
   });
 };
 
+// Checar se já existe para salvar
+const saveCartDataInStorage = (data) => {
+  let cartData = [];
+  const storageCartData = getSavedCartItems('cartItems');
+  if (!storageCartData) {
+    cartData.push(data);
+    saveCartItems(JSON.stringify(cartData));
+  }
+  cartData = JSON.parse(storageCartData);
+  cartData.push(data);
+  saveCartItems(JSON.stringify(cartData));
+};
+
 const addItemToCart = (element, sku) => {
   element.addEventListener('click', async () => {
     const { title: name, price: salePrice } = await fetchItem(sku);
-
+    
     const li = createCartItemElement({ sku, name, salePrice });
-    console.log(li);
+    li.addEventListener('click', cartItemClickListener);
+    cartItems.append(li);
+
+    saveCartDataInStorage({ sku, name, salePrice });
+  });
+};
+
+const loadCartDataOfStorage = () => {
+  const storageCartData = getSavedCartItems('cartItems');
+  if (!storageCartData) {
+    return;
+  }
+  const cartData = JSON.parse(storageCartData);
+  cartData.forEach(async ({ sku, name, salePrice }) => {
+    const li = createCartItemElement({ sku, name, salePrice });
     li.addEventListener('click', cartItemClickListener);
     cartItems.append(li);
   });
@@ -66,6 +103,7 @@ window.onload = async () => {
   const { results: productList } = data;
 
   appendProducts(productList);
+  loadCartDataOfStorage();
 
   // referencia sobre Data Attributes : https://www.youtube.com/watch?v=ri-xkk9PuDU
   const buttonsAddCart = document.querySelectorAll('[data-sku]');
