@@ -1,4 +1,5 @@
 const ol = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -44,10 +45,29 @@ const createItems = async (param) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-event.target.remove();
+// const totalPriceSub = async (arg) => {
+//   const inner = parseFloat(totalPrice.innerText);
+//   const item = await fetchItem(arg);
+//   const subValue = parseFloat(item.price);
+//   // console.log(arg);
+//   // totalPrice.innerText = inner - subValue;
+// };
 
-saveCartItems(ol.innerHTML);
+const totalpriceSum = async (param) => {
+  const inner = +totalPrice.innerText;
+  const item = await fetchItem(param);
+  const value = parseFloat(item.price);
+  const sum = inner + value;
+  totalPrice.innerText = sum;
+  localStorage.setItem('totalPrice', totalPrice.innerText); 
+};
+
+const cartItemClickListener = async (event) => {
+  event.target.remove();
+
+  console.log(event.target.innerHTML);
+  await saveCartItems(ol.innerHTML);
+  // totalPriceSub();
 };
 
 ol.addEventListener('click', cartItemClickListener);
@@ -64,6 +84,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 const CreateItems = (itemPai) => {
   fetchItem(itemPai).then((elementPai) => ol.appendChild(createCartItemElement(elementPai))
     .then(saveCartItems(ol.innerHTML)));
+    totalpriceSum(itemPai);
 };
 
 document.addEventListener('click', (event) => {
@@ -77,13 +98,14 @@ document.addEventListener('click', (event) => {
 
   if (event.target.classList.contains('empty-cart')) {
     ol.innerHTML = '';
+    totalPrice.innerText = 0;
     localStorage.clear();
   }
 });
 
 getItemLocalStorage = () => {
   ol.innerHTML = getSavedCartItems();
-  // console.log(ol.innerHTML);
+  totalPrice.innerText = getSavedCartItems();
 };
 
 window.onload = () => { createItems('computador'); getItemLocalStorage(); };
