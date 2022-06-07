@@ -7,6 +7,17 @@ const calculatePrice = () => {
   cart.innerText = result;
 };
 
+const createLoading = () => {
+  const loading = document.getElementsByClassName('loading')[0];
+    loading.innerHTML = 'Loading...';
+};
+
+const deleteLoading = () => {
+  const items = document.getElementsByClassName('items')[0];
+  const loading = document.getElementsByClassName('loading')[0];
+  items.removeChild(loading);
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -57,7 +68,9 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const prepareSite = async () => {
+  createLoading();
   const data = await fetchProducts('computador');
+  deleteLoading();
   const obj = [];
   const result = [];
   data.results.forEach((element) => obj.push(
