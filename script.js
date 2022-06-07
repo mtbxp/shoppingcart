@@ -38,7 +38,10 @@ const createListOfProducts = async () => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aquii
+  cart.addEventListener('click', event.target);
+  if (event.target.className === 'cart__item') {
+    cart.removeChild(event.target);
+  }
 };
 
 const createCartItemElement = ({ id, title, price }) => {
