@@ -10,7 +10,7 @@ describe('1 - Teste a função fetchProducts', async () => {
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
-  it('is fetching the expected url when called with computador as argument', async () => {
+  it('is fetching the expected endpoint when called with computador as argument', async () => {
     await fetchProducts('computador');
     expect(fetch).toBeCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
