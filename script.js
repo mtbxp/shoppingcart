@@ -24,8 +24,16 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+const cartItemClickListener = async () => {
+const fetchNewItem = await fetchItem('MLB1615760527');
+fetchNewItem.forEach((element) => {
+const newObj = {
+  sku: element.id,
+  name: element.title,
+  salePrice: element.price,
+};
+return console.log(newObj);
+});
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -50,4 +58,5 @@ newItens.forEach((element) => {
 
 window.onload = () => {
   newfunction();
+  cartItemClickListener();
  };
