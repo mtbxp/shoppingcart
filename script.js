@@ -67,13 +67,18 @@ clearBtn.addEventListener('click', () => {
   saveCartItems(ItemList.innerHTML);
 });
 
-fetchProducts('computador')
-  .then((products) => {
-    products.results
-      .forEach((element) => {
-        sectionItens.appendChild(createProductItemElement(element));
-      });
-  });
+const mainPage = async () => {
+  const load = document.createElement('p');
+  load.className = 'loading';
+  load.innerText = 'carregando...';
+  sectionItens.appendChild(load);
+  const products = await fetchProducts('computador');
+  document.querySelector('.loading').remove();
+  products.results
+    .forEach((element) => {
+      sectionItens.appendChild(createProductItemElement(element));
+    });
+};
 
 sectionItens.addEventListener('click', (e) => {
   if (e.target.classList.contains('item__add')) {
@@ -88,6 +93,7 @@ sectionItens.addEventListener('click', (e) => {
 });
 
 window.onload = () => {
+  mainPage();
   getSavedCartItems();
   sumTotal(ItemList);
 };
