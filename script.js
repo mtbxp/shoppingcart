@@ -1,4 +1,4 @@
-const { thumbnail } = require('./mocks/item');
+// const { thumbnail } = require('./mocks/item');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -44,19 +44,12 @@ const loadAllProductsOnPage = async () => {
   const data = await fetchProducts('computador');
   const produtos = data.results;
   
-  // const formatItems = produtos.map((produto) => console.log(produto));
-  // const formatItems = produtos
-  //   .map((produto) => {
-  //     console.log(produto);
-  //     return {
-  //       sku: produto.id,
-  //       name: produto.title,
-  //       image: produto.thumbnail,
-  //     };
-  //   });
+  const formatItems = produtos
+    .map((produto) => ({ sku: produto.id, name: produto.title, image: produto.thumbnail }));
 
-  // console.log(formatItems);
-  items.forEach((element) => {
+  const htmlItems = formatItems.map((item) => createProductItemElement(item));
+
+  htmlItems.forEach((element) => {
     document.getElementsByClassName('items')[0].appendChild(element);
   });
 };

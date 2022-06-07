@@ -4,7 +4,7 @@ const montaUrl = (produto) => url + produto;
 
 const fetchProducts = async (produto = '') => {
   if (produto === '') {
-    throw new Error('You must provide an url');
+    return new Error('You must provide an url');
   }
   
   if (produto === 'computador') {
