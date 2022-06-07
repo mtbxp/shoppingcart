@@ -3,7 +3,7 @@ const createProductImageElement = (imageSource) => {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};oi
+};
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
@@ -39,3 +39,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => { };
+fetchProducts();
