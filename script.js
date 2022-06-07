@@ -30,6 +30,9 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 // busca o id do item
 const getSkuFromProductItem = (item) => item.querySelector('.item__sku');
 
+// referencia:https://www.delftstack.com/pt/howto/javascript/javascript-round-to-2-decimal-places/
+// multipliquei por cem e dividi o valor do math.roud
+// para retornar os centavos do valor
 // filtra o valor e devolve ele somado 
 const removePrice = (price) => {
   const itensRemove = total.filter((value) => value === price);
@@ -43,13 +46,13 @@ const removePrice = (price) => {
     });
     total = results;
     const totalPrice = total.reduce((acc, value) => acc + value, 0);
-        return Math.round(totalPrice);
+        return Math.round(totalPrice * 100) / 100;
     } 
         const filtro = total.filter((value) => value !== price);
         total = filtro;
         const totalPrice = total.reduce((acc, value) => acc + value, 0);
         // console.log(total, 'removePrice', totalPrice);
-        return Math.round(totalPrice);
+        return Math.round(totalPrice * 100) / 100;
 };
 
 // retorna o valor total
@@ -60,7 +63,7 @@ const renderRemovePrice = (price) => {
   const valor = removePrice(price);
   const spam = returnSpam();
   // renderizar price
-  spam.innerText = `valor total:$${valor}`;
+  spam.innerText = `${valor}`;
   // console.log('renderRemove', valor, spam);
 };
 
@@ -77,14 +80,16 @@ const filtroRemovedor = (rmId) => {
       return itensfiltrado;
     });
     localStorage.setItem('cartItems', JSON.stringify(results));
-    console.log('deu certo', results);
+    // console.log('deu certo', results);
   } else {
     const itens = storage.filter((id) => id !== rmId);
     localStorage.setItem('cartItems', JSON.stringify(itens));
-    console.log('1');
+    // console.log('1');
   }
 };
 
+// referencia:https://developer.mozilla.org/pt-BR/docs/Web/API/Node/removeChild
+// utilizei de remoceChild para remover o elemento do seu proprio
 const cartItemClickListener = (li, rmId, price) => {
   li.addEventListener('click', (_event) => {
     // ...
@@ -95,7 +100,7 @@ const cartItemClickListener = (li, rmId, price) => {
     filtroRemovedor(rmId);
     renderRemovePrice(price);
   });
-  console.log(rmId, 'delet', li);
+  // console.log(rmId, 'delet', li);
 };
 // remover valor do total price
 
@@ -129,7 +134,7 @@ const SearchItems = async (id) => {
 const somaPrice = (price) => {
   total.push(price);
   const totalPrice = total.reduce((acc, value) => acc + value, 0);
-  const valorArredondado = Math.round(totalPrice);
+  const valorArredondado = Math.round(totalPrice * 100) / 100;
   return valorArredondado;
 };
 // renderiza o total do produto
@@ -139,12 +144,12 @@ const renderTotalPrice = (price) => {
   // se o spam ainda nao existir criar
   if (!spam) {
     const createSpam = document.createElement('spam');
-    createSpam.innerText = `valor total:$${valor}`;
+    createSpam.innerText = `${valor}`;
     createSpam.className = 'total-price';
     const section = document.querySelector('.cart');
     section.appendChild(createSpam);
   } else {
-    spam.innerText = `valor total:$${valor}`;
+    spam.innerText = `${valor}`;
   }
 };
 
@@ -175,7 +180,7 @@ const addShopCard = ({ path }) => {
     const storage = JSON.parse(localStorage.getItem('cartItems'));
     const results = [...storage, id];
     saveCartItems(results);
-    console.log('add', results);
+    // console.log('add', results);
   }
 };
 
@@ -194,8 +199,6 @@ const renderProductItemElement = async () => {
   const sectionProducts = document.querySelector('.items');
   // chamo produtos
   const products = await SearchProducts();
-    // const elemento = document.querySelector('.loading');
-    // elemento.innerHTML = '';
     // renderizo cada item na tela
     products.map((product) => {
       // crio o card
@@ -218,7 +221,7 @@ buttonClear.addEventListener('click', () => {
   // limpar o total
   total = [0];
   const spam = returnSpam();
-  spam.innerText = `valor total:$${total}`;
+  spam.innerText = `${total}`;
   // limpar o local localStorage
   localStorage.clear();
   // limpar o carrinho de compras
