@@ -1,5 +1,6 @@
 const getSavedCartItems = () => {
-  // seu código aqui
+  const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+  return storedCartItems;
 };
 
 if (typeof module !== 'undefined') {

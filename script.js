@@ -1,3 +1,5 @@
+const CART_CLASS = '.cart__items';
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -49,22 +51,27 @@ const cartItemClickListener = (event) => {
   item.remove();
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ sku, name, salePrice }, textFromLocalStorage) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  updateTotalPrice(salePrice);
+  if (textFromLocalStorage !== undefined) {
+    li.textContent = textFromLocalStorage;
+  } else {
+    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+    updateTotalPrice(salePrice);
+  }
   return li;
 };
 
-const addItemClickListener = async (event) => {
-  const cart = document.querySelector('.cart__items');
+const addItemToCartFromAddButton = async (event) => {
+  const cart = document.querySelector(CART_CLASS);
   const itemId = getSkuFromProductItem(event.target.parentElement);
   const item = await fetchItem(itemId);
   const { id: sku, title: name, price: salePrice } = item;
   const cartItem = createCartItemElement({ sku, name, salePrice });
   cart.append(cartItem);
+  saveCartItems();
 };
 
 const toggleLoadingMessage = (parentElement, bool) => {
@@ -90,19 +97,39 @@ const addProductsToSite = async () => {
     items.append(productSection);
   });
   const addItemButtons = document.querySelectorAll('.item__add');
-  addItemButtons.forEach((button) => button.addEventListener('click', addItemClickListener));
+  addItemButtons.forEach((button) => button.addEventListener('click', addItemToCartFromAddButton));
 };
 
 const emptyCart = () => {
-  const cart = document.querySelector('.cart__items');
+  const cart = document.querySelector(CART_CLASS);
   cart.innerHTML = '';
   updateTotalPrice();
+  localStorage.setItem('cartItems', JSON.stringify([]));
+};
+
+const addItemsFromLocalStorage = () => {
+  const storedCartItems = getSavedCartItems();
+  const cart = document.querySelector(CART_CLASS);
+  storedCartItems.forEach((storedItem) => {
+    const newItem = createCartItemElement({}, storedItem);
+    cart.append(newItem);
+    const price = storedItem.split('$')[1];
+    updateTotalPrice(parseFloat(price));
+  });
+};
+
+const checkLocalStorage = () => {
+  if (localStorage.getItem('cartItems') === null) {
+    localStorage.setItem('cartItems', JSON.stringify([]));
+  } else {
+    addItemsFromLocalStorage();
+  }
 };
 
 const emptyCartButton = document.querySelector('.empty-cart');
-
 emptyCartButton.addEventListener('click', emptyCart);
 
-addProductsToSite();
-
-window.onload = () => { };
+window.onload = () => { 
+  addProductsToSite();
+  checkLocalStorage();
+};
