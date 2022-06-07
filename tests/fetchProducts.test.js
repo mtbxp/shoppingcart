@@ -6,6 +6,9 @@ describe('1 - Teste a função fetchProducts', () => {
   const fetchProductsFunction = fetchProducts;
   it('Verifica se fetchProdutcs é uma função', () => {
     expect(typeof (fetchProductsFunction)).toBe('function');
-  })
-  fail('Teste vazio');
+  });
+  it('Ao rodar com parametro \'computador\' verifica se fetch foi chamada.', async () => {
+    await fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
+  });
 });
