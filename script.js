@@ -23,7 +23,7 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerHTML = `SKU: ${sku} | NAME: ${name} | <b>PRICE: $${salePrice}</b>`;
   li.addEventListener('click', cartItemClickListener);
   cartItems.appendChild(li);
   saveCartItems(cartItems.innerHTML);
@@ -38,9 +38,10 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const adcCart = section
+    .appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
-  section.addEventListener('click', async (element) => { 
+  adcCart.addEventListener('click', async (element) => { 
   const itemID = element.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemID);
   cartItems.appendChild(createCartItemElement(item)); 
