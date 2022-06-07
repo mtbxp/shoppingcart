@@ -17,20 +17,17 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  savedCartItems(cartItems.innerHTML);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku}
-  NAME: ${name}
-  PRICE: $${salePrice}
-  
-  `;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   cartItems.appendChild(li);
-  savedCartItems(cartItems.innerHTML);
+  saveCartItems(cartItems.innerHTML);
+
   return li;
 };
 
@@ -68,8 +65,7 @@ const clearCart = () => {
 };
 
 const toLocalStorage = () => { 
-  const savedCart = getSavedCartItems();
-  cartItems.innerHTML = savedCart;
+  cartItems.innerHTML = getSavedCartItems();
   const li = document.querySelectorAll('li');
   li.forEach((lis) => {
     lis.addEventListener('click', cartItemClickListener);
