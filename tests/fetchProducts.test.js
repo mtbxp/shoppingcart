@@ -7,7 +7,8 @@ describe('1 - Teste a função fetchProducts', () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   
   test('Verifica se fetchProducts é uma função.', async () => {
-    await expect(typeof fetchProducts).resolves.toBe('function');
+    await fetchProducts;
+    expect(typeof fetchProducts).toEqual('function');
   });
 
   test('Verifica se fetch é chamada ao executar fetchProducts com o argumento computador.', async () => {
@@ -22,11 +23,11 @@ describe('1 - Teste a função fetchProducts', () => {
   
   test('Verifica se o retorno da função fetchProducts, com o argumento computador, é uma estrutura de dados igual ao objeto computadorSearch.', async () => {
     const result = await fetchProducts('computador');
-    expect(result).toEqual(computadorSearch);
+    expect(result).toStrictEqual(computadorSearch);
   });
 
-  test('.', async () => {
-    await expect(fetchProducts('computador')).rejects.toThrowError(new Error('You must provide an url'));
+  test('Verifica se é retornado um erro quando nenhum argumento é passado.', async () => {
+    await expect(fetchProducts()).rejects.toThrowError(new Error('You must provide an url'));
   });
 
 });
