@@ -25,6 +25,7 @@ describe('1 - Teste a função fetchProducts', () => {
   })
 
   it('test if fectchProducts is a function', () => {
-    expect(fetchProducts()).toEqual(new Error('You must provide an url'));
+    const actual = fetchProducts();
+    expect(actual).toEqual(new Error('You must provide an url'));
   })
 });
