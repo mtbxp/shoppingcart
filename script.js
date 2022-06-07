@@ -26,6 +26,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// Codigo reformulado na linha 56
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 
@@ -43,14 +44,29 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
   const products = await fetchProducts('computador');
-  const test = products.results;
-  test.forEach((product) => {
+  const listProduct = products.results;
+  listProduct.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const item = createProductItemElement({ sku, name, image });
     items.appendChild(item);
 });
 };
 
-window.onload = () => {
-  addProductsToSite();
+// Adicionar o Produto ao Carringo de Compras
+const addProductsToCarrinho = async (event) => {
+  const carts = document.querySelector('.cart__items');
+  const itemId = getSkuFromProductItem(event.target.parentNode);
+  const productId = await fetchItem(itemId);
+  const { id: sku, title: name, price: salePrice } = productId;
+  const productIdOn = createCartItemElement({ sku, name, salePrice });
+  carts.append(productIdOn);
+};
+
+window.onload = async () => {
+  await addProductsToSite();
+
+  // Adicionando o Botao na captura dos items
+  const addButtonsItem = document.querySelectorAll('.item__add');
+  addButtonsItem.forEach((button) => button.addEventListener('click', addProductsToCarrinho));
+  console.log(addButtonsItem);
 };
