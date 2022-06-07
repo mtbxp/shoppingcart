@@ -39,4 +39,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+// Adicionar lista de produtos no site
+const addProductsToSite = async () => {
+  const items = document.querySelector('.items');
+  const products = await fetchProducts('computador');
+  const test = products.results;
+  test.forEach((product) => {
+    const { id: sku, title: name, thumbnail: image } = product;
+    const item = createProductItemElement({ sku, name, image });
+    items.appendChild(item);
+});
+};
+
+window.onload = () => {
+  addProductsToSite();
+};

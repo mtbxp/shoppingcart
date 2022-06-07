@@ -17,14 +17,11 @@ describe('1 - Teste a função fetchProducts', () => {
    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });//
   test('Testar se o fetchProducts "computador" é um objeto igual a computadorSearch', async () => {
-    const result = await fetchProducts("computador");
-    expect(result).toBe(computadorSearch);
+   const expected = await fetchProducts("computador");
+    expect(expected).toEqual(computadorSearch);
   });
   test('Testar se o fetchProducts retorna um error', async () => {
-    try {
-      await fetchProducts();
-    }catch (error) {
-      expect(error).toEqual(new Error('You must provide an url'))
-    }
+    const expected = await fetchProducts();
+    expect(expected).toEqual(new Error('You must provide an url'))
   });
 });
