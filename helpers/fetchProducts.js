@@ -10,15 +10,11 @@ const fetchProducts = async (listProduct) => {
     const url = getProduct(listProduct);
     const response = await fetch(url);
     const dataResults = await (response.json());
-    // const resultsReduced = dataResults.results.map((element) => {
-    //   const obj = { sku: element.id, name: element.title, image: element.thumbnail };
-    //   return obj;
-    // });
-    console.log(dataResults.results);
+    // console.log(dataResults.results);
     return dataResults.results;
 };
 
-fetchProducts('computador');
+// fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {

@@ -17,6 +17,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toHaveBeenCalledWith(urlRequest);
   });
   test('Testando se o retorno da função é uma estrutura de dados correta', async () => {
+    const actual = await fetchProducts('computador');
     const expected = [
       {
         id: 'MLB2110125750',
@@ -4247,7 +4248,7 @@ describe('1 - Teste a função fetchProducts', () => {
         discounts: null
       }
     ];
-    expect(await fetchProducts('computador')).toBe(expected);
+    expect(actual).toStrictEqual(expected);
   });
   test('Testando se ao chamar a funçao sem argumento, retorna um erro', async () => {
     const failRequest = await fetchProducts();
