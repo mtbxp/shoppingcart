@@ -34,20 +34,21 @@ const createProductItemElement = ({
   return section;
 };
 
-const getSkuFromProductItem = (item) =>
-  item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) =>
+//   item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  if (event.target.className === 'cart__item') {
-    cartItem.removeChild(event.target);
-  }
-};
+// const cartItemClickListener = (event) => {
+//   if (event.target.className === 'cart__item') {
+//     cartItem.removeChild(event.target);
+//     saveCartItems(cartItem.innerHTML);
+//   }
+// };
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);  
   return li;
 };
 
@@ -65,10 +66,18 @@ function addItemToCart() {
       const id = event.target.parentElement.firstChild.innerHTML;      
       fetchItem(id).then((data) => {
         cartItens.appendChild(createCartItemElement(data));
-        saveCartItems(cartItens.innerText);
+        saveCartItems(cartItens.innerHTML);        
     });
     }
+    if (event.target.className === 'cart__item') {
+      cartItem.removeChild(event.target);
+      saveCartItems(cartItem.innerHTML);      
+    }
   });
+}
+
+function loadStorage() {
+  cartItem.innerHTML = getSavedCartItems();
 }
 
 // fetchItem('MLB1341706310').then((data) => console.log(data));
@@ -78,4 +87,5 @@ function addItemToCart() {
 window.onload = () => {
   addItemToCart();
   displayproduct();
+  loadStorage();
 };
