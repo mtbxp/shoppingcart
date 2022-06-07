@@ -18,7 +18,8 @@ const createProductImageElement = (imageSource) => {
 };
 
 const cartItemClickListener = (event) => {
-
+  const itemClicado = event.target;
+  classCartItems.removeChild(itemClicado);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -40,7 +41,7 @@ const colocarNoCarrinho = async (event) => {
   const idCerto = event.target.parentElement.firstChild.innerHTML;
   const constF = await fetchItem(idCerto);
   classCartItems.appendChild(
-  createCartItemElement({ sky: constF.id, name: constF.title, salePrice: constF.price }),
+  createCartItemElement({ sku: constF.id, name: constF.title, salePrice: constF.price }),
   );
 };
 
