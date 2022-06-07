@@ -1,3 +1,6 @@
+const elementCartItems = document.getElementsByClassName('cart__items')[0];
+const elementSectionItems = document.getElementsByClassName('items')[0];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -44,16 +47,15 @@ const totalValue = async () => {
   elementTotalPrice.innerText = sumTotalValue();
 };
 
-const appendElementToItems = (element) => {
-  const elementSectionItems = document.getElementsByClassName('items')[0];
+const appendElementToSectionItems = (element) => {
   elementSectionItems.appendChild(element);
 };
 
 const refreshSave = () => {
-  const elementCartChildren = document.getElementsByClassName('cart__items')[0].children;
+  const childrenCart = elementCartItems.children;
   const arrayOfTextItems = ['0'];
-  for (let index = 0; index < elementCartChildren.length; index += 1) {
-    const infoItem = elementCartChildren[index].innerText;
+  for (let index = 0; index < childrenCart.length; index += 1) {
+    const infoItem = childrenCart[index].innerText;
     arrayOfTextItems.push(infoItem);
   }
   saveCartItems(JSON.stringify(arrayOfTextItems));
@@ -74,7 +76,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const appendElementCart = (element) => {
-  const elementCartItems = document.getElementsByClassName('cart__items')[0];
   elementCartItems.appendChild(element);
 };
 
@@ -91,31 +92,19 @@ const getItemByIDButton = async (ev) => {
 };
 
 const addEventToButtonsItems = () => {
-  const elementsItems = document.getElementsByClassName('items')[0].children;
-  for (let index = 0; index < elementsItems.length; index += 1) {
-    elementsItems[index].addEventListener('click', getItemByIDButton);
+  const elementsItemsChildren = document.getElementsByClassName('items')[0].children;
+  for (let index = 0; index < elementsItemsChildren.length; index += 1) {
+    elementsItemsChildren[index].addEventListener('click', getItemByIDButton);
   }
-};
-
-const renderProducts = async () => {
-  const results = await fetchProducts('computador');
-  results.forEach((item) => {
-    const { id, title, thumbnail } = item;
-    const obj = { sku: id, name: title, image: thumbnail };
-    const elementItem = createProductItemElement(obj);
-    appendElementToItems(elementItem);
-  });
-  addEventToButtonsItems();
 };
 
 const appendSavedItemsCart = (arrayOfInnerTexts) => {
   arrayOfInnerTexts.forEach((text) => {
-    const elementCart = document.getElementsByClassName('cart__items')[0];
     const elementLi = document.createElement('li');
     elementLi.className = 'cart__item';
     elementLi.innerText = text;
     elementLi.addEventListener('click', removeItemCart);
-    if (text !== '0') elementCart.appendChild(elementLi);
+    if (text !== '0') elementCartItems.appendChild(elementLi);
   });
 };
 
@@ -130,11 +119,35 @@ const removeChildren = (childrenCart) => {
 const addEventToBTNEmptyCart = () => {
   const elementButtonEmptyCart = document.getElementsByClassName('empty-cart')[0];
   elementButtonEmptyCart.addEventListener('click', () => {
-    const elementCart = document.getElementsByClassName('cart__items')[0];
-    const childrenCart = elementCart.children;
+    const childrenCart = elementCartItems.children;
 
     removeChildren(childrenCart);
   });
+};
+
+const loadingFunction = () => {
+  const elementLoading = document.createElement('h2');
+  elementLoading.className = 'loading';
+  elementLoading.innerText = 'carregando...';
+  elementSectionItems.appendChild(elementLoading);
+};
+
+const loadedFunction = () => {
+  const elementLoading = document.getElementsByClassName('loading')[0];
+  elementLoading.remove();
+};
+
+const renderProducts = async () => {
+  loadingFunction();
+  const results = await fetchProducts('computador');
+  results.forEach((item) => {
+    const { id, title, thumbnail } = item;
+    const obj = { sku: id, name: title, image: thumbnail };
+    const elementItem = createProductItemElement(obj);
+    appendElementToSectionItems(elementItem);
+  });
+  addEventToButtonsItems();
+  loadedFunction();
 };
 
 const renderItemsSaved = () => {
