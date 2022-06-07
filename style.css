@@ -118,7 +118,7 @@ body {
   padding: 15px;
   font-weight: 600;
   font-size: 1.1em;
-  color: brown;
+  color: rgb(112, 23, 23);
 }
 
 .item .item__image {
@@ -182,7 +182,7 @@ body {
 }
 
 .cart_fixed_elements span {
-  color: brown;
+  color: rgb(112, 23, 23);
   font-size: 1.1em;
 }
 
