@@ -74,6 +74,12 @@ const getProducts = () => {
 };
 //
 
+btnClear.addEventListener('click', () => {
+  // remover itens do carrinho, limpar carrinho e conteúdo do preço
+  olCartItems.innerHTML = '';
+  // limpar innerHTML da section (elementos que constituem a lista de produtos) e o innerText do elemento que recebe o preço.
+  totalPrice.innerText = '';
+});
 // Evento de click que adiciona ao carrinho
 sectionItems.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
