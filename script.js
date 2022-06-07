@@ -1,7 +1,7 @@
 const sectionItems = document.querySelector('.items');
 const olCartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
-const cart = document.querySelector('.cart');
+// const cart = document.querySelector('.cart');
 const btnClear = document.querySelector('.empty-cart');
 
 // codigo prepronto
@@ -34,10 +34,10 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // FEITO POR MIm
-function auxilSub(arg) {
-  const valorPraSubTratar = Number(arg.split('$')[1]);
-  return valorPraSubTratar;
-}
+// function auxilSub(arg) {
+//   const valorPraSubTratar = Number(arg.split('$')[1]);
+//   return valorPraSubTratar;
+// }
 
 let precoFinal = 0;
 
@@ -68,11 +68,15 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 // Resgatando itens dela FetchAPI
 const getProducts = () => {
-  fetchProducts('computador').then((products) =>
+  fetchProducts().then((products) =>
     products.results.forEach((product) =>
       sectionItems.appendChild(createProductItemElement(product))));
 };
 //
+
+function getLocalStorage() {
+  olCartItems.innerHTML = getSavedCartItems();
+}
 
 btnClear.addEventListener('click', () => {
   // remover itens do carrinho, limpar carrinho e conteúdo do preço
@@ -80,6 +84,7 @@ btnClear.addEventListener('click', () => {
   // limpar innerHTML da section (elementos que constituem a lista de produtos) e o innerText do elemento que recebe o preço.
   totalPrice.innerText = '';
 });
+
 // Evento de click que adiciona ao carrinho
 sectionItems.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
@@ -92,10 +97,13 @@ sectionItems.addEventListener('click', (event) => {
     });
   }
 });
-// STORAGES
-// função para adicionar items do carrinho ao localStorage
+// LOADING
 
-// função para resgatar items do carrinho
+// Criar o elemento de LOADING
+// innerText = 'carregando...'
+// className = 'loading'
+// o elemento deve aparecer DURANTE a chamada da API
+
 getProducts();
 
-window.onload = () => { getProducts(); };
+window.onload = () => { getProducts(); getLocalStorage(); };
