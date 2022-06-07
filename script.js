@@ -1,5 +1,5 @@
 const sectionPai = document.querySelector('.items');
-console.log(sectionPai);
+// console.log(sectionPai);
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,10 +25,15 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
-
-const mostraProdutos = async () => {
+// função criada para listar os produtos. 
+const listaProdutos = async () => {
   const { results } = await fetchProducts();
-  console.log(results);
+  const arrayTratado = results
+    .map((obj) => ({ sku: obj.id, name: obj.title, image: obj.thumbnail }));
+  arrayTratado.forEach((obj) => {
+    createProductItemElement(obj);
+  });
+  console.log(arrayTratado);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -46,5 +51,5 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => {
-  mostraProdutos();
+  listaProdutos();
  };
