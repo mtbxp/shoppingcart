@@ -31,12 +31,24 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 const getSkuFromProductItem = (item) => item.querySelector('.item__sku');
 
 const removePrice = (price) => {
-  const filtro = total.filter((value) => value !== price);
-  total = filtro;
-  const totalPrice = total.reduce((acc, value) => acc + value, 0);
-  const valorArredondado = Math.round(totalPrice);
-  // console.log(total, 'removePrice', totalPrice);
-  return valorArredondado;
+  const itensRemove = total.filter((value) => value === price);
+  if (itensRemove.length > 1) {
+    const results = total.reduce((_acc, _value) => {
+      const itensfiltrado = total.filter((value) => value !== price);
+      for (let index = 0; index < itensRemove.length - 1; index += 1) {
+        itensfiltrado.push(itensRemove[0]);
+      }
+      return itensfiltrado;
+    });
+    total = results;
+    const totalPrice = total.reduce((acc, value) => acc + value, 0);
+        return Math.round(totalPrice);
+    } 
+        const filtro = total.filter((value) => value !== price);
+        total = filtro;
+        const totalPrice = total.reduce((acc, value) => acc + value, 0);
+        // console.log(total, 'removePrice', totalPrice);
+        return Math.round(totalPrice);
 };
 // retorna o valor total
 const returnSpam = () => document.querySelector('.total-price');
