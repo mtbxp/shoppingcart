@@ -1,17 +1,16 @@
-const getFetchItemURL = (endpoint) => `https://api.mercadolibre.com/items/${endpoint}`;
+const getFetchItemURL = ($ItemID) => `https://api.mercadolibre.com/items/${$ItemID}`;
 
-const fetchItem = async (endpoint) => {
+const fetchItem = async ($ItemID) => {
   try {
-    const url = getFetchItemURL(endpoint);
+    const url = getFetchItemURL($ItemID);
     const response = await fetch(url);
-    return await response.json();
-    // return data;
+    const data = await response.json();
+    return data;
   } catch (error) {
     return error;
   }
 };
 
-// function extractDatas
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
