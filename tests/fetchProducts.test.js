@@ -8,8 +8,8 @@ describe('1 - Teste a função fetchProducts', () => {
   });
 
   it('Execute a função fetchProducts com o argumento computador e teste se fetch foi chamada', async () =>  {
-    fetchProducts('computador')
-    await expect(fetch).toHaveBeenCaled();
+    fetchProducts('computador');
+    await expect(fetch).toHaveBeenCalled();
   });
 
   it('Teste se, ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint https://api.mercadolibre.com/sites/MLB/search?q=computador', async () =>  {
@@ -29,5 +29,3 @@ describe('1 - Teste a função fetchProducts', () => {
     };
   });
 });
-
-//teste
