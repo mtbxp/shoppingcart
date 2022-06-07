@@ -1,5 +1,8 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -39,6 +42,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+
+
 const productList = document.querySelector('.items');
 
 const createListProduct = async () => {
@@ -50,6 +55,21 @@ const createListProduct = async () => {
   });
 };
 
+const addList = document.querySelector('.cart__items');
+
+const select = () => {
+  document.addEventListener('click', (element) => {
+    if (element.target.classList.contains('item__add')) {
+      const Selec = getSkuFromProductItem(element.target.parentNode);
+      const dados = fetchItem(Selec);
+      addList.appendChild(createCartItemElement(dados));
+      
+   }
+ })
+}
+
+
 window.onload = () => {
   createListProduct();
+  select();
  };
