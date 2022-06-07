@@ -90,7 +90,5 @@ const adicionarProdutosPratileira = async (tipoItem) => {
 };
 
 window.onload = () => { 
-  adicionarProdutosPratileira('computador');
-  paginaCarrenga();
-  manterLocal();
- };
+  adicionarProdutosPratileira('computador'); paginaCarrenga();
+  };
