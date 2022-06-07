@@ -14,13 +14,14 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ sku, name, image, salePrice }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', `$${salePrice}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -48,10 +49,11 @@ const createComputerList = async () => {
   const computerData = (await fetchProducts('computador')).results;
   hideLoadingMessage();
 
-  const computerExtractedData = computerData.map(({ id, title, thumbnail }) => ({
+  const computerExtractedData = computerData.map(({ id, title, thumbnail, price }) => ({
     sku: id,
     name: title,
     image: thumbnail,
+    salePrice: price,
   }));
   const computerList = document.querySelector('.items');
   computerExtractedData.forEach((computer) => {

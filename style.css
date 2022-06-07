@@ -11,7 +11,7 @@ body {
 
 .header {
   position: relative;
-  background-color: rgb(3, 52, 45);
+  background-color: rgb(6, 52, 90);
   display: flex;
   align-items: center;
   width: 100%;
@@ -32,7 +32,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  background-color: rgb(10, 118, 79);
+  background-color: rgb(3, 41, 179);
   width: 40%;
   height: 100%;
   margin-left: 30px;
@@ -49,7 +49,7 @@ body {
   right: 61.5%;
   width: 39.5%;
   height: 15px;
-  background: rgb(10, 118, 79);
+  background: rgb(3, 41, 179);
   transform: skew(-45deg);
   z-index: 0;
 }
@@ -61,7 +61,7 @@ body {
   right: 61.5%;
   width: 39.5%;
   height: 15px;
-  background: rgb(10, 118, 79);
+  background: rgb(3, 41, 179);
   transform: skew(45deg);
   z-index: 0;
 }
@@ -111,7 +111,14 @@ body {
   align-items: center;
   flex-grow: 1;
   padding: 10px;
-  text-align: center;
+  line-height: 1.5;
+}
+
+.item .item__price {
+  padding: 15px;
+  font-weight: 600;
+  font-size: 1.1em;
+  color: brown;
 }
 
 .item .item__image {
@@ -123,8 +130,9 @@ body {
   border: 0;
   cursor: pointer;
   margin: 0;
-  padding: 10px;
+  padding: 12px 10px;
   color: white;
+  font-size: 0.9em;
 }
 
 .cart {
@@ -134,27 +142,58 @@ body {
   justify-content: space-between;
   background-color: rgb(241, 241, 238);
   height: 100vh;
+  padding: 20px;
 }
 
 .cart .cart__items {
   max-height: 500px;
   overflow-y: scroll;
+  width: 100%;
+}
+
+.cart .cart__items .cart__item {
+  padding: 8px;
+  font-size: 0.9em;
+  margin: 8px 0;
+  background-color: rgba(78, 79, 143, 0.178);
+  line-height: 1.5;
+  cursor: url('Symbol-for-Delete.svg.png'), not-allowed;
 }
 
 .empty-cart {
-  width: 170px;
-  height: 35px;
-  margin: 0 auto;
+  width: 180px;
+  height: 40px;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
-  margin-top: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.empty-btn-container {
+  margin-bottom: 45px;
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
 }
 
 .cart_fixed_elements {
-  margin-bottom: 100px;
-  padding-top: 20px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.cart_fixed_elements span {
+  color: brown;
+  font-size: 1.1em;
 }
 
 .total-price {
+  font-weight: 700;
+}
+
+.loading {
+  font-size: 1em;
+  text-align: center;
+  color: rgb(3, 52, 45);
+  padding: 20px;
   font-weight: 700;
 }
