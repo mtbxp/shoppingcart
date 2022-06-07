@@ -56,7 +56,7 @@ const preparingFunction = async (productName) => {
       const sectionContainer = document.querySelector('.items');
       const parameters = [product.id, product.title, product.thumbnail];
       const sectionProducts = createProductItemElement(...parameters);
-      sectionProducts.addEventListener('click', buttonListener);
+      sectionProducts.children[3].addEventListener('click', buttonListener);
       sectionContainer.appendChild(sectionProducts);
     });
   }
