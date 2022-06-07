@@ -1,5 +1,5 @@
-const fetchItem = () => {
-  // seu código aqui
+const fetchItem = (param) => {
+  if (!param) throw new Error('You must provide an url');
 };
 
 if (typeof module !== 'undefined') {

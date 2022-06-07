@@ -27,28 +27,23 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  // event.parent
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
-const result = async () => {
-  const teste = await fetchProducts('computador');
-  // console.log(teste.results);
-  const itensContainer = document.querySelector('.items');
-  teste.results.forEach((param) => {
-    const test = createProductItemElement(param);
-    itensContainer.appendChild(test);
-    console.log(param);
-  });
+const createList = async () => {
+  const products = await fetchProducts('computador');
+  const container = document.querySelector('.items');
+  products.results.forEach((product) => container.appendChild(createProductItemElement(product)));
 };
 
 window.onload = () => {
-  result();
+  createList();
 };
