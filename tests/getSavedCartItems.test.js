@@ -16,4 +16,14 @@ describe('4 - Teste a função getSavedCartItems', () => {
     localStorage.getItem('cartItems');
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
+
+  // test('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado com o "cartItems" como parâmetro, caso não seja undefined.', () => {
+  //   getSavedCartItems();
+  //   const obj = {teste: 'value'};
+  //   const array = [];
+  //   array.push(obj);
+  //   // localStorage.setItem('cartItems', JSON.stringify(array));
+  //   const get = localStorage.getItem('cartItems');
+  //   expect(get).toEqual(0);
+  // });
 });
