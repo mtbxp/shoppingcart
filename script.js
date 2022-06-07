@@ -16,12 +16,16 @@ const cartItemClickListener = (event) => {
   event.srcElement.remove();
 };
 
-const createCartItemElement = (mens) => {
+const createCartItemElement = (sku, name, price) => {
   const li = document.createElement('li');
   const list = document.querySelector('.cart__items');
+  const cartItems = `SKU: ${sku}
+
+  NAME: ${name}
+  
+  PRICE: $${price}`;
   li.className = 'cart__item';
-  li.innerText = mens;
-  saveCartItems(mens);
+  li.innerText = cartItems;
   li.addEventListener('click', cartItemClickListener);
   list.appendChild(li);
   return li;
@@ -39,10 +43,7 @@ const createProductItemElement = (sku, name, image) => {
   button.addEventListener('click', async () => {
     const infoItem = await fetchItem(sku);
     const { id, title, price } = infoItem;
-    const cartItems = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-    createCartItemElement(cartItems);
-    const list = document.querySelector('.cart__items');
-    console.log(list.children['0'].innerText);
+    createCartItemElement(id, title, price);
   });
 
   return section;
