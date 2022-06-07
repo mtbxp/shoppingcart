@@ -56,14 +56,6 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   const li = event.target;
   li.remove();
-  console.log('foi');
-};
-window.onchange = () => {
-  const cartItem = document.getElementsByClassName('cart__item');
-
-for (let index = 0; index < cartItem.length; index += 1) {
-  cartItem[index].addEventListener('click', cartItemClickListener);
-}
 };
 
 function saveCartItems2() {
@@ -146,9 +138,18 @@ function loadLocalStorage() {
 }
 }
 
+function activateFunction() {
+  const cartItem = document.getElementsByClassName('cart__item');
+
+  for (let index = 0; index < cartItem.length; index += 1) {
+    cartItem[index].addEventListener('click', cartItemClickListener);
+  }
+}
+
 window.onload = () => { 
   createItems()
   .then(getButtons);
   loadLocalStorage();
   createLoading();
+  activateFunction();
 };
