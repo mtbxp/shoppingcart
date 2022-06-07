@@ -1,11 +1,11 @@
-const getUrl = (product) => `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+const URL = (product) => `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
 
 const fetchProducts = async (product) => {
 try {
-  const url = getUrl(product);
-  const result = await fetch(url);
-  const data = await result.json();
-  return data;
+  const url = URL(product);
+  const response = await fetch(url);
+  const { results } = await response.json();
+  return results;
 } catch (error) {
   return error;
 }
