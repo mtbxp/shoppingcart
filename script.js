@@ -15,15 +15,23 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+// acessar o pai para ver o parametro
+
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  const listaHTML = document.querySelector(cartList).innerHTML;
+};
+// chamar fetchitens e passa o parametro para a função para gerar a li e acessar o pai para ver o parametro
+
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const EventOnItem = (event) => {
   const sku = getSkuFromProductItem(event.target.parentNode);
@@ -44,12 +52,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
   return section;
 };
-// acessar o pai para ver o parametro
-
-const cartItemClickListener = (event) => {
-  event.target.remove();
-};
-// chamar fetchitens e passa o parametro para a função para gerar a li e acessar o pai para ver o parametro
 
 const createProductList = async () => {
   const fetch = await fetchProducts('computador');
