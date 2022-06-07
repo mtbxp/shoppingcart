@@ -6,7 +6,7 @@ describe('1 - Teste a função fetchProducts', () => {
   test('Verifica se fetchProduct é uma função', async () => {
     expect(typeof fetchProducts).toBe('function');
   });
-  test('Verifys if fetchProduct whith "computador" will be called', async () => {
+  test('Verifica se a função fetch será chamada', async () => {
     const resultado = await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
