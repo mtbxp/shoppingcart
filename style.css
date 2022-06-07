@@ -43,7 +43,7 @@ body {
 }
 
 .container-cartTitle:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 15px;
   right: 61.5%;
@@ -55,7 +55,7 @@ body {
 }
 
 .container-cartTitle:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 30px;
   right: 61.5%;
@@ -166,15 +166,16 @@ body {
   cursor: pointer;
 }
 
-.empty-cart:hover , .item__add:hover {
-   background-color: rgb(40, 119, 80);
-   cursor: pointer;
+.empty-cart:hover,
+.item__add:hover {
+  background-color: rgb(40, 119, 80);
+  cursor: pointer;
 }
 
 .loading {
   padding-top: 50px;
   font-size: 2rem;
   align-items: center;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(142, 8, 8);
 }

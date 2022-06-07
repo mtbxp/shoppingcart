@@ -77,7 +77,7 @@ const createListProducts = async () => {
   const getClassLoading = document.querySelector('.loading');
   const getItems = await fetchProducts('computador');
   getClassLoading.remove();
-  const elementsItem = getItems.forEach((flag) => {
+  getItems.forEach((flag) => {
     const setItems = createProductItemElement(flag);
     getClassItems.appendChild(setItems);
   });
