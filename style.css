@@ -141,9 +141,21 @@ body {
 }
 
 .empty-cart {
+  border-radius: 8px;
+  color: white;
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  border: 2px solid rgb(3, 52, 45);
+  background-color: rgb(10, 118, 79);
+}
+
+.empty-cart:hover {
+  width: 168px;
+  height: 33px;
+}
+
+.empty-cart:active {
+  width: 170px;
+  height: 35px;
 }

@@ -38,7 +38,7 @@ const sumTotal = (element) => {
       const price = cart.innerText.split('$')[1];
       const priceRandon = parseFloat(price) * 100;
       sum += priceRandon / 100;
-      totalPrice.innerText = sum;
+      totalPrice.innerText = `Total da compra: R$ ${sum}`;
     });
   } else {
     totalPrice.innerText = 0;
