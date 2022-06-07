@@ -147,3 +147,8 @@ body {
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
+
+.empty-cart:hover {
+  background-color: rgb(207, 207, 207);
+  border: 2px solid rgb(48, 48, 48);
+}
