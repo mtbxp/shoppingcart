@@ -8,7 +8,7 @@ describe('3 - Test saveCartItems function', () => {
     saveCartItems('<ol><li>Item</li></ol>`');
     expect(localStorage.setItem).toBeCalled();
   });
-  it('Should call the `localStorage.setItem` method, given the argument `<ol><li>Item</li></ol>`', () => {
+  it('Should call the `localStorage.setItem` method, given two arguments', () => {
     saveCartItems('<ol><li>Item</li></ol>`');
     expect(localStorage.setItem).toBeCalledWith('cartItems','<ol><li>Item</li></ol>');
   });
