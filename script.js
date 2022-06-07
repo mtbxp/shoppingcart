@@ -60,6 +60,7 @@ const showComputers = async () => {
 const clearCart = () => {
   const limparCarrinho = document.querySelector('.empty-cart');
   limparCarrinho.addEventListener('click', () => {
+    localStorage.clear();
     document.querySelectorAll('.cart__item').forEach((li) => li.remove());
   });
 };
