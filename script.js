@@ -70,7 +70,7 @@ const filterData = async () => {
   });
 };
 // .....................................................................................(MINHA)
-// Criar item a partir no localstorage: tentativa de criar função que cria LI e add a ol com os dados do local storage(INCOMPLETA)
+// Requisito 8 Criar item a partir no localstorage.
 const getLocaStorage = () => {
   const cartItem = getSavedCartItems('cartItems');
   ol2.innerHTML = cartItem;
@@ -78,8 +78,18 @@ const getLocaStorage = () => {
     item.addEventListener('click', cartItemClickListener);
   });
 };
+// .....................................................................................(MINHA)
+// Requisito 10 Apaga os items do carrinho e do localStorage.
+const emptycart = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    ol2.innerHTML = '';
+    localStorage.removeItem('cartItems');
+  });
+};
 
 window.onload = () => {
   filterData();
   getLocaStorage();
+  emptycart();
 };
