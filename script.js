@@ -1,7 +1,6 @@
 const lista = document.querySelector('.cart__items');
 const totalPrice = document.createElement('p');
 totalPrice.classList.add('total-price');
-totalPrice.innerText = '$0';
 const secaoCarrinho = document.querySelector('.cart');
 secaoCarrinho.appendChild(totalPrice);
 
@@ -24,13 +23,13 @@ const cartPrice = async () => {
     const preco = produtos.find((element2) => element2.id === element).price;
     soma += preco;
   });
-  totalPrice.innerText = `$${soma.toFixed(2)}`;
+  totalPrice.innerText = `$${soma.toFixed(2).toString()}`;
   localStorage.setItem('price', JSON.stringify(soma));
 };
 
 const setPrice = () => {
   const price = JSON.parse(localStorage.getItem('price'));
-  totalPrice.innerHTML = `$${price.toFixed(2)}`;
+  totalPrice.innerHTML = `$${price.toFixed(2).toString()}`;
 };
 
 const saveItems = () => {
@@ -116,22 +115,21 @@ const addItemCart = async () => {
     });
   }
 };
+
 const loadingScreen = () => {
   const newDiv = document.createElement('div');
   newDiv.id = 'carregando';
-  console.log(newDiv);
   newDiv.innerHTML = 'carregando...';
   const secao = document.getElementsByClassName('items')[0];
-  console.log(secao);
   secao.appendChild(newDiv);
 };
 
 window.onload = async () => {
   loadingScreen();
   const data = await fetchProducts('computador');
+  document.getElementById('carregando').remove();
   const produtos = data.results;
   const htmlSection = document.querySelector('.items');
-  document.getElementById('carregando').remove();
   produtos.forEach((element) => {
     const { id, title, thumbnail } = element;
     const section = createProductItemElement({ sku: id, name: title, image: thumbnail });
