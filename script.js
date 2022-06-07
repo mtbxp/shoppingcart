@@ -26,10 +26,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// Codigo reformulado na linha 56
+// Codigo remover Itens
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
-
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -68,5 +68,5 @@ window.onload = async () => {
   // Adicionando o Botao na captura dos items
   const addButtonsItem = document.querySelectorAll('.item__add');
   addButtonsItem.forEach((button) => button.addEventListener('click', addProductsToCarrinho));
-  console.log(addButtonsItem);
+  
 };
