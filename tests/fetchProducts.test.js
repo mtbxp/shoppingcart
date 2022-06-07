@@ -19,7 +19,7 @@ describe('1 - Teste a função fetchProducts', () => {
   })
 
   it('Testa se os dados recebidos de fetchProducts são iguais aos do objeto ComputadorSearch', async() => {
-    expect(await fetchProducts('computador')).toEqual(computadorSearch)
+    expect(await fetchProducts('computador')).toEqual(computadorSearch.results)
   })
   
   it('Testa se ao chamar a função fetchProducts sem nenhum parametro ela retorna um Erro', async() => {
