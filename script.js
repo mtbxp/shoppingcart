@@ -1,3 +1,4 @@
+const ol2 = document.querySelectorAll('.cart__items')[0];
 // Cria um elemento de imagem:
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -13,8 +14,7 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-// .....................................................................................
-
+// .....................................................................................(USADO)
 // Requisito 5 - Escuta a ação de clicar em um item no carrinho:
 const cartItemClickListener = ('click', (event) => {
   event.target.remove();
@@ -26,15 +26,17 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+
   return li;
 };
 // .....................................................................................(MINHA)
-// Requisito 4 - Função que recebe um id e usa o fetchItem para buscar as informações do produto, e após isso usa a createCartItemElement pra adicionar ao carrinho. ---- Falta pegar o ID de cada item -----
+// Requisito 4 - Função que recebe um id e usa o fetchItem para buscar as informações do produto, e após isso usa a createCartItemElement pra adicionar ao carrinho.
 const filterCart = async (id) => {
   const ol = document.querySelector('.cart__items');
   const itemDet = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = itemDet;
   ol.appendChild(createCartItemElement({ sku, name, salePrice }));
+  saveCartItems(ol.innerHTML);
 };
 // .....................................................................................
 // Requisito 4 - Pega o id de um produto:
@@ -52,9 +54,9 @@ const createProductItemElement = ({ sku, name, image }) => {
   const button = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   section.appendChild(button);
   button.addEventListener('click', (event) => {
-  const cada = event.target.parentNode;
-  const id = getSkuFromProductItem(cada);
-  filterCart(id);
+    const cada = event.target.parentNode;
+    const id = getSkuFromProductItem(cada);
+    filterCart(id);
   });
   return section;
 };
@@ -67,9 +69,17 @@ const filterData = async () => {
     item.appendChild(createProductItemElement({ sku, name, image }));
   });
 };
-
-// .....................................................................................
+// .....................................................................................(MINHA)
+// Criar item a partir no localstorage: tentativa de criar função que cria LI e add a ol com os dados do local storage(INCOMPLETA)
+const getLocaStorage = () => {
+  const cartItem = getSavedCartItems('cartItems');
+  ol2.innerHTML = cartItem;
+  ol2.childNodes.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+};
 
 window.onload = () => {
   filterData();
+  getLocaStorage();
 };
