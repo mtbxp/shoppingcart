@@ -24,12 +24,15 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+// eslint-disable-next-line no-unused-vars
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// eslint-disable-next-line no-unused-vars
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
+// eslint-disable-next-line no-unused-vars
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -38,4 +41,38 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const renderProduct = async () => {
+  const computadorProduct = document.querySelector('.items');
+  try {
+  const product = await fetchProducts('computador');
+  product.results.forEach((element) => {
+    const productCard = createProductItemElement(element);
+    computadorProduct.appendChild(productCard);
+  });
+  } catch (error) {
+    computadorProduct.innerHTML = `<h2>${error}</h2>`;
+  }
+};
+
+const renderImg = async () => {
+  const computadorProduct = document.querySelector('.items');
+  const product = await fetchProducts('computador');
+  try {
+  product.results.forEach((item) => {
+    const objProduct = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const listProduct = createProductItemElement(objProduct);
+    computadorProduct.appendChild(listProduct);
+  });
+  } catch (error) {
+    computadorProduct.innerHTML = `<h2>${error}</h2>`;
+  }
+};
+
+window.onload = () => {
+  renderProduct();
+  renderImg();
+};
