@@ -1,4 +1,5 @@
 const priceParagraph = document.querySelector('p');
+const itemsSection = document.querySelector('.items');
 
 if (localStorage.getItem('prices') === null) {
   priceParagraph.innerText = 0;
@@ -72,10 +73,15 @@ const createProductItemElement = ({ id, title, thumbnail }, listFather) => {
   return section;
 };
 
-const addItems = async (name, fatherEle, listFather) => {
-  const data = await fetchProducts(name);
+const addItems = async (getData, fatherEle, listFather) => {
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'loading';
+  loadingDiv.innerText = 'Carregando...';
+  itemsSection.appendChild(loadingDiv);
+  const items = await getData('computador');
+  loadingDiv.remove();
   for (let index = 0; index < 50; index += 1) {
-    const info = data[index];
+    const info = items[index];
     fatherEle.appendChild(createProductItemElement(info, listFather));
   }
 };
@@ -87,7 +93,8 @@ function addListenerToSavedItems(newList, list) {
       event.target.remove();
       localStorage.setItem('cartItems', JSON.stringify(list.innerHTML));
       const id = getList.innerText.slice(5, 18);
-      const data = await fetchItem(id);
+      const reponse = await fetch(`https://api.mercadolibre.com/items/${id}`);
+      const data = await reponse.json();
       priceParagraph.innerText = pricesSub(data.price);
     });
   }
@@ -95,7 +102,6 @@ function addListenerToSavedItems(newList, list) {
 
 window.onload = () => {
   const getClearButton = document.querySelector('.empty-cart');
-  const itemsSection = document.querySelector('.items');
   const list = document.querySelector('ol');
 
   getClearButton.addEventListener('click', () => {
@@ -105,7 +111,7 @@ window.onload = () => {
     priceParagraph.innerText = 0;
   });
 
-  addItems('computador', itemsSection, list);
+  addItems(fetchProducts, itemsSection, list);
 
   list.innerHTML = JSON.parse(getSavedCartItems());
 
