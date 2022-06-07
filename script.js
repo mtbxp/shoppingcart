@@ -1,4 +1,15 @@
 // getSavedCartItems();
+const emptyAll = document.querySelector('.empty-cart');
+
+const removeAll = () => {
+  const cartItems = document.querySelector('.cart__items');
+  const childsNumber = cartItems.childElementCount;
+  for (let index = 0; index < childsNumber; index += 1) {
+    cartItems.firstElementChild.remove();
+  }
+};
+
+emptyAll.addEventListener('click', removeAll);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -48,6 +59,13 @@ const cartItemClickListener = (list) => {
   }
 };
 
+const removeTotalListener = (obj) => {
+  const subtotal = document.querySelector('.total-price');
+  let inner = parseFloat(subtotal.innerHTML);
+  inner -= obj.salePrice;
+  subtotal.innerHTML = inner;
+};
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -56,18 +74,43 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const createItemElement = (item) => {
+const defineInitialSubtotal = (obj = 0) => {
+  const cart = document.querySelector('.cart');
+  const subtotal = document.createElement('div');
+  subtotal.className = 'total-price';
+  subtotal.innerHTML = obj === 0 ? 0 : obj.salePrice;
+  cart.append(subtotal);
+};
+// defineInitialSubtotal();
+
+const sumProducts = (objElement) => {
+  console.log(9)
+  const subtotal = document.querySelector('.total-price');
+  let number = parseFloat(subtotal.innerHTML);
+  console.log('Number: ', number);
+  console.log('objElement.salePrice: ', objElement.salePrice);
+  number += objElement.salePrice;
+  subtotal.innerHTML = Math.round(number * 100) / 100;
+  console.log(subtotal.innerHTML)
+};
+
+const createItemElement = (item, obj) => {
   const cart = document.querySelector('.cart__items');
   cart.append(item);
+  sumProducts(obj);
 };
 
 const initialRender = () => {
   const cartArray = getSavedCartItems(); // lista
-  if (cartArray !== null) {
+  if (cartArray === null) {
+    console.log(null)
+    defineInitialSubtotal();
+  } else {
     [...cartArray].forEach((obj) => {
-      const myLi = createCartItemElement(obj);
-      cartItemClickListener(myLi);
-      createItemElement(myLi);
+    defineInitialSubtotal(obj);
+    const myLi = createCartItemElement(obj);
+    cartItemClickListener(myLi);
+    createItemElement(myLi, obj);
     });
   }
 };
@@ -87,7 +130,8 @@ const addToCartListener = () => {
       saveCartItems(obj, objsArray);
       const myLi = createCartItemElement(obj);
       cartItemClickListener(myLi);
-      createItemElement(myLi);
+      createItemElement(myLi, obj);
+      removeTotalListener(obj);
     });
   }));
 };
