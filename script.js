@@ -1,4 +1,4 @@
-// const { fetchItem } = require("./helpers/fetchItem");
+// const saveCartItems = require("./helpers/saveCartItems");
 
 const listProducts = document.querySelector('.items');
 const sectionChart = document.querySelector('.cart__items');
@@ -20,12 +20,12 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  
   return section;
 };
 
@@ -50,7 +50,7 @@ const fetchId = async (event) => {
   const product = await fetchItem(id);
   const item = createCartItemElement(product);
   sectionChart.appendChild(item);
-  };
+};
 
 const allProducts = async () => {
   await fetchProducts('computador')
@@ -61,6 +61,9 @@ const allProducts = async () => {
     listProducts.appendChild(sectionCreate);
   }));
 };
+
+const allItemsChart = sectionChart.childNodes;
+console.log(allItemsChart);
 
 window.onload = () => {
   allProducts();
