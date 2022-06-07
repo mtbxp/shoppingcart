@@ -30,6 +30,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 // busca o id do item
 const getSkuFromProductItem = (item) => item.querySelector('.item__sku');
 
+// filtra o valor e devolve ele somado 
 const removePrice = (price) => {
   const itensRemove = total.filter((value) => value === price);
   if (itensRemove.length > 1) {
@@ -50,6 +51,7 @@ const removePrice = (price) => {
         // console.log(total, 'removePrice', totalPrice);
         return Math.round(totalPrice);
 };
+
 // retorna o valor total
 const returnSpam = () => document.querySelector('.total-price');
 
@@ -62,7 +64,7 @@ const renderRemovePrice = (price) => {
   // console.log('renderRemove', valor, spam);
 };
 
-// remove o item do shopcard
+// filtra se mais de um item for identificado
 const filtroRemovedor = (rmId) => {
   const storage = JSON.parse(localStorage.getItem('cartItems'));
   const itensRemove = storage.filter((id) => id === rmId);
@@ -84,15 +86,16 @@ const filtroRemovedor = (rmId) => {
 };
 
 const cartItemClickListener = (li, rmId, price) => {
-  li.addEventListener('click', ({ target }) => {
+  li.addEventListener('click', (_event) => {
     // ...
-    const naoEtarget = target;
-    naoEtarget.innerHTML = '';
+    if (li.parentNode) {
+      li.parentNode.removeChild(li);
+    }
     // removendo do localstorage
     filtroRemovedor(rmId);
     renderRemovePrice(price);
   });
-  // console.log(rmId, 'delet', filtro);
+  console.log(rmId, 'delet', li);
 };
 // remover valor do total price
 
@@ -237,7 +240,7 @@ renderLocalStorage = async () => {
 };
 
 window.onload = () => {
-  localStorage.setItem('cartItems', JSON.stringify([]));
+  // localStorage.setItem('cartItems', JSON.stringify([]));
   renderLocalStorage();
   renderProductItemElement();
 };
