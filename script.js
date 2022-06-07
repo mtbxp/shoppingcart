@@ -1,9 +1,8 @@
 const sectionItems = document.querySelector('.items');
 const listItems = document.querySelector('.cart__items');
-const botaoAdd = document.querySelector('.item__add');
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove(event.target);
 };
 
 const createCartItemElement = (sku, name, salePrice) => {
