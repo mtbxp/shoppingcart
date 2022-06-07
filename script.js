@@ -42,8 +42,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const productsSection = document.querySelector('.items');
    try {
     const products = await fetchProducts('computador');
-    const reder = Object.entries(products);
-    reder.forEach((product) => {
+    products.forEach((product) => {
     const productCard = createProductItemElement(
       { 
          sku: product.id,
