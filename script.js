@@ -1,4 +1,3 @@
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -57,9 +56,9 @@ const select = () => {
       const Selec = getSkuFromProductItem(element.target.parentNode);
       const dados = fetchItem(Selec);
       addList.appendChild(createCartItemElement(dados));
-    };
+    }
  });
-}
+};
 
 window.onload = () => {
   createListProduct();
