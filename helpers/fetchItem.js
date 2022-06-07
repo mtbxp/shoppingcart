@@ -1,5 +1,4 @@
 const fetchItem = async (id) => {
-  console.log(id, "oi");
   if (id === undefined) {
     throw new Error('You must provide an url');
   }

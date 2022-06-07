@@ -33,17 +33,15 @@ const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-  if (innerText === 'Adicionar ao Carrinho!') {
-    e.addEventListener('click', async (event) => {
-      const idCerto = event.target.parentElement.firstChild.innerHTML;
-      console.log('oi por favor funciona');
-      const constF = await fetchItem(idCerto);
-      classCartItems.appendChild(
-         createCartItemElement({ sky: constF.id, name: constF.title, salePrice: constF.price }),
-        );
-    });
-  }
   return e;
+};
+
+const colocarNoCarrinho = async (event) => {
+  const idCerto = event.target.parentElement.firstChild.innerHTML;
+  const constF = await fetchItem(idCerto);
+  classCartItems.appendChild(
+  createCartItemElement({ sky: constF.id, name: constF.title, salePrice: constF.price }),
+  );
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -56,7 +54,10 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const buttons = document.querySelectorAll('.item__add');
+  buttons.forEach((element) => {
+    element.addEventListener('click', colocarNoCarrinho);
+  });
   return section;
 };
 
