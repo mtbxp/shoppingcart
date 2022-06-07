@@ -1,5 +1,3 @@
-// const saveCartItems = require("./helpers/saveCartItems");
-
 const listProducts = document.querySelector('.items');
 const sectionChart = document.querySelector('.cart__items');
 
@@ -35,21 +33,26 @@ console.log(getSkuFromProductItem);
 const cartItemClickListener = (event) => { 
   const itemChart = event.target;
   itemChart.remove();
+  saveCartItems(sectionChart.innerHTML);
+  getSavedCartItems();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+sectionChart.addEventListener('click', cartItemClickListener);
 
 const fetchId = async (event) => {
   const id = event.target.parentNode.firstChild.innerText;
   const product = await fetchItem(id);
   const item = createCartItemElement(product);
   sectionChart.appendChild(item);
+  saveCartItems(sectionChart.innerHTML);
 };
 
 const allProducts = async () => {
@@ -62,9 +65,11 @@ const allProducts = async () => {
   }));
 };
 
-const allItemsChart = sectionChart.childNodes;
-console.log(allItemsChart);
+const itemsLoad = () => {
+  sectionChart.innerHTML = getSavedCartItems();
+};
 
 window.onload = () => {
   allProducts();
+  itemsLoad();
 };
