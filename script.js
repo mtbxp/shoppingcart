@@ -5,7 +5,7 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-
+const cartItemClickListener = (event) => {};
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -68,10 +68,6 @@ for (let index = 0; index < addItem.length; index += 1) {
 }
 };
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {};
-
-
 
 const prepareSite = async () => {
   const data = await fetchProducts('computador');
