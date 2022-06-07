@@ -20,7 +20,6 @@ const createProductItemElement = ({ sku, name, image }) => {
     section.appendChild(createProductImageElement(image));
     section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
     document.getElementsByClassName('items')[0].appendChild(section);
-  // return section;
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
