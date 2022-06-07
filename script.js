@@ -20,6 +20,7 @@ const createProductObject = async (product) => {
   });
 };
 
+
 const getItems = (item) => {
   const productItem = fetchItem(item)
     .then((data) => data);
@@ -41,6 +42,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -49,9 +51,11 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.addEventListener('click', clickAddCart);
   // console.log(section);
   return classItems.appendChild(section);
 };
+
 
 // console.log(fetchItem('MLB1341706310'));
 
@@ -84,11 +88,30 @@ const createItemObject = async (item) => {
   const objectItem = { sku: itemInfo.id,
     name: itemInfo.title,
     salePrice: Number(itemInfo.price) };
+    
+    return createCartItemElement(objectItem);
+  };
+  
+  const clickAddCart = (event) => {
+    // const sku = document.querySelector('.item__sku');
+    // sku.classList.add('addedToCart');
+    
+    console.log(createItemObject('MLB2121539194'));
+    // const skuFind = sku.forEach((element) => element.values);
+    // console.log(sku);
+    // console.log(skuFind);
+    console.log(event.target);
+  };
 
-  return createCartItemElement(objectItem);
-};
 
-createItemObject('MLB1341706310');
+  // clickAddCart();
+  
+  // const clickAddCart = (sku) => {
+    // const btnAddToCart = document.querySelector('.item__add');
+// return btnAddToCart.addEventListener('click', console.log('funcionou'));
+// };
+
+// createItemObject('MLB1341706310');
 // console.log(fetchProducts('computer'));
 
 window.onload = () => { };
