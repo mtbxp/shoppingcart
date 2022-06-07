@@ -41,13 +41,13 @@ const getSkuFromProductItem = (event) => {
   return str.slice(5, str.indexOf('|') - 1);
 };
 
-/* const clearList = (classItem) => {
+const clearList = (classItem) => {
   let childimg = classItem[0].lastElementChild;
   while (childimg) {
     classItem[0].removeChild(childimg);
     childimg = classItem[0].lastElementChild;
   }
-}; */
+};
 
 const cartItemClickListener = (event) => {
   const dados = getSavedCartItems('cartItems');
@@ -78,7 +78,7 @@ const addCartItemClickListener = () => {
   });
 };
 
-/* const updateListCartItems = () => {
+const updateListCartItems = () => {
   const dados = getSavedCartItems('cartItems');
   const N = cartItems[0].childElementCount;
 
@@ -93,7 +93,7 @@ const addCartItemClickListener = () => {
       cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
     });
   }
-}; */
+};
 
 const showListProducts = async () => {
   const data = await fetchProducts('computador');
@@ -105,7 +105,7 @@ const showListProducts = async () => {
   addCartItemClickListener();
 };
 
-// updateListCartItems();
+updateListCartItems();
 
 window.onload = () => { 
   showListProducts();
