@@ -84,14 +84,10 @@ const defineInitialSubtotal = (obj = 0) => {
 // defineInitialSubtotal();
 
 const sumProducts = (objElement) => {
-  console.log(9)
   const subtotal = document.querySelector('.total-price');
   let number = parseFloat(subtotal.innerHTML);
-  console.log('Number: ', number);
-  console.log('objElement.salePrice: ', objElement.salePrice);
   number += objElement.salePrice;
   subtotal.innerHTML = Math.round(number * 100) / 100;
-  console.log(subtotal.innerHTML)
 };
 
 const createItemElement = (item, obj) => {
@@ -103,7 +99,6 @@ const createItemElement = (item, obj) => {
 const initialRender = () => {
   const cartArray = getSavedCartItems(); // lista
   if (cartArray === null) {
-    console.log(null)
     defineInitialSubtotal();
   } else {
     [...cartArray].forEach((obj) => {
