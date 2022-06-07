@@ -11,4 +11,9 @@ if (typeof module !== 'undefined') {
   };
 }
 
-// teste 2
+// const fetchProducts = async (argument) => {
+//   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${argument}`;
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;
+// };

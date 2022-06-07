@@ -10,3 +10,10 @@ if (typeof module !== 'undefined') {
     fetchItem,
   };
 }
+
+// const fetchItem = async (argument) => {
+//   const url = `https://api.mercadolibre.com/items/${argument}`;
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;
+//  };
