@@ -24,13 +24,13 @@ const cartPrice = async () => {
     const preco = produtos.find((element2) => element2.id === element).price;
     soma += preco;
   });
-  totalPrice.innerText = `${Math.round(soma).toString()}`;
+  totalPrice.innerText = `${(Math.round((soma + Number.EPSILON) * 100) / 100).toString()}`;
   localStorage.setItem('price', JSON.stringify(soma));
 };
 
 const setPrice = () => {
   const price = JSON.parse(localStorage.getItem('price'));
-  totalPrice.innerHTML = `${Math.round(price).toString()}`;
+  totalPrice.innerHTML = `${(Math.round((price + Number.EPSILON) * 100) / 100).toString()}`;
 };
 // Funções do preco
 const saveItems = () => {
