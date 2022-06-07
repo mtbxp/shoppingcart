@@ -78,11 +78,18 @@ const btnBtnClearCart = () => {
 };
 
 window.onload = () => {
+  const div = document.createElement('span');
+  div.className = 'loading';
+  div.innerHTML = 'carregando...';
+  getSection.appendChild(div);
   fetchProducts('computador')
-  .then((itens) => itens.results.forEach((product) => {
+  .then((itens) => {
+    document.querySelector('.loading').remove();
+    itens.results.forEach((product) => {
     const createDivsItens = createProductItemElement(product);
     getSection.appendChild(createDivsItens);
-  }));
+  });
+});
 
   addEventItem();
   getSavedCartItems();
