@@ -1,5 +1,5 @@
 const classItems = document.getElementById('itemsList');
-const btnAddToCart = document.getElementsByClassName('item__add');
+const cartList = document.querySelector('.cart__items');
 // console.log(btnAddToCart);
 
 const getProducts = async (product) => {
@@ -20,8 +20,12 @@ const createProductObject = async (product) => {
   });
 };
 
+const getItems = (item) => {
+  const productItem = fetchItem(item)
+    .then((data) => data);
+    return productItem;
+};
 // console.log(createProductObject('computer'));
-// getProductList('computer');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -40,7 +44,7 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -49,7 +53,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return classItems.appendChild(section);
 };
 
-fetchItem('MLB1341706310');
+// console.log(fetchItem('MLB1341706310'));
 
 const createProductList = async () => {
   const getElementsList = await createProductObject('computer');
@@ -58,6 +62,7 @@ const createProductList = async () => {
 };
 
 createProductList();
+// getProductList('computer');
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -70,9 +75,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  // console.log(li);
+  return cartList.appendChild(li);
 };
 
+const createItemObject = async (item) => {
+  const itemInfo = await Object(getItems(item));
+  const objectItem = { sku: itemInfo.id,
+    name: itemInfo.title,
+    salePrice: Number(itemInfo.price) };
+
+  return createCartItemElement(objectItem);
+};
+
+createItemObject('MLB1341706310');
 // console.log(fetchProducts('computer'));
 
 window.onload = () => { };
