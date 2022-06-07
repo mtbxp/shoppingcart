@@ -10,7 +10,7 @@ const getLoading = async () => {
   element.innerText = 'carregando...';
   classCart.appendChild(element);
   await fetchProducts('computador');
-  // classPrice.innerText = localStorage.getItem('classPrice');
+  classPrice.innerText = localStorage.getItem('classPrice');
   element.remove();
 };
 
@@ -42,6 +42,10 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// let finalPrice = 0; 
+// const correctValue = Math.random((finalPrice + arg) * 100) / 100;
+// finalPrice = correctValue;
+
 const totalSum = async (item) => {
   const items = await fetchItem(item);
   if (classPrice.innerText) {
@@ -61,13 +65,13 @@ const cartItemClickListener = async (event) => {
     await saveCartItems(itemCart.innerHTML);
 };
 
-itemCart.addEventListener('click', cartItemClickListener);
+// itemCart.addEventListener('click', cartItemClickListener);
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
@@ -83,6 +87,7 @@ productSection.addEventListener('click', (event) => {
     const idItem = getSkuFromProductItem(itemSection);
     fetchItem(idItem).then((product) => {
       itemCart.appendChild(createCartItemElement(product));
+
       saveCartItems(itemCart.innerHTML);
       totalSum(idItem);
       localStorage.setItem('classPrice', classPrice.innerText);
@@ -92,6 +97,7 @@ productSection.addEventListener('click', (event) => {
 
 removeItemCart.addEventListener('click', () => {
   const listCompletd = document.querySelector('.cart__items');
+
   listCompletd.innerHTML = '';
   classPrice.innerText = '';
   localStorage.clear();
@@ -101,8 +107,8 @@ const getLocalStorage = () => {
   itemCart.innerHTML = getSavedCartItems();
 };
 
-window.onload = () => { 
-  products();
+window.onload = () => {
   getLocalStorage();
   getLoading();
+  products();
 };
