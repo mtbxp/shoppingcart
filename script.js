@@ -22,6 +22,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   console.log(sku, name, salePrice);
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.style.margin = '30px';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
