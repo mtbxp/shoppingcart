@@ -1,5 +1,7 @@
 const itemsList = document.getElementsByClassName('items');
-const cartItems = document.getElementsByClassName('cart__items');
+const cartItems = document.getElementsByClassName('cart__items'); 
+const totalPriceSpan = document.getElementsByClassName('total-price');
+const btnClearCartItems = document.getElementsByClassName('empty-cart'); 
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -41,7 +43,7 @@ const getSkuFromProductItem = (event) => {
   return str.slice(5, str.indexOf('|') - 1);
 };
 
-const clearList = (classItem) => {
+const clearClass = (classItem) => {
   let childimg = classItem[0].lastElementChild;
   while (childimg) {
     classItem[0].removeChild(childimg);
@@ -55,6 +57,7 @@ const cartItemClickListener = (event) => {
   dados.splice(dados.indexOf(element), 1);
   event.target.remove();
   saveCartItems(dados);
+  updateListCartItems();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -65,34 +68,40 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const addCartItemClickListener = () => {
-  document.querySelectorAll('.item__add').forEach((item) => {
-    item.addEventListener('click', async (e) => {
-      const itemCart = e.target.parentNode.firstChild.innerText;
-      const { id: sku, 
-              title: name, 
-              price: salePrice } = await fetchItem(itemCart);
-      addItemCartList(sku);
-      cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
-    });
-  });
-};
+const updateTotalPrice = (array) => array.reduce((acc, curr) => acc + curr, 0);
 
 const updateListCartItems = () => {
   const dados = getSavedCartItems('cartItems');
   const N = cartItems[0].childElementCount;
 
   if (dados !== null && dados.lenght !== N) {
-    clearList(cartItems);
+    clearClass(cartItems);
     const totalPrice = [];
 
     dados.map(async (item) => {
       const { id: sku, title: name, price: salePrice } = await fetchItem(item);
       totalPrice.push(salePrice);
-      console.log(totalPrice);
+      totalPriceSpan[0].innerHTML = `Subtotal: R$ ${updateTotalPrice(totalPrice)}`;
       cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
     });
   }
+};
+
+const addCartItemClickListener = () => {
+  document.querySelectorAll('.item__add').forEach((item) => {
+    item.addEventListener('click', async (e) => {
+      const itemCart = e.target.parentNode.firstChild.innerText;
+      const { id: sku } = await fetchItem(itemCart);
+      addItemCartList(sku);
+      updateListCartItems();
+    });
+  });
+};
+
+const clearCart = () => {
+  localStorage.removeItem('cartItems');
+  clearClass(cartItems);
+  totalPriceSpan[0].innerHTML = 'Subtotal: R$';
 };
 
 const showListProducts = async () => {
@@ -105,8 +114,8 @@ const showListProducts = async () => {
   addCartItemClickListener();
 };
 
-updateListCartItems();
-
+btnClearCartItems[0].addEventListener('click', clearCart);
 window.onload = () => { 
   showListProducts();
+  updateListCartItems();
 };
