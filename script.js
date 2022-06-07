@@ -2,6 +2,8 @@
 
 const productsList = document.querySelector('.items');
 const cartList = document.querySelector('.cart__items');
+const priceTag = document.querySelector('.total-price');
+const clearButton = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -17,8 +19,10 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartItemClickListener = () => {
-  // coloque seu código aqui
+const cartItemClickListener = (event) => {
+  const price = Number(event.target.innerText.split('$')[1]);
+  event.target.remove();
+  priceTag.innerText = `${Number(priceTag.innerText) - price}`;
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -32,6 +36,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 const addItemToCart = (event) => {
   const productId = event.target.parentNode.firstChild.innerText;
   fetchItem(productId).then((product) => {
+    priceTag.innerText = `${Number(priceTag.innerText) + product.price}`;
     cartList.appendChild(createCartItemElement(product));
   });
 };
@@ -50,10 +55,21 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 };
 
 const createProductList = async () => {
-  await fetchProducts('computador')
-    .then((list) => list.results
-    .forEach((product) => productsList.appendChild(createProductItemElement(product))));
+  const loadMessage = document.createElement('p');
+  loadMessage.className = 'loading';
+  loadMessage.innerText = 'carregando...';
+  productsList.appendChild(loadMessage);
+  const productsData = await fetchProducts('computador').then((list) => list.results);
+  productsList.firstChild.remove();
+  await productsData.forEach((product) => {
+      productsList.appendChild(createProductItemElement(product));
+    });
 };
+
+clearButton.addEventListener('click', () => {
+  cartList.innerText = '';
+  priceTag.innerText = '0.00';
+});
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
