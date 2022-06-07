@@ -44,4 +44,11 @@ fetchProducts('computador').then((pc) =>
   image: element.thumbnail })).map((computer) => 
  document.getElementsByClassName('items')[0].appendChild(createProductItemElement(computer))));
 
+ const meuCarrinho = async () => {
+  const cartItem = document.getElementsByClassName('cart__items')[0];
+  const la = await fetchItem('MLB1615760527').then((trem) => 
+  ({ sku: trem.id, name: trem.title, salePrice: trem.price }));
+  cartItem.appendChild(createCartItemElement(la));
+ };
+meuCarrinho();
 window.onload = () => {};
