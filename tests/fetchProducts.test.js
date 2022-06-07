@@ -19,12 +19,12 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toHaveBeenCalledWith(url);
   })
 
-  it('test if fectchProducts with parameter `computador` the fetch was called', async () => {
+  it('test if fectchProducts with parameter `computador` result is equal to computadorSearch', async () => {
     const result = await fetchProducts('computador');
     expect(result).toEqual(computadorSearch);
   })
 
-  it('test if fectchProducts is a function', () => {
+  it('test if fectchProducts whitout parameter, returns `you must provide an url`', () => {
     const actual = fetchProducts();
     expect(actual).toEqual(new Error('You must provide an url'));
   })
