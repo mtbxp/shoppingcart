@@ -1,5 +1,6 @@
 const classItems = document.getElementById('itemsList');
 const cartList = document.querySelector('.cart__items');
+
 // console.log(btnAddToCart);
 
 const getProducts = async (product) => {
@@ -20,7 +21,6 @@ const createProductObject = async (product) => {
   });
 };
 
-
 const getItems = (item) => {
   const productItem = fetchItem(item)
     .then((data) => data);
@@ -35,13 +35,17 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const createCustomElement = (element, className, innerText) => {
+const createCustomElement = (element, className, innerText, sku) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  if (element === 'button') {
+    e.addEventListener('click', () => {
+      clickAddCart(sku);
+    });
+  }
   return e;
 };
-
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
@@ -50,13 +54,10 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  section.addEventListener('click', clickAddCart);
-  // console.log(section);
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!', sku));
+
   return classItems.appendChild(section);
 };
-
-
 // console.log(fetchItem('MLB1341706310'));
 
 const createProductList = async () => {
@@ -93,25 +94,7 @@ const createItemObject = async (item) => {
   };
   
   const clickAddCart = (event) => {
-    // const sku = document.querySelector('.item__sku');
-    // sku.classList.add('addedToCart');
-    
-    console.log(createItemObject('MLB2121539194'));
-    // const skuFind = sku.forEach((element) => element.values);
-    // console.log(sku);
-    // console.log(skuFind);
-    console.log(event.target);
+    createItemObject(event);
   };
-
-
-  // clickAddCart();
-  
-  // const clickAddCart = (sku) => {
-    // const btnAddToCart = document.querySelector('.item__add');
-// return btnAddToCart.addEventListener('click', console.log('funcionou'));
-// };
-
-// createItemObject('MLB1341706310');
-// console.log(fetchProducts('computer'));
 
 window.onload = () => { };
