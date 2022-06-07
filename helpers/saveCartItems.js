@@ -1,5 +1,3 @@
-const localStorageSimulator = require('../mocks/localStorageSimulator');
-
 const saveCartItems = async (addyElm) => {
   if (!addyElm) {
     throw new Error('you make any error');
