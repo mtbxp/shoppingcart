@@ -20,8 +20,36 @@ const createProductItemElement = (sku, name, image) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
+};
+
+
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => {
+ 
+};
+
+const createCartItemElement = (sku, name, salePrice) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+const addProductsCart = async (event) => {
+  const classCartItems = document.querySelector('.cart__items');
+
+  const product = await fetchItem(event.path[1].childNodes[0].innerHTML);
+  
+  const productId = product.id;
+  const productName = product.title;
+  const productPrice = product.price;
+ 
+  const finalCart = createCartItemElement(productId, productName, productPrice);
+  classCartItems.appendChild(finalCart);
 };
 
 const getProducts = async () => {
@@ -32,25 +60,12 @@ const getProducts = async () => {
      const sku = product.id;
      const name = product.title;
      const image = product.thumbnail;
-
+      
      const productCard = createProductItemElement(sku, name, image);
      classItens.appendChild(productCard);
-   });
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-  // coloque seu código aqui
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+    
+     productCard.children[3].addEventListener('click', addProductsCart);
+});
 };
 
 window.onload = () => { 
