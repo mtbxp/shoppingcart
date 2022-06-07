@@ -1,5 +1,4 @@
 const saveCartItems = () => {
-  
 };
 
 if (typeof module !== 'undefined') {
