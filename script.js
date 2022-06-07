@@ -1,5 +1,4 @@
-const itemList = document.querySelector('.itens');
-
+// Original
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,14 +39,24 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = async () => {
+// Meus codes
+// Requisito 2 - Com a ajuda da revisão do Gabs 06/06 <3
+const renderItens = async () => {
+  const itemList = document.querySelector('.items');
+  
   const products = await fetchProducts('computador');
-  products.forEach((product) => {
+  
+  products.results.forEach((product) => {
     const item = {
       sku: product.id,
       name: product.title,
       image: product.thumbnail,
     };
-    itemList.appendChild(createProductItemElement(item));
+    const productCard = createProductItemElement(item);
+    itemList.appendChild(productCard);
   });
+};
+
+window.onload = () => {
+ renderItens();
  };
