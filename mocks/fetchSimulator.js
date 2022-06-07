@@ -1,3 +1,4 @@
+const { fetchProducts } = require('../helpers/fetchProducts');
 const item = require('./item');
 const search = require('./search');
 
