@@ -1,6 +1,6 @@
 const itemsList = document.getElementsByClassName('items');
 const cartItems = document.getElementsByClassName('cart__items'); 
-// const totalPriceSpan = document.getElementsByClassName('total-price');
+const totalPriceSpan = document.getElementsByClassName('total-price');
 const btnClearCartItems = document.getElementsByClassName('empty-cart'); 
 
 const createProductImageElement = (imageSource) => {
@@ -43,10 +43,10 @@ const getSkuFromProductItem = (event) => {
   return str.slice(5, str.indexOf('|') - 1);
 };
 
-/* const getPriceFromProductItem = (event) => {
+const getPriceFromProductItem = (event) => {
   const str = event.target.innerText;
   return str.slice(str.indexOf('$') + 1, str.lenght);
-}; */
+};
 
 const clearClass = (classItem) => {
   let childimg = classItem[0].lastElementChild;
@@ -56,19 +56,19 @@ const clearClass = (classItem) => {
   }
 };
 
-/* const getTotalPrice = (event) => {
+const getTotalPrice = (event) => {
   let text = totalPriceSpan[0].innerHTML;
   text = text.slice(text.indexOf('$') + 2, text.length);
   text -= getPriceFromProductItem(event);
   text = Math.round(text * 100) / 100;
   totalPriceSpan[0].innerHTML = `Subtotal: R$ ${text}`;
-}; */
+};
 
 const cartItemClickListener = (event) => {
   const dados = getSavedCartItems('cartItems');
   const element = getSkuFromProductItem(event);
   dados.splice(dados.indexOf(element), 1);
-  // getTotalPrice(event);
+  getTotalPrice(event);
   event.target.remove();
   saveCartItems(dados);
 };
@@ -80,11 +80,11 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-/* 
+
 const updateTotalPrice = (array) => {
-  const value = array.reduce((acc, curr) => acc + curr, 0);
+  const value = array.reduce((acc, curr) => acc + curr.salePrice, 0);
   return Math.round(value * 100) / 100;
-}; */
+};
 
 const updateListCartItems = () => {
   const dados = getSavedCartItems('cartItems');
@@ -92,14 +92,8 @@ const updateListCartItems = () => {
 
   if (dados !== null && dados.lenght !== N) {
     clearClass(cartItems);
-    // const totalPrice = [];
-
-    dados.map(async (item) => {
-      const { id: sku, title: name, price: salePrice } = await fetchItem(item);
-      /* totalPrice.push(salePrice);
-      totalPriceSpan[0].innerHTML = `Subtotal: R$ ${updateTotalPrice(totalPrice)}`; */
-      cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
-    });
+    dados.map((item) => cartItems[0].appendChild(createCartItemElement(item)));
+    totalPriceSpan[0].innerHTML = `Subtotal: R$ ${updateTotalPrice(dados)}`;
   }
 };
 
@@ -107,8 +101,8 @@ const addCartItemClickListener = () => {
   document.querySelectorAll('.item__add').forEach((item) => {
     item.addEventListener('click', async (e) => {
       const itemCart = e.target.parentNode.firstChild.innerText;
-      const { id: sku } = await fetchItem(itemCart);
-      addItemCartList(sku);
+      const { id: sku, title: name, price: salePrice } = await fetchItem(itemCart);
+      addItemCartList({ sku, name, salePrice });
       updateListCartItems();
     });
   });
@@ -117,7 +111,7 @@ const addCartItemClickListener = () => {
 const clearCart = () => {
   localStorage.removeItem('cartItems');
   clearClass(cartItems);
-  // totalPriceSpan[0].innerHTML = 'Subtotal: R$';
+  totalPriceSpan[0].innerHTML = 'Subtotal: R$';
 };
 
 const loadingMessage = () => {
