@@ -31,7 +31,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  const alvo = event.target;
+  alvo.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -61,6 +62,14 @@ const AdicionaCarrinho = async () => {
   }
 };
 
+const limpaCarrinho = () => {
+  const limpador = document.getElementsByClassName('empty-cart');
+  const carrinho = document.getElementsByClassName('cart__items');
+  limpador[0].addEventListener('click', () => {
+    carrinho[0].innerHTML = ' ';
+  });
+};
+
 const Start = async () => {
   const items = document.getElementsByClassName('items');
   const data = await fetchProducts('computador');
@@ -71,6 +80,7 @@ const Start = async () => {
     items[0].appendChild(produto);
   });
   AdicionaCarrinho();
+  limpaCarrinho();
 };
 
 window.onload = () => {
