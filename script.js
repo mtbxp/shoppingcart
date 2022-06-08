@@ -35,9 +35,20 @@ const functionReturn = async () => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const cartValue = () => {
+  const li = document.querySelectorAll('.cart__item');
+  const showValue = document.querySelector('.total-price');
+  let totalValue = 0;
+  li.forEach((element) => {
+    totalValue += (Number(element.innerText.split('$')[1]));
+  });
+  showValue.innerText = totalValue;
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
   saveCartItems(cart.innerHTML);
+  cartValue();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -58,6 +69,7 @@ const cartItems = async (event) => {
   const products = await fetchItem(id);
   const createItem = createCartItemElement(products);
   cart.appendChild(createItem);
+  cartValue();
   saveCartItems(cart.innerHTML);
   removeSavedItems();
 };
