@@ -19,7 +19,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho'));
 
   return section;
 };
@@ -32,8 +32,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-// eslint-disable-next-line no-unused-vars
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -41,21 +40,9 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// const renderProduct = async () => {
-//   const computadorProduct = document.querySelector('.items');
-//   try {
-//   const product = await fetchProducts('computador');
-//   product.results.forEach((element) => {
-//     const productCard = createCustomElement(element);
-//     computadorProduct.appendChild(productCard);
-//   });
-//   } catch (error) {
-//     computadorProduct.innerHTML = `<h2>${error}</h2>`;
-//   }
-// };
+const computadorProduct = document.querySelector('.items');
 
-const renderImg = async () => {
-  const computadorProduct = document.querySelector('.items');
+const renderProduct = async () => {
   const product = await fetchProducts('computador');
   try {
   product.results.forEach((item) => {
@@ -72,7 +59,19 @@ const renderImg = async () => {
   }
 };
 
+const appendItem = (product) => {
+  const shoppingCart = document.querySelector('.cart__items');
+  shoppingCart.appendChild(createCartItemElement(product));
+};
+
+const addItemToCart = () => {
+  computadorProduct.addEventListener('click', (event) => {
+    const productList = getSkuFromProductItem(event.target.parentNode);
+    fetchItem(productList).then((element) => appendItem(element));
+  });
+};
+
 window.onload = () => {
-  // renderProduct();
-  renderImg();
+   renderProduct();
+   addItemToCart();
 };
