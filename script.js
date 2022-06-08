@@ -1,3 +1,5 @@
+const { fetchProducts } = require("./helpers/fetchProducts");
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createProductImageElement = (imageSource) => {
@@ -14,7 +16,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, tittle: name, thumbnail: image }) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -26,10 +28,25 @@ const createProductItemElement = ({ id: sku, tittle: name, thumbnail: image }) =
   return section;
 };
 
-const chamaProductItemElement = async () => {
-  const item = document.getElementsByClassName('items');
-  fetchProducts('computador').then((elements) => elements.results.forEach((element) => 
-  item.appendChild(createProductItemElement(element))));
+const searchProduct = async () => {
+  const fetchP = await fetchProducts('computador');
+  const produtos = fetchP.map((element) => {
+    const itemOb = {
+      sku: element.id,
+      name: image.tittle,
+      image: element.thumbnail,
+    };
+    return itemOb;
+  });
+  return produtos;
+};
+
+const sendProduct = async () => {
+  const itens = await searchProduct();
+  itens.forEach((element) => {
+    const item = document.getElementsByClassName('items');
+    item.appendChild(createProductItemElement(element))
+  });
 };
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -47,6 +64,5 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => {
-  fetchProducts('computador');
-  chamaProductItemElement();
+  sendProduct();
  };
