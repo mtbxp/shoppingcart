@@ -8,7 +8,7 @@ const calcCartPrice = () => {
   cartItem.forEach((element) => {
     price += parseFloat(element.innerHTML.split('$')[1]);
   });
-  total.innerHTML = `R$${price}`;
+  total.innerHTML = price;
 };
 
 const clearButton = document.querySelector('.empty-cart');
