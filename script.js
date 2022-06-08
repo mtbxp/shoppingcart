@@ -1,6 +1,17 @@
 const itemProduct = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const priceParagraph = document.querySelector('.total-price');
+const page = document.querySelector('.container');
+
+const loadingAPI = async () => { 
+  const createElement = document.createElement('p');
+  createElement.className = 'loading';
+  createElement.innerText = 'carregando...';
+  page.appendChild(createElement);
+  await fetchProducts('computador');
+  priceParagraph.innerText = localStorage.getItem('priceParagraph');
+  createElement.remove();
+};
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -81,4 +92,5 @@ const getLocalStorage = () => {
 
 window.onload = () => {
   getLocalStorage();
+  loadingAPI();
 };
