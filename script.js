@@ -1,5 +1,7 @@
+// Ajuda da revisão do Gabs 06/06 e da aula da casa de câmbio 07/07
+
 const cart = document.querySelector('.cart__items');
-// Original
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -10,28 +12,14 @@ const createProductImageElement = (imageSource) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createCustomElement = (element, className, innerText) => {
-//   if (element === 'button') {
-//     const eButton = document.createElement(element);
-//     eButton.className = className;
-//     eButton.innerText = innerText;
-//  eButton.addEventListener('click', async (event) => {
-//   const idElement = getSkuFromProductItem(event.target.parentNode);
-// const item = await fetchItem(idElement);
-// const { id, title, price } = item;
-// const itemObj = { sku: id, name: title, salePrice: price };
-// cart.append(createCartItemElement(itemObj));
-// });
-//   }
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 };
 
-// Jogar um addEventListener na criação do botão. 
-
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  // Com o clique no item do carrinho, remover a classe que o faz pertencer ao carrinho.
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -82,8 +70,6 @@ const renderItens = async () => {
     itemList.appendChild(productCard);
   });
 };
-
-// Ajuda da revisão do Gabs 06/06 e da aula da casa de câmbio 07/07
 
 window.onload = () => {
  renderItens();
