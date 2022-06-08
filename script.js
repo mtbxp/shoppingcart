@@ -76,22 +76,12 @@ const addItemToCartFromAddButton = async (event) => {
   updateLocalStorage();
 };
 
-const toggleLoadingMessage = (bool) => {
-  if (bool) {
-    const addLoading = createCustomElement('section', 'loading', 'carregando...');
-    const items = document.querySelector('.items');
-    items.append(addLoading);
-  } else {
-    const removeLoading = document.querySelector('.loading');
-    removeLoading.remove();
-  }
-};
-
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
-  toggleLoadingMessage(true);
+  const loading = createCustomElement('section', 'loading', 'carregando...');
+  items.append(loading);
   const products = await fetchProducts('computador');
-  toggleLoadingMessage(false);
+  loading.remove();
   products.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const productSection = createProductItemElement({ sku, name, image });
     items.append(productSection);
