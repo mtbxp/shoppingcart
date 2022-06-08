@@ -12,12 +12,12 @@ describe('Teste a função fetchItem', () => {
   });
   it('3 - Com o argumento "MLB1615760527", a função fetch deve ser chamada com o endpoint correto', async () => {
     const endpoint = 'https://api.mercadolibre.com/items/MLB1615760527'
-    await fetchItem('computador');
+    await fetchItem('MLB1615760527');
   });
   it('4 - Deve retornar um objeto com as propriedades esperadas', async () => {
-    const response = await fetchItem('computador');
+    const response = await fetchItem('MLB1615760527');
 
-    expect(response).toEqual(computadorSearch);
+    expect(response).toEqual(item);
   });
   it('5 - Sem argumento, deve retornar um erro com a mensagem esperada', async () => {
     const response = await fetchItem();
