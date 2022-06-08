@@ -74,7 +74,15 @@ const itensToBePlaced = async () => {
   });
   buttonListener();
 };
+const emptyCart = () => {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', () => {
+  const cart = document.querySelectorAll('.cart__item');
+  cart.forEach((element) => element.remove());  
+  });
+};
 
 window.onload = () => {
   itensToBePlaced();
+  emptyCart();
 };
