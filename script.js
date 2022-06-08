@@ -92,7 +92,17 @@ const sendToCartItem = () => {
   });
 };
 
-console.log(cartItems);
+const emptyshoppingcart = () => {
+  const ol = document.querySelector('.cart__items');
+  ol.innerText = '';
+};
+
+const clearCart = () => {
+  const clearBtn = document.querySelector('.empty-cart');
+  clearBtn.addEventListener('click', emptyshoppingcart);
+};
+
+clearCart();
 
 window.onload = () => {
   sendToCartItem();
