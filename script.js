@@ -54,7 +54,7 @@ const renderProducts = async () => {
   const addButton = document.querySelectorAll('.item__add');
   addButton.forEach((e, n) => e.addEventListener('click', async () => {
     console.log(`clicou no elemento ${n}`);
-    const selectedProduct = await fetchItem(itemList[n].sku);
+    // const selectedProduct = await fetchItem(itemList[n].sku);
     const cart = document.querySelector('.cart__items');
     cart.appendChild(createCartItemElement(itemList[n]));
   }));
