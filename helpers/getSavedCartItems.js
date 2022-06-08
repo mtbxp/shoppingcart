@@ -1,9 +1,4 @@
-const getSavedCartItems = (arrayOfParameters) => {
-  if (arrayOfParameters) {
-    const arrayOfParametersParse = JSON.parse(arrayOfParameters);
-    return arrayOfParametersParse;
-  }
-};
+const getSavedCartItems = () => localStorage.getItem('cartItems');
 
 if (typeof module !== 'undefined') {
   module.exports = getSavedCartItems;
