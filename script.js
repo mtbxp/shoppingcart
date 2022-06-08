@@ -1,4 +1,3 @@
-/* eslint-disable no-loop-func */
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
 // const { fetchItem } = require("./helpers/fetchItem");
@@ -43,23 +42,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// const usaId = async (el) => {
-//   const data = await fetchItem(el);
-//   const { id, title, price } = data;
-//   createCartItemElement({ id, title, price });
-// };
+const colocaCarrinho = async (e) => {
+  const lista = document.getElementsByClassName('cart__items');
+  const alvo = e.target;
+  const idSelecionado = alvo.parentNode.firstChild.innerText;
+  const dados = await fetchItem(idSelecionado);
+  const { id, title, price } = dados;
+  const produto = createCartItemElement({ sku: id, name: title, salePrice: price });
+  lista[0].appendChild(produto);
+};
 
 const AdicionaCarrinho = async () => {
-  const lista = document.getElementsByClassName('cart__items');
   const products = document.getElementsByClassName('item');
   for (let i = 0; i < products.length; i += 1) {
     products[i].addEventListener('click', async (e) => {
-      const alvo = e.target;
-      const idSelecionado = alvo.parentNode.firstChild.innerText;
-      const dados = await fetchItem(idSelecionado);
-      const { id, title, price } = dados;
-      const produto = createCartItemElement({ sku: id, name: title, salePrice: price });
-      lista[0].appendChild(produto);
+      await colocaCarrinho(e);
     });
   }
 };
