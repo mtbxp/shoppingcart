@@ -131,6 +131,20 @@ const addToCartListener = () => {
   }));
 };
 
+const insertLoad = () => {
+  const cart = document.querySelector('.cart');
+  const load = document.createElement('h2');
+  load.className = 'loading';
+  load.innerHTML = 'Carregando...';
+  cart.append(load);
+};
+insertLoad();
+
+const removeLoad = () => {
+  const load = document.querySelector('.loading');
+  load.remove();
+};
+
 fetchProducts('computador').then((result) => {
   result.forEach((product) => {
   const obj = {
@@ -142,6 +156,7 @@ fetchProducts('computador').then((result) => {
   createItems(myElement);
   });
   addToCartListener();
+  removeLoad();
 });
 
 window.addEventListener('load', initialRender);
