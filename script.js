@@ -30,7 +30,7 @@ function addItemCart(event) {
         sku: objeto.id,
         name: objeto.title,
         salePrice: objeto.price,
-        img: objeto.thumbnail
+        img: objeto.thumbnail,
       }));
     });
   }
