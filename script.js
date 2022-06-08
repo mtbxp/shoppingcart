@@ -75,13 +75,13 @@ const compactResult = (result) => {
 };
 
 window.onload = async () => {
-  const section = document.querySelector('.item');
-  const loading = createCustomElement('span', 'loading', 'carregando...');
+  const section = document.querySelector('.items');
+  const loading = createCustomElement('p', 'loading', 'carregando...');
   section.appendChild(loading);
   const func = await fetchProducts('computador');
-  loading.remove();
   const result = func.results;
   compactResult(result);
+  loading.remove();
   const arr = getSavedCartItems();
   arr.forEach((obj) => {
     createCartItemElement(obj.sku, obj.name, obj.salePrice);
