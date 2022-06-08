@@ -26,11 +26,11 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 };
 
 const createLoadingText = () => {
-  const newSpan = document.createElement('p');
+  const paragraph = document.createElement('p');
   const father = document.querySelector('.cart');
-  newSpan.className = 'loading';
-  newSpan.innerText = 'carregando...';
-  father.appendChild(newSpan);
+  paragraph.className = 'loading';
+  paragraph.innerText = 'carregando...';
+  father.appendChild(paragraph);
 };
 
 const removeLoadingText = () => document.querySelector('.loading').remove();
