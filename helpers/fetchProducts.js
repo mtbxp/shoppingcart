@@ -1,8 +1,8 @@
 const fetchProducts = async (product) => {
-  const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
   try {
-    const result = await fetch(endpoint);
-    const data = await result.json();
+    const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+    const response = await fetch(endpoint);
+    const data = await response.json();
     return data;
   } catch (error) {
     return new Error('You must provide an url');
