@@ -24,8 +24,6 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   it('Quando chamada sem parâmetros, lança o erro esperado', async () => {
     expect.assertions(1);
-    const expected = new Error('You must provide an url');
-    const result = await fetchProducts();
-    expect(result).toEqual(expected);
+    await expect(fetchProducts()).rejects.toThrow('You must provide an url');
   });
 });

@@ -95,7 +95,7 @@ const addProductsToSite = async () => {
   toggleLoadingMessage(items, true);
   const products = await fetchProducts('computador');
   toggleLoadingMessage(items, false);
-  products.forEach((product) => {
+  products.results.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const productSection = createProductItemElement({ sku, name, image });
     items.append(productSection);
