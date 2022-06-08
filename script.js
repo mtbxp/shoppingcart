@@ -37,5 +37,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const buscaComputador = async () => {
+  const retornoFetchProducts = await fetchProducts('computador');
+  console.log(retornoFetchProducts);
+    retornoFetchProducts.forEach((element) => {
+    const { id: sku, title: name, thumbnail: image } = element;
+    document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
+});
+};
 
-window.onload = () => { };
+window.onload = () => {
+  buscaComputador();
+ };
