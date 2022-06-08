@@ -32,38 +32,37 @@ const updateTotalPrice = (price) => {
   const currentPrice = document.querySelector('.total-price');
   if (price === undefined) {
     currentPrice.textContent = '0,00';
-    return;
+    return;    
   }
-  // const currentPriceValue = currentPrice.textContent.replace('.', '').replace(',', '.'); 
-  const currentPriceValue = currentPrice.textContent.replace(',', '.'); // apenas para passar no Cypress
-  let newPrice = parseFloat(currentPriceValue) + price;
-  newPrice = newPrice.toLocaleString('en-us', {
-    // minimumFractionDigits: 2,
+  const currentPriceValue = currentPrice.textContent.replace('.', '').replace(',', '.'); 
+  const stringOptions = {
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  });
-  currentPrice.textContent = newPrice.replace(',', ''); // replace apenas para o Cypress
+  };
+  const newPrice = parseFloat(currentPriceValue) + price;
+  currentPrice.textContent = newPrice.toLocaleString('pt-br', stringOptions); // Formata como 1.000,00, por exemplo
+};
+
+const updateLocalStorage = () => {
+  const cart = document.querySelector(CART_CLASS);
+  const cartHTML = cart.outerHTML;
+  saveCartItems(cartHTML);
 };
 
 const cartItemClickListener = (event) => {
   const item = event.target;
   const price = item.textContent.split('$')[1];
-  updateTotalPrice(-parseFloat(price));
-  const cart = document.querySelector(CART_CLASS);
-  const cartHTML = cart.outerHTML;
-  saveCartItems(cartHTML);
   item.remove();
+  updateTotalPrice(-parseFloat(price));
+  updateLocalStorage();
 };
 
-const createCartItemElement = ({ sku, name, salePrice }, textFromLocalStorage) => {
+const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.addEventListener('click', cartItemClickListener);
-  if (textFromLocalStorage !== undefined) {
-    li.textContent = textFromLocalStorage;
-  } else {
-    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-    updateTotalPrice(salePrice);
-  }
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  updateTotalPrice(salePrice);
   return li;
 };
 
@@ -74,16 +73,14 @@ const addItemToCartFromAddButton = async (event) => {
   const { id: sku, title: name, price: salePrice } = item;
   const cartItem = createCartItemElement({ sku, name, salePrice });
   cart.append(cartItem);
-  const cartHTML = cart.outerHTML;
-  saveCartItems(cartHTML);
+  updateLocalStorage();
 };
 
-const toggleLoadingMessage = (parentElement, bool) => {
+const toggleLoadingMessage = (bool) => {
   if (bool) {
-    const addLoading = document.createElement('section');
-    addLoading.className = 'loading';
-    addLoading.textContent = 'carregando...';
-    parentElement.append(addLoading);
+    const addLoading = createCustomElement('section', 'loading', 'carregando...');
+    const items = document.querySelector('.items');
+    items.append(addLoading);
   } else {
     const removeLoading = document.querySelector('.loading');
     removeLoading.remove();
@@ -92,11 +89,10 @@ const toggleLoadingMessage = (parentElement, bool) => {
 
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
-  toggleLoadingMessage(items, true);
+  toggleLoadingMessage(true);
   const products = await fetchProducts('computador');
-  toggleLoadingMessage(items, false);
-  products.results.forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
+  toggleLoadingMessage(false);
+  products.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const productSection = createProductItemElement({ sku, name, image });
     items.append(productSection);
   });
@@ -118,13 +114,9 @@ const addItemsFromLocalStorage = () => {
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((item) => {
     item.addEventListener('click', cartItemClickListener);
+    const price = item.textContent.split('$')[1];
+    updateTotalPrice(parseFloat(price));
   });
-  // storedCartItems.forEach((storedItem) => {
-  //   const newItem = createCartItemElement({}, storedItem);
-  //   cart.append(newItem);
-  //   const price = storedItem.split('$')[1];
-  //   updateTotalPrice(parseFloat(price));
-  // });
 };
 
 const checkLocalStorage = () => {
