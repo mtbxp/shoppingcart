@@ -3,7 +3,7 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
-  test('Testa se a função fetchProducts é uma função', ()  => {
+  test('Testa se fetchProducts é uma função', ()  => {
     expect(typeof fetchProducts).toBe('function');
   });
 
