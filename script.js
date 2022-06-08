@@ -12,10 +12,10 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -24,13 +24,23 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const FetchProductsToCreateProducts = async () => {
+  const data = await fetchProducts('computador');
+  data.results.forEach((curr) => {
+    const sectionDad = document.querySelector('.items');
+    sectionDad.appendChild(createProductItemElement(curr));
+  });
+  // { sku, name, image };
+};
+FetchProductsToCreateProducts();
+
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui - change code
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = (sku, name, salePrice) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -38,4 +48,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => { createCartItemElement(); };
