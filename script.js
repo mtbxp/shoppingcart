@@ -35,7 +35,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  const carroItem = document.querySelectorAll('.cart__items')[0];
+  carroItem.appendChild(li);
   return li;
+};
+const insereItem = async (item) => {
+  const it = await fetchItem(item);
+  it.forEach(({ id, title, price }) => {
+    const objItem = {
+      sku: it.id,
+      name: it.title,
+      salePrice: it.price,
+    };
+    createCartItemElement(objItem);
+  });
 };
 
 const insereLista = async () => {
