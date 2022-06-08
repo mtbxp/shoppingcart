@@ -13,4 +13,3 @@ describe('3 - Teste a função saveCartItems', () => {
     expect(execute).toHaveBeenLastCalledWith();
   })
 });
-sa

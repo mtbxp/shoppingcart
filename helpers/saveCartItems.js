@@ -1,5 +1,7 @@
-const saveCartItems = () => {
-  // seu código aqui
+// const { json } = require('stylelint/lib/formatters');
+
+const saveCartItems = (value) => {
+  localStorage.setItem('cartItems', value);
 };
 
 if (typeof module !== 'undefined') {
