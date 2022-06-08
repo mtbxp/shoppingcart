@@ -1,6 +1,6 @@
 const carrinhoPai = document.getElementsByClassName('cart__items');
 let carrinho = [];
-localStorage.removeItem('cartItems')
+
 const fetchComputador = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const fProduto = await fetch(url);
