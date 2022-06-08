@@ -69,8 +69,6 @@ const cartItemClickListener = (list, obj) => {
     removeFromStorage(list.target);
     list.target.remove();
   } 
-  if (obj !== undefined) {
-  }
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -119,7 +117,6 @@ const initialRender = () => {
 };
 
 const insertLoad = () => {
-  console.log('insert cahmado')
   const cart = document.querySelector('.cart');
   const load = document.createElement('h2');
   load.className = 'loading';
@@ -130,8 +127,6 @@ insertLoad();
 
 const removeLoad = () => {
   const load = document.querySelector('.loading');
-  console.log(load)
-  console.log('removeload cahmado')
   load.remove();
 };
 
@@ -142,7 +137,6 @@ const addToCartListener = () => {
   addToCart.forEach((item) => item.addEventListener('click', (event) => {
     idElement = event.target.parentElement.firstChild.innerText;
     insertLoad();
-    console.log('insert')
     fetchItem(idElement).then((result) => {
       const obj = {
         sku: result.id,
