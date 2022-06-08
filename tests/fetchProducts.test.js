@@ -1,6 +1,6 @@
 require('../mocks/fetchSimulator');
 const { fetchProducts } = require('../helpers/fetchProducts');
-const computadorSearch = require('../mocks/search');
+const computadorSearch = require('../mocks/search')
 
 describe('1 - Teste a função fetchProducts', () => {
   const fetchProductsFunction = fetchProducts;
@@ -20,7 +20,6 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(retorno).toStrictEqual(computadorSearch);
   });
   it('Verifica se a função da erro caso não seja passado nenhum argumento', async () => {
-    const retornoSemArgumento = await fetchProducts();
     expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
   });
 });
