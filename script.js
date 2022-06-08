@@ -1,3 +1,27 @@
+function calculatePrice() {
+  let prices = [];
+  const lis = document.getElementsByClassName('cart__item');
+  if (lis.length === 0) {
+    return 'Empty Cart';
+  }
+  for (let index = 0; index < lis.length; index += 1) {
+    const words = lis[index].innerText.split(' ');
+    const wordsLength = words.length;
+    prices.push(words[wordsLength - 1]);
+  }
+  prices = (prices.map((price) => price.replace('$', '')));
+  
+  const newPrices = prices.map((price) => parseFloat(price, 10));
+
+  const total = newPrices.reduce((acc, currentValor) => acc + currentValor);
+  return total;
+}
+
+function putTotalPriceInP() {
+  const p = document.getElementsByClassName('total-price')[0];
+  p.innerText = `Total Price: $${calculatePrice()}`;
+}
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -83,6 +107,7 @@ function putElementInOl({ sku, name, salePrice }) {
   const li = createCartItemElement({ sku, name, salePrice });
   olFather.appendChild(li);
   saveCartItems2();
+  putTotalPriceInP();
 }
 
 function getID(event) {
@@ -111,6 +136,7 @@ const emptyCarty = document.getElementsByClassName('empty-cart')[0];
 function emptyCartyFunction() {
   const olFather = document.getElementsByClassName('cart__items')[0];
   olFather.innerHTML = '';
+  putTotalPriceInP();
 }
 
 emptyCarty.addEventListener('click', emptyCartyFunction);
@@ -152,4 +178,5 @@ window.onload = () => {
   loadLocalStorage();
   createLoading();
   activateFunction();
+  putTotalPriceInP();
 };
