@@ -43,9 +43,9 @@ function getTotalPrice(nodeContainer) {
 
 function renderTotalPrice(node) {
   const para = document.createElement('p');
-  para.className = 'total-price';
   const totalPrice = getTotalPrice(node);
-  para.textContent = totalPrice;
+  const content = `<p>Preço Total: <span class="total-price">${totalPrice}</span></p>`;
+  para.innerHTML = content;
   const nodeParent = node.parentElement;
   if (nodeParent.children.length >= 3) {
     node.nextElementSibling.remove();
