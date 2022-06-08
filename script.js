@@ -31,7 +31,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   cartItem.appendChild(li);
   arr.push(salePrice);
   counter.className = 'total-price';
-  const result = arr.reduce((acc, cur) => acc + cur, 0).toPrecision(3);
+  const result = arr.reduce((acc, cur) => acc + cur, 0).toFixed(2);
   counter.innerText = result;
 };
 
@@ -63,15 +63,18 @@ const prepareCartList = async (itemId) => {
 };
 
 const localStorageList = () => {
-  prepareCartList(getSavedCartItems());
+ const items = JSON.parse(getSavedCartItems());
+ for (let index = 0; index < items.length; index += 1) {
+  prepareCartList(items[index]);
+ }
 };
-
+const storageItem = [];
 const teste = (event) => {
  const data = event.target.parentNode.firstChild.innerText;
- const { innerText } = event.target.parentNode.firstChild;
- console.log(innerText);
+ storageItem.push(data);
  prepareCartList(data);
- saveCartItems(innerText);
+ saveCartItems(storageItem);
+  return data;
 };
 
 const createProductItemElement = ({
@@ -93,6 +96,7 @@ const createProductItemElement = ({
 
 const prepareSite = async () => {
     loadingShow();
+
     const data = await fetchProducts('computador');
     const dataLength = data.results;
     for (let index = 0; index < dataLength.length; index += 1) {
@@ -106,6 +110,7 @@ const prepareSite = async () => {
     };
     createProductItemElement(result);
   }
+  localStorageList();
   };
 
 const btn = document.querySelector('.empty-cart');
@@ -113,9 +118,9 @@ btn.addEventListener('click', () => {
 cartItem.innerHTML = '';
 arr = [];
 counter.innerText = '00,00';
+localStorage.removeItem('cartItems');
 });
 
 window.onload = () => {
   prepareSite();
-  localStorageList(); 
-};
+ };
