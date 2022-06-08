@@ -22,7 +22,6 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   it('Verificar se ao chamar a função `fetchProducts` sem argumentos, retorna um erro com uma mensagem', async () => {
     const mockError = await fetchProducts();
-    console.log(mockError);
-    // expect(mockError).toEqual(new Error('You must provide an url'));
+    expect(mockError).toEqual(new Error('You must provide an url'));
   });
 });
