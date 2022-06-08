@@ -1,5 +1,3 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -24,6 +22,14 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
+};
+
+const productsOnScreen = async () => {
+const itemSection = document.querySelector('.items');
+ const listProducts = await fetchProducts('computador');
+ listProducts.forEach(({ id, title, thumbnail }) => 
+ itemSection.appendChild(createProductItemElement({ id, title, thumbnail }))); 
+ console.log(listProducts);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -40,5 +46,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-console.log(fetchProducts());
-window.onload = () => { };
+window.onload = () => { productsOnScreen(); };
