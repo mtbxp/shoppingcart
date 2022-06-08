@@ -74,6 +74,12 @@ const addItemToCart = () => {
   });
 };
 
+const listCart = document.querySelector('ol');
+document.querySelector('.empty-cart').addEventListener('click', () => {
+  localStorage.clear();
+  listCart.innerHTML = '';
+});
+
 window.onload = () => {
    renderProduct();
    addItemToCart();
