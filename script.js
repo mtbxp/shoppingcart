@@ -47,8 +47,8 @@ const createCartItemElement = (obj) => {
   return li;
 };
 
-const testeAdd = async (idx) => {
-  let itemClicado = await fetchComputador()[idx];
+const testeAdd = async () => {
+  let itemClicado = await fetchComputador();
   itemClicado = itemClicado.map((element) => {
     const idComputador = element.id;
     const titleComputador = element.title;
@@ -66,16 +66,15 @@ const addDireto = (dadosSelecionado) => {
   carrinhoPai[0].appendChild(createCartItemElement(dadosSelecionado));
 };
 
-const addCartItem = () => {
-  const addItens = document.querySelectorAll('. item__add');
-  console.log(addItens);
-  console.log(addItens[0]);
-  /* addItens.forEach((element, idx) => {
-    // const dadosSelecionado = testeAdd(idx);
+const addCartItem = async () => {
+  const addItens = document.querySelectorAll('.item__add');
+  const dadosSelecionado = await testeAdd();
+  addItens.forEach((element, idx) => {
     element.addEventListener('click', function clickOi() {
-      console.log('oi');
+      console.log(dadosSelecionado[idx]);
+      carrinhoPai[0].appendChild(createCartItemElement(dadosSelecionado[idx]));
     });
-  }); */
+  });
 };
 
 const separaDados = async () => {
@@ -102,9 +101,10 @@ const adicionaItem = async () => {
   }); 
 };
 
-window.onload = () => {
-  fetchComputador();
-  separaDados();
-  adicionaItem();
+window.onload = async () => {
+  await fetchComputador();
+  await separaDados();
+  await testeAdd();
+  await adicionaItem();
   addCartItem();
  };
