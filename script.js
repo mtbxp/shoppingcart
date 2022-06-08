@@ -3,6 +3,7 @@
 // const saveCartItems = require("./helpers/saveCartItems");
 
 // const { fetchItem } = require("./helpers/fetchItem");
+let valorTotal = 0;
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -46,13 +47,22 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const adicionaOLocalStorage = () => {
+  const preçoTotal = document.getElementById('total');
   const carrinho = document.getElementsByClassName('cart__items');
   const obj = getSavedCartItems();
+  if (obj === null) {
+    console.log(undefined);
+  } else {
   const produto = createCartItemElement(obj);
   carrinho[0].appendChild(produto);
+  const valor = obj.salePrice;
+  valorTotal += valor;
+  preçoTotal.innerHTML = Math.round(valorTotal);
+  }
 };
 
 const colocaCarrinho = async (e) => {
+  const preçoTotal = document.getElementById('total');
   const lista = document.getElementsByClassName('cart__items');
   const alvo = e.target;
   const idSelecionado = alvo.parentNode.firstChild.innerText;
@@ -61,6 +71,9 @@ const colocaCarrinho = async (e) => {
   const produto = createCartItemElement({ sku: id, name: title, salePrice: price });
   lista[0].appendChild(produto);
   saveCartItems({ sku: id, name: title, salePrice: price });
+  const valor = parseFloat(price);
+  valorTotal += valor;
+  preçoTotal.innerHTML = Math.round(valorTotal);
 };
 
 const AdicionaCarrinho = async () => {
