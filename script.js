@@ -51,6 +51,21 @@ const products = async () => {
   return results;
 };
 
+const setPropritesLocalStorage = (arr) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = arr;
+  li.addEventListener('click', cartItemClickListener);
+  cartItems.appendChild(li);
+};
+
+const sendLocalStorageToCartItens = () => {
+  const localStorage = getSavedCartItems('cartItems');
+  if (localStorage) {
+    localStorage.forEach((element) => setPropritesLocalStorage(element));
+  }
+};
+
 const sendApiToSite = async () => {
   const listaDeItems = document.querySelector('.items');
   const produtos = await products();
@@ -75,19 +90,6 @@ const sendToCartItem = () => {
 };
 
 /* As duas funções abaixo são responsaveis por colocar as propriedades devidas dos itens do localstorge e colocar os itens no carrinho  */
-
-const setPropritesLocalStorage = (arr) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = arr;
-  li.addEventListener('click', cartItemClickListener);
-  cartItems.appendChild(li);
-};
-
-const sendLocalStorageToCartItens = () => {
-  const localStorage = getSavedCartItems('cartItems');
-  localStorage.forEach((element) => setPropritesLocalStorage(element));
-};
 
 window.onload = () => {
   sendToCartItem();
