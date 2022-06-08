@@ -1,5 +1,4 @@
 const saveCartItems = (olList) => {
-  // seu código aqui
   try {
     const listSave = [];
     olList.childNodes.forEach((element) => listSave.push(element.innerText));

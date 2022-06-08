@@ -43,13 +43,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 // Abaixo estão as funções criadas para implementação no HTML (Funções criadas por mim);
 
-// As funções abaixo colocam os dados da Api do ML no html;
-
-const products = async () => {
-  const produtos = await fetchProducts('computador');
-  const { results } = produtos;
-  return results;
-};
+/* As duas funções abaixo são responsaveis por colocar as propriedades devidas dos itens do localstorge e colocar os itens no carrinho  */
 
 const setPropritesLocalStorage = (arr) => {
   const li = document.createElement('li');
@@ -66,7 +60,16 @@ const sendLocalStorageToCartItens = () => {
   }
 };
 
+// As funções abaixo colocam os dados da Api do ML no html;
+
+const products = async () => {
+  const produtos = await fetchProducts('computador');
+  const { results } = produtos;
+  return results;
+};
+
 const sendApiToSite = async () => {
+  sendLocalStorageToCartItens();
   const listaDeItems = document.querySelector('.items');
   const produtos = await products();
   produtos.map((element) => {
@@ -89,10 +92,7 @@ const sendToCartItem = () => {
   });
 };
 
-/* As duas funções abaixo são responsaveis por colocar as propriedades devidas dos itens do localstorge e colocar os itens no carrinho  */
-
 window.onload = () => {
   sendToCartItem();
   sendApiToSite();
-  sendLocalStorageToCartItens();
 };
