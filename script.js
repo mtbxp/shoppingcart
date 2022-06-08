@@ -37,7 +37,6 @@ function getTotalPrice(nodeContainer) {
     total += +price;
     total = (Math.round(total * 100) / 100);
   });
-  console.log(total);
   return total;
 }
 
@@ -92,7 +91,7 @@ function appendProductInCart(obj) {
 
 function renderItemInCart(id) {
   return fetchItem(id)
-    .then((fetchedProduct) => appendProductInCart(fetchedProduct));
+    .then(appendProductInCart);
 }
 
 function updateCart(nodeContainer) {
@@ -107,7 +106,7 @@ function updateCart(nodeContainer) {
 
 function renderProducts() {
   return fetchProducts('computador')
-    .then((fetchedProducts) => appendProducts(fetchedProducts));
+    .then(appendProducts);
 }
 
 function renderInitialCartFromLocStor() {
@@ -121,8 +120,5 @@ window.onload = () => {
   renderInitialCartFromLocStor();
   renderTotalPrice(cartContainer);
   renderProducts()
-    .then((products) => {
-      updateCart(products);
-      console.log(products);
-    });
+    .then(updateCart);
 };
