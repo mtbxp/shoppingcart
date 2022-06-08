@@ -1,12 +1,7 @@
 const saveCartItems = (olList) => {
-  try {
     const listSave = [];
     olList.childNodes.forEach((element) => listSave.push(element.innerText));
-    const listSaveString = JSON.stringify(listSave);
-    localStorage.setItem('cartItems', listSaveString);
-  } catch (error) {
-    return (error);
-  }
+    localStorage.setItem('cartItems', JSON.stringify(listSave));
 };
 
 if (typeof module !== 'undefined') {

@@ -45,7 +45,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 /* As duas funções abaixo são responsaveis por colocar as propriedades devidas dos itens do localstorge e colocar os itens no carrinho  */
 
-const setPropritesLocalStorage = (arr) => {
+  const setPropritesLocalStorage = (arr) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = arr;
@@ -54,8 +54,8 @@ const setPropritesLocalStorage = (arr) => {
 };
 
 const sendLocalStorageToCartItens = () => {
-  const localStorage = getSavedCartItems('cartItems');
-  if (localStorage) {
+  const localStorage = getSavedCartItems();
+    if (localStorage) {
     localStorage.forEach((element) => setPropritesLocalStorage(element));
   }
 };
@@ -91,6 +91,8 @@ const sendToCartItem = () => {
     }
   });
 };
+
+console.log(cartItems);
 
 window.onload = () => {
   sendToCartItem();

@@ -3,23 +3,25 @@ const saveCartItems = require('../helpers/saveCartItems');
 
 localStorageSimulator('setItem');
 
+const oltest = document.createElement('ol') 
+const litest = document.createElement('li')
+litest.innerText = 'Item';
+oltest.appendChild(litest)
+
 describe('3 - Teste a função saveCartItems', () => {
-  // implemente seus testes aqui
-  /* fail('Teste vazio'); */
-
-  test('Deve chamar o método localStorage.setItem', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>')
+  
+  it('Deve chamar o localStorage quabdo o argumento for passado', async () => {
+    await saveCartItems(oltest);
     expect(localStorage.setItem).toHaveBeenCalled();
-  });
+  })
 
-  test('Deve chamar o método localStorage.setItem com os dois metodos corretos', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>')
-    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '<ol><li>Item</li></ol>');
-  });
+  it('Deve chamar localStorage.setItem com dois parâmetros, cartItems e o texto da lista', async () => {
+    await saveCartItems(oltest);
+    expect(localStorage.setItem).toBeCalledWith('cartItems', '["Item"]');
+  })
 
-  test('Deve retornar um erro com a mensagem: "You must provide an url"', async () => {
-    const error = new Error('You must provide an url');
-    await expect(saveCartItems()).resolves.toThrow(error);
+  it('Deve ser uma função', () => {
+    expect(typeof saveCartItems).toBe('function');
   });
 
 });
