@@ -21,7 +21,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  const listaHTML = document.querySelector(cartList).innerHTML;
+  // const listaHTML = document.querySelector('.cart__item').innerHTML;
 };
 // chamar fetchitens e passa o parametro para a função para gerar a li e acessar o pai para ver o parametro
 
@@ -51,14 +51,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   .addEventListener('click', EventOnItem);
 
   return section;
-};
-
-const sum = () => {
-  const totalPrice = querySelector('.total-price');
-  const listaDeArray = querySelectorAll('li');
-  listaDeArray.forEach((e) => {
-    
-  });
 };
 
 const createProductList = async () => {
