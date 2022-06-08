@@ -3,14 +3,13 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
-  // implemente seus testes aqui
   it('Teste se fetchProducts é uma função', () => {
     expect(typeof fetchProducts).toBe('function');
   });
 
-  // it('Execute a função fetchProducts com o argumento computador e teste se fetch foi chamada', () => {
-  //   fetchProducts('computador')
-  //   expect(fetchProducts('computador')).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  // it('Execute a função fetchProducts com o argumento computador e teste se fetch foi chamada', async () => {
+  //   const newFetch1 = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  //   expect(newFetch1).toHaveBeenCalled();
   // });
 
   it('Teste se, ao chamar a função fetchProducts com o argumento computador, a função fetch utiliza o endpoint https://api.mercadolibre.com/sites/MLB/search?q=computador', () => {
@@ -23,9 +22,8 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(newFeatch).toEqual(computadorSearch);
   });
 
-  // it('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url', () => {
-
-  // });
-  // fail('Teste vazio');
+  it('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
+    const newFeacthErro = await fetchProducts();
+    expect(newFeacthErro).toEqual(new Error('You must provide an url'));
+  });
 });
-
