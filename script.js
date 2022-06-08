@@ -4,7 +4,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-// oi
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -38,4 +38,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const insertProduct = async () => {
+  const getClassItem = document.querySelector('.items');
+  const arrayProducts = await fetchProducts('computador');
+
+  arrayProducts.results.forEach((element) => {
+    const item = {
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    };
+    const productCard = createCartItemElement(item);
+    getClassItem.appendChild(productCard);
+  });
+};
+
+window.onload = () => {
+ insertProduct(); 
+};
