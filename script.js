@@ -70,21 +70,15 @@ const creatProductList = async () => {
   });
 };
 
-// const idArray = () => {
-//   const span = document.querySelectorAll('.item__sku');
-//   const obj = Object.values(span);
-//   const ids = obj.map((id) => id.innerText);
-//   return ids
-// };
-
-// const idItem = () => {
-//   const li = await creatItemCart(id);
-//   const ol = document.querySelector('.cart__items');
-//   const button = document.querySelectorAll('.item__add');
-//   const callback = () => ol.appendChild(li);
-//   button.addEventListener('click', callback);
-// };
+const clearCart = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    const ol = document.querySelector('.cart__items');
+    ol.innerHTML = '';
+  });
+};
 
 window.onload = () => {
   creatProductList();
+  clearCart();
 };
