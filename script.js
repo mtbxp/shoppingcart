@@ -5,8 +5,6 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-// primeiras alterações para o PullRequest
-
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -40,4 +38,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = async () => { 
+  const getItemSection = document.querySelector('.items');
+  const { results } = await fetchProducts('computador');
+  results.forEach((item) => {
+    const getInfoPruduct = {
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
+    };
+    const createItem = createProductItemElement(getInfoPruduct);
+    getItemSection.appendChild(createItem);
+  });
+ };
