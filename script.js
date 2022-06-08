@@ -2,23 +2,73 @@
 // const saveCartItems = require('./helpers/saveCartItems');
 // const item = require('./mocks/item');
 
-const refreshStorage = async (obj) => {
+const cutDecimals = (allPrices) => {
+  let endpoint = allPrices.length;
+  let newPrice = '';
+  for (let index = 0; index < endpoint; index += 1) {
+    // if (allPrices[index] !== undefined) newPrice += allPrices[index];
+    if (allPrices[index] === '.') {
+      endpoint = index;
+    } else {
+      newPrice += allPrices[index];
+    }    
+  }
+  return newPrice;
+};
+
+const sumValues = (lcStog) => {
+  const allPrices = document.getElementsByClassName('total-price')[0];
+  try {    
+    let sum = 0;
+    let checkDec = '';
+    lcStog.forEach((obj) => {
+      const { salePrice } = Object.values(obj)[0];
+      console.log(salePrice);
+      sum += salePrice;
+    });
+    checkDec += sum;
+    const newPrice = cutDecimals(checkDec);
+    console.log(newPrice); 
+    allPrices.innerText = newPrice;    
+  } catch (error) {
+    console.log(error);    
+  }
+};
+
+const addItem = (lcStog, obj) => {
+  if (typeof obj === 'object') {
+    lcStog.push(obj);
+    saveCartItems(lcStog);
+  }
+};
+
+const deleteItem = (lcStog, obj) => {
+  if (typeof obj === 'string') {
+    const newArr = lcStog.filter((objItem) => Object.keys(objItem)[0] !== obj);
+    saveCartItems(newArr);
+  } 
+};
+
+const firstItem = (lcStog, obj) => {
   try {
-    const lcStog = await getSavedCartItems();
     if (lcStog === null) {
       const newArr = [];
       newArr.push(obj);
       saveCartItems(newArr);
-      return;
-    }
-    if (typeof obj === 'string') {
-      const newArr = await lcStog.filter((objItem) => Object.keys(objItem)[0] !== obj);
-      saveCartItems(newArr);
-    } 
-    if (typeof obj === 'object') {
-      lcStog.push(obj);
-      saveCartItems(lcStog);
-    }
+    }    
+  } catch (error) {
+    console.log(error);    
+  }
+};
+
+const refreshStorage = async (obj) => {
+  try {
+    let lcStog = await getSavedCartItems();
+    firstItem(await lcStog, obj);
+    deleteItem(await lcStog, obj);
+    addItem(await lcStog, obj);
+    lcStog = await getSavedCartItems();
+    sumValues(await lcStog);
   } catch (error) {
       console.log(error);    
     }
@@ -103,6 +153,7 @@ const loadStorage = async () => {
 };
 
 const init = async () => {
+  await refreshStorage();
   const obj = await fetchProducts('computador');
   const secItems = document.getElementsByClassName('items')[0];
   const buttons = document.getElementsByClassName('item__add');
