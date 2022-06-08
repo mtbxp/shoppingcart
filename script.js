@@ -1,11 +1,22 @@
+const classItems = document.querySelector('.items');
+const classCartItems = document.querySelector('.cart__items');
+const botaoEsvaziar = document.querySelector('.empty-cart');
+
+const loading = () => {
+  const load = document.createElement('li');
+  load.innerText = 'carregando...';
+  load.className = 'loading';
+  classCartItems.appendChild(load);
+  setTimeout(() => {
+    const loads = document.querySelector('.loading');
+    classCartItems.removeChild(loads);
+  }, 200);
+};
+
 const resultsComputador = async () => {
   const mostraCertinho = await fetchProducts('computador');
   return mostraCertinho;  
 };
-
-const classItems = document.querySelector('.items');
-const classCartItems = document.querySelector('.cart__items');
-const botaoEsvaziar = document.querySelector('.empty-cart');
 
 botaoEsvaziar.addEventListener('click', () => {
   const filhos = classCartItems.children;
@@ -50,7 +61,7 @@ const colocarNoCarrinho = async (event) => {
   createCartItemElement({ sku: constF.id, name: constF.title, salePrice: constF.price }),
   );
   saveCartItems(classCartItems.innerHTML);
-};
+  };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -71,6 +82,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const arrayCertadeProdutos = async () => { 
   const teste = await resultsComputador();
+  loading();
   teste.forEach((element) => {
     classItems.appendChild(
       createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail }),
