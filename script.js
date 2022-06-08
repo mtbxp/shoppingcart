@@ -1,6 +1,8 @@
 const items = document.querySelector('.items');
 const cart = document.querySelector('.cart__items');
+const values = document.querySelector('.total-price');
 let array = [];
+let sum = 0;
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -28,15 +30,21 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   event.target.remove();
   const cartList = document.querySelectorAll('.cart__item');
   array = [];
+  sum = 0;
   for (let ind = 0; ind < cartList.length; ind += 1) {
     array.push(cartList[ind].innerText);
+    const split = cartList[ind].innerText.split('PRICE: $');
+    const value = JSON.parse(split[1]);
+    sum += value;
   }
+  const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  values.innerText = `Valor Total = $${sumValue}`;
   const stringfy = JSON.stringify(array);
   saveCartItems(stringfy);
 };
@@ -71,7 +79,10 @@ const request4 = () => {
         name: itemAdd.title,
         salePrice: itemAdd.price,
       };
+      sum += itemAdd.price;
       cart.appendChild(createCartItemElement(product));
+      const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
+      values.innerText = `Valor Total = $${sumValue}`;
       cartAddStorage();
     });
   });
@@ -89,8 +100,12 @@ const record = () => {
       name: name[1],
       salePrice: price[1],
     };
+    const number = JSON.parse(price[1]);
+    sum += number;
     cart.appendChild(createCartItemElement(product));
   });
+  const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  values.innerText = `Valor Total = $${sumValue}`;
 };
 
 window.onload = async () => {
