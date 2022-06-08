@@ -51,19 +51,26 @@ const removeFromStorage = (target) => {
   localStorage.setItem('cartItems', JSON.stringify(newStorage));
 };
 
-const cartItemClickListener = (list) => {
-  // coloque seu código aqui
-  if (list.target !== undefined) {
-    removeFromStorage(list.target);
-    list.target.remove();
-  }
+const removeTotalListener = (price) => {
+  const subtotal = document.querySelector('.total-price');
+  let inner = subtotal !== null ? parseFloat(subtotal.innerHTML) : 0;
+  inner -= price;
+  subtotal.innerHTML = Math.round(inner * 100) / 100;
 };
 
-const removeTotalListener = (obj) => {
-  const subtotal = document.querySelector('.total-price');
-  let inner = parseFloat(subtotal.innerHTML);
-  inner -= obj.salePrice;
-  subtotal.innerHTML = inner;
+const cartItemClickListener = (list, obj) => {
+  // coloque seu código aqui
+  if (list.target !== undefined) {
+    const inner = list.target.innerHTML;
+    const indexOfPrice = inner.indexOf('PRICE');
+    const price = inner.slice(indexOfPrice + 8, inner.length);
+    const priceNumber = parseFloat(price);
+    removeTotalListener(priceNumber);
+    removeFromStorage(list.target);
+    list.target.remove();
+  } 
+  if (obj !== undefined) {
+  }
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -86,6 +93,7 @@ const defineInitialSubtotal = (obj = 0) => {
 const sumProducts = (objElement) => {
   const subtotal = document.querySelector('.total-price');
   let number = parseFloat(subtotal.innerHTML);
+  console.log('Number antigo', number);
   number += objElement.salePrice;
   subtotal.innerHTML = Math.round(number * 100) / 100;
 };
@@ -98,40 +106,20 @@ const createItemElement = (item, obj) => {
 
 const initialRender = () => {
   const cartArray = getSavedCartItems(); // lista
-  if (cartArray === null) {
+  if (cartArray === null || cartArray.length === 0) {
     defineInitialSubtotal();
   } else {
     [...cartArray].forEach((obj) => {
     defineInitialSubtotal(obj);
     const myLi = createCartItemElement(obj);
-    cartItemClickListener(myLi);
+    cartItemClickListener(myLi, obj);
     createItemElement(myLi, obj);
     });
   }
 };
 
-const objsArray = getSavedCartItems() || [];
-
-const addToCartListener = () => {
-  const addToCart = document.querySelectorAll('.item__add');
-  addToCart.forEach((item) => item.addEventListener('click', (event) => {
-    idElement = event.target.parentElement.firstChild.innerText;
-    fetchItem(idElement).then((result) => {
-      const obj = {
-        sku: result.id,
-        name: result.title,
-        salePrice: result.price,
-      };
-      saveCartItems(obj, objsArray);
-      const myLi = createCartItemElement(obj);
-      cartItemClickListener(myLi);
-      createItemElement(myLi, obj);
-      removeTotalListener(obj);
-    });
-  }));
-};
-
 const insertLoad = () => {
+  console.log('insert cahmado')
   const cart = document.querySelector('.cart');
   const load = document.createElement('h2');
   load.className = 'loading';
@@ -142,7 +130,32 @@ insertLoad();
 
 const removeLoad = () => {
   const load = document.querySelector('.loading');
+  console.log(load)
+  console.log('removeload cahmado')
   load.remove();
+};
+
+const objsArray = getSavedCartItems() || [];
+
+const addToCartListener = () => {
+  const addToCart = document.querySelectorAll('.item__add');
+  addToCart.forEach((item) => item.addEventListener('click', (event) => {
+    idElement = event.target.parentElement.firstChild.innerText;
+    insertLoad();
+    console.log('insert')
+    fetchItem(idElement).then((result) => {
+      const obj = {
+        sku: result.id,
+        name: result.title,
+        salePrice: result.price,
+      };
+      saveCartItems(obj, objsArray);
+      const myLi = createCartItemElement(obj);
+      cartItemClickListener(myLi, obj);
+      createItemElement(myLi, obj);
+    });
+    removeLoad();
+  }));
 };
 
 fetchProducts('computador').then((result) => {
