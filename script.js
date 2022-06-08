@@ -1,5 +1,7 @@
 // const { thumbnail } = require('./mocks/item');
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -56,4 +58,5 @@ const loadAllProductsOnPage = async () => {
 
 window.onload = async () => {
   await loadAllProductsOnPage();
+  // await fetchItem('MLB1615760527');
 };
