@@ -78,19 +78,19 @@ const arrayCertadeProdutos = async () => {
   });
 };
 
-const startCarrinho = () => {
-  if (localStorage.length === 0) {
-    const coloqueItems = document.createElement('li');
-    coloqueItems.innerText = 'Coloque seus itens aqui !';
-    classCartItems.appendChild(coloqueItems);
-  }
-  const itensDoLocal = document.createElement('li');
-  itensDoLocal.innerHTML = JSON.parse(getSavedCartItems());
-  console.log(itensDoLocal);
-  classCartItems.appendChild(itensDoLocal);
-};
+// const startCarrinho = () => {
+//   if (localStorage.length === 0) {
+//     const coloqueItems = document.createElement('li');
+//     coloqueItems.innerText = 'Coloque seus itens aqui !';
+//     classCartItems.appendChild(coloqueItems);
+//   }
+//   const itensDoLocal = document.createElement('li');
+//   itensDoLocal.innerHTML = JSON.parse(getSavedCartItems());
+//   console.log(itensDoLocal);
+//   classCartItems.appendChild(itensDoLocal);
+// };
 
 window.onload = () => { 
   arrayCertadeProdutos();
-  startCarrinho();
+  // startCarrinho();
 };
