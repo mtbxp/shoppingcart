@@ -75,7 +75,19 @@ const getStorage = () => {
   sectionCart.innerHTML = items;
 };
 
+const btnEmpty = () => {
+  const lis = document.querySelectorAll('.cart__item');
+  lis.forEach((element) => element.remove());
+  localStorage.clear();
+};
+
+const emptyCart = () => {
+  const btnEmptyCart = document.querySelector('.empty-cart');
+  btnEmptyCart.addEventListener('click', btnEmpty);
+};
+
 window.onload = () => {
   getList();
   getStorage();
+  emptyCart();
 };
