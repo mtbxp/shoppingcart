@@ -13,9 +13,9 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toBeCalledWith(url);
   });
 
-  test('function fetchProducts was called', async () => {
+  test('Se fetch foi chamada', async () => {
     await fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalled();
   });
 
   test('Se o retorno da função fetchProducts com o argumento \'computador\' é uma estrutura de dados igual ao objeto computadorSearch', async () => {
