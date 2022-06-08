@@ -1,6 +1,6 @@
-const getSavedCartItems = async () => {
+const getSavedCartItems = () => {
   const string = localStorage.getItem('cartItems');
-  const result = await JSON.parse(string);
+  const result = JSON.parse(string);
   return result;
 };
 

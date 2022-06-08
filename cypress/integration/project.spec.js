@@ -26,7 +26,7 @@ const countCart = (amount) => {
 }
 
 const checkPrice = (results, indexes) => {
-  console.log(results)
+  // console.log(results)
   cy.wait(1000);
   let total = 0;
   indexes.forEach(index => total += results[index].price);
@@ -198,7 +198,7 @@ describe('Shopping Cart Project', () => {
     })
   });
 
-  describe('9 - Calcule o valor total dos itens do carrinho de compras de forma assíncrona', () => {
+  describe.only('9 - Calcule o valor total dos itens do carrinho de compras de forma assíncrona', () => {
     it('Calcule o valor total dos itens do carrinho de compras de forma assíncrona', () => {
       cy.visit(PROJECT_URL, {
         onBeforeLoad(win) {

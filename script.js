@@ -31,6 +31,7 @@ const cutDecimals = (allPrices) => {
 };
 
 const sumValues = (lcStog) => {
+  console.log('entrou');
   const allPrices = document.getElementsByClassName('total-price')[0];
   try {    
     let sum = 0;
@@ -78,13 +79,13 @@ const firstItem = (lcStog, obj) => {
 const refreshStorage = async (obj) => {
   try {
     loadingOn();
-    let lcStog = await getSavedCartItems();
+    let lcStog = getSavedCartItems();
     loadingOff();
     firstItem(await lcStog, obj);
     deleteItem(await lcStog, obj);
     addItem(await lcStog, obj);
     loadingOn();
-    lcStog = await getSavedCartItems();
+    lcStog = getSavedCartItems();
     loadingOff();
     sumValues(await lcStog);
   } catch (error) {
@@ -169,7 +170,7 @@ const loadStorage = async () => {
   try {
     const cartItems = document.getElementsByClassName('cart__items')[0];
     loadingOn();
-    const lcStog = await getSavedCartItems();
+    const lcStog = getSavedCartItems();
     loadingOff();
     console.log(lcStog);
     lcStog.forEach((item) => {
