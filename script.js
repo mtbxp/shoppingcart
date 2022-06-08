@@ -1,6 +1,4 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
-// let cartItems = []; // requisito 8
+let cartItems = []; // requisito 8
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -30,8 +28,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // const test = event.target.innerText;  // requisito 8
-  // console.log(test);
+  const removedItemId = event.target.innerText.split(' ')[1]; // requisito 8
+  const indexOfRemovedItem = cartItems.findIndex((e) => e.sku === removedItemId);
+  cartItems.splice(indexOfRemovedItem, 1);
+  saveCartItems(cartItems);
   event.target.remove();
 };
 
@@ -40,20 +40,34 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  // cartItems.push({ sku, name, salePrice });  // requisito 8
-  // console.log(cartItems);
+  cartItems.push({ sku, name, salePrice }); // requisito 8
+  saveCartItems(cartItems);
   return li;
 };
 
 const emptyCart = () => {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', () => {
-    const cartList = document.querySelector('.cart__items');
+    const cartList = document.getElementsByClassName('cart__items');
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
-    // cartItems = [];
+    cartItems = [];
+    saveCartItems(cartItems);
   });
+};
+
+const reloadCart = () => {
+  if (cartItems.length > 0) {
+    cartItems.forEach((e) => {
+      const li = document.createElement('li');
+      li.className = 'cart__item';
+      li.innerText = `SKU: ${e.sku} | NAME: ${e.name} | PRICE: $${e.salePrice}`;
+      li.addEventListener('click', cartItemClickListener);
+      const cart = document.querySelector('.cart__items');
+      cart.appendChild(li);
+    });
+  }
 };
 
 const renderProducts = async () => {
@@ -80,4 +94,6 @@ const renderProducts = async () => {
 window.onload = async () => {
   await renderProducts();
   emptyCart();
+  cartItems = getSavedCartItems();
+  reloadCart();
 };
