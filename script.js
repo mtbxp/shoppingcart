@@ -14,6 +14,14 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
   event.srcElement.remove();
+  let sku = '';
+  for (let index = 5; index <= 17; index += 1) {
+    sku += event.srcElement.innerText[index];
+  }
+  const arr = getSavedCartItems();
+  const obj = arr.find((item) => item.id === sku);
+  arr.splice(arr.indexOf(obj), 1);
+  saveCartItems(arr);
 };
 
 const createCartItemElement = (sku, name, price) => {
@@ -28,6 +36,12 @@ const createCartItemElement = (sku, name, price) => {
   li.innerText = cartItems;
   li.addEventListener('click', cartItemClickListener);
   list.appendChild(li);
+  let arr = [];
+  if (localStorage.length > 0) {
+    arr = getSavedCartItems();
+  }
+  arr.push({ id: sku, title: name, salePrice: price });
+  saveCartItems(arr);
   return li;
 };
 

@@ -1,6 +1,5 @@
-const saveCartItems = (mens) => {
-  const parm = [];
-  parm.push(mens);
+const saveCartItems = (arr) => {
+  const parm = JSON.stringify(arr);
   localStorage.setItem('cartItems', parm);
 };
 
