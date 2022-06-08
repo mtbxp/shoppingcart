@@ -59,6 +59,7 @@ function getProduct(event) {
 
 function appendProductInCart(obj) {
   cartContainer.append(createCartItemElement(obj));
+  saveCartItems(cartContainer);
   return cartContainer;
 }
 
@@ -83,7 +84,15 @@ function renderProducts() {
     .then((fetchedProducts) => appendProducts(fetchedProducts));
 }
 
+function renderInitialCartFromLocStor() {
+  cartContainer.innerHTML = getSavedCartItems() || '';
+  Object.values(cartContainer.children).forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
+
 window.onload = () => {
+  renderInitialCartFromLocStor();
   renderProducts()
     .then((products) => {
       updateCart(products);
