@@ -41,16 +41,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const showProducts = async () => {
  const productSection = document.querySelector('.items');
  const product = await fetchProducts('computador');
- const productResults = product.results;
- const productList = productResults.forEach(({ id, title, thumbnail }) => {
-   const productInfor = {
-     id,
-     title,
-     thumbnail,
+ const productObj = Object.entries(product);
+ const productDados = productObj.map((element) => {
+   const productInfo = {
+     id: element.id,
+     title: element.title,
+     thumbnail: element.thumbnail,
    };
-   return productInfor;
-  });
-  console.log(productList);
+   return productInfo;
+ });
+ console.log(productDados);
 };
 
 window.onload = () => { 
