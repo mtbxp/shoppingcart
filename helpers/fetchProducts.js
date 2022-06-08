@@ -3,7 +3,6 @@ const fetchProducts = async (QUERY) => {
   const data = await response.json();
   return data;
 };
-
 /* istanbul ignore next */
 if (typeof module !== 'undefined') {
   module.exports = {
