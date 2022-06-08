@@ -13,14 +13,4 @@ describe('4 - Teste a função getSavedCartItems', () => {
     getSavedCartItems();
     expect(localStorage.getItem).toBeCalledWith('cartItems');
   });
-
-  it('Testa o retorno da função quando o localstorage está vazio', () => {
-    expect(getSavedCartItems()).toBe(undefined);
-  });
-
-  it('Testa o retorno quando vem algo no localstorage', () => {
-    localStorage: 'cartItems:ola'
-    
-    expect(getSavedCartItems()).toBe(Object);
-  })
 });

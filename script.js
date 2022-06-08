@@ -1,9 +1,3 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
-
-// const saveCartItems = require("./helpers/saveCartItems");
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
 const resultsComputador = async () => {
   const mostraCertinho = await fetchProducts('computador');
   return mostraCertinho;  
@@ -11,6 +5,16 @@ const resultsComputador = async () => {
 
 const classItems = document.querySelector('.items');
 const classCartItems = document.querySelector('.cart__items');
+const botaoEsvaziar = document.querySelector('.empty-cart');
+
+botaoEsvaziar.addEventListener('click', () => {
+  const filhos = classCartItems.children;
+  if (filhos.length !== 0) {
+    for (index = filhos.length - 1; index >= 0; index -= 1) {
+      classCartItems.removeChild(filhos[index]);
+    }
+  }
+});
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -45,7 +49,7 @@ const colocarNoCarrinho = async (event) => {
   classCartItems.appendChild(
   createCartItemElement({ sku: constF.id, name: constF.title, salePrice: constF.price }),
   );
-  saveCartItems({ sku: constF.id, name: constF.title, salePrice: constF.price });
+  saveCartItems(classCartItems.innerHTML);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -65,7 +69,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const arrayCerta = async () => { 
+const arrayCertadeProdutos = async () => { 
   const teste = await resultsComputador();
   teste.forEach((element) => {
     classItems.appendChild(
@@ -74,6 +78,19 @@ const arrayCerta = async () => {
   });
 };
 
+const startCarrinho = () => {
+  if (localStorage.length === 0) {
+    const coloqueItems = document.createElement('li');
+    coloqueItems.innerText = 'Coloque seus itens aqui !';
+    classCartItems.appendChild(coloqueItems);
+  }
+  const itensDoLocal = document.createElement('li');
+  itensDoLocal.innerHTML = JSON.parse(getSavedCartItems());
+  console.log(itensDoLocal);
+  classCartItems.appendChild(itensDoLocal);
+};
+
 window.onload = () => { 
-  arrayCerta();
+  arrayCertadeProdutos();
+  startCarrinho();
 };
