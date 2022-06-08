@@ -1,5 +1,7 @@
 // const { fetchProducts } = require("./helpers/fetchProducts");
 
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { fetchItem } = require("./helpers/fetchItem");
 
 const resultsComputador = async () => {
@@ -43,6 +45,7 @@ const colocarNoCarrinho = async (event) => {
   classCartItems.appendChild(
   createCartItemElement({ sku: constF.id, name: constF.title, salePrice: constF.price }),
   );
+  saveCartItems({ sku: constF.id, name: constF.title, salePrice: constF.price });
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
