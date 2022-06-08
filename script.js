@@ -1,4 +1,5 @@
 const cartItems = document.querySelector('.cart__items');
+const totalPrice = document.querySelector('.total-price');
 let totalValueOfItemsInCart = 0;
 
 const createProductImageElement = (imageSource) => {
@@ -32,7 +33,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const calculateAndShowTotal = (price, subtract = false) => {
-  const totalPrice = document.querySelector('.total-price');
   if (subtract) {
     totalValueOfItemsInCart -= price;
   } else {
@@ -101,6 +101,17 @@ const addItemToCart = (element, sku) => {
     saveCartDataInStorage({ sku, name, salePrice });
   });
 };
+
+const emptycartButton = document.querySelector('.empty-cart');
+
+const clearItemsInTheCart = () => {
+  cartItems.innerText = '';
+  totalValueOfItemsInCart = 0;
+  totalPrice.innerText = 0;
+  saveCartItems('[]');
+};
+
+emptycartButton.addEventListener('click', clearItemsInTheCart);
 
 const loadCartDataOfStorage = () => {
   const storageCartData = getSavedCartItems('cartItems');
