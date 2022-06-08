@@ -36,7 +36,7 @@ const createProductItemElement = (objeto) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.parentNode.removeChild(event.target);
 };
 
 const createCartItemElement = (obj) => {
@@ -47,7 +47,7 @@ const createCartItemElement = (obj) => {
   return li;
 };
 
-const testeAdd = async () => {
+const itensParaAdd = async () => {
   let itemClicado = await fetchComputador();
   itemClicado = itemClicado.map((element) => {
     const idComputador = element.id;
@@ -62,16 +62,11 @@ const testeAdd = async () => {
   return itemClicado;
 };
 
-const addDireto = (dadosSelecionado) => {
-  carrinhoPai[0].appendChild(createCartItemElement(dadosSelecionado));
-};
-
 const addCartItem = async () => {
   const addItens = document.querySelectorAll('.item__add');
-  const dadosSelecionado = await testeAdd();
+  const dadosSelecionado = await itensParaAdd();
   addItens.forEach((element, idx) => {
-    element.addEventListener('click', function clickOi() {
-      console.log(dadosSelecionado[idx]);
+    element.addEventListener('click', function addDireto() {
       carrinhoPai[0].appendChild(createCartItemElement(dadosSelecionado[idx]));
     });
   });
@@ -104,7 +99,7 @@ const adicionaItem = async () => {
 window.onload = async () => {
   await fetchComputador();
   await separaDados();
-  await testeAdd();
+  await itensParaAdd();
   await adicionaItem();
   addCartItem();
  };
