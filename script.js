@@ -1,3 +1,6 @@
+const itemsContainer = document.querySelector('.items');
+const cartContainer = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,13 +29,36 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const itemsContainer = document.querySelector('.items');
-const cartContainer = document.querySelector('.cart__items');
+function getTotalPrice(nodeContainer) {
+  let total = 0;
+  Object.values(nodeContainer.children).forEach((item) => {
+    const index = item.textContent.indexOf('$');
+    const price = item.textContent.slice(index + 1);
+    total += +price;
+    total = (Math.round(total * 100) / 100);
+  });
+  console.log(total);
+  return total;
+}
+
+function renderTotalPrice(node) {
+  const para = document.createElement('p');
+  para.className = 'total-price';
+  const totalPrice = getTotalPrice(node);
+  para.textContent = totalPrice;
+  const nodeParent = node.parentElement;
+  if (nodeParent.children.length >= 3) {
+    node.nextElementSibling.remove();
+  }
+  node.after(para);
+}
 
 const cartItemClickListener = (event) => {
   const item = event.target.closest('.cart__item');
   if (!item) return;
   item.remove();
+  saveCartItems(cartContainer);
+  renderTotalPrice(cartContainer);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -60,6 +86,7 @@ function getProduct(event) {
 function appendProductInCart(obj) {
   cartContainer.append(createCartItemElement(obj));
   saveCartItems(cartContainer);
+  renderTotalPrice(cartContainer);
   return cartContainer;
 }
 
@@ -74,8 +101,7 @@ function updateCart(nodeContainer) {
     const item = getProduct(event);
     if (!item) return;
     const id = getSkuFromProductItem(item);
-    renderItemInCart(id)
-      .then((selectedItemsContainer) => console.log(selectedItemsContainer));
+    renderItemInCart(id);
   });
 }
 
@@ -93,6 +119,7 @@ function renderInitialCartFromLocStor() {
 
 window.onload = () => {
   renderInitialCartFromLocStor();
+  renderTotalPrice(cartContainer);
   renderProducts()
     .then((products) => {
       updateCart(products);
