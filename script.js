@@ -43,6 +43,11 @@ const getSkuFromProductItem = (event) => {
   return str.slice(5, str.indexOf('|') - 1);
 };
 
+const getPriceFromProductItem = (event) => {
+  const str = event.target.innerText;
+  return str.slice(str.indexOf('$') + 1, str.lenght);
+};
+
 const clearClass = (classItem) => {
   let childimg = classItem[0].lastElementChild;
   while (childimg) {
@@ -51,13 +56,21 @@ const clearClass = (classItem) => {
   }
 };
 
+const getTotalPrice = (event) => {
+  let text = totalPriceSpan[0].innerHTML;
+  text = text.slice(text.indexOf('$') + 2, text.length);
+  text -= getPriceFromProductItem(event);
+  text = Math.round(text * 100) / 100;
+  totalPriceSpan[0].innerHTML = `Subtotal: R$ ${text}`;
+};
+
 const cartItemClickListener = (event) => {
   const dados = getSavedCartItems('cartItems');
   const element = getSkuFromProductItem(event);
   dados.splice(dados.indexOf(element), 1);
+  getTotalPrice(event);
   event.target.remove();
   saveCartItems(dados);
-  updateListCartItems();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -68,7 +81,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const updateTotalPrice = (array) => array.reduce((acc, curr) => acc + curr, 0);
+const updateTotalPrice = (array) => {
+  const value = array.reduce((acc, curr) => acc + curr, 0);
+  return Math.round(value * 100) / 100;
+};
 
 const updateListCartItems = () => {
   const dados = getSavedCartItems('cartItems');
