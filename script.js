@@ -20,7 +20,7 @@ const createCustomElement = (element, className, innerText) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // Somando os valores totais!
-const sumValShop = () => {
+const sumValShop = async () => {
   const arrayShop = Array.from(document.getElementsByClassName('cart__item'));
   if (arrayShop.length === 0) {
     totPrice.innerHTML = `Total: $${0}`; 
@@ -58,7 +58,7 @@ const putCart = async (elm) => {
   const itemsC = createCartItemElement(response);
   listShop.appendChild(itemsC);
   saveCartItems(JSON.stringify(idI));
-  sumValShop();
+  await sumValShop();
 };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
