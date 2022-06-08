@@ -24,11 +24,13 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const cartItemClickListener = async (event) => {
+  // coloque seu código aqui 
+  // apaga o item do carrinho?
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
 };
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -38,11 +40,28 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const placeCartItem = async (item) => {
+  const itemData = await fetchItem(item);
+  const itemInfo = {
+    sku: itemData.id,
+    name: itemData.title,
+    salePrice: itemData.price,
+  };
+  console.log(itemInfo);
+  const itemToPlace = createCartItemElement(itemInfo);
+  document.querySelector('.cart__items').appendChild(itemToPlace);
+};
+
+const buttonListener = () => {
+  const grid = document.querySelectorAll('.item__add');
+  grid.forEach((element) => element.addEventListener('click', () => placeCartItem(element
+  .parentElement.firstChild.innerText)));
+};
+
 const itensToBePlaced = async () => {
   const computerItens = await fetchProducts('computador');
   const computerData = computerItens.results;
-  // console.log(computerData);
-  computerInfo = computerData.map((element) => {
+  const computerInfo = computerData.map((element) => {
     const info = {
       sku: element.id,
       name: element.title,
@@ -50,12 +69,13 @@ const itensToBePlaced = async () => {
     };
     return info;
   });
-  // console.log(computerInfo);
   computerInfo.forEach((element) => {
-  const itemToPlace = createProductItemElement(element);
-  document.querySelector('.items').appendChild(itemToPlace);
+    const itemToPlace = createProductItemElement(element);
+    document.querySelector('.items').appendChild(itemToPlace);
   });
+  buttonListener();
 };
+
 window.onload = () => {
   itensToBePlaced();
 };
