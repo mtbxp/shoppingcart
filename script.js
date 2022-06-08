@@ -1,5 +1,3 @@
-const { fetchProducts } = require("./helpers/fetchProducts");
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createProductImageElement = (imageSource) => {
@@ -45,7 +43,7 @@ const sendProduct = async () => {
   const itens = await searchProduct();
   itens.forEach((element) => {
     const item = document.getElementsByClassName('items');
-    item.appendChild(createProductItemElement(element))
+    item.appendChild(createProductItemElement(element));
   });
 };
 
