@@ -19,7 +19,7 @@ function calculatePrice() {
 
 function putTotalPriceInP() {
   const p = document.getElementsByClassName('total-price')[0];
-  p.innerText = `Total Price: $${calculatePrice()}`;
+  p.innerText = `${calculatePrice()}`;
 }
 
 const createProductImageElement = (imageSource) => {
@@ -80,6 +80,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   const li = event.target;
   li.remove();
+  putTotalPriceInP();
 };
 
 function saveCartItems2() {
