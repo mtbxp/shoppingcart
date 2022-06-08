@@ -1,3 +1,5 @@
+const carrinhoPai = document.getElementsByClassName('cart__items');
+
 const fetchComputador = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const fProduto = await fetch(url);
@@ -37,12 +39,43 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = (obj) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${obj.sku} | NAME: ${obj.name} | PRICE: $${obj.salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+};
+
+const testeAdd = async (idx) => {
+  let itemClicado = await fetchComputador()[idx];
+  itemClicado = itemClicado.map((element) => {
+    const idComputador = element.id;
+    const titleComputador = element.title;
+    const priceComputador = element.price;
+    return {
+      sku: idComputador,
+      name: titleComputador,
+      salePrice: priceComputador,
+    };
+  });
+  return itemClicado;
+};
+
+const addDireto = (dadosSelecionado) => {
+  carrinhoPai[0].appendChild(createCartItemElement(dadosSelecionado));
+};
+
+const addCartItem = () => {
+  const addItens = document.querySelectorAll('. item__add');
+  console.log(addItens);
+  console.log(addItens[0]);
+  /* addItens.forEach((element, idx) => {
+    // const dadosSelecionado = testeAdd(idx);
+    element.addEventListener('click', function clickOi() {
+      console.log('oi');
+    });
+  }); */
 };
 
 const separaDados = async () => {
@@ -73,4 +106,5 @@ window.onload = () => {
   fetchComputador();
   separaDados();
   adicionaItem();
+  addCartItem();
  };
