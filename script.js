@@ -51,39 +51,11 @@ const totalSum = (item) => {
   return classPrice.innerText;
 };
 
-// const totalSum = async (item) => {
-//   const items = await fetchItem(item);
-//   if (classPrice.innerText) {
-//     console.log(parseFloat(classPrice.innerText));
-//     console.log(parseFloat(items.price));
-//     const test = parseFloat(classPrice.innerText) + parseFloat(items.price);
-//     console.log(test);
-//     const itemsValue = Math.round((test) * 100) / 100;
-//     console.log(itemsValue);
-//     classPrice.innerText = itemsValue;
-//   } else {
-//     classPrice.innerText = items.price;
-//   }
-// };
-
-// const subtraction = (event) => {
-//   const valueItems = Number(event.target.innerText.split('$')[1]);
-//   classPrice.innerText = Number(classPrice.innerText) - valueItems;
-  
-// }
-
 const cartItemClickListener = (event) => {
-  // console.log('subtração');
-  // const cartItem = document.querySelector('.cart__item');
-  // event.target.classList.contains('cart__item');
   const valueItems = Number(event.target.innerText.split('$')[1]);
   totalSum(-valueItems);
-  // console.log(Number(classPrice.innerText), valueItems);
-  // classPrice.innerText = Number(classPrice.innerText) - valueItems;
-  // console.log(classPrice.innerText);
   event.target.remove();
   saveCartItems(itemCart.innerHTML);
-  // subtraction(event);
 };
 
 itemCart.addEventListener('click', cartItemClickListener);
