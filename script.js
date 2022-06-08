@@ -10,15 +10,25 @@ const createProductImageElement = (imageSource) => {
 };
 
 const cartItemClickListener = (event) => {
-  
+  if (event.target.classList.contains('span-class')
+  || event.target.classList.contains('item__image')) {
+    event.target.parentElement.parentElement.remove();
+    saveCartItems(ol);
+  }
 };
+
+ol.addEventListener('click', cartItemClickListener);
 
 const createCartItemElement = ({ id: sku, title: name, thumbnail, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.appendChild(createProductImageElement(thumbnail));
-  li.addEventListener('click', cartItemClickListener);
+  const span = document.createElement('span');
+  span.className = 'span-class';
+  span.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  const div = document.createElement('div');
+  div.appendChild(createProductImageElement(thumbnail));
+  div.appendChild(span);
+  li.appendChild(div);
   return li;
 };
 
@@ -29,6 +39,7 @@ function addItemCart(event) {
   const getSku = getSkuFromProductItem(event.target.parentElement);
   fetchItem(getSku).then((objeto) => {
    ol.appendChild(createCartItemElement(objeto));
+   saveCartItems(ol);
   });
   }
 }
@@ -60,4 +71,4 @@ fetchProducts('computador')// retorna a API tratada com o JSON() vulgo 'response
   });
 });
 
-window.onload = () => { };
+window.onload = () => { getSavedCartItems(); };
