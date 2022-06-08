@@ -4,7 +4,7 @@
 
 // const { fetchItem } = require("./helpers/fetchItem");
 
-// const shoppingCart = [];
+let shoppingCart = [];
 
 async function fetchItems(item) {
   const res = await fetchItem(item);
@@ -40,7 +40,9 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  const sk = event.target.innerText.split(' ')[1];
+  shoppingCart = shoppingCart.filter((produto) => produto.id !== sk);
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -54,7 +56,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const addToCart = async (event) => {
   const skuOuID = getSkuFromProductItem(event.target.parentNode);
   const jsonProduto = await fetchItems(skuOuID);
-  // shoppingCart.push(jsonProduto);
+  shoppingCart.push(jsonProduto);
   const shoppingCartNode = document.querySelector('.cart__items');
   const formatedProduct = {
     sku: jsonProduto.id,
