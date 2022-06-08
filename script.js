@@ -39,15 +39,15 @@ const createCartItemElement = ({ id, title, price }) => {
 };
 
 const createListProductItems = async () => {
-  const data = await fetchProducts('computador');
+  const { results } = await fetchProducts('computador');
   const classItems = document.querySelector('.items');
-  data.forEach((listProducts) => classItems.appendChild(createProductItemElement(listProducts)));
+  results.forEach((listProducts) => classItems.appendChild(createProductItemElement(listProducts)));
 };
 
 const addToCart = async (itemSku) => {
-  const obj = await fetchItem(itemSku);
+  const itemSpecs = await fetchItem(itemSku);
   const listToCart = document.querySelector('.cart__items');
-  listToCart.appendChild(createCartItemElement(obj));
+  listToCart.appendChild(createCartItemElement(itemSpecs));
 };
 
 const getButtons = async () => {
@@ -58,7 +58,18 @@ const getButtons = async () => {
   }));
 };
 
+const removeCartItems = async () => {
+  const emptyCartButton = document.querySelector('.empty-cart');
+  emptyCartButton.addEventListener('click', () => {
+    const cartItems = document.querySelector('.cart__items');
+    while (cartItems.hasChildNodes()) {
+    cartItems.removeChild(cartItems.firstChild);
+    }
+  });
+};
+
 window.onload = async () => { 
   await createListProductItems(); 
-  getButtons();
+  await getButtons();
+  removeCartItems();
 };
