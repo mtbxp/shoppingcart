@@ -4,7 +4,7 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-
+const storageItem = [];
 let arr = [];
 
 const createCustomElement = (element, className, innerText) => {
@@ -16,35 +16,44 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItem = document.querySelector('.cart__items');
 const counter = document.querySelector('.total-price');
+counter.className = 'total-price';
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = async (event) => {
   event.target.remove();
-  console.log(event.target.innerHTML);
-  arr.reduce((acc, cur) => acc - cur);
+  const skku = event.target.id;
+  const data = await fetchItem(skku);
+  const index = arr.findIndex((element) => element === data.price);
+  arr.splice(index, 1);
+  const result = arr.reduce((acc, cur) => acc + cur, 0);
+  counter.innerText = Math.ceil(result * 100) / 100;
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = async ({
+  sku,
+  name,
+  salePrice,
+}) => {
   const li = document.createElement('li');
+  li.id = `${sku}`;
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   cartItem.appendChild(li);
   arr.push(salePrice);
-  counter.className = 'total-price';
-  const result = arr.reduce((acc, cur) => acc + cur, 0).toFixed(2);
-  counter.innerText = result;
+  const result = arr.reduce((acc, cur) => acc + cur, 0);
+  counter.innerText = Math.ceil(result * 100) / 100;
 };
 
 const loadingHide = () => {
-  const loading = document.querySelector('.loading'); 
-   loading.remove();
- };
+  const loading = document.querySelector('.loading');
+  loading.remove();
+};
 
 const loadingShow = () => {
   const li = document.createElement('p');
   li.className = 'loading';
   li.innerText = 'carregando...';
-  const header = document.querySelector('.header'); 
+  const header = document.querySelector('.header');
   header.appendChild(li);
   setTimeout(loadingHide, 500);
 };
@@ -63,17 +72,15 @@ const prepareCartList = async (itemId) => {
 };
 
 const localStorageList = () => {
- const items = JSON.parse(getSavedCartItems());
- for (let index = 0; index < items.length; index += 1) {
-  prepareCartList(items[index]);
- }
+  const items = JSON.parse(getSavedCartItems());
+  items.forEach((element) => prepareCartList(element));
 };
-const storageItem = [];
-const teste = (event) => {
- const data = event.target.parentNode.firstChild.innerText;
- storageItem.push(data);
- prepareCartList(data);
- saveCartItems(storageItem);
+
+const clickItem = (event) => {
+  const data = event.target.parentNode.firstChild.innerText;
+  storageItem.push(data);
+  prepareCartList(data);
+  saveCartItems(storageItem);
   return data;
 };
 
@@ -91,15 +98,14 @@ const createProductItemElement = ({
   const item = document.querySelector('#item');
   const addItem = document.querySelectorAll('.item__add');
   item.appendChild(section);
-  addItem.forEach((entry) => entry.addEventListener('click', teste));
+  addItem.forEach((entry) => entry.addEventListener('click', clickItem));
 };
 
 const prepareSite = async () => {
-    loadingShow();
-
-    const data = await fetchProducts('computador');
-    const dataLength = data.results;
-    for (let index = 0; index < dataLength.length; index += 1) {
+  loadingShow();
+  const data = await fetchProducts('computador');
+  const dataLength = data.results;
+  for (let index = 0; index < dataLength.length; index += 1) {
     const sku = data.results[index].id;
     const name = data.results[index].title;
     const image = data.results[index].thumbnail;
@@ -111,16 +117,16 @@ const prepareSite = async () => {
     createProductItemElement(result);
   }
   localStorageList();
-  };
+};
 
 const btn = document.querySelector('.empty-cart');
 btn.addEventListener('click', () => {
-cartItem.innerHTML = '';
-arr = [];
-counter.innerText = '00,00';
-localStorage.removeItem('cartItems');
+  cartItem.innerHTML = '';
+  arr = [];
+  counter.innerText = '00,00';
+  localStorage.removeItem('cartItems');
 });
 
 window.onload = () => {
   prepareSite();
- };
+};
