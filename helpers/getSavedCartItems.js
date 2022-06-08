@@ -1,5 +1,5 @@
 const getSavedCartItems = (arg) => {
-    localStorage.setItem('CartItems', arg);
+    localStorage.getItem('CartItems');
     if (arg === undefined) {
       throw new Error('error!');
    }
