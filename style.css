@@ -77,7 +77,6 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  
 }
 
 .title strong {
@@ -155,10 +154,10 @@ body {
   border: 2px solid rgb(48, 48, 48);
 }
 
-li.cart__item {
+li .cart__item {
   margin-bottom: 10px;
 }
 
-div.total-price {
+div .total-price {
   margin: 10px;
 }

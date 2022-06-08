@@ -77,9 +77,8 @@ const listProdct = async () => {
   // requisito 11 carregando...
   const divs = document.createElement('div');
   const prodct = document.querySelector('.items');
-
-  divs.className = 'loading';
   divs.innerHTML = 'carregando...';
+  divs.className = 'loading';
   prodct.appendChild(divs);
   
   const data = await fetchProducts('computador');
@@ -109,10 +108,6 @@ const serchMemori = async () => {
 
   const valShop = localStorage.getItem('shopTot');
   totPrice.innerHTML = `Total: $${valShop}`;
-};
-serchMemori();
-
-window.onload = () => {
+};npm run lint:stylesow.onload = () => {
   listProdct();
 };
-localStorage.setItem('shopTot', resp);
