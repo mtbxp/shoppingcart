@@ -8,10 +8,6 @@ const fetchComputador = async () => {
   return data.results;
 };
 
-const salvaNoLocalStorage = (item) => {
-  localStorage.setItem('cartItems', item);
-};
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -111,7 +107,7 @@ const adicionaItem = async () => {
 
 const testeLocal = () => {
   carrinho = JSON.parse(localStorage.getItem('cartItems'));
-  if (carrinho.length > 0) {
+  if (carrinho !== undefined && carrinho.length > 0) {
     carrinho.forEach((element) => carrinhoPai[0].appendChild(createCartItemElement(element)));
   }
 };
