@@ -1,3 +1,16 @@
+const totalPrice = () => {
+  const cartList = document.querySelectorAll('.cart__item');
+  let total = 0.00;
+  cartList.forEach((element) => {
+    const classes = element.getAttribute('class');
+    const arrayClasses = classes.split(/\D+/);
+    arrayClasses.shift();
+    const price = arrayClasses.join('.');
+    total += parseFloat(price);
+  });
+  const priceText = document.getElementsByClassName('total-price')[0];
+  priceText.innerText = `${Math.round(total * 100) / 100}`;
+};
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,11 +43,13 @@ const cartItemClickListener = (event) => {
   event.target.remove();
   const cartContainer = document.getElementsByClassName('cart__items')[0];
   saveCartItems(JSON.stringify(cartContainer.innerHTML));
+  totalPrice();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.classList.add(`$${salePrice}`);
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -47,6 +62,7 @@ const addCartItems = async (event) => {
   const newElement = createCartItemElement(targetInfo);
   cartContainer.appendChild(newElement);
   saveCartItems(JSON.stringify(cartContainer.innerHTML));
+  totalPrice();
 };
 
 const loadCart = () => {
@@ -60,11 +76,9 @@ window.onload = async () => {
   loadCart();
   const itemsContainer = document.getElementsByClassName('items')[0];
   const objResult = await fetchProducts('computador');
-  objResult.results
-    .forEach(({ id, title, thumbnail }) => {
+  objResult.results.forEach(({ id, title, thumbnail }) => {
       itemsContainer.appendChild(createProductItemElement(id, title, thumbnail));
     });
-
   const arrayOfButtons = document.querySelectorAll('.item__add');
   arrayOfButtons.forEach((button) => {
     button.addEventListener('click', addCartItems);
@@ -74,5 +88,7 @@ window.onload = async () => {
     const cartContainer = document.getElementsByClassName('cart__items')[0];
     cartContainer.innerHTML = '';
     saveCartItems(JSON.stringify(cartContainer.innerHTML));
+    totalPrice();
   });
+  totalPrice();
 };
