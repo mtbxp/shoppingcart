@@ -61,6 +61,9 @@ const renderProduct = async () => {
 
 const appendItem = (product) => {
   const shoppingCart = document.querySelector('.cart__items');
+  shoppingCart.addEventListener('click', (cart) => {
+  cart.target.remove();
+});
   shoppingCart.appendChild(createCartItemElement(product));
 };
 
