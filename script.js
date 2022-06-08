@@ -27,13 +27,13 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 // função criada para listar os produtos. 
 const listaProdutos = async () => {
-  const { results } = await fetchProducts();
+  const { results } = await fetchProducts('computador');
   const arrayTratado = results
     .map((obj) => ({ sku: obj.id, name: obj.title, image: obj.thumbnail }));
   arrayTratado.forEach((obj) => {
     createProductItemElement(obj);
+    sectionPai.append(createProductItemElement(obj));
   });
-  console.log(arrayTratado);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
