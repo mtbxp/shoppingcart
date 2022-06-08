@@ -1,6 +1,6 @@
 const carrinhoPai = document.getElementsByClassName('cart__items');
 let carrinho = [];
-
+localStorage.removeItem('cartItems')
 const fetchComputador = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const fProduto = await fetch(url);
@@ -107,9 +107,10 @@ const adicionaItem = async () => {
 
 const testeLocal = () => {
   carrinho = JSON.parse(localStorage.getItem('cartItems'));
-  if (carrinho !== undefined && carrinho.length > 0) {
+  if (carrinho !== null && carrinho.length > 0) {
     carrinho.forEach((element) => carrinhoPai[0].appendChild(createCartItemElement(element)));
   }
+  carrinho = [];
 };
 
 window.onload = async () => {
@@ -117,6 +118,6 @@ window.onload = async () => {
   await separaDados();
   await itensParaAdd();
   await adicionaItem();
-  // await testeLocal();
+  await testeLocal();
   addCartItem();
  };
