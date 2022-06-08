@@ -31,7 +31,7 @@ const searchProduct = async () => {
   const produtos = fetchP.map((element) => {
     const itemOb = {
       sku: element.id,
-      name: image.tittle,
+      name: element.title,
       image: element.thumbnail,
     };
     return itemOb;
@@ -42,8 +42,9 @@ const searchProduct = async () => {
 const sendProduct = async () => {
   const itens = await searchProduct();
   itens.forEach((element) => {
-    const item = document.getElementsByClassName('items');
-    item.appendChild(createProductItemElement(element));
+    const item = document.getElementsByClassName('items')[0];
+    const creatP = createProductItemElement(element);
+    item.appendChild(creatP);
   });
 };
 

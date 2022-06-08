@@ -3,7 +3,7 @@ const fetchProducts = async (query) => {
   try {
     const itemApi = await fetch(urlApi);
     const data = await itemApi.json();
-    return data;
+    return data.results;
   } catch (error) {
     return error;
   }
