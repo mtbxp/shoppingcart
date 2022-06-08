@@ -1,5 +1,6 @@
 /* const { list } = require('mocha/lib/reporters/base'); */
 const totPrice = document.querySelector('.total-price');
+totPrice.innerHTML = `Total: $${0}`;
 const listShop = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
@@ -18,13 +19,30 @@ const createCustomElement = (element, className, innerText) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+// Somando os valores totais!
+const sumValShop = () => {
+  const arrayShop = Array.from(document.getElementsByClassName('cart__item'));
+  if (arrayShop.length === 0) {
+    totPrice.innerHTML = `Total: $${0}`; 
+  }
+  let resp = 0;
+  arrayShop.forEach(async (elm) => {
+    const en = elm.innerHTML.split('|')[0].split(' ')[1];
+    const item = await fetchItem(en);
+    resp += parseFloat(item.price, 10);
+    totPrice.innerHTML = `Total: $${parseFloat(resp, 10)}`;
+    localStorage.setItem('shopTot', resp);
+  });
+};
+
 // Deleta os elementos
 const cartItemClickListener = (event) => {
   // Referência:https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
   listShop.removeChild(event.target);
-  
+  localStorage.clear();
 };
 
+// Cria o item do carrinho
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,7 +57,8 @@ const putCart = async (elm) => {
   const response = await fetchItem(idI);
   const itemsC = createCartItemElement(response);
   listShop.appendChild(itemsC);
-  saveCartItems(JSON.stringify(itemsC.innerHTML));
+  saveCartItems(JSON.stringify(idI));
+  sumValShop();
 };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
@@ -55,6 +74,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
 // Criando lista de produtos
 const listProdct = async () => {
+  // requisito 11 carregando...
   const divs = document.createElement('div');
   const prodct = document.querySelector('.items');
 
@@ -72,36 +92,27 @@ const listProdct = async () => {
   });
 };
 
-// Somando os valores totais!
-const sumValShop = () => {
-  if (listShop.length === 0) {
-    totPrice.innerHTML = 'Total: $0';
-  }
-  let resp = 0;
-  
-  const arrShop = document.querySelectorAll('.cart__item');
-  const totalVal = arrShop.forEach((val) => {
-    resp += parseFloat(val.innerHTML.split('$')[7] * 100);
-    return resp;
-  });
-  totPrice.innerHTML = `Total: $${totalVal / 100}`;
-};
-
 // Clear Buttom
 const buttom = document.querySelector('.empty-cart');
 buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
   localStorage.clear();
+  totPrice.innerHTML = `Total: $${0}`;
 });
 
 // Carregando o localStorage
-const serchMemori = () => {
+const serchMemori = async () => {
   const response = JSON.parse(getSavedCartItems());
-  listShop.innerHTML = response;
+  const res = await fetchItem(response);
+  const items = createCartItemElement(res);
+  listShop.appendChild(items);
+
+  const valShop = localStorage.getItem('shopTot');
+  totPrice.innerHTML = `Total: $${valShop}`;
 };
+serchMemori();
 
 window.onload = () => {
   listProdct();
-  serchMemori();
-  sumValShop();
 };
+localStorage.setItem('shopTot', resp);
