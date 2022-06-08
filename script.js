@@ -80,6 +80,17 @@ function loadStorage() {
   cartItem.innerHTML = getSavedCartItems();
 }
 
+function emptyCart() {
+  const button = document.querySelector('.empty-cart');
+
+  button.addEventListener('click', (event) => {
+    if (event.target.className === 'empty-cart') {
+      localStorage.clear();      
+      cartItem.innerHTML = '';
+    }
+  });
+}
+
 // fetchItem('MLB1341706310').then((data) => console.log(data));
 // fetchItem(id).then((data) => console.log(data));
 // fetchProducts('computador').then((data) => console.log(data));
@@ -88,4 +99,5 @@ window.onload = () => {
   addItemToCart();
   displayproduct();
   loadStorage();
+  emptyCart();
 };
