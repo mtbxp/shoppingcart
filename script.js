@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 const cartItemClickListener = (event) => {
   event.target.remove();
 };
@@ -12,10 +14,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const addItemCart = async (param) => {
   const obj = await fetchItem(param);
-  const ol = document.querySelector('.cart__items');
   const { id, title, price } = obj;
   const obj2 = { sku: id, name: title, salePrice: price };
   ol.appendChild(createCartItemElement(obj2));
+};
+
+const saveCart = () => {
+  const string = ol.innerHTML;
+  if (ol.innerHTML.length > 0) {
+    saveCartItems(string);
+  }
 };
 
 const createButton = (sku) => {
@@ -24,6 +32,7 @@ const createButton = (sku) => {
   button.innerText = 'Adicionar ao carrinho!';
   button.addEventListener('click', async () => {
     await addItemCart(sku);
+    saveCart();
   });
   return button;
 };
@@ -59,6 +68,14 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 // //////////////////////////////////////////////////////////////////////////////
 
+const clearCart = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', () => {
+    ol.innerHTML = '';
+    localStorage.clear();
+  });
+};
+
 const creatProductList = async () => {
   const obj = await fetchProducts('computador');
   const section = document.querySelector('.items');
@@ -68,17 +85,24 @@ const creatProductList = async () => {
     const produtos = await createProductItemElement(obj2);
     return section.appendChild(produtos);
   });
+  clearCart();
 };
 
-const clearCart = () => {
-  const button = document.querySelector('.empty-cart');
-  button.addEventListener('click', () => {
-    const ol = document.querySelector('.cart__items');
-    ol.innerHTML = '';
+const getCart = () => {
+  if (localStorage.length > 0) {
+    ol.innerHTML = getSavedCartItems();
+  }
+};
+
+const clearOldCart = () => {
+  getCart();
+  const li = document.querySelectorAll('.cart__item');
+  li.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
   });
 };
 
 window.onload = () => {
   creatProductList();
-  clearCart();
+  clearOldCart();
 };
