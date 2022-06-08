@@ -53,6 +53,14 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
+const sum = () => {
+  const totalPrice = querySelector('.total-price');
+  const listaDeArray = querySelectorAll('li');
+  listaDeArray.forEach((e) => {
+    
+  });
+};
+
 const createProductList = async () => {
   const fetch = await fetchProducts('computador');
   const fetchProduct = fetch.results;
