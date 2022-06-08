@@ -1,5 +1,6 @@
 const cartItems = document.querySelector('.cart__items');
 const totalPrice = document.querySelector('.total-price');
+const emptycartButton = document.querySelector('.empty-cart');
 let totalValueOfItemsInCart = 0;
 
 const createProductImageElement = (imageSource) => {
@@ -102,8 +103,6 @@ const addItemToCart = (element, sku) => {
   });
 };
 
-const emptycartButton = document.querySelector('.empty-cart');
-
 const clearItemsInTheCart = () => {
   cartItems.innerText = '';
   totalValueOfItemsInCart = 0;
@@ -126,13 +125,34 @@ const loadCartDataOfStorage = () => {
   });
 };
 
-window.onload = async () => { 
-  const data = await fetchProducts('computador').then((response) => response);
-  const { results: productList } = data;
+const container = document.querySelector('.container');
 
+const addLoding = () => {
+  const p = document.createElement('p');
+  p.innerText = 'Carregando...';
+  p.className = 'loading';
+  container.appendChild(p);
+  console.log('Carregando...');
+};
+
+const removeLoading = () => {
+  const loading = document.querySelector('.loading');
+  container.removeChild(loading);
+  console.log('Carregou!!!');
+};
+
+window.onload = async () => { 
+  let data = null;
+  if (!data) {
+    addLoding();
+  }
+  data = await fetchProducts('computador').then((response) => response);
+  if (data) {
+    removeLoading();
+  }
+  const { results: productList } = data;
   appendProducts(productList);
   loadCartDataOfStorage();
-
   // referencia sobre Data Attributes : https://www.youtube.com/watch?v=ri-xkk9PuDU
   const buttonsAddCart = document.querySelectorAll('[data-sku]');
   buttonsAddCart.forEach((buttonAddCart) => {
