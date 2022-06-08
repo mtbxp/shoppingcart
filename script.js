@@ -37,5 +37,14 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const section = document.querySelector('.items');
+const productList = async () => {  
+  const { results } = await fetchProducts('computador');
+  results.forEach(({ id, title, thumbnail }) => {
+    section.appendChild(createProductItemElement(({ sku: id, name: title, image: thumbnail })));
+    });
+};
 
-window.onload = () => { };
+window.onload = () => {  
+  productList();
+};
