@@ -1,5 +1,5 @@
 const sectionPai = document.querySelector('.items');
-// console.log(sectionPai);
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,7 +25,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
-// função criada para listar os produtos. 
+
+// função criada para listar os produtos e inserir no HTML
 const listaProdutos = async () => {
   const { results } = await fetchProducts('computador');
   const arrayTratado = results
