@@ -1,5 +1,6 @@
 const itemsContainer = document.querySelector('.items');
 const cartContainer = document.querySelector('.cart__items');
+const emptyCartBtn = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -35,7 +36,7 @@ function getTotalPrice(nodeContainer) {
     const index = item.textContent.indexOf('$');
     const price = item.textContent.slice(index + 1);
     total += +price;
-    total = (Math.round(total * 100) / 100);
+    total = Math.round(total * 100) / 100;
   });
   return total;
 }
@@ -90,8 +91,7 @@ function appendProductInCart(obj) {
 }
 
 function renderItemInCart(id) {
-  return fetchItem(id)
-    .then(appendProductInCart);
+  return fetchItem(id).then(appendProductInCart);
 }
 
 function updateCart(nodeContainer) {
@@ -105,8 +105,7 @@ function updateCart(nodeContainer) {
 }
 
 function renderProducts() {
-  return fetchProducts('computador')
-    .then(appendProducts);
+  return fetchProducts('computador').then(appendProducts);
 }
 
 function renderInitialCartFromLocStor() {
@@ -116,9 +115,19 @@ function renderInitialCartFromLocStor() {
   });
 }
 
+function cleanCart(event) {
+  event.preventDefault();
+  while (cartContainer.hasChildNodes()) {
+    cartContainer.childNodes[0].remove();
+  }
+  saveCartItems(cartContainer);
+}
+
 window.onload = () => {
+  emptyCartBtn.addEventListener('click', cleanCart);
   renderInitialCartFromLocStor();
   renderTotalPrice(cartContainer);
   renderProducts()
-    .then(updateCart);
+    .then(updateCart)
+    .catch(console.log);
 };
