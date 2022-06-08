@@ -119,8 +119,9 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
+  background: rgb(10, 118, 79);
   border: 0;
+  border-radius: 7px;
   cursor: pointer;
   margin: 0;
   padding: 10px;
@@ -140,10 +141,23 @@ body {
   overflow-y: scroll;
 }
 
+.cart .cart__items .cart__item {
+  margin: 10px 0;
+}
+
 .empty-cart {
   width: 170px;
   height: 35px;
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(221, 221, 221);
+  background-color: rgb(3, 52, 45);
+  height: 50px;
 }
