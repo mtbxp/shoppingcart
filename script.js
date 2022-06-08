@@ -42,27 +42,48 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// let finalPrice = 0; 
-// const correctValue = Math.random((finalPrice + arg) * 100) / 100;
-// finalPrice = correctValue;
+let finalPrice = 0; 
 
-const totalSum = async (item) => {
-  const items = await fetchItem(item);
-  if (classPrice.innerText) {
-    const itemsValue = parseFloat(classPrice.innerText) + parseFloat(items.price);
-    classPrice.innerText = itemsValue;
-  } else {
-    classPrice.innerText = items.price;
-  }
+const totalSum = (item) => {
+  const values = Math.round((finalPrice + item) * 100) / 100;
+  finalPrice = values;
+  classPrice.innerText = values;
+  return classPrice.innerText;
 };
 
-const cartItemClickListener = async (event) => {
-  const cartItem = document.querySelector('.cart__item');
-  event.target.classList.contains('cart__item');
-    const valueItems = Number(event.target.innerText.split('$')[1]);
-    classPrice.innerText = Number(classPrice.innerText) - valueItems;
-    cartItem.remove();
-    await saveCartItems(itemCart.innerHTML);
+// const totalSum = async (item) => {
+//   const items = await fetchItem(item);
+//   if (classPrice.innerText) {
+//     console.log(parseFloat(classPrice.innerText));
+//     console.log(parseFloat(items.price));
+//     const test = parseFloat(classPrice.innerText) + parseFloat(items.price);
+//     console.log(test);
+//     const itemsValue = Math.round((test) * 100) / 100;
+//     console.log(itemsValue);
+//     classPrice.innerText = itemsValue;
+//   } else {
+//     classPrice.innerText = items.price;
+//   }
+// };
+
+// const subtraction = (event) => {
+//   const valueItems = Number(event.target.innerText.split('$')[1]);
+//   classPrice.innerText = Number(classPrice.innerText) - valueItems;
+  
+// }
+
+const cartItemClickListener = (event) => {
+  // console.log('subtração');
+  // const cartItem = document.querySelector('.cart__item');
+  // event.target.classList.contains('cart__item');
+  const valueItems = Number(event.target.innerText.split('$')[1]);
+  totalSum(-valueItems);
+  // console.log(Number(classPrice.innerText), valueItems);
+  // classPrice.innerText = Number(classPrice.innerText) - valueItems;
+  // console.log(classPrice.innerText);
+  event.target.remove();
+  saveCartItems(itemCart.innerHTML);
+  // subtraction(event);
 };
 
 itemCart.addEventListener('click', cartItemClickListener);
@@ -89,7 +110,7 @@ productSection.addEventListener('click', (event) => {
       itemCart.appendChild(createCartItemElement(product));
 
       saveCartItems(itemCart.innerHTML);
-      totalSum(idItem);
+      totalSum(product.price);
       localStorage.setItem('classPrice', classPrice.innerText);
     }); 
   }
