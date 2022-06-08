@@ -1,5 +1,14 @@
 let cartItems = []; // requisito 8
 
+const showTotalPrice = () => {
+  const showPrice = document.querySelector('.total-price');
+  let totalPrice = 0;
+  for (let index = 0; index < cartItems.length; index += 1) {
+    totalPrice += cartItems[index].salePrice;
+  }
+  showPrice.innerText = totalPrice;
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,6 +41,7 @@ const cartItemClickListener = (event) => {
   const indexOfRemovedItem = cartItems.findIndex((e) => e.sku === removedItemId);
   cartItems.splice(indexOfRemovedItem, 1);
   saveCartItems(cartItems);
+  showTotalPrice();
   event.target.remove();
 };
 
@@ -41,20 +51,9 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   cartItems.push({ sku, name, salePrice }); // requisito 8
+  showTotalPrice();
   saveCartItems(cartItems);
   return li;
-};
-
-const emptyCart = () => {
-  const emptyButton = document.querySelector('.empty-cart');
-  emptyButton.addEventListener('click', () => {
-    const cartList = document.getElementsByClassName('cart__items');
-    while (cartList.firstChild) {
-      cartList.removeChild(cartList.firstChild);
-    }
-    cartItems = [];
-    saveCartItems(cartItems);
-  });
 };
 
 const reloadCart = () => {
@@ -68,6 +67,20 @@ const reloadCart = () => {
       cart.appendChild(li);
     });
   }
+};
+
+const emptyCart = () => {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', () => {
+    const cartList = document.getElementsByClassName('cart__items');
+    while (cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild);
+    }
+    cartItems = [];
+    showTotalPrice();
+    saveCartItems(cartItems);
+    reloadCart();
+  });
 };
 
 const renderProducts = async () => {
@@ -96,4 +109,5 @@ window.onload = async () => {
   emptyCart();
   cartItems = getSavedCartItems();
   reloadCart();
+  showTotalPrice();
 };
