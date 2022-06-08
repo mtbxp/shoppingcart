@@ -68,6 +68,11 @@ document.addEventListener('click', async (event) => {
    const idElement = event.target.parentNode.firstChild.innerHTML;
    itemsCart(idElement);
   }
+  if (event.target.classList.contains('empty-cart')) {
+    cartItems.innerHTML = '';
+    priceParagraph.innerHTML = '';
+    localStorage.clear();
+  }
 });
 
 const getLocalStorage = () => {
