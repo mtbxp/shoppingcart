@@ -3,6 +3,30 @@ const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  
+  test('Teste se fetchProducts é uma função', async () => {
+    expect(await fetchProducts()).toBe(Function);
+  })
+
+  test('caso receba do parametro computador o fetch retorna o endpoint https://api.mercadolibre.com/sites/MLB/search?q=computador', () => {
+    fetchProducts('computador');
+
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+  })
+
+  test('caso o parametro seja computador o getch é chamado', () => {
+    fetchProducts('computador');
+
+    expect(fetch).toBeCalled();
+  })
+
+  test('Teste se o retorno da função fetchProducts com o argumento computador é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo', async () => {
+    const exepected = await fetchProducts('computador');
+    exepect(exepected).toEqual(computadorSearch);
+  }).
+
+  test('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
+    expect(await fetchProducts('')).toThrowError('You must provide an url');
+  })
+
 });
