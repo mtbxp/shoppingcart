@@ -14,7 +14,7 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = ({ sku, name, salePrice, img }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
   li.appendChild(createProductImageElement(img));
   li.addEventListener('click', cartItemClickListener);
   return li;
@@ -29,8 +29,8 @@ function addItemCart(event) {
       ol.appendChild(createCartItemElement({
         sku: objeto.id,
         name: objeto.title,
-        salaPrice: objeto.salaPrice,
-        img: objeto.thumbnail,
+        salePrice: objeto.price,
+        img: objeto.thumbnail
       }));
     });
   }
