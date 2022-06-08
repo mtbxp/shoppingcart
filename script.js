@@ -36,12 +36,6 @@ const createCartItemElement = (sku, name, price) => {
   li.innerText = cartItems;
   li.addEventListener('click', cartItemClickListener);
   list.appendChild(li);
-  let arr = [];
-  if (localStorage.length > 0) {
-    arr = getSavedCartItems();
-  }
-  arr.push({ id: sku, title: name, salePrice: price });
-  saveCartItems(arr);
   return li;
 };
 
@@ -49,17 +43,20 @@ const createProductItemElement = (sku, name, image) => {
   const section = document.createElement('section');
   section.className = 'item';
   const mens = 'Adicionar ao carrinho!';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__title', name));
   const button = section.appendChild(createCustomElement('button', 'item__add', mens));
   button.addEventListener('click', async () => {
-    const infoItem = await fetchItem(sku);
-    const { id, title, price } = infoItem;
+    const { id, title, price } = await fetchItem(sku);
     createCartItemElement(id, title, price);
+    let arr = [];
+    if (localStorage.length > 0) {
+      arr = getSavedCartItems();
+    }
+    arr.push({ sku: id, name: title, salePrice: price });
+    saveCartItems(arr);
   });
-
   return section;
 };
 
@@ -71,15 +68,16 @@ window.onload = async () => {
   result.forEach((item) => {
     const { id, title, thumbnail } = item;
     let smallerTitle = '';
-    for (let index = 0; index < 37; index += 1) {
+    for (let index = 0; smallerTitle.length < 37; index += 1) {
       smallerTitle += title[index];
-      if (index === 36) {
-        smallerTitle += ' ...';
-      }
     }
+    smallerTitle += ' ...';
     const section = createProductItemElement(id, smallerTitle, thumbnail);
     const items = document.querySelector('.items');
     items.appendChild(section);
   });
-  getSavedCartItems();
+  const arr = getSavedCartItems();
+  arr.forEach((obj) => {
+    createCartItemElement(obj.sku, obj.name, obj.salePrice);
+  });
 };
