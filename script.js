@@ -1,4 +1,4 @@
-  const createProductImageElement = (imageSource) => {
+const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -12,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -30,7 +30,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -38,13 +38,28 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const itensList = document.querySelector('.items');
+const addProductsList = () => {
+const productList = document.querySelector('.items');
 fetchProducts('computador')
-  .then((products) => {
-    products.results
-      .forEach((element) => {
-        itensList.appendChild(createProductItemElement(element));
-      });
+.then((products) => {
+  products.results
+  .forEach((element) => {
+    productList.appendChild(createProductItemElement(element));
+  });
+});
+};
+
+const itemCart = (id) => {
+  cartItems = document.querySelector('.cart__items');
+  fetchItem(id).then((element) => cartItems.appendChild(createCartItemElement(element)));
+};
+
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('item__add')) {
+    const section = event.target.parentNode.firstChild.innerText;
+    itemCart(section);
+}
 });
 
 window.onload = () => { };
+addProductsList();

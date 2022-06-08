@@ -7,7 +7,7 @@ const fetchProducts = async (query) => {
         return new Error('You must provide an url');
   }
 };
-console.log(fetchProducts('computador'));
+
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
