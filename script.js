@@ -1,5 +1,7 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { fetchItem } = require("./helpers/fetchItem");
 
 const createProductImageElement = (imageSource) => {
@@ -43,6 +45,13 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const adicionaOLocalStorage = () => {
+  const carrinho = document.getElementsByClassName('cart__items');
+  const obj = getSavedCartItems();
+  const produto = createCartItemElement(obj);
+  carrinho[0].appendChild(produto);
+};
+
 const colocaCarrinho = async (e) => {
   const lista = document.getElementsByClassName('cart__items');
   const alvo = e.target;
@@ -51,10 +60,11 @@ const colocaCarrinho = async (e) => {
   const { id, title, price } = dados;
   const produto = createCartItemElement({ sku: id, name: title, salePrice: price });
   lista[0].appendChild(produto);
+  saveCartItems({ sku: id, name: title, salePrice: price });
 };
 
 const AdicionaCarrinho = async () => {
-  const products = document.getElementsByClassName('item');
+  const products = document.getElementsByClassName('item__add');
   for (let i = 0; i < products.length; i += 1) {
     products[i].addEventListener('click', async (e) => {
       await colocaCarrinho(e);
@@ -67,6 +77,7 @@ const limpaCarrinho = () => {
   const carrinho = document.getElementsByClassName('cart__items');
   limpador[0].addEventListener('click', () => {
     carrinho[0].innerHTML = ' ';
+    localStorage.clear();
   });
 };
 
@@ -81,6 +92,7 @@ const Start = async () => {
   });
   AdicionaCarrinho();
   limpaCarrinho();
+  adicionaOLocalStorage();
 };
 
 window.onload = () => {
