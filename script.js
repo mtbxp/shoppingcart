@@ -127,6 +127,7 @@ const testeLocal = () => {
   carrinho = JSON.parse(localStorage.getItem('cartItems'));
   if (carrinho !== null && carrinho.length > 0) {
     carrinho.forEach((element) => carrinhoPai[0].appendChild(createCartItemElement(element)));
+    precoTotal(carrinho);
   } else {
     carrinho = [];
   }
