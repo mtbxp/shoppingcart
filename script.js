@@ -2,6 +2,20 @@
 // const saveCartItems = require('./helpers/saveCartItems');
 // const item = require('./mocks/item');
 
+const loadingOff = () => {
+  const secItems = document.getElementsByClassName('items')[0];
+  const element = document.getElementsByClassName('loading')[0];
+  secItems.removeChild(element);
+};
+
+const loadingOn = () => {
+  const secItems = document.getElementsByClassName('items')[0];
+  const element = document.createElement('p');
+  element.innerText = 'carregando...';
+  element.classList.add('loading');
+  secItems.appendChild(element);
+};
+
 const cutDecimals = (allPrices) => {
   let endpoint = allPrices.length;
   let newPrice = '';
@@ -63,15 +77,27 @@ const firstItem = (lcStog, obj) => {
 
 const refreshStorage = async (obj) => {
   try {
+    loadingOn();
     let lcStog = await getSavedCartItems();
+    loadingOff();
     firstItem(await lcStog, obj);
     deleteItem(await lcStog, obj);
     addItem(await lcStog, obj);
+    loadingOn();
     lcStog = await getSavedCartItems();
+    loadingOff();
     sumValues(await lcStog);
   } catch (error) {
       console.log(error);    
     }
+};
+
+const eraseAll = () => {
+  const newArr = [];
+  const cartItems = document.getElementsByClassName('cart__items')[0];
+  cartItems.innerText = '';
+  saveCartItems(newArr);
+  refreshStorage();
 };
 
 const createProductImageElement = (imageSource) => {
@@ -126,7 +152,9 @@ const moveToCart = async (event) => {
   const fatherElement = event.target.parentElement;
   const itemSku = fatherElement.firstChild.innerText;
   console.log(itemSku);
+  loadingOn();
   const itemInfos = await fetchItem(itemSku);
+  loadingOff();
   const cartItems = document.getElementsByClassName('cart__items')[0];
   const obj = {
     sku: await itemInfos.id,
@@ -140,7 +168,9 @@ const moveToCart = async (event) => {
 const loadStorage = async () => {
   try {
     const cartItems = document.getElementsByClassName('cart__items')[0];
+    loadingOn();
     const lcStog = await getSavedCartItems();
+    loadingOff();
     console.log(lcStog);
     lcStog.forEach((item) => {
       console.log(Object.values(item)[0]);
@@ -152,12 +182,21 @@ const loadStorage = async () => {
   }
 };
 
+const addEvents = () => {
+  const buttons = document.getElementsByClassName('item__add');
+  for (let index = 0; index < buttons.length; index += 1) {
+    buttons[index].addEventListener('click', moveToCart);
+  }
+  const btnEraseAll = document.getElementsByClassName('empty-cart')[0];
+  btnEraseAll.addEventListener('click', eraseAll);
+};
+
 const init = async () => {
   await refreshStorage();
+  loadingOn();
   const obj = await fetchProducts('computador');
+  loadingOff();
   const secItems = document.getElementsByClassName('items')[0];
-  const buttons = document.getElementsByClassName('item__add');
-  // localStorage.clear();
   loadStorage();
   Object.values(obj).forEach((element) => {
     const newObj = {
@@ -167,9 +206,7 @@ const init = async () => {
     };
     secItems.appendChild(createProductItemElement(newObj));
   });
-  for (let index = 0; index < buttons.length; index += 1) {
-    buttons[index].addEventListener('click', moveToCart);
-  }
+  addEvents();
 };
 
 window.onload = init;

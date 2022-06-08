@@ -145,6 +145,11 @@ body {
   align-self:center;
 }
 
+.loading {
+  display: flex;
+  position: absolute;
+}
+
 .empty-cart {
   width: 170px;
   height: 35px;
