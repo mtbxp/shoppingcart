@@ -17,13 +17,10 @@ const createCustomElement = (element, className, innerText) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// acessar o pai para ver o parametro
-
 const cartItemClickListener = (event) => {
   event.target.remove();
-  // const listaHTML = document.querySelector('.cart__item').innerHTML;
+  saveCartItems(cartList.innerHTML);
 };
-// chamar fetchitens e passa o parametro para a função para gerar a li e acessar o pai para ver o parametro
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
@@ -37,6 +34,7 @@ const EventOnItem = (event) => {
   const sku = getSkuFromProductItem(event.target.parentNode);
   fetchItem(sku).then((item) => {
     cartList.appendChild(createCartItemElement(item));
+    saveCartItems(cartList.innerHTML);
   });
 };
 
@@ -62,6 +60,15 @@ const createProductList = async () => {
   });
 };
 
-window.onload = () => { 
+const requisição = () => {
+  const olHtml = document.querySelector('.cart__items');
+  olHtml.innerHTML = getSavedCartItems();
+  olHtml.addEventListener('click', cartItemClickListener);
+};
+
+// para salvar no storage você precisa fazer ele salvar na key conseguir o value e assim fazer ele ficar salvo, para acessar ele precisamos fazer isso por click onde caso contenha um produto ele rpecisa ser adicionado ao valor e se não for ser deixado de lado 
+
+  window.onload = () => { 
   createProductList();
+  requisição();
 };
