@@ -120,8 +120,17 @@ const clearCart = () => {
   // totalPriceSpan[0].innerHTML = 'Subtotal: R$';
 };
 
+const loadingMessage = () => {
+  const msg = document.createElement('span');
+  msg.innerText = 'Carregando...';
+  msg.className = 'loading';
+  itemsList[0].appendChild(msg);
+};
+
 const showListProducts = async () => {
   const data = await fetchProducts('computador');
+  const msg = document.getElementsByClassName('loading');
+  msg[0].style.display = 'none';
   data.map((item) => {
     const { id: sku, title: name, thumbnail: image } = item;
     const element = createProductItemElement({ sku, name, image });
@@ -132,6 +141,7 @@ const showListProducts = async () => {
 
 btnClearCartItems[0].addEventListener('click', clearCart);
 window.onload = () => { 
+  loadingMessage();
   showListProducts();
   updateListCartItems();
 };
