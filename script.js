@@ -5,10 +5,41 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const createCustomElement = (element, className, innerText) => {
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => {
+
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', () => cartItemClickListener);
+  // console.log(li);
+  return li;
+};
+
+const renderItems = async (id) => {
+  const item = await fetchItem(id);
+  const element = {
+    sku: item.id,
+    name: item.title,
+    salePrice: item.price,
+  };
+  const sectionCart = document.getElementsByClassName('cart__items')[0];
+  const y = createCartItemElement(element);
+  console.log(y);
+  sectionCart.appendChild(y);
+};
+
+const createCustomElement = (element, className, innerText, sku) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  if (element === 'button') {
+    e.addEventListener('click', async () => renderItems(sku));
+  }
   return e;
 };
 
@@ -19,23 +50,9 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!', sku));
 
   return section;
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 };
 
 const mapProducts = async () => {
