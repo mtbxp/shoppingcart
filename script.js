@@ -24,10 +24,12 @@ const createProductItemElement = (sku, name, image) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  const cartContainer = document.getElementsByClassName('cart__items')[0];
+  saveCartItems(JSON.stringify(cartContainer.innerHTML));
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -42,10 +44,20 @@ const addCartItems = async (event) => {
   const cartContainer = document.getElementsByClassName('cart__items')[0];
   const targetID = event.target.parentElement.firstChild.innerText;
   const targetInfo = await fetchItem(targetID);
-  cartContainer.appendChild(createCartItemElement(targetInfo));
+  const newElement = createCartItemElement(targetInfo);
+  cartContainer.appendChild(newElement);
+  saveCartItems(JSON.stringify(cartContainer.innerHTML));
+};
+
+const loadCart = () => {
+  const cartContainer = document.getElementsByClassName('cart__items')[0];
+  cartContainer.innerHTML = JSON.parse(getSavedCartItems());
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach((element) => element.addEventListener('click', cartItemClickListener));
 };
 
 window.onload = async () => {
+  loadCart();
   const itemsContainer = document.getElementsByClassName('items')[0];
   const objResult = await fetchProducts('computador');
   objResult.results
@@ -57,5 +69,10 @@ window.onload = async () => {
   arrayOfButtons.forEach((button) => {
     button.addEventListener('click', addCartItems);
   });
-  
+  const clearButton = document.getElementsByClassName('empty-cart')[0];
+  clearButton.addEventListener('click', () => {
+    const cartContainer = document.getElementsByClassName('cart__items')[0];
+    cartContainer.innerHTML = '';
+    saveCartItems(JSON.stringify(cartContainer.innerHTML));
+  });
 };
