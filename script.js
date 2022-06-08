@@ -30,6 +30,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(cartItems);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -68,11 +69,27 @@ const sendToCartItem = () => {
       const obj = await fetchItem(idProduct);
       const li = createCartItemElement(obj);
       cartItems.appendChild(li);
+      saveCartItems(cartItems);
     }
   });
+};
+
+/* As duas funções abaixo são responsaveis por colocar as propriedades devidas dos itens do localstorge e colocar os itens no carrinho  */
+
+const setPropritesLocalStorage = (arr) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = arr;
+  cartItems.appendChild(li);
+};
+
+const sendLocalStorageToCartItens = () => {
+  const localStorage = getSavedCartItems('cartItems');
+  localStorage.forEach((element) => setPropritesLocalStorage(element));
 };
 
 window.onload = () => {
   sendToCartItem();
   sendApiToSite();
+  sendLocalStorageToCartItens();
 };
