@@ -24,7 +24,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = async () => {
+const cartItemClickListener = (event) => {
+event.target.closest('li').remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -45,14 +46,12 @@ const addItemCart = async (idElement) => {
 
 const createButton = () => { 
   const getButton = document.querySelectorAll('.item__add');
-  // console.log(getButton);
 getButton.forEach((element) => element.addEventListener('click', (event) => {
   console.log('teste');
     const idElement = event.target.parentNode.firstChild.innerText;
     addItemCart(idElement);
   }));
 };
-// createButton();
 
 const newfunction = async () => {
   const newItens = await fetchProducts('computador');
