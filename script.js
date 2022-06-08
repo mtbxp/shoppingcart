@@ -38,4 +38,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const fetchContinue = async () => {
+  // Vou colocar aqui o Id, title e tumbnail
+  const { results } = await fetchProducts();
+  console.log(results);
+  // vou criar um forEach para fazer as sections
+  results.forEach();
+};
+
 window.onload = () => { };
