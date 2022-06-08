@@ -1,3 +1,4 @@
+const cart = document.querySelector('.cart__items');
 // Original
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -6,26 +7,28 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
 const createCustomElement = (element, className, innerText) => {
+//   if (element === 'button') {
+//     const eButton = document.createElement(element);
+//     eButton.className = className;
+//     eButton.innerText = innerText;
+//  eButton.addEventListener('click', async (event) => {
+//   const idElement = getSkuFromProductItem(event.target.parentNode);
+// const item = await fetchItem(idElement);
+// const { id, title, price } = item;
+// const itemObj = { sku: id, name: title, salePrice: price };
+// cart.append(createCartItemElement(itemObj));
+// });
+//   }
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-};
-
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// Jogar um addEventListener na criação do botão. 
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
@@ -39,23 +42,48 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// Meus codes
-// Requisito 2 - Com a ajuda da revisão do Gabs 06/06 <3
+const itemCart = async (itemId) => {
+  const data = await fetchItem(itemId);
+  const { id, title, price } = data;
+  const itemObj = { sku: id, name: title, salePrice: price };
+  cart.appendChild(createCartItemElement(itemObj));
+};
+
+const addToCart = (event) => {
+  const parent = event.target.parentElement;
+  itemCart(getSkuFromProductItem(parent));
+};
+
+const createProductItemElement = ({ sku, name, image }) => {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', addToCart);
+
+  return section;
+};
+
 const renderItens = async () => {
   const itemList = document.querySelector('.items');
   
   const products = await fetchProducts('computador');
   
   products.results.forEach((product) => {
-    const item = {
+    const itemLoad = {
       sku: product.id,
       name: product.title,
       image: product.thumbnail,
     };
-    const productCard = createProductItemElement(item);
+    const productCard = createProductItemElement(itemLoad);
     itemList.appendChild(productCard);
   });
 };
+
+// Ajuda da revisão do Gabs 06/06 e da aula da casa de câmbio 07/07
 
 window.onload = () => {
  renderItens();
