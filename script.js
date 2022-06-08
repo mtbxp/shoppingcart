@@ -38,9 +38,22 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const mapListProdutos = async () => {
+  const newGetList = await fetchProducts('computador');
+  const data = newGetList.results.map((get) => {
+    const result = {
+      sku: get.id,
+      name: get.title,
+      image: get.thumbnail,
+    };
+    return result;
+  });
+  return data;
+};
+
 const listProdutos = async () => {
   const addList = document.querySelector('.items');
-  const getList = await fetchProducts('computador');
+  const getList = await mapListProdutos();
   getList.forEach((item) => {
     const addItens = createProductItemElement(item);
     addList.appendChild(addItens);
