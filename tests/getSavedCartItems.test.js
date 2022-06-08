@@ -6,11 +6,11 @@ localStorageSimulator('getItem');
 describe('4 - Teste a função getSavedCartItems', () => {
   it('should call localStorage', async () => {
     await getSavedCartItems();
-    expect(localStorage.setItem).toHaveBeenCalled();
+    expect(localStorage.getItem).toHaveBeenCalled();
   });
   it('should call localStorage with correct parameter', async () => {
     await getSavedCartItems();
-    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems');
+    expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
   // fail('Teste vazio');
 });
