@@ -13,16 +13,21 @@ describe('2 - Teste a função fetchItem', () => {
   test(`passando o argumento do item "MLB1615760527", a função fetch utiliza o endpoint
   "https://api.mercadolibre.com/items/MLB1615760527"`, async () => {
     const url = 'https://api.mercadolibre.com/items/MLB1615760527';
-    fetchItem('MLB1615760527');
-    expect(fetch).toHaveReturnedWith(url);
+    await fetchItem('MLB1615760527');
+    expect(fetch).toHaveBeenCalledWith(url);
   });
   test(`passando o argumento do item "MLB1615760527", retorna uma estrutura de dados 
     igual ao objeto item`, async () => {
-      expect(fetchItem('MLB1615760527')).toEqual(item);
+      expect(await fetchItem('MLB1615760527')).toEqual(item);
+  });
+  test(`se retorna algo.`, async () => {
+    expect(await fetchItem('MLB1615760527')).toHaveReturned();
   });
   test(`sem argumento, retorna um erro com a mensagem: 'You must provide 
   an url'.`, async () => {
     const errorM = 'You must provide an url';
-    expect(fetchItem('MLB1615760527')).toThrow(errorM);
+    expect( async () => { 
+      await fetchItem() 
+    }).toThrow(errorM);
   });
 });
