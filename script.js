@@ -1,4 +1,5 @@
 const cartItems = document.querySelector('.cart__items');
+let totalValueOfItemsInCart = 0;
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -30,12 +31,26 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const calculateAndShowTotal = (price, subtract = false) => {
+  const totalPrice = document.querySelector('.total-price');
+  if (subtract) {
+    totalValueOfItemsInCart -= price;
+  } else {
+    totalValueOfItemsInCart += price;
+  }
+  totalPrice.innerText = totalValueOfItemsInCart;
+};
+
 const removeSavedItemInTheStorage = (skuCart) => {
   const storageCartData = getSavedCartItems('cartItems');
   const cartData = JSON.parse(storageCartData);
-  const filteredStorage = cartData.filter((item) => item.sku !== skuCart);
+  const filteredStorage = cartData.filter((item) => { 
+    if (item.sku === skuCart) {
+      calculateAndShowTotal(item.salePrice, true);
+    }
+    return item.sku !== skuCart;
+  });
   saveCartItems(JSON.stringify(filteredStorage));
-  console.log(filteredStorage);
 };
 
 const cartItemClickListener = (event) => {
@@ -60,7 +75,6 @@ const appendProducts = (productList) => {
   });
 };
 
-// Checar se já existe para salvar
 const saveCartDataInStorage = (data) => {
   let cartData = [];
   const storageCartData = getSavedCartItems('cartItems');
@@ -74,8 +88,11 @@ const saveCartDataInStorage = (data) => {
 };
 
 const addItemToCart = (element, sku) => {
+  // Checar se já existe para salvar
   element.addEventListener('click', async () => {
     const { title: name, price: salePrice } = await fetchItem(sku);
+
+    calculateAndShowTotal(salePrice);
     
     const li = createCartItemElement({ sku, name, salePrice });
     li.addEventListener('click', cartItemClickListener);
