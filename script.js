@@ -22,6 +22,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const cartItemClickListener = (event) => {
   // Referência:https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
   listShop.removeChild(event.target);
+  
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -76,8 +77,14 @@ const sumValShop = () => {
   if (listShop.length === 0) {
     totPrice.innerHTML = 'Total: $0';
   }
-  const totalVal = listShop.reduce((arr, val) => arr.salePrice + val.salePrice, 0);
-  totPrice.innerHTML = `Total: $${Math.round(totalVal)}`;
+  let resp = 0;
+  
+  const arrShop = document.querySelectorAll('.cart__item');
+  const totalVal = arrShop.forEach((val) => {
+    resp += parseFloat(val.innerHTML.split('$')[7] * 100);
+    return resp;
+  });
+  totPrice.innerHTML = `Total: $${totalVal / 100}`;
 };
 
 // Clear Buttom
@@ -96,4 +103,5 @@ const serchMemori = () => {
 window.onload = () => {
   listProdct();
   serchMemori();
+  sumValShop();
 };

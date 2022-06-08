@@ -139,6 +139,7 @@ body {
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
+  margin: 10px;
 }
 
 .empty-cart {
@@ -152,4 +153,12 @@ body {
 .empty-cart:hover {
   background-color: rgb(207, 207, 207);
   border: 2px solid rgb(48, 48, 48);
+}
+
+li.cart__item {
+  margin-bottom: 10px;
+}
+
+div.total-price {
+  margin: 10px;
 }
