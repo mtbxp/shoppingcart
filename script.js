@@ -35,13 +35,34 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const cartItemClickListener = (event) => {
+  cartList.removeChild(event.target);
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return cartList.appendChild(li);
+};
+
+const createItemObject = async (item) => {
+  const itemInfo = await Object(getItems(item));
+  const objectItem = { sku: itemInfo.id,
+    name: itemInfo.title,
+    salePrice: Number(itemInfo.price) };
+    
+    return createCartItemElement(objectItem);
+  };
+  
 const createCustomElement = (element, className, innerText, sku) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   if (element === 'button') {
     e.addEventListener('click', () => {
-      clickAddCart(sku);
+      createItemObject(sku);
     });
   }
   return e;
@@ -71,29 +92,8 @@ createProductList();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  cartList.removeChild(event.target);
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return cartList.appendChild(li);
-};
-
-const createItemObject = async (item) => {
-  const itemInfo = await Object(getItems(item));
-  const objectItem = { sku: itemInfo.id,
-    name: itemInfo.title,
-    salePrice: Number(itemInfo.price) };
-    
-    return createCartItemElement(objectItem);
-  };
-  
-  const clickAddCart = (event) => {
-    createItemObject(event);
-  };
+  // const clickAddCart = (event) => {
+  //   ;
+  // };
 
 window.onload = () => { };
