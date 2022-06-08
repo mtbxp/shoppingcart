@@ -11,8 +11,6 @@ const fetchItem = async (product) => {
   }
 };
 
-fetchItem('MLB1615760527');
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
