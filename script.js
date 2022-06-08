@@ -1,3 +1,29 @@
+// const getSavedCartItems = require('./helpers/getSavedCartItems');
+// const saveCartItems = require('./helpers/saveCartItems');
+// const item = require('./mocks/item');
+
+const refreshStorage = async (obj) => {
+  try {
+    const lcStog = await getSavedCartItems();
+    if (lcStog === null) {
+      const newArr = [];
+      newArr.push(obj);
+      saveCartItems(newArr);
+      return;
+    }
+    if (typeof obj === 'string') {
+      const newArr = await lcStog.filter((objItem) => Object.keys(objItem)[0] !== obj);
+      saveCartItems(newArr);
+    } 
+    if (typeof obj === 'object') {
+      lcStog.push(obj);
+      saveCartItems(lcStog);
+    }
+  } catch (error) {
+      console.log(error);    
+    }
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -27,6 +53,13 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
+  console.log();
+  let cathSku = '';
+  for (let index = 5; index < 18; index += 1) {
+    cathSku += (event.target.innerText[index]);
+  }
+  console.log(cathSku);
+  refreshStorage(cathSku);
   const elementTouch = event.target;
   elementTouch.parentElement.removeChild(elementTouch);
 };
@@ -41,7 +74,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const moveToCart = async (event) => {
   const fatherElement = event.target.parentElement;
-  const itemSku = fatherElement.getElementsByClassName('item__sku')[0].innerText;
+  const itemSku = fatherElement.firstChild.innerText;
+  console.log(itemSku);
   const itemInfos = await fetchItem(itemSku);
   const cartItems = document.getElementsByClassName('cart__items')[0];
   const obj = {
@@ -49,13 +83,31 @@ const moveToCart = async (event) => {
     name: await itemInfos.title,
     salePrice: await itemInfos.price,
   };
+  refreshStorage({ [itemInfos.id]: obj });
   cartItems.appendChild(createCartItemElement(obj));
+};
+
+const loadStorage = async () => {
+  try {
+    const cartItems = document.getElementsByClassName('cart__items')[0];
+    const lcStog = await getSavedCartItems();
+    console.log(lcStog);
+    lcStog.forEach((item) => {
+      console.log(Object.values(item)[0]);
+      const cartElement = createCartItemElement(Object.values(item)[0]);
+      cartItems.appendChild(cartElement);
+    });
+  } catch (error) {
+    throw new Error(error);    
+  }
 };
 
 const init = async () => {
   const obj = await fetchProducts('computador');
   const secItems = document.getElementsByClassName('items')[0];
   const buttons = document.getElementsByClassName('item__add');
+  // localStorage.clear();
+  loadStorage();
   Object.values(obj).forEach((element) => {
     const newObj = {
       sku: element.id,
