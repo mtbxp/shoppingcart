@@ -2,6 +2,12 @@ const cartItems = document.querySelector('.cart__items');
 const items = document.querySelector('.items');
 // const cartItem = document.querySelector('.cart__item');
 
+const clearButton = document.querySelector('.empty-cart');
+clearButton.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  saveCartItems('');
+});
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -64,16 +70,8 @@ const addProductsToCart = () => {
 
 const getCartItems = () => {
   cartItems.innerHTML = getSavedCartItems();
-  cartItems.forEach((element) => {
+  document.querySelectorAll('li').forEach((element) => {
     element.addEventListener('click', cartItemClickListener);
-  });
-};
-
-const clearCart = () => {
-  const clearButton = document.querySelector('.empty-cart');
-  clearButton.addEventListener('click', () => {
-    cartItems.innerHTML = '';
-    saveCartItems('');
   });
 };
 
@@ -81,5 +79,4 @@ window.onload = () => {
   productsList();
   addProductsToCart();
   getCartItems();
-  clearCart();
 };
