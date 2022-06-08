@@ -80,6 +80,7 @@ const setPropritesLocalStorage = (arr) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = arr;
+  li.addEventListener('click', cartItemClickListener);
   cartItems.appendChild(li);
 };
 
