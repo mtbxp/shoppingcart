@@ -67,7 +67,7 @@ function renderItemInCart(id) {
     .then((fetchedProduct) => appendProductInCart(fetchedProduct));
 }
 
-function editCart(nodeContainer) {
+function updateCart(nodeContainer) {
   nodeContainer.addEventListener('click', (event) => {
     event.preventDefault();
     const item = getProduct(event);
@@ -86,7 +86,7 @@ function renderProducts() {
 window.onload = () => {
   renderProducts()
     .then((products) => {
-      editCart(products);
+      updateCart(products);
       console.log(products);
     });
 };
