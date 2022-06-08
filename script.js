@@ -38,14 +38,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// const itensToBePlaced = async () => {
-//   const computerItens = await fetchProducts('computador');
-//   const computerData = computerItens.results.forEach((element) => {
-//     const computerItem = createProductItemElement(element);
-//     document.querySelector('.items').appendChild(computerItem);
-//   }); 
-// }; 
-
 const itensToBePlaced = async () => {
   const computerItens = await fetchProducts('computador');
   const computerData = computerItens.results;
