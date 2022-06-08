@@ -11,4 +11,9 @@ describe('4 - Teste a função getSavedCartItems', () => {
     expect(getSavedCartItems()).toHaveBeenCalled(localStorage.getItem);
     expect(getSavedCartItems()).toHaveBeenCalled(localStorage.getItem('cartItems'));
   });
+  test('o que é retornado da função', async () => {
+    const arr = localStorage.getItem('cartItems');
+    const result = JSON.parse(arr);
+    expect(getSavedCartItems()).toEqual(result);
+  })
 });

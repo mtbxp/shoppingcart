@@ -27,11 +27,7 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = (sku, name, price) => {
   const li = document.createElement('li');
   const list = document.querySelector('.cart__items');
-  const cartItems = `SKU: ${sku}
-
-  NAME: ${name}
-  
-  PRICE: $${price}`;
+  const cartItems = `SKU: ${sku} | NAME: ${name} | PRICE: $${price}`;
   li.className = 'cart__item';
   li.innerText = cartItems;
   li.addEventListener('click', cartItemClickListener);
