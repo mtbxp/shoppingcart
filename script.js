@@ -35,7 +35,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  const cart = document.querySelector('.cart__items');
+  return cart.appendChild(li);
 };
 
 const nova = async () => {
@@ -44,8 +45,15 @@ const nova = async () => {
     sku: id,
     name: title,
     image: thumbnail,
+  }).addEventListener('click', async () => {
+    const itemASerAdicionados = await fetchItem(id);
+    const algumaCoisa = {
+      sku: itemASerAdicionados.id,
+      name: itemASerAdicionados.title,
+      salePrice: itemASerAdicionados.price,
+    };
+    createCartItemElement(algumaCoisa);
   }));
-  console.log(FP);
 };
 
 window.onload = () => {
