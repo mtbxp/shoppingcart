@@ -56,11 +56,11 @@ const createProductItemElement = (sku, name, image) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const clearCart = () => {
+  saveCartItems([]);
+};
 
-window.onload = async () => {
-  const func = await fetchProducts('computador');
-  const result = func.results;
+const compactResult = (result) => {
   result.forEach((item) => {
     const { id, title, thumbnail } = item;
     let smallerTitle = '';
@@ -72,8 +72,19 @@ window.onload = async () => {
     const items = document.querySelector('.items');
     items.appendChild(section);
   });
+};
+
+window.onload = async () => {
+  const section = document.querySelector('.item');
+  const loading = createCustomElement('span', 'loading', 'carregando...');
+  section.appendChild(loading);
+  const func = await fetchProducts('computador');
+  loading.remove();
+  const result = func.results;
+  compactResult(result);
   const arr = getSavedCartItems();
   arr.forEach((obj) => {
     createCartItemElement(obj.sku, obj.name, obj.salePrice);
   });
+  document.querySelector('.empty-cart').addEventListener('click', clearCart);
 };
