@@ -7,12 +7,12 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const sumPrices = () => {
-  const sectionCart = document.querySelector('.cart');
-  value.className = 'sum-price';
+const sumPrices = async () => {
+  const sectionCart = await document.querySelector('.cart');
+  value.className = 'total-price';
   value.style.padding = '10px';
   sectionCart.appendChild(value);
-  const lis = document.querySelectorAll('.cart__item');
+  const lis = await document.querySelectorAll('.cart__item');
   let price = 0;
   lis.forEach((li) => {
     price += parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, '')); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
