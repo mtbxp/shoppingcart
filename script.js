@@ -39,18 +39,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const showProducts = async () => {
- const productSection = document.querySelector('.items');
- const product = await fetchProducts('computador');
- const productObj = Object.entries(product);
- const productDados = productObj.map((element) => {
-   const productInfo = {
-     id: element.id,
-     title: element.title,
-     thumbnail: element.thumbnail,
-   };
-   return productInfo;
- });
- console.log(productDados);
+  const productSection = document.querySelector('.items');
+  const product = await fetchProducts('computador');
+  product.forEach((element) => {
+    const productInfo = {
+     sku: element.id,
+     name: element.title,
+     image: element.thumbnail,
+    };
+    productSection.appendChild(createProductItemElement(productInfo));
+  });
 };
 
 window.onload = () => { 
