@@ -17,7 +17,6 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-  console.log('entrou');
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -28,20 +27,39 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// const cartItemClickListener = (event) => {
-//   // coloque seu código aqui
-// };
+const cartItemClickListener = () => {
+  this.innerHTML = '';
+};
 
-// const createCartItemElement = ({ sku, name, salePrice }) => {
-//   const li = document.createElement('li');
-//   li.className = 'cart__item';
-//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-//   li.addEventListener('click', cartItemClickListener);
-//   return li;
-// };
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+const renderProducts = async () => {
+  const elementos = await fetchProducts('computador').then((data) => data.results);
+  const sku = elementos.map((esku) => esku.id);
+  const name = elementos.map((ename) => ename.title);
+  const image = elementos.map((eimage) => eimage.thumbnail);
+  const price = elementos.map((eprice) => eprice.price);
+  const itemList = [];
+  for (let i = 0; i < sku.length; i += 1) {
+    itemList.push({ sku: sku[i], name: name[i], image: image[i], salePrice: price[i] });
+  }
+  const items = document.querySelector('.items');
+  itemList.forEach((e) => items.appendChild(createProductItemElement(e)));
+  const addButton = document.querySelectorAll('.item__add');
+  addButton.forEach((e, n) => e.addEventListener('click', async () => {
+    console.log(`clicou no elemento ${n}`);
+    const selectedProduct = await fetchItem(itemList[n].sku);
+    const cart = document.querySelector('.cart__items');
+    cart.appendChild(createCartItemElement(itemList[n]));
+  }));
+};
 
 window.onload = async () => {
-  const elementos = await fetchProducts('computador');
-  const items = document.querySelector('.items');
-  elementos.forEach((e) => items.appendChild(createProductItemElement(e)));
+  await renderProducts();
 };
