@@ -66,7 +66,11 @@ document.addEventListener('click', (event) => {
     const acessaProduto = event.target.parentNode.firstChild.innerText;
     adicionaProdutos(acessaProduto);
   }
-});
+  if (event.target.classList.contains('empty-cart')) {
+    classeCartItems.innerHTML = '';
+  }
+  });
 
 classeCartItems.innerHTML = getSavedCartItems();
+
 window.onload = () => { };
