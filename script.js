@@ -1,5 +1,7 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
+// let cartItems = []; // requisito 8
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,6 +30,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
+  // const test = event.target.innerText;  // requisito 8
+  // console.log(test);
   event.target.remove();
 };
 
@@ -36,7 +40,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  // cartItems.push({ sku, name, salePrice });  // requisito 8
+  // console.log(cartItems);
   return li;
+};
+
+const emptyCart = () => {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', () => {
+    const cartList = document.querySelector('.cart__items');
+    while (cartList.firstChild) {
+      cartList.removeChild(cartList.firstChild);
+    }
+    // cartItems = [];
+  });
 };
 
 const renderProducts = async () => {
@@ -53,7 +70,7 @@ const renderProducts = async () => {
   itemList.forEach((e) => items.appendChild(createProductItemElement(e)));
   const addButton = document.querySelectorAll('.item__add');
   addButton.forEach((e, n) => e.addEventListener('click', async () => {
-    console.log(`clicou no elemento ${n}`);
+    // console.log(`clicou no elemento ${n}`);
     // const selectedProduct = await fetchItem(itemList[n].sku);
     const cart = document.querySelector('.cart__items');
     cart.appendChild(createCartItemElement(itemList[n]));
@@ -62,4 +79,5 @@ const renderProducts = async () => {
 
 window.onload = async () => {
   await renderProducts();
+  emptyCart();
 };
