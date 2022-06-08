@@ -4,6 +4,10 @@ const saveCartItems = require('../helpers/saveCartItems');
 localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  it('should call the method when the function saveCartItems with the arg "<ol><li>Item</li></ol>" is executed', () => {
+    expect(saveCartItems('<ol><li>Item</li></ol>')).toHaveBeenCalled();
+  });
+  it('should call the method with 2 parameters ("cartItems" and the saveCartItems arg) when the function saveCartItems with the arg "<ol><li>Item</li></ol>" is executed', () => {
+    expect(saveCartItems('<ol><li>Item</li></ol>')).toHaveBeenCalledWith(localStorageSimulator('cartItems', '<ol><li>Item</li></ol>'));
+  });
 });
