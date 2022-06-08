@@ -15,7 +15,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
-  //li.appendChild(createProductImageElement(img));
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
