@@ -4,8 +4,8 @@
 // getSkuFromProductItem: Pega o id de um produto;
 // cartItemClickListener: Escuta a ação de clicar em um item no carrinho;
 // createCartItemElement: Cria os elementos do carrinho.
-// fetchProducts: busca array com informações do produto
-// fetchItem:
+// fetchProducts: busca array com informações do produto por "computador"
+// fetchItem: busca array com informações do produto com id
 // getSavedCartItems:
 // saveCartItems:
 
@@ -47,8 +47,10 @@ const showcase = async () => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const getNameFromProductItem = (item) => item.querySelector('span.item__title').innerText;
+
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -59,4 +61,26 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => showcase();
+const addItemToCart = async (event) => {
+  const item = event.target.parentElement;
+  const id = getSkuFromProductItem(item);
+  const selected = await fetchItem(id);
+  const data = { sku: getSkuFromProductItem(item),
+      name: getNameFromProductItem(item),
+      salePrice: selected.price };
+  const element = createCartItemElement(data);
+  const list = document.querySelector('.cart__items');
+  list.appendChild(element);
+};
+
+const buttonsListener = () => {
+  const buttons = document.querySelectorAll('.item');
+  buttons.forEach((btn) => btn.addEventListener('click', addItemToCart));
+};
+
+const start = async () => {
+  await showcase();
+  buttonsListener();
+};
+
+window.onload = () => start();
