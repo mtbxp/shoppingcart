@@ -24,15 +24,14 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const FetchProductsToCreateProducts = async () => {
+const fetchProductsToCreateProducts = async () => {
   const data = await fetchProducts('computador');
   data.results.forEach((curr) => {
     const sectionDad = document.querySelector('.items');
     sectionDad.appendChild(createProductItemElement(curr));
   });
-  // { sku, name, image };
 };
-FetchProductsToCreateProducts();
+fetchProductsToCreateProducts();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
