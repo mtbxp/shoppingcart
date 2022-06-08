@@ -66,7 +66,7 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 };
 
 const getPricesItems = () => localStorage.getItem('prices');
-// console.log(getPricesItems);
+console.log(getPricesItems);
 
 sectionChart.addEventListener('click', cartItemClickListener);
 
