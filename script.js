@@ -1,6 +1,7 @@
 const items = document.querySelector('.items');
 const cart = document.querySelector('.cart__items');
 const values = document.querySelector('.total-price');
+const clear = document.querySelector('.empty-cart');
 let array = [];
 let sum = 0;
 
@@ -107,6 +108,18 @@ const record = () => {
   const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
   values.innerText = `Valor Total = $${sumValue}`;
 };
+
+const clearCart = () => {
+  const cartList = document.querySelectorAll('.cart__item');
+  cartList.forEach((element) => {
+    element.remove();
+  });
+  sum = 0;
+  values.innerText = 'Valor Total = $0';
+  localStorage.clear();
+};
+
+clear.addEventListener('click', clearCart);
 
 window.onload = async () => {
   const data = await fetchProducts('computador');
