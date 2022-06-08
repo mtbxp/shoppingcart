@@ -1,4 +1,7 @@
+/* eslint-disable no-loop-func */
 // const { fetchProducts } = require('./helpers/fetchProducts');
+
+// const { fetchItem } = require("./helpers/fetchItem");
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -40,7 +43,28 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const pega = async () => {
+// const usaId = async (el) => {
+//   const data = await fetchItem(el);
+//   const { id, title, price } = data;
+//   createCartItemElement({ id, title, price });
+// };
+
+const AdicionaCarrinho = async () => {
+  const lista = document.getElementsByClassName('cart__items');
+  const products = document.getElementsByClassName('item');
+  for (let i = 0; i < products.length; i += 1) {
+    products[i].addEventListener('click', async (e) => {
+      const alvo = e.target;
+      const idSelecionado = alvo.parentNode.firstChild.innerText;
+      const dados = await fetchItem(idSelecionado);
+      const { id, title, price } = dados;
+      const produto = createCartItemElement({ sku: id, name: title, salePrice: price });
+      lista[0].appendChild(produto);
+    });
+  }
+};
+
+const Start = async () => {
   const items = document.getElementsByClassName('items');
   const data = await fetchProducts('computador');
   const array = await data;
@@ -49,8 +73,9 @@ const pega = async () => {
     const produto = createProductItemElement({ sku: id, name: title, image: thumbnail });
     items[0].appendChild(produto);
   });
+  AdicionaCarrinho();
 };
 
 window.onload = () => {
-  pega();
+  Start();
 };
