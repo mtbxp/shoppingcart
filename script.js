@@ -17,7 +17,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+/* const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText; */
 
 // Somando os valores totais!
 const sumValShop = async () => {
@@ -77,8 +77,8 @@ const listProdct = async () => {
   // requisito 11 carregando...
   const divs = document.createElement('div');
   const prodct = document.querySelector('.items');
-  divs.innerHTML = 'carregando...';
   divs.className = 'loading';
+  divs.innerHTML = 'carregando...';
   prodct.appendChild(divs);
   
   const data = await fetchProducts('computador');
@@ -108,6 +108,9 @@ const serchMemori = async () => {
 
   const valShop = localStorage.getItem('shopTot');
   totPrice.innerHTML = `Total: $${valShop}`;
-};npm run lint:stylesow.onload = () => {
+};
+serchMemori();
+
+window.onload = () => {
   listProdct();
 };
