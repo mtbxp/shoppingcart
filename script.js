@@ -17,9 +17,9 @@ const precoTotal = (array) => {
   preco = Math.round(preco * 100) / 100;
   console.log(preco);
   if (preco === 0) {
-    totalPrice.innerHTML = 'Total Price: $ 0,00';
+    totalPrice.innerHTML = '0,00';
   } else {
-    totalPrice.innerHTML = `Total Price: $ ${preco}`;
+    totalPrice.innerHTML = `${preco}`;
   }
 };
 
@@ -127,6 +127,8 @@ const testeLocal = () => {
   carrinho = JSON.parse(localStorage.getItem('cartItems'));
   if (carrinho !== null && carrinho.length > 0) {
     carrinho.forEach((element) => carrinhoPai[0].appendChild(createCartItemElement(element)));
+  } else {
+    carrinho = [];
   }
 };
 
@@ -137,5 +139,4 @@ window.onload = async () => {
   await adicionaItem();
   testeLocal();
   addCartItem();
-  precoTotal(carrinho);
  };
