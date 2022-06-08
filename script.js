@@ -1,4 +1,5 @@
 const items = document.querySelector('.items');
+const cartItems = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -22,11 +23,11 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   event.target.remove();
@@ -40,43 +41,19 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const addAndRemoveProductToCart = () => {
+window.onload = () => {
+  cartItems.innerHTML = getSavedCartItems();
   fetchProducts('computador')
     .then((data) => data.results.forEach((element) =>
       items.appendChild(createProductItemElement(element))));
   document.body.addEventListener('click', (e) => {
     if (e.target.classList.contains('item__add')) {
-      const itemID = e.target.parentNode.firstChild.innerText;
-      fetchItem(itemID).then((item) =>
-        document.querySelector('.cart__items').appendChild(createCartItemElement(item)));
-        saveCartItems(document.querySelector('.cart_items'));
+      fetchItem(getSkuFromProductItem(e.target.parentNode))
+        .then((item) => {
+          cartItems.appendChild(createCartItemElement(item));
+          saveCartItems(cartItems.innerHTML);
+        });
     }
-    if (e.target.classList.contains('cart_item')) {
-      cartItemClickListener(e);
-    }
+    if (e.target.classList.contains('cart__item')) return cartItemClickListener(e);
   });
-};
-
-/* const addAndRemoveToCart = (data) => {
-  const itemCart = createCartItemElement(data);
-  itemCart.addEventListener('click', (event) => {
-    event.target.remove();
-  });
-  cartItems.appendChild(itemCart);
-};
-
-const addEventToItems = () => {
-  items.addEventListener('click', (event) => {
-    if (event.target.classList.contains('item_add')) {
-      const productId = getSkuFromProductItem(event.target.parentElement);
-      fetchItem(productId).then((product) => {
-        cartItems.appendChild(createCartItemElement(product));
-        saveCartItems(cartItems.innerHTML);
-    });
-  }
-});
-}; */
-
-window.onload = () => {
-  addAndRemoveProductToCart();
 };
