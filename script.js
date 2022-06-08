@@ -117,6 +117,6 @@ window.onload = async () => {
   await separaDados();
   await itensParaAdd();
   await adicionaItem();
-  await testeLocal();
+  // await testeLocal();
   addCartItem();
  };
