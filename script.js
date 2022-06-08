@@ -1,3 +1,5 @@
+const value = document.createElement('label');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -5,8 +7,22 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const sumPrices = () => {
+  const sectionCart = document.querySelector('.cart');
+  value.className = 'sum-price';
+  value.style.padding = '10px';
+  sectionCart.appendChild(value);
+  const lis = document.querySelectorAll('.cart__item');
+  let price = 0;
+  lis.forEach((li) => {
+    price += parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, '')); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
+  });
+  value.innerText = price;
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
+  sumPrices();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -31,6 +47,8 @@ const addProductToCart = async (event) => {
 
   const itemsCart = JSON.stringify(sectionCart.innerHTML);
   saveCartItems(itemsCart);
+
+  sumPrices();
 };
 
 const createCustomElement = (element, className, innerText, sku) => {
@@ -79,6 +97,7 @@ const btnEmpty = () => {
   const lis = document.querySelectorAll('.cart__item');
   lis.forEach((element) => element.remove());
   localStorage.clear();
+  sumPrices();
 };
 
 const emptyCart = () => {
@@ -90,4 +109,5 @@ window.onload = () => {
   getList();
   getStorage();
   emptyCart();
+  sumPrices();
 };
