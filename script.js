@@ -6,9 +6,7 @@ const createProductImageElement = (imageSource) => {
 };
 
 const cartItemClickListener = (event) => {
-  // const sectionCart = document.querySelector('.cart__items');
-  // sectionCart.removeChild(event.target);
-  event.target.remove(); // perguntar qual a diferença entre fazer isso ou as duas linhas acima
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -21,7 +19,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const addProductToCart = async (event) => {
   const itemId = await fetchItem(event);
-  // console.log(event);
   const sectionCart = document.querySelector('.cart__items');
   const { id, title, price } = itemId;
   const reference = {
@@ -31,7 +28,9 @@ const addProductToCart = async (event) => {
   };
   const selectedItem = createCartItemElement(reference);
   sectionCart.appendChild(selectedItem);
-  saveCartItems();
+
+  const itemsCart = JSON.stringify(sectionCart.innerHTML);
+  saveCartItems(itemsCart);
 };
 
 const createCustomElement = (element, className, innerText, sku) => {
@@ -70,6 +69,13 @@ const getList = async () => {
   });
 };
 
+const getStorage = () => {
+  const items = JSON.parse(getSavedCartItems());
+  const sectionCart = document.querySelector('.cart__items');
+  sectionCart.innerHTML = items;
+};
+
 window.onload = () => {
   getList();
+  getStorage();
 };
