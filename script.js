@@ -1,8 +1,6 @@
 const itemProduct = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
-const itemPrice = document.querySelector('.price');
-const priceParagraph = document.querySelector('.total-price')
-const value = [];
+const priceParagraph = document.querySelector('.total-price');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -36,10 +34,10 @@ createProduct();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-
 const cartItemClickListener = (event) => {
   const selected = event.target;
-  priceParagraph.innerText = Number(priceParagraph.innerText) - Number(selected.innerText.split('$')[1])
+  priceParagraph.innerText = Number(priceParagraph.innerText) 
+  - Number(selected.innerText.split('$')[1]);
   selected.parentNode.removeChild(selected);
   saveCartItems(cartItems.innerHTML);
 };
@@ -59,7 +57,7 @@ const itemsCart = (element) => {
     cartItems.appendChild(createCartItemElement(i));
     const createCartItem = createCartItemElement(i);
     const value = Number(createCartItem.innerText.split('$')[1]);
-    total += value
+    total += value;
     priceParagraph.innerText = total;
     saveCartItems(cartItems.innerHTML);
   });
@@ -71,10 +69,6 @@ document.addEventListener('click', async (event) => {
    itemsCart(idElement);
   }
 });
-
-const sumProducts = () => {
-  const totalPrice = cartItems.reduce(((value, item) => value += item), 0); 
-}
 
 const getLocalStorage = () => {
   cartItems.innerHTML = getSavedCartItems();
