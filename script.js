@@ -48,6 +48,20 @@ const cartItemClickListener = (event) => {
   }
 };
 
+const criaCarregabdo = () => {
+  const divInicial = document.getElementsByClassName('items');
+  const div = document.createElement('h1');
+  div.className = 'loading';
+  div.innerHTML = 'carregando...';
+  divInicial.appendChild(div);
+};
+
+const deletaCarregando = () => {
+  const divInicial = document.getElementsByClassName('items');
+  const filho = divInicial.firstChild;
+  divInicial.removeChild(filho);
+};
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -59,10 +73,11 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 const adicionaOLocalStorage = () => {
   const preçoTotal = document.getElementById('total');
   const carrinho = document.getElementsByClassName('cart__items');
-  const obj = getSavedCartItems();
-  if (obj === null) {
+  const item = getSavedCartItems();
+  if (item === null) {
     console.log(undefined);
   } else {
+  const obj = JSON.parse(item);  
   const produto = createCartItemElement(obj);
   carrinho[0].appendChild(produto);
   const valor = obj.salePrice;
@@ -96,11 +111,13 @@ const AdicionaCarrinho = async () => {
 };
 
 const limpaCarrinho = () => {
+  const preçoTotal = document.getElementById('total');
   const limpador = document.getElementsByClassName('empty-cart');
   const carrinho = document.getElementsByClassName('cart__items');
   limpador[0].addEventListener('click', () => {
     carrinho[0].innerHTML = ' ';
     localStorage.clear();
+    preçoTotal.innerHTML = 0;
   });
 };
 

@@ -7,8 +7,6 @@ const fetchItem = async (digitado) => {
   return data;
 };
 
-fetchItem('MLB1983288877');
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
