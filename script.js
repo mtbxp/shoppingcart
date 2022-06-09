@@ -1,4 +1,3 @@
-// const getSavedCartItems = require('./helpers/getSavedCartItems');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -39,8 +38,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   const cartItem = cart.appendChild(li);
-  console.log(cartItem);
-  return cart.appendChild(li);
+  saveCartItems(cartItem.innerHTML);
+  return cartItem;
 };
 
 const limparCarrinho = () => {
@@ -63,10 +62,21 @@ const nova = async () => {
     };
     createCartItemElement(algumaCoisa);
   }));
+  document.querySelector('.loading').remove();
+};
+const maisNova = () => {
+  const vari = getSavedCartItems();
+  console.log(vari);
+};
+
+const loading = () => {
+  const containerVnka = document.querySelector('.container');
+  containerVnka.appendChild(createCustomElement('span', 'loading', 'carregando...'));
 };
 
 window.onload = () => {
+  loading();
   nova();
   limparCarrinho();
-  // getSavedCartItems();
+  maisNova();
 };
