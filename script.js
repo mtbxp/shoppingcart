@@ -16,8 +16,9 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  // console.log(event);
 };
+cartItemClickListener();
 // função utilizada no requisito 4
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -66,7 +67,6 @@ const listaProdutos = async () => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 
 window.onload = () => {
   listaProdutos();
