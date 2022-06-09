@@ -7,9 +7,7 @@ const createProductImageElement = (imageSource) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  event.target.innerText = '';
-};
+const cartItemClickListener = (event) => event.target.remove();
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -76,6 +74,6 @@ const renderProducts = async () => {
   });
 };
 
-window.onload = async () => { 
+window.onload = () => { 
   renderProducts();
 };
