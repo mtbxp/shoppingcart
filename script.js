@@ -1,5 +1,6 @@
 const myCart = document.querySelector('.cart__items');
 const priceTag = document.querySelector('.total-price'); 
+const clearButton = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -100,8 +101,15 @@ const loadSaved = async (items) => {
   });
 };
 
+const clearCart = () => {
+  myCart.innerHTML = '';
+  localStorage.removeItem('cartItems');
+  priceTag.innerHTML = '';
+};
+
 window.onload = async () => {
   await loadProducts();
   await loadSaved(getSavedCartItems());
   await loadCartTotalPrice();
+  clearButton.addEventListener('click', clearCart);
 };
