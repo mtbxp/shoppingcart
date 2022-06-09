@@ -9,6 +9,13 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const formatNumber = (number) => {
+  const opa = number.toString().split('.');
+  const decimal = Math.round(opa[1].slice(0, 3) / 10);
+  return opa[0] + (decimal / 100);
+};
+console.log(formatNumber(3233.6099999999997));
+
 const sumPrices = () => {
   const sectionCart = document.querySelector('.cart');
   value.className = 'total-price';
@@ -17,9 +24,9 @@ const sumPrices = () => {
 
   let price = 0;
   getLis().forEach((li) => {
-    price += parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, '')); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
+    price += (parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, ''))); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
   });
-  value.innerText = price;
+  value.innerText = formatNumber(price);
   if (price !== 0) {
     sectionCart.appendChild(value);
   } else sectionCart.removeChild(value);
@@ -120,7 +127,6 @@ const removeItem = () => {
   if (getOl().children.length > 0) {
     getOl().addEventListener('click', clickRemoveItem);
   }
-  console.log(getOl().children.length);
 };
 
 window.onload = () => {
