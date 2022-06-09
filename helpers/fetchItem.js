@@ -9,6 +9,8 @@ const fetchItem = async (id) => {
   }
 };
 
+// Exercício revisado e corrigido pelos colegas Paulo Rubio, William Portella e Carla Uyemura na sala de estudos.
+
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
