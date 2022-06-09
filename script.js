@@ -1,3 +1,5 @@
+const olCartList = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,9 +30,8 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 // const getPriceFromCartItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  const listToCart = document.querySelector('.cart__items');
   event.target.remove();
-  saveCartItems(listToCart.innerHTML);
+  saveCartItems(olCartList.innerHTML);
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -49,9 +50,8 @@ const createListProductItems = async () => {
 
 const addToCart = async (itemSku) => {
   const itemSpecs = await fetchItem(itemSku);
-  const listToCart = document.querySelector('.cart__items');
-  listToCart.appendChild(createCartItemElement(itemSpecs));
-  saveCartItems(listToCart.innerHTML);
+  olCartList.appendChild(createCartItemElement(itemSpecs));
+  saveCartItems(olCartList.innerHTML);
 };
 
 const getButtons = async () => {
@@ -65,9 +65,8 @@ const getButtons = async () => {
 const removeCartItems = async () => {
   const emptyCartButton = document.querySelector('.empty-cart');
   emptyCartButton.addEventListener('click', () => {
-    const cartItems = document.querySelector('.cart__items');
-    while (cartItems.hasChildNodes()) {
-    cartItems.removeChild(cartItems.firstChild);
+    while (olCartList.hasChildNodes()) {
+      olCartList.removeChild(olCartList.firstChild);
     }
     localStorage.clear();
   });
@@ -85,10 +84,10 @@ const removeCartItems = async () => {
 // }
 
 const showAfterReload = () => {
-  const getCartItems = document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
   const cartItems = document.querySelectorAll('.cart__item');
-  cartItems.forEach((items) => items.addEventListener('click', cartItemClickListener))
-}
+  cartItems.forEach((items) => items.addEventListener('click', cartItemClickListener));
+};
 
 const showLoadingScreen = async () => {
   const parentSection = document.querySelector('.items');
@@ -110,7 +109,4 @@ window.onload = async () => {
   endLoadingScreen();
   showAfterReload();
   removeCartItems();
-  // cartItemClickListener();
-  // await calculatePriceCartItems();
-  
 };
