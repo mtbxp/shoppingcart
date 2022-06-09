@@ -1,4 +1,5 @@
 let cartItems = []; // requisito 8
+const CARTCLASS = '.cart__items';
 
 const showTotalPrice = () => {
   const showPrice = document.querySelector('.total-price');
@@ -63,7 +64,7 @@ const reloadCart = () => {
       li.className = 'cart__item';
       li.innerText = `SKU: ${e.sku} | NAME: ${e.name} | PRICE: $${e.salePrice}`;
       li.addEventListener('click', cartItemClickListener);
-      const cart = document.querySelector('.cart__items');
+      const cart = document.querySelector(CARTCLASS);
       cart.appendChild(li);
     });
   }
@@ -72,14 +73,15 @@ const reloadCart = () => {
 const emptyCart = () => {
   const emptyButton = document.querySelector('.empty-cart');
   emptyButton.addEventListener('click', () => {
-    const cartList = document.getElementsByClassName('cart__items');
+    const cartList = document.querySelector(CARTCLASS);
+    console.log(cartList.firstChild);
     while (cartList.firstChild) {
       cartList.removeChild(cartList.firstChild);
     }
     cartItems = [];
     showTotalPrice();
     saveCartItems(cartItems);
-    reloadCart();
+    // reloadCart();
   });
 };
 
@@ -99,7 +101,7 @@ const renderProducts = async () => {
   addButton.forEach((e, n) => e.addEventListener('click', async () => {
     // console.log(`clicou no elemento ${n}`);
     // const selectedProduct = await fetchItem(itemList[n].sku);
-    const cart = document.querySelector('.cart__items');
+    const cart = document.querySelector(CARTCLASS);
     cart.appendChild(createCartItemElement(itemList[n]));
   }));
 };
