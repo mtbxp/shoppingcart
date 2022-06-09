@@ -1,9 +1,10 @@
 const getSavedCartItems = (arg) => {
-    localStorage.getItem('CartItems');
     if (arg === undefined) {
       throw new Error('error!');
    }
+   return localStorage.getItem(arg);
 };
+
 if (typeof module !== 'undefined') {
   module.exports = getSavedCartItems;
 }

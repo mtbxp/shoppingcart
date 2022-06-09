@@ -57,14 +57,20 @@ const meuCarrinho = async (id) => {
  };
 
 const AddNocarrinho = async () => {
+const bd = [];
+if (localStorage.getItem('CartItems')) {
+  const la = JSON.parse(getSavedCartItems('CartItems'));
+  la.map((element) => meuCarrinho(element));
+}
 await produtos();
 const catchButton = document.getElementsByClassName('item__add');
 const transButton = Object.values(catchButton);
-transButton.forEach((element) => element.addEventListener('click', async (event) => {
+transButton.forEach((element) => element.addEventListener('click', async function lele(event) {
  const sku = event.target.parentNode.firstChild.innerText;
- meuCarrinho(sku);
+ bd.push(sku);
+ await meuCarrinho(sku);
+ saveCartItems(JSON.stringify(bd));
 }));
 };
 AddNocarrinho();
-
 window.onload = () => {};
