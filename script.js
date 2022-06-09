@@ -26,6 +26,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
 event.target.closest('li').remove();
+// a função closest é opcional, sem ela a função cartItemClickListener funciona normalmente.
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
