@@ -7,17 +7,19 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const sumPrices = async () => {
-  const sectionCart = await document.querySelector('.cart');
+const sumPrices = () => {
+  const sectionCart = document.querySelector('.cart');
   value.className = 'total-price';
   value.style.padding = '10px';
-  sectionCart.appendChild(value);
-  const lis = await document.querySelectorAll('.cart__item');
+  const lis = document.querySelectorAll('.cart__item');
   let price = 0;
   lis.forEach((li) => {
     price += parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, '')); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
   });
-  value.innerText = price;
+  value.innerText = `Valor Total: ${price}`;
+  if (price === 0) {
+    sectionCart.removeChild(value);
+  } else sectionCart.appendChild(value);
 };
 
 const cartItemClickListener = (event) => {
@@ -71,7 +73,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const getList = async () => {
   const query = await fetchProducts('computador');
