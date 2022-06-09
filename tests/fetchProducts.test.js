@@ -18,6 +18,6 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   it('should return an error with when no argument is set', async (done) => {
     const emptyFetchProducts = await fetchProducts();
-    expect(emptyFetchProducts).toEqual(new Error('You must provide an url.'));
+    expect(emptyFetchProducts).toEqual(new Error('You must provide an url'));
   });
 });

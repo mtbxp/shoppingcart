@@ -18,6 +18,6 @@ describe('2 - Teste a função fetchItem', () => {
   });
   it("should return an error when no argument is set", async () => {
     const emptyItemInfo = await fetchItem();
-    expect(emptyItemInfo).toEqual(new Error('You must provide an url.'));
+    expect(emptyItemInfo).toEqual(new Error('You must provide an url'));
   });
 });
