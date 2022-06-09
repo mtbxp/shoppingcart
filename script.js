@@ -1,4 +1,3 @@
-
 const ol = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
@@ -56,7 +55,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 window.onload = async () => {
-  saveCartItems("vvitor hugfo")
+  saveCartItems('vvitor hugfo');
   const [sectionItens] = document.getElementsByClassName('items');
   const items = await fetchProducts('computador');
   items.results.forEach((produto) => {
