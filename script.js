@@ -1,3 +1,5 @@
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,4 +40,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+// const renderProduct = async () => {
+//   const pesquisa = await fetchProducts('computador');
+//   const produto = pesquisa.results;
+//   console.log(produto);
+// };
+
+window.onload = () => {};
