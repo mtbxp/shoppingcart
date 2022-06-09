@@ -29,6 +29,7 @@ const sumPrices = () => {
 
 const setStorage = () => {
   saveCartItems(JSON.stringify(getOl().innerHTML));
+  sumPrices();
 };
 
 const getStorage = () => {
@@ -90,7 +91,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 const loaded = () => {
   const loadingText = document.querySelector('.loading');
   loadingText.remove();
-  console.log('loaded ok');
 };
 
 const getList = async () => {
@@ -132,9 +132,8 @@ const removeItem = () => {
 
 const loading = () => {
   const sectionItems = document.querySelector('.items');
-  loadingText = createCustomElement('span', 'loading', 'carregando...');
+  const loadingText = createCustomElement('span', 'loading', 'carregando...');
   sectionItems.appendChild(loadingText);
-  console.log('loading ok');
 };
 
 window.onload = () => {
