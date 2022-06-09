@@ -1,5 +1,4 @@
 // Ajuda da revisão do Gabs 06/06 e da aula da casa de câmbio 07/07
-
 const cart = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
@@ -36,6 +35,7 @@ const itemCart = async (itemId) => {
   const { id, title, price } = data;
   const itemObj = { sku: id, name: title, salePrice: price };
   cart.appendChild(createCartItemElement(itemObj));
+  saveCartItems(cart.innerHTML);
 };
 
 const addToCart = (event) => {
@@ -72,6 +72,13 @@ const renderItens = async () => {
   });
 };
 
+const renderCart = () => {
+  const loadCart = localStorage.getItem('cartItems');
+  cart.innerHTML = loadCart;
+  cart.addEventListener('click', cartItemClickListener);
+};
+
 window.onload = () => {
  renderItens();
+ renderCart();
  };
