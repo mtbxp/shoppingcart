@@ -1,6 +1,7 @@
 const classItems = document.getElementById('itemsList');
 const cartList = document.querySelector('.cart__items');
-
+const cart = document.querySelector('.cart');
+let sumCartItens = 0;
 // console.log(btnAddToCart);
 
 const getProducts = async (product) => {
@@ -55,6 +56,26 @@ const createStorageCartList = () => {
   return storagedItens;
 };
 
+const cartSum = (price) => {
+  if (!price) {
+    // const section = document.createElement('section');
+    // section.className = 'total';
+    const totalPrice = document.createElement('span');
+    totalPrice.className = 'total-price';
+    totalPrice.innerText = sumCartItens;
+    // section.appendChild(totalPrice);
+    return cartList.appendChild(totalPrice);
+  }
+  
+  const totalPrice = document.createElement('span');
+  totalPrice.className = 'total-price';
+  sumCartItens += price;
+  totalPrice.innerText = sumCartItens;
+  return cartList.appendChild(totalPrice);
+};
+
+// cartSum();
+
 createStorageCartList();
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -63,6 +84,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   saveCartItems('cartItems', li.innerText);
+  cartSum(salePrice);
   return cartList.appendChild(li);
 };
 
