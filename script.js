@@ -12,13 +12,14 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ sku, name, image, salePrice }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__price', `R$ ${salePrice}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -28,6 +29,8 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  const cartItem = event.target;
+  cartItem.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -42,21 +45,20 @@ const products = async () => {
   const items = document.querySelector('.items');
   const { results } = await fetchProducts('computador');
   return results.map((item) => {
-    const { id: sku, title: name, thumbnail: image } = item;
-    items.appendChild(createProductItemElement({ sku, name, image }));
+    const { id: sku, title: name, thumbnail: image, price: salePrice } = item;
+    items.appendChild(createProductItemElement({ sku, name, image, salePrice }));
     return items;
   });
 };
 
 const getProductsForCartItem = async (event) => {
-  event.target.classList.add('selected');
-  const selected = document.querySelector('.selected');
-  const id = selected.parentElement.firstChild.innerText;
   const cart = document.querySelector('ol.cart__items');
+  const item = event.target.parentElement;
+  const id = getSkuFromProductItem(item);
   const data = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = data;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-  selected.classList.remove('selected');
+  saveCartItems(cart.innerHTML); // continuar aqui... em desenvolvimento
   return cart;
 };
 

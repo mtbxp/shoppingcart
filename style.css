@@ -108,10 +108,21 @@ body {
 
 .item .item__title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  align-self: center;
   flex-grow: 1;
   padding: 10px;
   text-align: center;
+}
+
+.item .item__price {
+  display: flex;
+  align-self: center;
+  align-items: flex-end;
+  flex-grow: 1;
+  padding: 10px;
+  text-align: center;
+  color: green;
 }
 
 .item .item__image {
@@ -136,6 +147,10 @@ body {
 }
 
 .cart .cart__items {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+  padding: 5px;
   height: 500px;
   overflow-y: scroll;
 }
