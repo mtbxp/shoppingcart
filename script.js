@@ -1,6 +1,7 @@
-const carrinhoPai = document.getElementsByClassName('cart__items');
+let carrinhoPai = document.getElementsByClassName('cart__items');
 let carrinho;
 const totalPrice = document.querySelector('.total-price');
+const btnRemove = document.querySelector('.empty-cart');
 
 const fetchComputador = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -15,7 +16,6 @@ const precoTotal = (array) => {
     preco += element.salePrice;
   });
   preco = Math.round(preco * 100) / 100;
-  console.log(preco);
   if (preco === 0) {
     totalPrice.innerHTML = '0,00';
   } else {
@@ -132,6 +132,15 @@ const testeLocal = () => {
     carrinho = [];
   }
 };
+
+btnRemove.addEventListener('click', function removeCarrinho() {
+  carrinhoPai = document.getElementsByClassName('cart__items');
+  const itensDoCarrinho = document.querySelectorAll('.cart__item');
+  itensDoCarrinho.forEach((element) => element.parentNode.removeChild(element));
+  carrinho = [];
+  localStorage.setItem('cartItems', JSON.stringify(carrinho));
+  precoTotal(carrinho);
+});
 
 window.onload = async () => {
   await fetchComputador();
