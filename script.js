@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
 const createProductImageElement = (imageSource) => {
@@ -56,6 +57,8 @@ const fetchContinue = async (element) => {
     const { id, title, thumbnail } = resultado;
     // console.log({ id, title, thumbnail });
     sku = id;
+    // eslint-disable-next-line no-restricted-globals
+    // eslint-disable-next-line no-global-assign
     name = title;
     image = thumbnail;
     acharPai.appendChild(createProductItemElement({ sku, name, image }));
