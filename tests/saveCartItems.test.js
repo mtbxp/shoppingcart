@@ -5,5 +5,7 @@ localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
+  it('Verificar se `getSavedCartItems` é uma função', async () => {
+    await expect(typeof saveCartItems).toBe('function');
+  });
 });
