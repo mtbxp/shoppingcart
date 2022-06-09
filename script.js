@@ -54,6 +54,13 @@ const InsertProducts = async () => {
   });
 };
 
+const emptyCart = () => {
+  document.querySelectorAll('.cart__item').forEach((item) => item.remove());
+};
+
+const emptyButton = document.querySelector('.empty-cart');
+emptyButton.addEventListener('click', emptyCart);
+
 window.onload = () => {
   InsertProducts();
 };
