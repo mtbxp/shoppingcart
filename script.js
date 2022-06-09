@@ -71,15 +71,15 @@ const removeCartItems = async () => {
 const showLoadingScreen = async () => {
   const parentSection = document.querySelector('.items');
   const elementSection = document.createElement('section');
-  parentSection.appendChild(elementSection)
+  parentSection.appendChild(elementSection);
   elementSection.className = 'loading';
   elementSection.innerText = 'carregando...';
-}
+};
 
 const endLoadingScreen = async () => {
   const loading = document.querySelector('.loading');
   loading.remove();
-}
+};
 
 window.onload = async () => { 
   showLoadingScreen();
