@@ -4,8 +4,8 @@ const computadorSearch = require('../mocks/search');
 
 describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
-  it('Testar se é uma função', () => {
-    const testFunc = typeof fetchProducts();
+  it('Testar se é uma função', async () => {
+    const testFunc = typeof await fetchProducts();
     const testResult = 'function';
     expect(testFunc).toBe(testResult);
   } );
@@ -21,9 +21,11 @@ describe('1 - Teste a função fetchProducts', () => {
   it('Testar o retorno da função', async () => {
     const receberPara = await fetchProducts('computador');
     expect(receberPara).toEqual(computadorSearch);
+    // computadorSearch é chamado no inicio
   });
-  it('Sem argumento retorna Erro', () => {
-    expect(fetchProducts()).toThrow('You must provide an url');
+  it('Sem argumento retorna Erro', async () => {
+    const semArgumento = await fetchProducts();
+    expect(semArgumento).toThrow('You must provide an url');
   });
   // fail('Teste vazio');
 });

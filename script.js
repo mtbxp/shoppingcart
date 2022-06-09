@@ -1,3 +1,5 @@
+// const { fetchProducts } = require('./helpers/fetchProducts');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,12 +40,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const fetchContinue = async () => {
-  // Vou colocar aqui o Id, title e tumbnail
-  const { results } = await fetchProducts();
-  console.log(results);
-  // vou criar um forEach para fazer as sections
-  results.forEach();
+const separarEm3 = async (parameter) => {
+  // Esta função deve pegar cada resultado e separar somente id, title e tumbnail.
+  const { id, title, tumbnail } = parameter;
+  createProductItemElement({ id, title, tumbnail });
 };
+
+const fetchContinue = async (element) => {
+  // Vou colocar aqui o Id, title e tumbnail, mas primeiro separar o result
+  const { results } = await fetchProducts(element);
+  // return results;
+
+  // vou criar um forEach para fazer as sections
+  results.forEach(separarEm3(results));
+};
+// fetchContinue('computador').then((data) => console.log(data));
 
 window.onload = () => { };
