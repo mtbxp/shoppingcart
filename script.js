@@ -46,15 +46,15 @@ const calculateTotalPrice = () => {
   }, 0);
   totalPriceTag.innerHTML = Math.round(totalPrice * 100) / 100;
 };
+const cartItem = document.querySelector('.cart__items');
 
 const cartItemClickListenerDelete = (event) => {
-  const cartItem = document.querySelector('.cart__items');
   cartItem.removeChild(event.target);
   saveCartItems(cartItem.innerHTML);
 };
 
 const ItemClicker = () => {
-  const cart = document.querySelectorAll('.cart__item');
+  // const cart = document.querySelectorAll('.cart__item');
   cart.forEach((item) => {
     item.addEventListener('click', cartItemClickListenerDelete);
   });  
@@ -80,7 +80,7 @@ const addProduct = async () => {
       const productId = getIDFromProductItem(event.target.parentElement);
       const product = await fetchItem(productId);
       const newItemOnCart = createCartItemElement(product);
-      const cartItem = document.querySelector('.cart__items');
+      // const cartItem = document.querySelector('.cart__items');
       cartItem.appendChild(newItemOnCart);
     });
   });
