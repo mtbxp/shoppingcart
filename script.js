@@ -51,7 +51,11 @@ const getSkuFromProductItem = (item) =>
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
+  saveCartItems(cartItems.innerHTML);
 };
+cartItems.innerHTML = getSavedCartItems();
+cartItems.childNodes.forEach((el) => el.addEventListener('click', cartItemClickListener));
+
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -59,13 +63,16 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-const appendChildCreateCart = (param) => {
-  fetchItem(param).then((el) => cartItems.appendChild(createCartItemElement(el)));
+const addChildCreateCart = (param) => {
+  fetchItem(param).then((el) => {
+    cartItems.appendChild(createCartItemElement(el));
+    saveCartItems(cartItems.innerHTML);
+  });
 };
   document.addEventListener('click', (event) => {
   if (event.target.classList.contains('item__add')) {
     const section = event.target.parentNode.firstChild.innerText;
-    appendChildCreateCart(section);
+    addChildCreateCart(section);
   }
 });
 const buttonEsvaziarCarrinho = document.querySelector('.empty-cart');
