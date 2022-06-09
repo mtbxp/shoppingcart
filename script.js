@@ -1,4 +1,5 @@
 const myCart = document.querySelector('.cart__items');
+const priceTag = document.querySelector('.total-price'); 
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -16,12 +17,22 @@ const createCustomElement = (element, className, innerText) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const loadCartTotalPrice = async () => {
+  const localCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+  
+  totalPrice = 0;
+  localCart.forEach(async (elem) => {
+    const item = await fetchItem(elem);
+    totalPrice += item.price;
+    priceTag.innerText = totalPrice;
+  });
+};
+
 const cartItemClickListener = (event) => {
   myCart.removeChild(event.target);
   const myItemText = JSON.stringify(event.target.innerText);
   const savedItems = JSON.parse(localStorage.getItem('cartItems'));
   const myItem = JSON.parse(myItemText).split('|')[0].split(' ')[1];
-  console.log((savedItems));
 
   savedItems.forEach((elem, index) => {
     if (elem === myItem) {
@@ -30,6 +41,7 @@ const cartItemClickListener = (event) => {
   });
 
   localStorage.setItem('cartItems', JSON.stringify(savedItems));
+  loadCartTotalPrice();
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -45,11 +57,16 @@ const toCart = async (event) => {
   const response = await fetchItem(itemId);
   const localCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
   const item = event.target.parentNode.firstChild.innerHTML;
-
   localCart.push(item);
   myCart.appendChild(createCartItemElement(response));
-
   saveCartItems(JSON.stringify(localCart));
+ 
+  totalPrice = 0;
+  localCart.forEach(async (elem) => {
+    const itemPrice = await fetchItem(elem);
+    totalPrice += itemPrice.price;
+    priceTag.innerText = totalPrice;
+  });
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -70,8 +87,8 @@ const itensSection = document.querySelector('.items');
 const loadProducts = async () => {
   const toSellThem = await fetchProducts('computador');
 
-  toSellThem.forEach(({ id, title, thumbnail }) => itensSection
-  .appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail })));
+  toSellThem.forEach(async ({ id, title, thumbnail }) => itensSection
+  .appendChild(await createProductItemElement({ sku: id, name: title, image: thumbnail })));
 };
 
 const loadSaved = async (items) => {  
@@ -85,5 +102,6 @@ const loadSaved = async (items) => {
 
 window.onload = async () => {
   await loadProducts();
-  loadSaved(getSavedCartItems());
+  await loadSaved(getSavedCartItems());
+  await loadCartTotalPrice();
 };
