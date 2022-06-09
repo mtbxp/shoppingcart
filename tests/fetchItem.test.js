@@ -18,7 +18,11 @@ describe('2 - Teste a função fetchItem', () => {
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
   });
 
-    it('deve retornar `You must provide an url` caso não receba argumento', async () =>{
+  it('a função fetchItem com o argumento `MLB1615760527` deve ser igual ao ao objeto `item`', async () => {
+    expect(await fetchItem('MLB1615760527')).toEqual(item)
+  });
+
+  it('deve retornar `You must provide an url` caso não receba argumento', async () =>{
   ;
   expect(await fetchItem()).toEqual(new Error('You must provide an url'));
   });
