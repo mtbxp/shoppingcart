@@ -8,12 +8,15 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-//const createCustomElement = (element, className, innerText) => {
- // const e = document.createElement(element);
- // e.className = className;
- // e.innerText = innerText;
- // return e;
-//};
+const createCustomElement = (element, className, innerText, sku) => {
+  const result = document.createElement(element);
+  result.className = className;
+  result.innerText = innerText;
+  if (element === 'button') {
+    result.addEventListener('click', () => searchCart(sku));
+  };
+  return result;
+};
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
@@ -47,8 +50,6 @@ const sendProduct = async () => {
   });
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
@@ -60,8 +61,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
 const searchCart = async (ItemID) => {
   const fetchI = await fetchItem(ItemID);
+
   const element = {
     sku: fetchI.id,
     name: fetchI.title,
@@ -70,15 +73,6 @@ const searchCart = async (ItemID) => {
   const creatI = createCartItemElement(element);
   cartItem.appendChild(creatI);
 };
-const createCustomElement = (element, className, innerText, sku) => {
-  const result = document.createElement(element);
-  result.className = className;
-  result.innerText = innerText;
-  if (element === 'button') {
-    result.addEventListener('click', () => searchCart(sku));
-  };
-  return result;
-}
 
 window.onload = () => {
   sendProduct();
