@@ -1,5 +1,7 @@
 const classCartItems = '.cart__items';
 let totalCartProductsPrices = 0;
+const emptyCart = document.querySelector('.empty-cart');
+const olItems = document.querySelector(classCartItems);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -90,6 +92,13 @@ const totalValue = () => {
   total.className = 'total-price';
   document.querySelector('.cart').appendChild(total);
 };
+
+// esvaziar carrinho
+emptyCart.addEventListener('click', () => {
+  while (olItems.childNodes.length > 0) {
+    olItems.removeChild(olItems.firstChild);
+  }
+});
 
 window.onload = () => {
   preparingFunction('computador');
