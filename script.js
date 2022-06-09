@@ -66,4 +66,12 @@ const loadCartOnStart = () => {
   savedItems.addEventListener('click', cartItemClickListener);
 };
 
-window.onload = () => { createProductsList(); loadCartOnStart(); };
+const removeCartProducts = () => {
+  const removeBtn = document.querySelector('.empty-cart');
+  removeBtn.addEventListener('click', () => {
+    cart.innerHTML = '';
+    localStorage.setItem('cartProducts', '');
+  });
+};
+
+window.onload = () => { createProductsList(); loadCartOnStart(); removeCartProducts(); };
