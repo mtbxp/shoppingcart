@@ -114,6 +114,15 @@ body {
   text-align: center;
 }
 
+.item .item__price {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 10px;
+  justify-content: end;
+  font-weight: bold;
+}
+
 .item .item__image {
   width: 100%;
 }
@@ -138,6 +147,10 @@ body {
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
+}
+
+.cart__item {
+  padding: 10px;
 }
 
 .empty-cart {
