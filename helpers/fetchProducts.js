@@ -1,3 +1,16 @@
+// const loadingHide = () => {
+//   const loading = document.querySelector('.loading');
+//   loading.remove();
+// };
+
+// const loadingShow = () => {
+//   const div = document.createElement('div');
+//   div.className = 'loading';
+//   div.innerText = 'carregando...';
+//   const header = document.querySelector('.header');
+//   header.appendChild(div);
+// };
+
 const fetchProducts = async ($QUERY) => {
   // seu código 
   if ($QUERY === undefined) {

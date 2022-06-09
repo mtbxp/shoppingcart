@@ -44,20 +44,6 @@ const createCartItemElement = async ({
   counter.innerText = Math.ceil(result * 100) / 100;
 };
 
-const loadingHide = () => {
-  const loading = document.querySelector('.loading');
-  loading.remove();
-};
-
-const loadingShow = () => {
-  const li = document.createElement('p');
-  li.className = 'loading';
-  li.innerText = 'carregando...';
-  const header = document.querySelector('.header');
-  header.appendChild(li);
-  setTimeout(loadingHide, 500);
-};
-
 const prepareCartList = async (itemId) => {
   const data = await fetchItem(itemId);
   const salePrice = data.price;
@@ -73,7 +59,16 @@ const prepareCartList = async (itemId) => {
 
 const localStorageList = () => {
   const items = JSON.parse(getSavedCartItems());
-  items.forEach((element) => prepareCartList(element));
+  if (items.length === 'number') {
+    items.forEach((element) => prepareCartList(element));
+  }
+};
+const showLoading = () => {
+  const div = document.createElement('div');
+  div.className = 'loading';
+  div.innerText = 'carregando...';
+  const header = document.querySelector('.header');
+  header.appendChild(div);
 };
 
 const clickItem = (event) => {
@@ -102,10 +97,13 @@ const createProductItemElement = ({
 };
 
 const prepareSite = async () => {
-  loadingShow();
+  showLoading();
   const data = await fetchProducts('computador');
-  const dataLength = data.results;
-  for (let index = 0; index < dataLength.length; index += 1) {
+if (typeof data.query === 'string') {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+  localStorageList();
+  for (let index = 0; index < data.results.length; index += 1) {
     const sku = data.results[index].id;
     const name = data.results[index].title;
     const image = data.results[index].thumbnail;
@@ -116,7 +114,7 @@ const prepareSite = async () => {
     };
     createProductItemElement(result);
   }
-  localStorageList();
+}
 };
 
 const btn = document.querySelector('.empty-cart');
