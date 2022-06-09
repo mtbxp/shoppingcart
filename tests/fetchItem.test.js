@@ -14,4 +14,7 @@ it('Teste se, ao chamar a função fetchItem com o argumento do item "MLB1615760
   await fetchItem("MLB1615760527");
   expect(fetch).toHaveBeenCalledWith("https://api.mercadolibre.com/items/MLB1615760527");
 })
+it('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url.', async () => {
+  await expect(fetchItem()).rejects.toThrow('You must provide an url');
+}) 
 });

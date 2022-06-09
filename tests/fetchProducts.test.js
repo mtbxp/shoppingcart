@@ -14,4 +14,7 @@ describe('1 - Teste a função fetchProducts', () => {
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   });
+  it('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url.', async () => {
+    await expect(fetchProducts()).rejects.toThrow('You must provide an url');
+  })
 });

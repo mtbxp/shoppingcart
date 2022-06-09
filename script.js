@@ -49,7 +49,7 @@ const limparCarrinho = () => {
 };
 
 const nova = async () => {
-  const FP = await fetchProducts();
+  const FP = await fetchProducts('computador');
   FP.forEach(({ id, title, thumbnail }) => createProductItemElement({
     sku: id,
     name: title,
