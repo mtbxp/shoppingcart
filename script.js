@@ -1,3 +1,7 @@
+// const saveCartItems = require("./helpers/saveCartItems");
+
+// const saveCartItems = require("./helpers/saveCartItems");
+
 const importItems = document.querySelector('.items');
 const elementClass = document.querySelector('.cart__items');
 
@@ -13,7 +17,7 @@ const createCustomElement = (element, className, innerText) => {
   e.className = className;
   e.innerText = innerText;
   return e;
-};
+}; 
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
@@ -41,16 +45,18 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-function productsItems() {
+function addItems() {
   fetchProducts('computador').then((items) => {
   items.results.forEach((itemChild) => {
   importItems.appendChild(createProductItemElement(itemChild));
 });
 });
-}
+} 
 const elementChild = (element) => {
-  fetchItem(element).then((itemsId) => 
-  elementClass.appendChild(createCartItemElement(itemsId)));
+  fetchItem(element).then((itemsId) => {
+  elementClass.appendChild(createCartItemElement(itemsId));
+  saveCartItems(itemsId)
+  });
 }; 
 importItems.addEventListener('click', async (event) => {
   if (event.target.classList.contains('item__add')) {
@@ -59,6 +65,27 @@ importItems.addEventListener('click', async (event) => {
   }
 });
 
+// const itemShopping = (products) => {
+//   fetchItem(products).then((item) => {
+//     elementClass.appendChild(createCartItemElement(item));
+//     saveCartItems(elementClass.innerHTML);
+//   });
+// };
+
+// document.addEventListener('click', (event) => {
+//   if (event.target.classList.contains('item__add')) {
+//     const productId = event.target.parentNode.firstChild.innerHTML;
+//     itemShopping(productId);
+//   }
+// });
+
+// const getSaved = () => {
+//   elementClass.innerHTML = getSavedCartItems();
+// };
+
 window.onload = () => { 
-  productsItems();
+  addItems();
+  getSavedCartItems(createCartItemElement);
+  // saveCartItems();
+  // getSaved();
 };
