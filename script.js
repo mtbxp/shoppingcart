@@ -1,3 +1,5 @@
+const productList = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -15,6 +17,7 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -37,8 +40,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const productList = document.querySelector('.items');
-
 const createListProduct = async () => {
   const valeu = await fetchProducts('computador');
   valeu.results.forEach((item) => {
@@ -51,16 +52,17 @@ const createListProduct = async () => {
 const addList = document.querySelector('.cart__items');
 
 const select = () => {
-  document.addEventListener('click', (element) => {
+  document.addEventListener('click', async (element) => {
     if (element.target.classList.contains('item__add')) {
-      const Selec = getSkuFromProductItem(element.target.parentNode);
-      const dados = fetchItem(Selec);
-      addList.appendChild(createCartItemElement(dados));
+      const Selec = getSkuFromProductItem((element.target.parentNode));
+      const dados = await fetchItem(Selec);
+      const { id: sku, title: name, price: salePrice } = dados
+      addList.appendChild(createCartItemElement({ sku, name, salePrice }));
     }
  });
 };
 
-window.onload = () => {
-  createListProduct();
+window.onload = async () => {
+  await createListProduct();
   select();
  };

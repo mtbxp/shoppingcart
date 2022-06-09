@@ -4,7 +4,7 @@ const fetchItem = async (item) => {
     const value = await data.json();
     return value;
   } catch (error) {
-    return (error);
+    return error;
   }
 };
 if (typeof module !== 'undefined') {
