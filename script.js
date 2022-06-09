@@ -1,4 +1,6 @@
 const value = document.createElement('label');
+const getOl = () => document.querySelector('.cart__items');
+const getLis = () => document.querySelectorAll('.cart__item');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -11,20 +13,33 @@ const sumPrices = () => {
   const sectionCart = document.querySelector('.cart');
   value.className = 'total-price';
   value.style.padding = '10px';
-  const lis = document.querySelectorAll('.cart__item');
+  sectionCart.appendChild(value);
+
   let price = 0;
-  lis.forEach((li) => {
+  getLis().forEach((li) => {
     price += parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, '')); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
   });
-  value.innerText = `Valor Total: ${price}`;
-  if (price === 0) {
-    sectionCart.removeChild(value);
-  } else sectionCart.appendChild(value);
+  value.innerText = price;
+  if (price !== 0) {
+    sectionCart.appendChild(value);
+  } else sectionCart.removeChild(value);
+};
+
+const setStorage = () => {
+  saveCartItems(JSON.stringify(getOl().innerHTML));
+};
+
+const getStorage = () => {
+  const items = JSON.parse(getSavedCartItems());
+  getOl().innerHTML = items;
 };
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  setStorage();
   sumPrices();
+
+  if (getLis().length === 0) localStorage.clear();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -37,7 +52,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const addProductToCart = async (event) => {
   const itemId = await fetchItem(event);
-  const sectionCart = document.querySelector('.cart__items');
   const { id, title, price } = itemId;
   const reference = {
     sku: id,
@@ -45,11 +59,9 @@ const addProductToCart = async (event) => {
     salePrice: price,
   };
   const selectedItem = createCartItemElement(reference);
-  sectionCart.appendChild(selectedItem);
+  getOl().appendChild(selectedItem);
 
-  const itemsCart = JSON.stringify(sectionCart.innerHTML);
-  saveCartItems(itemsCart);
-
+  setStorage();
   sumPrices();
 };
 
@@ -73,8 +85,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 const getList = async () => {
   const query = await fetchProducts('computador');
   query.forEach(({ id, title, thumbnail }) => {
@@ -89,15 +99,9 @@ const getList = async () => {
   });
 };
 
-const getStorage = () => {
-  const items = JSON.parse(getSavedCartItems());
-  const sectionCart = document.querySelector('.cart__items');
-  sectionCart.innerHTML = items;
-};
-
 const btnEmpty = () => {
-  const lis = document.querySelectorAll('.cart__item');
-  lis.forEach((element) => element.remove());
+  // const lis = document.querySelectorAll('.cart__item');
+  getLis().forEach((element) => element.remove());
   localStorage.clear();
   sumPrices();
 };
@@ -107,9 +111,22 @@ const emptyCart = () => {
   btnEmptyCart.addEventListener('click', btnEmpty);
 };
 
+const clickRemoveItem = (event) => {
+  if (event.target.className === 'cart__item') event.target.remove();
+  setStorage();
+};
+
+const removeItem = () => {
+  if (getOl().children.length > 0) {
+    getOl().addEventListener('click', clickRemoveItem);
+  }
+  console.log(getOl().children.length);
+};
+
 window.onload = () => {
   getList();
   getStorage();
   emptyCart();
   sumPrices();
+  removeItem();
 };
