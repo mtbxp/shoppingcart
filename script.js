@@ -5,7 +5,7 @@ async function loadText() {
   const h2 = document.createElement('h2');
   h2.innerText = 'carregando...';
   h2.className = 'loading';
-  document.querySelector('.container').appendChild(h2);
+  document.querySelector('.items').appendChild(h2);
   await fetchProducts('computador');
   h2.remove();
 }
