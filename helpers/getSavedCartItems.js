@@ -1,16 +1,4 @@
-const getSavedCartItems = () => {
-  const savedItems = JSON.parse(localStorage.getItem('cartItems'));
-  const myCart = document.querySelector('.cart__items');
-
- savedItems.forEach(({ id, title, price }) => myCart
- .appendChild(createCartItemElement({
-   sku: id,
-  name: title,
-  salePrice: price,
-})));
- 
- console.log(savedItems);
-};
+const getSavedCartItems = () => localStorage.getItem('cartItems') || [];
 
 if (typeof module !== 'undefined') {
   module.exports = getSavedCartItems;

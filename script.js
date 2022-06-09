@@ -21,35 +21,35 @@ const cartItemClickListener = (event) => {
   const myItemText = JSON.stringify(event.target.innerText);
   const savedItems = JSON.parse(localStorage.getItem('cartItems'));
   const myItem = JSON.parse(myItemText).split('|')[0].split(' ')[1];
+  console.log((savedItems));
 
   savedItems.forEach((elem, index) => {
-    if (elem.id === myItem) {
+    if (elem === myItem) {
       savedItems.splice(index, 1);
     }
   });
 
   localStorage.setItem('cartItems', JSON.stringify(savedItems));
-
-  console.log(JSON.parse(myItemText).split('|')[0].split(' ')[1]);
-  console.log(savedItems);
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
 const toCart = async (event) => {
-  const id = getSkuFromProductItem(event.target.parentElement);
-  const response = await fetchItem(id);
+  const itemId = getSkuFromProductItem(event.target.parentElement);
+  const response = await fetchItem(itemId);
+  const localCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+  const item = event.target.parentNode.firstChild.innerHTML;
 
-  myCart.appendChild(createCartItemElement({
-    sku: response.id, 
-    name: response.title, 
-    salePrice: response.price }));
+  localCart.push(item);
+  myCart.appendChild(createCartItemElement(response));
+
+  saveCartItems(JSON.stringify(localCart));
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -62,8 +62,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const button = section.querySelector('button');
   button.addEventListener('click', toCart);
-  button.addEventListener('click', (event) => 
-  saveCartItems(event.target.parentElement.querySelector('.item__sku').innerText));
   return section;
 };
 
@@ -76,7 +74,16 @@ const loadProducts = async () => {
   .appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail })));
 };
 
+const loadSaved = async (items) => {  
+  const storageItems = JSON.parse(items);
+  console.log(storageItems);
+  storageItems.forEach(async (elem) => {
+    const response = await fetchItem(elem);
+    myCart.appendChild(createCartItemElement(response));
+  });
+};
+
 window.onload = async () => {
   await loadProducts();
-  getSavedCartItems();
+  loadSaved(getSavedCartItems());
 };

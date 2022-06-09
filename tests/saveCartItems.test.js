@@ -5,7 +5,8 @@ localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
   it('Should call localStorage.setItem', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>');
+    const myLi = '<ol><li>Item</li></ol>';
+    await saveCartItems(myLi);
 
     expect(localStorage.setItem).toHaveBeenCalled();
   });
