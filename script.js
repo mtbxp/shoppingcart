@@ -27,7 +27,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => { // req 5
-  // coloque seu código aqui
+  // event.target.closest('li').remove(); caso eu estilize a ol/li
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => { // req4
@@ -47,6 +48,8 @@ async function appendFetchItems(idQualquer) { // req4
   const resultado = createCartItemElement({ sku, name, salePrice });
   const ol = document.getElementsByClassName('cart__items')[0];
   ol.appendChild(resultado);
+  const li = document.querySelector('.item__add');
+  li.addEventListener('click', createCartItemElement);
 }
 
 function addBotao() { // req4
@@ -57,7 +60,7 @@ function addBotao() { // req4
   }));
 }
 
-async function appendFetchProducts() {
+async function appendFetchProducts() { // req1
   const result = await fetchProducts('computador');
   const productsList = result.results.map(function (p) {
     return {
@@ -75,3 +78,4 @@ async function appendFetchProducts() {
 }
 
 window.onload = () => { appendFetchProducts(); };
+// Referências: <https://developer.mozilla.org/pt-BR/docs/Web/API/Element/closest>
