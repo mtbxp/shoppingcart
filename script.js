@@ -26,9 +26,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
+const cartItemClickListener = async (event) => {};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -38,19 +36,32 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const createItems = async () => {
+// Obtive ajuda nesses exercícios
+const getItemsInfo = async () => {
   const response = await fetchProducts('computador');
-  
+  const { results } = response;
+
+  const productsInfo = [];
+
+  results.forEach((item) => {
+    const { id: sku, title: name, thumbnail: image } = item;
+
+    productsInfo.push({ sku, name, image });
+  });
+
+  return productsInfo;
+};
+
+const createListProducts = async () => {
   const items = document.querySelector('.items');
 
-  const { results } = response;
-  const resultsEntries = Object.entries(results);
-
-  resultsEntries.forEach((item) => {
-    const { id, title, thumbnail } = item;
-
-    items.appendChild(createProductItemElement({ id, title, thumbnail }));
+  (await getItemsInfo()).forEach((item) => {
+    items.appendChild(createProductItemElement(item));
   });
 };
 
-window.onload = () => { createItems(); };
+const starting = () => {
+  createListProducts();
+};
+
+window.onload = () => { starting(); };
