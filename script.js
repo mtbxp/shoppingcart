@@ -46,15 +46,29 @@ const placeCartItem = async (item) => {
     name: itemData.title,
     salePrice: itemData.price,
   };
-  // console.log(itemInfo);
   const itemToPlace = createCartItemElement(itemInfo);
-  document.querySelector('.cart__items').appendChild(itemToPlace);  
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.appendChild(itemToPlace);
+  saveCartItems(cartItems.innerHTML);
+};
+
+const totalPrice = () => {
+  const section = document.createElement('section');
+  section.className = 'total-price';
+  section.innerText = 'Preço Total:';
+  const cart = document.querySelector('.cart');
+  cart.appendChild(section);
+};
+
+const priceSum = () => {
+  
 };
 
 const buttonListener = () => {
   const grid = document.querySelectorAll('.item__add');
   grid.forEach((element) => element.addEventListener('click', () => placeCartItem(element
   .parentElement.firstChild.innerText)));
+  priceSum();
 };
 
 const itensToBePlaced = async () => {
@@ -82,7 +96,15 @@ const emptyCart = () => {
   });
 };
 
+const cartRecovery = () => {
+  const cart = document.querySelector('.cart__items');
+  cart.innerHTML = getSavedCartItems();
+  cart.childNodes.forEach((element) => element.addEventListener('click', cartItemClickListener));
+};
+
 window.onload = () => {
   itensToBePlaced();
   emptyCart();
+  cartRecovery();
+  totalPrice();
 };
