@@ -26,7 +26,6 @@ const getItems = (item) => {
     .then((data) => data);
     return productItem;
 };
-// console.log(createProductObject('computer'));
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -43,18 +42,17 @@ const createStorageCartList = () => {
   const storagedItens = getSavedCartItems();
 
   if (storagedItens === null) {
-    return saveCartItems('cartItems');
+    return localStorage.clear();
   }
   storagedItens.forEach((element) => {
     const li = document.createElement('li');
     li.className = 'cart__item';
     li.innerText = element;
+    li.addEventListener('click', cartItemClickListener);
     return cartList.appendChild(li);
   });
 
   return storagedItens;
-
-  // storagedItens.forEach((element) => (li.innerText = element));
 };
 
 createStorageCartList();
@@ -64,7 +62,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  // console.log(li.innerText);
   saveCartItems('cartItems', li.innerText);
   return cartList.appendChild(li);
 };
@@ -101,7 +98,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return classItems.appendChild(section);
 };
-// console.log(fetchItem('MLB1341706310'));
 
 const createProductList = async () => {
   const getElementsList = await createProductObject('computer');
@@ -110,10 +106,6 @@ const createProductList = async () => {
 };
 
 createProductList();
-
-// saveCartItems();
-
-// getProductList('computer');
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
