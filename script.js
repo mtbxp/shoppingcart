@@ -2,6 +2,7 @@ const classCartItems = '.cart__items';
 let totalCartProductsPrices = 0;
 const emptyCart = document.querySelector('.empty-cart');
 const olItems = document.querySelector(classCartItems);
+const items = document.querySelector('.items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -74,6 +75,7 @@ const preparingFunction = async (productName) => {
       sectionProducts.children[3].addEventListener('click', buttonListener);
       sectionContainer.appendChild(sectionProducts);
     });
+    items.removeChild(items.firstChild);
   }
 };
 
@@ -100,7 +102,15 @@ emptyCart.addEventListener('click', () => {
   }
 });
 
+const addWaiting = () => {
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerText = 'carregando...';
+  items.appendChild(loading);
+};
+
 window.onload = () => {
+  addWaiting();
   preparingFunction('computador');
   gettingSavedCartItems();
   totalValue();
