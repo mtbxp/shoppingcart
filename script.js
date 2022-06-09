@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
 const createProductImageElement = (imageSource) => {
@@ -15,12 +14,12 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ sku, xname, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createCustomElement('span', 'item__title', xname));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
@@ -33,10 +32,10 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ sku, xname, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -57,11 +56,9 @@ const fetchContinue = async (element) => {
     const { id, title, thumbnail } = resultado;
     // console.log({ id, title, thumbnail });
     sku = id;
-    // eslint-disable-next-line no-restricted-globals
-    // eslint-disable-next-line no-global-assign
-    name = title;
+    xname = title;
     image = thumbnail;
-    acharPai.appendChild(createProductItemElement({ sku, name, image }));
+    acharPai.appendChild(createProductItemElement({ sku, xname, image }));
   }));
 };
 // fetchContinue('computador').then((data) => console.log(data));
