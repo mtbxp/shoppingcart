@@ -8,13 +8,25 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const searchCart = async (ItemID) => {
+  const fetchI = await fetchItem(ItemID);
+
+  const element = {
+    sku: fetchI.id,
+    name: fetchI.title,
+    salePrice: fetchI.price,
+  };
+  const creatI = createCartItemElement(element);
+  cartItem.appendChild(creatI);
+};
+
 const createCustomElement = (element, className, innerText, sku) => {
   const result = document.createElement(element);
   result.className = className;
   result.innerText = innerText;
   if (element === 'button') {
     result.addEventListener('click', () => searchCart(sku));
-  };
+  }
   return result;
 };
 
@@ -60,18 +72,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-};
-
-const searchCart = async (ItemID) => {
-  const fetchI = await fetchItem(ItemID);
-
-  const element = {
-    sku: fetchI.id,
-    name: fetchI.title,
-    salePrice: fetchI.price,
-  };
-  const creatI = createCartItemElement(element);
-  cartItem.appendChild(creatI);
 };
 
 window.onload = () => {
