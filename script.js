@@ -4,11 +4,12 @@ const ol = document.querySelector('.cart__items');
 
 const btnEmpty = document.querySelector('.empty-cart');
 
-const esvaziaCarrinho = () => {
-  ol.innerHTML = '';
-};
-
-btnEmpty.addEventListener('click', esvaziaCarrinho);
+btnEmpty.addEventListener('click', (event) => {
+  if (event.target.classList.contains('empty-cart')
+  || event.target.classList.contains('cart__items')) {
+    ol.innerHTML = '';
+  }
+});
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -22,6 +23,7 @@ const cartItemClickListener = (event) => {
   || event.target.classList.contains('item__image')) {
     event.target.parentElement.parentElement.remove();
     saveCartItems(ol);
+    getSavedCartItems(ol);
   }
 };
 
