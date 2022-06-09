@@ -35,6 +35,7 @@ const getSkuFromProductItem = async (item) => {
   const id = item.querySelector('span.item__sku').innerText;
   const functionFetchItem = await fetchItem(id);
   cartItem.appendChild(createCartItemElement(functionFetchItem));
+  saveCartItems(cartItem.innerHTML);
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
@@ -66,6 +67,7 @@ listProducts();
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(cartItem.innerHTML);
 };
 
 cartItem.addEventListener('click', cartItemClickListener);
@@ -76,4 +78,7 @@ function clearCart() {
 }
 btnEmptyCart.addEventListener('click', clearCart);
 
-window.onload = () => { loadText(); };
+function loadElements() {
+cartItem.innerHTML = getSavedCartItems();
+}
+window.onload = () => { loadText(); loadElements(); };
