@@ -20,6 +20,7 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
   // Com o clique no item do carrinho, remover a classe que o faz pertencer ao carrinho.
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
