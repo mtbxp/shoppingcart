@@ -1,9 +1,12 @@
 const getSavedCartItems = () => {
-  const dataStringify = localStorage.getItem('cartItems');
-  if (dataStringify) {
-    const data = JSON.parse(dataStringify);
-    return data;
-  }
+  // const dataStringify = await localStorage.getItem('cartItems');
+  // if (dataStringify) {
+  //   const data = await JSON.parse(dataStringify);
+  //   return data;
+  // }
+  const data = localStorage.getItem('cartItems');
+  const finalData = JSON.parse(data);
+  return finalData;
 };
 
 if (typeof module !== 'undefined') {
