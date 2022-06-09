@@ -1,5 +1,7 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
+const { fetchItem } = require("./helpers/fetchItem");
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,6 +44,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  // Creio que aqui é a função para remover o produto do carrinho caso seja clicado.
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -51,5 +54,23 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+// Dado o Id de um item, a função appenda um li com as infos do item no carrinho de compras. Preciso pensar em uma forma de encontrar o Id do item em que cliquei.
+
+// Posso fazer um forEach em todos os botões dos elementos da lista. (classe item__add e querySelectorAll para gerar uma lista com todos eles).
+// Adicionar um listener para o click nesses botões
+// Caso haja o click, devo pegar o elemento pai do botão (será a section do item - .parentElement)
+// O primeiro elemento filho da section tem innerText = sku (.firstElementChild)
+// sku é o mesmo que id, então basta pegar o valor (element.value é uma ideia) e colocar na função abaixo.
+
+async function insertCartItem (id) {
+  const productInfo = await fetchItem(id);
+  const sku = productInfo.id;
+  const name = productInfo.title;
+  const salesPrice = productInfo.price;
+  const li = createCartItemElement({ sku, name, salesPrice });
+  const parentElement = document.querySelector('.cart__items');
+  parentElement.appendChild(li);
+}
 
 insertProductElement();
