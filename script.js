@@ -38,18 +38,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-fetchProducts('computador').then((pc) =>
- pc.results.map((element) => ({ sku: element.id,
+const produtos = async () => {
+ const computadores = await fetchProducts('computador');
+const pc = computadores.results.map((element) => ({ 
+  sku: element.id,
   name: element.title, 
-  image: element.thumbnail })).map((computer) => 
- document.getElementsByClassName('items')[0].appendChild(createProductItemElement(computer))));
+  image: element.thumbnail }))
+  .map((computer) => 
+ document.getElementsByClassName('items')[0].appendChild(createProductItemElement(computer)));
+ return pc;
+};
 
- const meuCarrinho = async () => {
+const meuCarrinho = async (id) => {
   const cartItem = document.getElementsByClassName('cart__items')[0];
-  const carrinho = await fetchItem('MLB1615760527').then((trem) => 
+  const carrinho = await fetchItem(id).then((trem) => 
   ({ sku: trem.id, name: trem.title, salePrice: trem.price }));
   cartItem.appendChild(createCartItemElement(carrinho));
  };
-meuCarrinho();
+
+const AddNocarrinho = async () => {
+await produtos();
+const catchButton = document.getElementsByClassName('item__add');
+const transButton = Object.values(catchButton);
+transButton.forEach((element) => element.addEventListener('click', async (event) => {
+ const sku = event.target.parentNode.firstChild.innerText;
+ meuCarrinho(sku);
+}));
+};
+AddNocarrinho();
 
 window.onload = () => {};
