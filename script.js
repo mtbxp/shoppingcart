@@ -25,7 +25,7 @@ const createProductItemElement = ({ sku, name, price, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('span', 'item__price', `$${price}`));
+  section.appendChild(createCustomElement('span', 'item__price', `${price}`));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -41,12 +41,13 @@ const clearClass = (classItem) => {
 
 const updateTotalPrice = () => {
   const items = document.querySelectorAll('.cart__item');
-  let total = 0;
+  let total = 0.0;
   items.forEach((item) => {
     let value = item.innerHTML;
     value = value.slice(value.indexOf('$') + 1, value.length);
     total += Number(value);
   });
+  total = Math.floor(total * 100) / 100;
   totalPriceSpan[0].innerHTML = total;
 };
 
@@ -59,14 +60,9 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-};
-
-const updateListCartItems = () => {
-  cartItems[0].innerHTML = getSavedCartItems('cartItems');
-  updateTotalPrice();
 };
 
 const getSkuFromProductItem = (item) => {
@@ -74,6 +70,27 @@ const getSkuFromProductItem = (item) => {
   const name = item.querySelector('span.item__title').innerText;
   const salePrice = item.querySelector('span.item__price').innerText;
   return { sku, name, salePrice };
+};
+
+const getDataFromInnerHTML = (item) => {
+  const txt = item.innerHTML;
+  const sku = txt.slice(5, txt.indexOf('|') - 1);
+  let name = txt.slice(txt.indexOf('NAME: '), txt.length);
+  name = name.slice(6, name.indexOf('|') - 1);
+  const salePrice = Number(txt.slice(txt.indexOf('$') + 1, txt.length));
+  
+  return { sku, name, salePrice };
+};
+
+const updateListCartItems = () => {
+  cartItems[0].innerHTML = getSavedCartItems();
+  const dados = document.querySelectorAll('.cart__item');
+  clearClass(cartItems);
+  dados.forEach((item) => {
+    const { sku, name, salePrice } = getDataFromInnerHTML(item);
+    cartItems[0].appendChild(createCartItemElement({ sku, name, salePrice }));
+  });
+  updateTotalPrice();
 };
 
 const addCartItemClickListener = () => {
