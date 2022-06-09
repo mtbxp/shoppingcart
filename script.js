@@ -5,13 +5,18 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const cartItemClickListener = () => {
+const cartItemClickListener = (event) => {
   // coloque seu código aqui;
+  const itemCart = document.querySelector('.cart__item');
+  const cartNode = itemCart.parentNode;
+  const itemToRemove = event.target;
+  cartNode.removeChild(itemToRemove);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.id = sku;
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
