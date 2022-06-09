@@ -40,20 +40,29 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const separarEm3 = async (parameter) => {
-  // Esta função deve pegar cada resultado e separar somente id, title e tumbnail.
-  const { id, title, tumbnail } = parameter;
-  createProductItemElement({ id, title, tumbnail });
-};
+// const separarEm3 = (parameter) => {
+//   // Esta função deve pegar cada resultado e separar somente id, title e tumbnail.
+//   const { id, title, tumbnail } = parameter;
+//   const acharPai = document.querySelector('.items');
+//   acharPai.appendChild(createProductItemElement({ id, title, tumbnail }));
+// };
 
 const fetchContinue = async (element) => {
   // Vou colocar aqui o Id, title e tumbnail, mas primeiro separar o result
   const { results } = await fetchProducts(element);
-  // return results;
-
+  const acharPai = document.querySelector('.items');
   // vou criar um forEach para fazer as sections
-  results.forEach(separarEm3(results));
+  results.forEach(((resultado) => {
+    const { id, title, thumbnail } = resultado;
+    // console.log({ id, title, thumbnail });
+    sku = id;
+    name = title;
+    image = thumbnail;
+    acharPai.appendChild(createProductItemElement({ sku, name, image }));
+  }));
 };
 // fetchContinue('computador').then((data) => console.log(data));
 
-window.onload = () => { };
+window.onload = () => {
+  fetchContinue('computador');
+};

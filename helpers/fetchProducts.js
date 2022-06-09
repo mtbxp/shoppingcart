@@ -1,6 +1,6 @@
-const fetchProducts = async (Aquery) => {
+const fetchProducts = async (query) => {
   // seu código aqui
-  const query = 'computador';
+  // const query = 'computador';
   const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
   try {
     const response = await fetch(endpoint);
