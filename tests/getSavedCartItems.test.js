@@ -17,8 +17,4 @@ describe('4 - Teste a função getSavedCartItems', () => {
     await getSavedCartItems();
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
-  it('Verificar a função `getSavedCartItems` retorna um erro com uma mensagem', async () => {
-    const mockError = await getSavedCartItems();
-    expect(mockError).toEqual(new Error('You must provide an url'));
-  });
 });
