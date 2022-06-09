@@ -60,6 +60,21 @@ const createElement = async () => {
     }));
 };
 
+const removeAllElements = () => {
+  const getAllProductsInTheCart = document.querySelector('.cart__items');
+  getAllProductsInTheCart.remove();
+  const reCreateOl = document.querySelector('.cart');
+  const createOl = document.createElement('ol');
+  createOl.className = 'cart__items';
+  reCreateOl.appendChild(createOl);
+};
+
+const emptyCart = async () => {
+  const getEmptyButton = document.querySelector('.empty-cart');
+  getEmptyButton.addEventListener('click', removeAllElements);
+};
+emptyCart();
+
 window.onload = () => {
   createElement();
 };
