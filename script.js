@@ -1,6 +1,6 @@
 const sectionItems = document.querySelector('.items');
 const listItems = document.querySelector('.cart__items');
-const contador = document.querySelector('.total_price');
+const contador = document.querySelector('.total-price');
 const botaoLimpa = document.querySelector('.empty-cart');
 let total = 0;
 
