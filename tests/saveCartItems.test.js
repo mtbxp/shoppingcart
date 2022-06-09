@@ -13,9 +13,9 @@ describe('3 - Teste a função saveCartItems', () => {
   })
   test("este se, ao executar saveCartItems com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado com dois parâmetros", () => {
     saveCartItems("<ol><li>Item</li></ol>")
-    expect(window.localStorage.setItem).toHaveBeenCalledWith("saveCartItems", "<ol><li>Item</li></ol>")
+    expect(window.localStorage.setItem).toHaveBeenCalledWith("cartItems", "<ol><li>Item</li></ol>")
   })
-  it("testa se a função retorna um erro se chamada sem argumento", () => {
+  it("testa se a função retorna undefined se chamada sem argumento", () => {
     expect(saveCartItems()).toEqual(undefined)
   })
 });
