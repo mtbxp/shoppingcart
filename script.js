@@ -98,16 +98,13 @@ const itemsLoad = () => {
   sectionChart.innerHTML = getSavedCartItems();
 };
 
-function removeAll() {
+clearCartButton.addEventListener('click', () => {
   localStorage.removeItem('prices');
   localStorage.removeItem('cartItems');
   sectionChart.innerHTML = '';
   totalprice.innerText = '';
-}
-
-clearCartButton.addEventListener('click', removeAll);
+});
 
 window.onload = () => {
-  // allProducts();
   itemsLoad();
 };
