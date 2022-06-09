@@ -36,6 +36,8 @@ const getIDFromProductItem = (item) => item.querySelector('span.item__sku').inne
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  const cart = document.querySelector('.cart__items');
+  cart.removeChild(event.target);
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -46,8 +48,8 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
- const mantenProducts = [];
- localStorage.setItem('products', JSON.stringify(mantenProducts));
+ const keepProducts = [];
+ localStorage.setItem('products', JSON.stringify(keepProducts));
 
 const addProduct = async () => {
   await insertProducts();
