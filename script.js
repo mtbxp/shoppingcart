@@ -9,12 +9,7 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const formatNumber = (number) => {
-  const opa = number.toString().split('.');
-  const decimal = Math.round(opa[1].slice(0, 3) / 10);
-  return opa[0] + (decimal / 100);
-};
-console.log(formatNumber(3233.6099999999997));
+const formatNumber = (number) => Math.round(number * 100) / 100;
 
 const sumPrices = () => {
   const sectionCart = document.querySelector('.cart');
@@ -24,7 +19,7 @@ const sumPrices = () => {
 
   let price = 0;
   getLis().forEach((li) => {
-    price += (parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, ''))); // isso pega a ultima parte das lis, remove a parte das letras que sobraram para ficar apenas numeros e pontos
+    price += (parseFloat(li.innerText.slice(-17, li.innerText.length).replace(/[^\d.-]/g, ''))); // isso pega a ultima parte das lis e remove a parte das letras que sobraram para ficar apenas numeros e pontos
   });
   value.innerText = formatNumber(price);
   if (price !== 0) {
@@ -92,8 +87,15 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const loaded = () => {
+  const loadingText = document.querySelector('.loading');
+  loadingText.remove();
+  console.log('loaded ok');
+};
+
 const getList = async () => {
   const query = await fetchProducts('computador');
+  await loaded();
   query.forEach(({ id, title, thumbnail }) => {
     const reference = {
       sku: id,
@@ -107,7 +109,6 @@ const getList = async () => {
 };
 
 const btnEmpty = () => {
-  // const lis = document.querySelectorAll('.cart__item');
   getLis().forEach((element) => element.remove());
   localStorage.clear();
   sumPrices();
@@ -129,7 +130,15 @@ const removeItem = () => {
   }
 };
 
+const loading = () => {
+  const sectionItems = document.querySelector('.items');
+  loadingText = createCustomElement('span', 'loading', 'carregando...');
+  sectionItems.appendChild(loadingText);
+  console.log('loading ok');
+};
+
 window.onload = () => {
+  loading();
   getList();
   getStorage();
   emptyCart();
