@@ -9,7 +9,8 @@ const createProductImageElement = (imageSource) => {
 };
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aquiiiiiii
+  const li = event.target;
+  return li.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -33,12 +34,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 // A função 'buttonEvent' e a condição 'if' na função 'createCustomElement' foram criados com o auxilio e orientação do Vitor Tomaz - Turma 22 - Tribo A, e da Raissa Vasconcelos, Eliel Oliveira, e Gustavo Menezes - Turma 22 - Tribo B ;
 
-const buttonEvent = (element) => {
-  element.addEventListener('click', (event) => {
-    const section = event.target.parentElement;
-    const id = getSkuFromProductItem(section);
-    createCartList(id);
-  });
+const buttonEvent = (event) => {
+  const section = event.target.parentElement;
+  const id = getSkuFromProductItem(section);
+  createCartList(id);
 };
 
 const createCustomElement = (element, className, innerText) => {
@@ -47,7 +46,7 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
 
   if (element === 'button') {
-    buttonEvent(e);
+    e.addEventListener('click', buttonEvent);
   }
 
   return e;
