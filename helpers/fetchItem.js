@@ -8,7 +8,7 @@ const fetchItem = async (id) => {
     return error;
   }
 };
-
+/* istanbul ignore next */
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,

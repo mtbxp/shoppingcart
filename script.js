@@ -4,6 +4,7 @@ const values = document.querySelector('.total-price');
 const clear = document.querySelector('.empty-cart');
 let array = [];
 let sum = 0;
+const getCartList = () => document.querySelectorAll('.cart__item');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -35,7 +36,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  const cartList = document.querySelectorAll('.cart__item');
+  const cartList = getCartList();
   array = [];
   sum = 0;
   for (let ind = 0; ind < cartList.length; ind += 1) {
@@ -44,8 +45,9 @@ const cartItemClickListener = (event) => {
     const value = JSON.parse(split[1]);
     sum += value;
   }
-  const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
-  values.innerText = `Valor Total = $${sumValue}`;
+  const sumValue = sum.toLocaleString('es', { maximumFractionDigits: 2 });
+  const sumReplace = sumValue.replace(',', '.');
+  values.innerText = sumReplace;
   const stringfy = JSON.stringify(array);
   saveCartItems(stringfy);
 };
@@ -59,7 +61,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const cartAddStorage = () => {
-  const cartList = document.querySelectorAll('.cart__item');
+  const cartList = getCartList();
   array = [];
   for (let ind = 0; ind < cartList.length; ind += 1) {
     array.push(cartList[ind].innerText);
@@ -71,7 +73,6 @@ const cartAddStorage = () => {
 const request4 = () => {
   const listButtons = document.querySelectorAll('.item__add');
   const listIds = document.querySelectorAll('.item__sku');
-
   listButtons.forEach((element, index) => {
     element.addEventListener('click', async () => {
       const itemAdd = await fetchItem(listIds[index].innerText);
@@ -82,8 +83,9 @@ const request4 = () => {
       };
       sum += itemAdd.price;
       cart.appendChild(createCartItemElement(product));
-      const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
-      values.innerText = `Valor Total = $${sumValue}`;
+      const sumValue = sum.toLocaleString('es', { maximumFractionDigits: 2 });
+      const sumReplace = sumValue.replace(',', '.');
+      values.innerText = sumReplace;
       cartAddStorage();
     });
   });
@@ -105,25 +107,31 @@ const record = () => {
     sum += number;
     cart.appendChild(createCartItemElement(product));
   });
-  const sumValue = sum.toLocaleString('en-US', { maximumFractionDigits: 2 });
-  values.innerText = `Valor Total = $${sumValue}`;
+  const sumValue = sum.toLocaleString('es', { maximumFractionDigits: 2 });
+  const sumReplace = sumValue.replace(',', '.');
+  values.innerText = sumReplace;
 };
 
 const clearCart = () => {
-  const cartList = document.querySelectorAll('.cart__item');
+  const cartList = getCartList();
   cartList.forEach((element) => {
     element.remove();
   });
   sum = 0;
-  values.innerText = 'Valor Total = $0';
+  values.innerText = 0;
   localStorage.clear();
 };
 
 clear.addEventListener('click', clearCart);
 
 window.onload = async () => {
+  const load = document.createElement('p');
+  load.className = 'loading';
+  load.innerText = 'carregando...';
+  items.appendChild(load);
+  const loadSel = document.querySelector('.loading');
   const data = await fetchProducts('computador');
-
+  loadSel.remove();
   data.results.forEach((element) => {
     const product = {
       sku: element.id,
@@ -132,7 +140,6 @@ window.onload = async () => {
     };
     items.appendChild(createProductItemElement(product));
   });
-
   request4();
   record();
 };
