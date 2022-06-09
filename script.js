@@ -1,5 +1,8 @@
 const sectionItems = document.querySelector('.items');
 const listItems = document.querySelector('.cart__items');
+const contador = document.querySelector('.total_price');
+const botaoLimpa = document.querySelector('.empty-cart');
+let total = 0;
 
 const cartItemClickListener = (event) => {
   event.target.remove(event.target);
@@ -10,12 +13,19 @@ const createCartItemElement = (sku, name, salePrice) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  saveCartItems(JSON.stringify(li.innerText));
   return li;
+};
+
+const soma = (preco) => {
+  total += preco;
+  contador.innerText = `Total: ${Math.round(total * 100) / 100}`;
 };
 
 const buscaItem = async (element) => {
   const addItem = await fetchItem(element);
   const { id, title, price } = addItem;
+  soma(price);
   listItems.appendChild(createCartItemElement(id, title, price));
   };
 
@@ -63,6 +73,13 @@ const buscaLista = async () => {
   lista.forEach((element) => sectionItems.appendChild(createProductItemElement(element)));
 };
 
+const limpaCarro = () => {
+  botaoLimpa.addEventListener('click', () => {
+    listItems.innerText = '';
+  });
+};
+
 window.onload = () => { 
   buscaLista();
+  limpaCarro();
 };

@@ -140,6 +140,17 @@ body {
   overflow-y: scroll;
 }
 
+.cart__item {
+  padding-top: 15px;
+  line-height: 20px;
+}
+
+.total_price {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  line-height: 20px;
+}
+
 .empty-cart {
   width: 170px;
   height: 35px;
