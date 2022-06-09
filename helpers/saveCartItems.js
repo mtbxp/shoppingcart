@@ -1,4 +1,4 @@
-const saveCartItems = (htmlItems) => {
+const saveCartItems = async (htmlItems) => {
 localStorage.setItem('cartItems', htmlItems);
 };
 
