@@ -72,4 +72,6 @@ const showProducts = async () => {
 window.onload = () => { 
   showProducts();
   productsCar();
+  saveCartItems();
+  getSavedCartItems();
 };
