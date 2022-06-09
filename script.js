@@ -8,6 +8,10 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const cartItemClickListener = (event) => {
+  // coloque seu código aqui
+};
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -68,10 +72,6 @@ const sendProduct = async () => {
     const creatP = createProductItemElement(element);
     item.appendChild(creatP);
   });
-};
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
 };
 
 window.onload = () => {
