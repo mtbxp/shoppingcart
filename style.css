@@ -148,3 +148,8 @@ body {
   background-color: rgb(249, 249, 246);
 }
 
+li {
+  color: blue;
+  margin-top: 15px;
+  text-align: justify;
+}

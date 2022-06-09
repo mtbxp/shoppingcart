@@ -4,8 +4,6 @@
 
 // const { fetchItem } = require("./helpers/fetchItem");
 
-// let listItemClick = '';
-
 let addCartItemClick = '';
 
 const createProductImageElement = (imageSource) => {
@@ -25,10 +23,8 @@ const createCustomElement = (element, className, innerText, id) => {
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
-
   section.className = 'item';
   section.id = sku;
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -43,14 +39,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-// function removeItemList() {
-//   sectionCart.paretnode.removeChild(listItem);
-// }
-// const listItem = document.getElementById(itemClicado);
-// listItem.addEventListener('click', removeItemList);
-// console.log(listItem);
-// };
 
 const cartItemClickListener = (event) => {
   removeItemClick = event.target.id;
@@ -84,10 +72,6 @@ itemAdd = async () => {
     const objItemAdd = { sku: element.id, name: element.title, salePrice: element.price };
     const listItemCart = createCartItemElement(objItemAdd);
     sectionCart.appendChild(listItemCart);
-    listItemCart.addEventListener('click', cartItemClickListener);
-    // () => {
-    //   sectionCart.removeChild(listItemCart);
-    // });
   });
 };
 
