@@ -25,9 +25,12 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getPriceFromCartItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
+  const listToCart = document.querySelector('.cart__items');
   event.target.remove();
+  saveCartItems(listToCart.innerHTML);
 };
 
 const createCartItemElement = ({ id, title, price }) => {
@@ -48,6 +51,7 @@ const addToCart = async (itemSku) => {
   const itemSpecs = await fetchItem(itemSku);
   const listToCart = document.querySelector('.cart__items');
   listToCart.appendChild(createCartItemElement(itemSpecs));
+  saveCartItems(listToCart.innerHTML);
 };
 
 const getButtons = async () => {
@@ -65,8 +69,26 @@ const removeCartItems = async () => {
     while (cartItems.hasChildNodes()) {
     cartItems.removeChild(cartItems.firstChild);
     }
+    localStorage.clear();
   });
 };
+
+// const calculatePriceCartItems = async () => {
+//   const getCartSection = document.querySelector('.cart');
+//   const createDiv = document.createElement('div');
+//   const getCartItemsList = document.querySelectorAll('.cart__item');
+//   const updatedPrice = 0;
+//   getCartItemsList.forEach((item) => updatedPrice += item.price)
+//   createDiv.className = 'total-price';
+//   createDiv.innerText = `Valor Total: ${updatedPrice}`;
+//   getCartSection.appendChild(createDiv)
+// }
+
+const showAfterReload = () => {
+  const getCartItems = document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach((items) => items.addEventListener('click', cartItemClickListener))
+}
 
 const showLoadingScreen = async () => {
   const parentSection = document.querySelector('.items');
@@ -85,6 +107,10 @@ window.onload = async () => {
   showLoadingScreen();
   await createListProductItems(); 
   await getButtons();
-  removeCartItems();
   endLoadingScreen();
+  showAfterReload();
+  removeCartItems();
+  // cartItemClickListener();
+  // await calculatePriceCartItems();
+  
 };

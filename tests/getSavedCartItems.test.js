@@ -8,10 +8,11 @@ describe('4 - Teste a função getSavedCartItems', () => {
     expect(typeof getSavedCartItems).toBe('function');
     })
     it('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado', () => {
-      expect(getSavedCartItems).toHaveBeenCalled();
+      getSavedCartItems();
+      expect(localStorage.getItem).toHaveBeenCalled();
     })
     it(`Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado com o 'cartItems' como parâmetro`, () => {
-      const result = getSavedCartItems(localStorage.getItem)
-      expect(result).toHaveBeenCalledWith(getSavedCartItems);
+      getSavedCartItems();
+      expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
     })
 });
