@@ -5,13 +5,15 @@ localStorageSimulator('setItem');
 
 describe('Teste a função saveCartItems', () => {
 
-  it('1 - Com o argumento "<ol><li>Item</li></ol>", o método localStorage.setItem é chamado', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>');
-    expect(localStorage.setItem).toHaveBeenCalled();
+  it('1 - Com o argumento "<ol><li>Item</li></ol>", o método localStorage.setItem é chamado', () => {
+    saveCartItems('<ol><li>Item</li></ol>');
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   });
 
-  it('2 - Com o argumento "<ol><li>Item</li></ol>", o método localStorage.setItem é chamado com 2 parâmetros', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>');
-    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', 'saveCartItems');
+
+  it('2 - Com o argumento "<ol><li>Item</li></ol>", o método localStorage.setItem é chamado com 2 parâmetros', () => {
+    saveCartItems('<ol><li>Item</li></ol>');
+    const cartItemStringfy = JSON.stringify('<ol><li>Item</li></ol>')
+    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', cartItemStringfy);
   });
 });
