@@ -18,6 +18,20 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   myCart.removeChild(event.target);
+  const myItemText = JSON.stringify(event.target.innerText);
+  const savedItems = JSON.parse(localStorage.getItem('cartItems'));
+  const myItem = JSON.parse(myItemText).split('|')[0].split(' ')[1];
+
+  savedItems.forEach((elem, index) => {
+    if (elem.id === myItem) {
+      savedItems.splice(index, 1);
+    }
+  });
+
+  localStorage.setItem('cartItems', JSON.stringify(savedItems));
+
+  console.log(JSON.parse(myItemText).split('|')[0].split(' ')[1]);
+  console.log(savedItems);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -48,12 +62,14 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   const button = section.querySelector('button');
   button.addEventListener('click', toCart);
+  button.addEventListener('click', (event) => 
+  saveCartItems(event.target.parentElement.querySelector('.item__sku').innerText));
   return section;
 };
 
 const itensSection = document.querySelector('.items');
 
-const toLoad = async () => {
+const loadProducts = async () => {
   const toSellThem = await fetchProducts('computador');
 
   toSellThem.forEach(({ id, title, thumbnail }) => itensSection
@@ -61,5 +77,6 @@ const toLoad = async () => {
 };
 
 window.onload = async () => {
-  await toLoad();
+  await loadProducts();
+  getSavedCartItems();
 };
