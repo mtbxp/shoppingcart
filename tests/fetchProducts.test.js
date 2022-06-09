@@ -14,7 +14,7 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   })
 
-  test('caso o parametro seja computador o getch é chamado', () => {
+  test('caso o parametro seja computador o fetch é chamado', () => {
     fetchProducts('computador');
 
     expect(fetch).toBeCalled();

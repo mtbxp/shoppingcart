@@ -12,7 +12,13 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+/*  async function start(loko) {
+  const data = await fetchProducts(loko); 
+  console.log(data);
+}
+console.log(start('computador')); */
+
+const createProductItemElement = async ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 

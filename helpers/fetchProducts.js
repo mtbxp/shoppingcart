@@ -2,12 +2,12 @@
    try {
     const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`);
     const result = await response.json();
-    return result;
-   } catch (error) {
+    const { results } = result;
+    return results;
+} catch (error) {
       return new Error('You must provide an url');
   }
 };
-console.log(fetchProducts('computador'));
 
 if (typeof module !== 'undefined') {
   module.exports = {
