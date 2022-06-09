@@ -57,6 +57,21 @@ const appendProductsElements = async () => {
   });
 };
 
+const getCartProductInfos = async () => {
+  const cartItem = await fetchItem('MLB1615760527');
+  const cartItemInfos = {
+    sku: cartItem.id,
+    name: cartItem.title,
+    salePrice: cartItem.price };
+  return cartItemInfos;
+};
+
+const appendItemToCart = async () => {
+  const cart = document.querySelector('.cart__items');
+  cart.appendChild(createCartItemElement(await getCartProductInfos()));
+};
+
 window.onload = async () => { 
   await appendProductsElements();
+  await appendItemToCart();
 };
