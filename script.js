@@ -36,6 +36,17 @@ const insertProducts = async () => {
 
 const getIDFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const calculateTotalPrice = () => {
+  const totalPriceTag = document.querySelector('.total-price');
+  const cart = document.querySelectorAll('.cart__item');
+  const cartArray = Array.from(cart);
+  const totalPrice = cartArray.reduce((total, currentProduct) => {
+    const currentPrice = currentProduct.innerText.split('$')[1];
+    return total + parseFloat(currentPrice);
+  }, 0);
+  totalPriceTag.innerHTML = Math.round(totalPrice * 100) / 100;
+};
+
 const cartItemClickListenerDelete = (event) => {
   const cart = document.querySelector('.cart__items');
   cart.removeChild(event.target);
@@ -79,4 +90,5 @@ window.onload = () => {
   insertProducts();
   addProduct();
   ItemClicker();
+  calculateTotalPrice();
 };
