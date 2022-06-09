@@ -26,25 +26,34 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   return section;
 };
 
+// cria os produtos na pagina
 const insertProducts = async () => {
   const itemsGroup = document.querySelector('.items');
   const data = await fetchProducts('computador');
   const allProducts = data.results;
   allProducts.forEach((product) => itemsGroup.appendChild(createProductItemElement(product)));
 };
+
 const getIDFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+const cartItemClickListenerDelete = (event) => {
   const cart = document.querySelector('.cart__items');
   cart.removeChild(event.target);
+  saveCartItems(cart.innerHTML);
+};
+
+const ItemClicker = () => {
+  const cart = document.querySelectorAll('.cart__item');
+  cart.forEach((item) => {
+    item.addEventListener('click', cartItemClickListenerDelete);
+  });  
 };
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', ItemClicker);
   return li;
 };
 
@@ -69,4 +78,5 @@ const addProduct = async () => {
 window.onload = () => { 
   insertProducts();
   addProduct();
+  ItemClicker();
 };
