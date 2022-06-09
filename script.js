@@ -84,9 +84,8 @@ const createProductList = async () => {
   });
 };
 
-const removeItens = (event) => {
-  cartList.innerHTML = '';
-  cartItemClickListener(event);
+const removeItens = () => {
+  cartList.innerText = '';
   total = 0;
   totalPrices();
 };
