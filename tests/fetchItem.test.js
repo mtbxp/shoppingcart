@@ -10,10 +10,10 @@ describe('2 - Teste a função fetchItem', () => {
     expect(await fetchItem()).toBe(Function);
   })
 
-  TestScheduler('Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', async () => {
-  fetchItem('MLB1615760527');
+  test('Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', async () => {
+    fetchItem('MLB1615760527');
 
-  expect(fetch).toBeCalled();
+    expect(fetch).toBeCalled();
   })
 
   test('Teste se, ao chamar a função fetchItem com o argumento do item "MLB1615760527", a função fetch utiliza o endpoint "https://api.mercadolibre.com/items/MLB1615760527";', () => {
@@ -27,7 +27,8 @@ describe('2 - Teste a função fetchItem', () => {
 
     exepect(exepected).toEqual(item);
   })
-test('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url', () => {
+
+test('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
   expect(await fetchItem('')).toThrowError('You must provide an url');
 })
   });
