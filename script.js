@@ -105,6 +105,7 @@ const generateCartProduct = () => {
         title: name,
         price: salePrice });
       cartItemsList.appendChild(selectedProductInfo);
+      saveCartItems(selectedProductInfo);
       removeAllCartProducts();
     });
   });

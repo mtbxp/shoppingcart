@@ -12,7 +12,4 @@ describe('3 - Teste a função saveCartItems', () => {
     saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toBeCalledWith('cartItems', JSON.stringify('<ol><li>Item</li></ol>'));
   });
-  it('returns the expected error when called without an argument', () => {
-    expect(saveCartItems()).toEqual(new Error('Opa!'));
-  });
 });
