@@ -58,7 +58,7 @@ const appendProductsElements = async () => {
 };
 
 const getCartProductInfos = async () => {
-  const cartItem = await fetchItem('MLB1615760527');
+  const cartItem = await fetchItem('MLB1341706310');
   const cartItemInfos = {
     sku: cartItem.id,
     name: cartItem.title,
