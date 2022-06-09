@@ -1,5 +1,6 @@
 // Ajuda da revisão do Gabs 06/06 e da aula da casa de câmbio 07/07
 const cart = document.querySelector('.cart__items');
+const emptyBtn = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -55,6 +56,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+
+  emptyBtn.addEventListener('click', () => {
+    cart.innerHTML = '';
+  });
 
 const renderItens = async () => {
   const itemList = document.querySelector('.items');
