@@ -4,14 +4,13 @@ const fetchProducts = async (product) => {
   try {
     const response = await fetch(`${endPoint}${product}`);
     const responseJson = await response.json();
-    const results = await responseJson.results;
-    return results;
+    return responseJson;
   } catch (error) {
     throw new Error('You must provide an url');
   }
 };
 
-fetchProducts('computador');
+// fetchProducts('computador');
 
 if (typeof module !== 'undefined') {
   module.exports = {
