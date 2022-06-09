@@ -13,6 +13,7 @@ describe('4 - Teste a função getSavedCartItems', () => {
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
   test(`se retorna algo.`, () => {
-    expect(getSavedCartItems()).toHaveReturned();
+    const result = getSavedCartItems();
+    expect(result).toHaveReturned();
   });
 });

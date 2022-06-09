@@ -27,7 +27,3 @@ describe('1 - Teste a função fetchProducts', () => {
       expect(result).toEqual(new Error(errorM));
   });
 });
-
-/* test(`se retorna algo.`, async () => {
-  expect(await fetchProducts('computador')).toHaveReturned();
-}); */

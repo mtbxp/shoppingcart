@@ -5,7 +5,7 @@ const fetchItem = async (ItemID) => {
     const data = await result.json();
     return data;      
   } catch (error) {
-    throw new Error(error);    
+    return error;    
   }
 };
 

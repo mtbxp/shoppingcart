@@ -20,7 +20,6 @@ const cutDecimals = (allPrices) => {
   let endpoint = allPrices.length;
   let newPrice = '';
   for (let index = 0; index < endpoint; index += 1) {
-    // if (allPrices[index] !== undefined) newPrice += allPrices[index];
     if (allPrices[index] === '.') {
       endpoint = index;
     } else {
@@ -78,15 +77,11 @@ const firstItem = (lcStog, obj) => {
 
 const refreshStorage = async (obj) => {
   try {
-    loadingOn();
-    let lcStog = getSavedCartItems();
-    loadingOff();
+    let lcStog = await getSavedCartItems();
     firstItem(await lcStog, obj);
     deleteItem(await lcStog, obj);
     addItem(await lcStog, obj);
-    loadingOn();
-    lcStog = getSavedCartItems();
-    loadingOff();
+    lcStog = await getSavedCartItems();
     sumValues(await lcStog);
   } catch (error) {
       console.log(error);    
@@ -169,10 +164,8 @@ const moveToCart = async (event) => {
 const loadStorage = async () => {
   try {
     const cartItems = document.getElementsByClassName('cart__items')[0];
-    loadingOn();
-    const lcStog = getSavedCartItems();
-    loadingOff();
-    console.log(lcStog);
+    const lcStog = await getSavedCartItems();
+    console.log(await lcStog);
     lcStog.forEach((item) => {
       console.log(Object.values(item)[0]);
       const cartElement = createCartItemElement(Object.values(item)[0]);
@@ -193,9 +186,9 @@ const addEvents = () => {
 };
 
 const init = async () => {
-  await refreshStorage();
   loadingOn();
-  const obj = await fetchProducts('computador');
+  let obj = await fetchProducts('computador');
+  obj = obj.results;
   loadingOff();
   const secItems = document.getElementsByClassName('items')[0];
   loadStorage();
@@ -207,6 +200,7 @@ const init = async () => {
     };
     secItems.appendChild(createProductItemElement(newObj));
   });
+  await refreshStorage();
   addEvents();
 };
 

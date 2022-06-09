@@ -3,9 +3,9 @@ const saveCartItems = require('../helpers/saveCartItems');
 
 localStorageSimulator('setItem');
 
-describe('3 - Teste a função saveCartItems', async () => {
+describe('3 - Teste a função saveCartItems', () => {
   test('com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado', async () => {
-    await saveCartItems('<ol><li>Item</li></ol>');
+    const test = await saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalled();
   });
   test(`com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado com dois
@@ -17,8 +17,6 @@ describe('3 - Teste a função saveCartItems', async () => {
   test(`sem argumento, retorna um erro com a mensagem: 'You must provide 
   an url'.`, async () => {
     const errorM = 'You must provide an url';
-    expect( async () => { 
-      await saveCartItems() 
-    }).toThrow(errorM);
+    expect(await saveCartItems()).toEqual(new Error(errorM));
   });
 });

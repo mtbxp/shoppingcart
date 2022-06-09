@@ -20,14 +20,10 @@ describe('2 - Teste a função fetchItem', () => {
     igual ao objeto item`, async () => {
       expect(await fetchItem('MLB1615760527')).toEqual(item);
   });
-  test(`se retorna algo.`, async () => {
-    expect(await fetchItem('MLB1615760527')).toHaveReturned();
-  });
   test(`sem argumento, retorna um erro com a mensagem: 'You must provide 
   an url'.`, async () => {
     const errorM = 'You must provide an url';
-    expect( async () => { 
-      await fetchItem() 
-    }).toThrow(errorM);
+    const result = await fetchItem();
+    expect(result).toEqual(new Error(errorM));
   });
 });
