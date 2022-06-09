@@ -120,7 +120,6 @@ body {
   flex-grow: 1;
   padding: 10px;
   justify-content: end;
-  font-weight: bold;
 }
 
 .item .item__image {
