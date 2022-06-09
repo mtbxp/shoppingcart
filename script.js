@@ -11,25 +11,56 @@ const cartItemClickListener = (event) => {
   event.target.remove('li');
 };
 
+const limparCarrinho = () => {
+  document.querySelectorAll('li.cart__item').forEach((e) => e.remove());
+  saveCartItems('[]');
+};
+
+function pegaItemsDoCarrinho() {
+  let arrayItemsSave = getSavedCartItems('cartItems');
+  if (arrayItemsSave) {
+    arrayItemsSave = JSON.parse(arrayItemsSave);
+  } else {
+    arrayItemsSave = [];
+  }
+  return arrayItemsSave;
+}
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  const removeItem = (event) => {
+    cartItemClickListener(event);
+
+    const itemsDoCarrinho = pegaItemsDoCarrinho();
+    const filtraItems = (itemCarrinho) => itemCarrinho.id !== sku;
+    saveCartItems(JSON.stringify(itemsDoCarrinho.filter(filtraItems)));
+  };
+  li.addEventListener('click', removeItem);
   return li;
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+function SaveCar(item) {
+  const arrayItemsSave = pegaItemsDoCarrinho();
+  arrayItemsSave.push(item);
+  saveCartItems(JSON.stringify(arrayItemsSave));
+}
+
+function addItemOnView(objeto) {
+  ol.appendChild(createCartItemElement({
+    sku: objeto.id,
+    name: objeto.title,
+    salePrice: objeto.price,
+  }));
+}
 function addItemCart(event) {
   if (event.target.classList.contains('item__add')) {
     const getSku = getSkuFromProductItem(event.target.parentElement);
     fetchItem(getSku).then((objeto) => {
-      ol.appendChild(createCartItemElement({
-        sku: objeto.id,
-        name: objeto.title,
-        salePrice: objeto.price,
-      }));
+      SaveCar(objeto);
+      addItemOnView(objeto);
     });
   }
 }
@@ -55,7 +86,14 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 window.onload = async () => {
-  saveCartItems('vvitor hugfo');
+  const botaoEsvaziar = document.querySelector('.empty-cart');
+  botaoEsvaziar.addEventListener('click', limparCarrinho);
+
+  if (getSavedCartItems('cartItems')) {
+    const arraItems = pegaItemsDoCarrinho();
+    arraItems.forEach(addItemOnView);
+  }
+
   const [sectionItens] = document.getElementsByClassName('items');
   const items = await fetchProducts('computador');
   items.results.forEach((produto) => {
