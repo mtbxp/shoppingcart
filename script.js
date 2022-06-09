@@ -56,7 +56,7 @@ const select = () => {
     if (element.target.classList.contains('item__add')) {
       const Selec = getSkuFromProductItem((element.target.parentNode));
       const dados = await fetchItem(Selec);
-      const { id: sku, title: name, price: salePrice } = dados
+      const { id: sku, title: name, price: salePrice } = dados;
       addList.appendChild(createCartItemElement({ sku, name, salePrice }));
     }
  });
