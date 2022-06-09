@@ -31,10 +31,8 @@ const createProductItemElement = ({ id: sku, title: name, price: salePrice, thum
 const getSkuFromProductItem = () =>
 item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = () => {
-  // selecionar o produto através da função fetchItem
-  // Madar para o local storage
-  // Mandar para o carrinho de compras
+const cartItemClickListener = (item) => {
+  item.target.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
