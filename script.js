@@ -54,6 +54,12 @@ const cartItemClickListener = (event) => {
   event.target.remove();
  };
 
-cartItem.addEventListener('click', cartItemClickListener);
+ cartItem.addEventListener('click', cartItemClickListener);
+ 
+ const btnEmptyCart = document.querySelector('.empty-cart');
+ function clearCart() {
+   cartItem.innerHTML = '';
+ }
+ btnEmptyCart.addEventListener('click', clearCart);
 
 window.onload = () => { };
