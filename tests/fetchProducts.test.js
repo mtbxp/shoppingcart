@@ -7,10 +7,9 @@ describe('1 - Teste a função fetchProducts', () => {
   // implemente seus testes aqui
   const fetchUrl = `https://api.mercadolibre.com/sites/MLB/search?q=computador`;
   test('Verifica se a fetchProducts é uma função', () => {
-    expect(typeof fetchProducts).toBe('function')
+    expect(fetchProducts).toBeInstanceOf(Function);
   });
   test('Verifica se a fetch é chamada ao executar a função fetchProducts', async () => {
-    expect.assertions(2);
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
     expect(fetch).toHaveBeenCalledWith(fetchUrl);

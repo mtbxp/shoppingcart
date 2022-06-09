@@ -128,7 +128,6 @@ body {
 }
 
 .cart {
-  border-left: solid black 0.4px;
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
@@ -137,25 +136,8 @@ body {
 }
 
 .cart .cart__items {
-  height: 550px;
+  height: 500px;
   overflow-y: scroll;
-}
-
-.cart__item div {
-  width: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: white;
-  margin: 10px 15px;
-  border-radius: 8px;
-  gap: 20px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.425);
-}
-
-.cart__item img {
-  width: 150px;
 }
 
 .empty-cart {
