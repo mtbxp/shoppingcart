@@ -2,6 +2,8 @@ const listProducts = document.querySelector('.items');
 const sectionChart = document.querySelector('.cart__items');
 const totalprice = document.querySelector('.total-price');
 const clearCartButton = document.querySelector('.empty-cart');
+const paragraphLoading = document.querySelector('header');
+console.log(paragraphLoading);
 
 const pricesCart = JSON.parse(localStorage.getItem('prices')) || [];
 
@@ -82,6 +84,16 @@ const allProducts = async () => {
   }));
 };
 
+const createLoading = async () => {
+  const paragraph = document.createElement('p');
+  paragraph.innerText = 'carregando...';
+  paragraph.className = 'loading';
+  paragraphLoading.appendChild(paragraph);
+  await allProducts();
+  paragraph.remove();
+};
+createLoading();
+
 const itemsLoad = () => {
   sectionChart.innerHTML = getSavedCartItems();
 };
@@ -96,6 +108,6 @@ function removeAll() {
 clearCartButton.addEventListener('click', removeAll);
 
 window.onload = () => {
-  allProducts();
+  // allProducts();
   itemsLoad();
 };
