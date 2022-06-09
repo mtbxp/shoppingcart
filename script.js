@@ -44,7 +44,7 @@ function getTotalPrice(nodeContainer) {
 function renderTotalPrice(node) {
   const para = document.createElement('p');
   const totalPrice = getTotalPrice(node);
-  const content = `<p>Preço Total: <span class="total-price">${totalPrice}</span></p>`;
+  const content = `Preço Total: <span class="total-price">${totalPrice}</span>`;
   para.innerHTML = content;
   const nodeParent = node.parentElement;
   if (nodeParent.children.length >= 3) {
@@ -121,13 +121,37 @@ function cleanCart(event) {
     cartContainer.childNodes[0].remove();
   }
   saveCartItems(cartContainer);
+  renderTotalPrice(cartContainer);
+}
+
+function showLoading() {
+  const overlay = document.createElement('div');
+  overlay.className = 'loading';
+  overlay.textContent = 'carregando...';
+  const loader = document.createElement('div');
+  loader.className = 'lds-spinner';
+  for (let index = 0; index < 12; index += 1) {
+    const loaderChild = document.createElement('div');
+    loader.append(loaderChild); 
+  }
+  overlay.append(loader);
+  document.body.append(overlay);
+}
+
+function hideLoading() {
+  const overlay = document.querySelector('.loading');
+  overlay.remove();
 }
 
 window.onload = () => {
   emptyCartBtn.addEventListener('click', cleanCart);
   renderInitialCartFromLocStor();
   renderTotalPrice(cartContainer);
-  renderProducts()
-    .then(updateCart)
-    .catch(console.log);
+  showLoading();
+  setTimeout(() => {
+    renderProducts()
+      .then(updateCart)
+      .catch(console.log)
+      .finally(hideLoading);
+  }, 1000);
 };
