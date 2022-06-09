@@ -41,7 +41,7 @@ const clearClass = (classItem) => {
 
 const updateTotalPrice = () => {
   const items = document.querySelectorAll('.cart__item');
-  let total = 0.0;
+  let total = 0;
   items.forEach((item) => {
     let value = item.innerHTML;
     value = value.slice(value.indexOf('$') + 1, value.length);
@@ -119,8 +119,8 @@ const loadingMessage = () => {
 
 const showListProducts = async () => {
   const data = await fetchProducts('computador');
-  const msg = document.getElementsByClassName('loading');
-  msg[0].style.display = 'none';
+  const msgFather = document.getElementsByClassName('items');
+  msgFather[0].firstChild.remove();
   data.map((item) => {
     const { id: sku, title: name, thumbnail: image, price } = item;
     const element = createProductItemElement({ sku, name, price, image });
