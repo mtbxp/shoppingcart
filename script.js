@@ -8,6 +8,14 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
 const searchCart = async (ItemID) => {
   const fetchI = await fetchItem(ItemID);
 
@@ -64,14 +72,6 @@ const sendProduct = async () => {
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 };
 
 window.onload = () => {
