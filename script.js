@@ -38,14 +38,32 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const section = document.querySelector('.items');
+const sectionProtuctItems = document.querySelector('.items');
 const productList = async () => {  
   const { results } = await fetchProducts('computador');
   results.forEach(({ id, title, thumbnail }) => {
-    section.appendChild(createProductItemElement(({ sku: id, name: title, image: thumbnail })));
-    });
+    sectionProtuctItems
+    .appendChild(createProductItemElement(({ sku: id, name: title, image: thumbnail })));
+  });
 };
 
-window.onload = () => {  
-  productList();
+const productCartItem = async () => {
+  const button = document.querySelectorAll('.item__add'); // referencia https://www.w3schools.com/js/js_htmldom_elements.asp
+  button.forEach((btn) => { 
+    btn.addEventListener('click', async (event) => {
+      const id = getSkuFromProductItem(event.target.parentElement);
+      const result = await fetchItem(id);
+      const ol = document.querySelector('.cart__items');
+      ol.appendChild(createCartItemElement({ 
+      sku: result.id,
+      name: result.title,
+      salePrice: result.price,
+    }));
+  });
+});
+};
+
+window.onload = async () => {  
+ await productList();
+  await productCartItem();
 };

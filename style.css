@@ -145,6 +145,6 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  border: 1px solid rgb(5, 52, 219);
+  background-color: rgba(249, 249, 246, 0.651);
 }
