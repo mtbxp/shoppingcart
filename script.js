@@ -44,7 +44,7 @@ const getCartItemElement = async (e) => {
   const OL = document.querySelector('.cart__items');
   const buttonsAdd = document.querySelectorAll('.item__add');
 
-  buttonsAdd.forEach((button) => {
+  buttonsAdd.forEach(async (button) => {
     button.addEventListener('click', async () => {
       const itemId = getSkuFromProductItem(button.parentElement); 
       const itemValues = await fetchItem(itemId);
@@ -53,7 +53,7 @@ const getCartItemElement = async (e) => {
     });
   });
 };
-getCartItemElement();
+getCartItemElement('MLB1930876153');
 
 const start = async () => {
   const { results } = await fetchProducts('computador');
