@@ -5,6 +5,16 @@
 // const { fetchItem } = require("./helpers/fetchItem");
 
 let addCartItemClick = '';
+const classItems = '.cart__items';
+
+// const itemsLocalStorage = document.getElementsById('list-cart');
+// console.log(itemsLocalStorage);
+
+// itemsLocalStorage.addEventListener('click', (event) => {
+//   removeItemStorage = event.target.id;
+//   const itemStorage = document.getElementById(removeItemClick);
+//   itemStorage.remove();
+// });
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -34,7 +44,6 @@ const createProductItemElement = ({ sku, name, image }) => {
     addCartItemClick = event.target.id;
     itemAdd();
   });
-
   return section;
 };
 
@@ -55,6 +64,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const loadCart = () => {
+  const cartItem = document.querySelector(classItems).innerHTML;
+  saveCartItems('cartItems', cartItem);
+};
+
+const getCart = () => {
+  getSavedCartItems();
+  document.querySelector(classItems).innerHTML = getSavedCartItems();
+};
+
 listProduct = async () => {
   const products = await fetchProducts('computador');
   const sectionItems = document.querySelector('.items');
@@ -63,18 +82,22 @@ listProduct = async () => {
     const resultProduct = createProductItemElement(objProduct);
     sectionItems.appendChild(resultProduct);
   });
+  const listCart = document.getElementById('list-cart');
+  listCart.addEventListener('click', cartItemClickListener);
 };
 
 itemAdd = async () => { 
   const detailsItem = await fetchItem(addCartItemClick);
-  const sectionCart = document.querySelector('.cart__items');
+  const sectionCart = document.querySelector(classItems);
   detailsItem.forEach((element) => {
     const objItemAdd = { sku: element.id, name: element.title, salePrice: element.price };
     const listItemCart = createCartItemElement(objItemAdd);
     sectionCart.appendChild(listItemCart);
   });
+  loadCart();
 };
 
 window.onload = async () => {
   listProduct();
+  getCart();
 };
