@@ -31,6 +31,8 @@ const createProductItemElement = ({ id: sku, title: name, price: salePrice, thum
 const getSkuFromProductItem = () =>
 item.querySelector('span.item__sku').innerText;
 
+getSkuFromProductItem();
+
 const cartItemClickListener = (item) => {
   item.target.remove();
 };
