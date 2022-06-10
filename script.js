@@ -1,12 +1,10 @@
 const sectionItems = document.querySelector('.items');
 const listItems = document.querySelector('.cart__items');
-const contador = document.querySelector('.total-price');
 const botaoLimpa = document.querySelector('.empty-cart');
-let total = 0;
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  saveCartItems(listItems.innerHTML)
+  saveCartItems(listItems.innerHTML);
   };
 
 const createCartItemElement = (sku, name, salePrice) => {
@@ -52,10 +50,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const cartAddButton = (event) => {
-  
-}
-
 const createProductItemElement = ({ 
   id: sku, 
   title: name, 
@@ -71,7 +65,7 @@ const createProductItemElement = ({
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const buscaLista = async () => {
   const lista = await fetchProducts('computador');
