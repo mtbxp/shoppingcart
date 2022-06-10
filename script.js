@@ -40,15 +40,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const mapListProdutos = async () => {
   const newGetList = await fetchProducts('computador');
-  const data = newGetList.results.map((get) => {
-    const result = {
+  const dataList = newGetList.results.map((get) => {
+    const resultList = {
       sku: get.id,
       name: get.title,
       image: get.thumbnail,
     };
-    return result;
+    return resultList;
   });
-  return data;
+  return dataList;
 };
 
 const listProdutos = async () => {
@@ -60,6 +60,24 @@ const listProdutos = async () => {
   });
 };
 
+// FUNÇÃO QUE AO CLICAR PEGA A CLASSE DO PRODUTO SELECIONADO.
+const addShoppingCart = async () => {
+  const clickItem = document.querySelector('.items');
+  clickItem.addEventListener('click', async (event) => {
+    const resultClick = event.target.parentElement;
+    const itemSku = getSkuFromProductItem(resultClick);
+    const response = await fetch(`https://api.mercadolibre.com/items/${itemSku}`);
+    const data = await response.json();
+    const resultItem = { sku: data.id, name: data.title, salePrice: data.price };
+    const addCart = createCartItemElement(resultItem);
+    const addclickItem = document.querySelector('ol.cart__items');
+    addclickItem.appendChild(addCart);
+    console.log(clickItem);
+    console.log(addCart);
+  });
+};
+
 window.onload = () => { 
   listProdutos();
+  addShoppingCart();
 };
