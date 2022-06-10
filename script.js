@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = (sku, name, image) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -40,10 +38,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-// const renderProduct = async () => {
-//   const pesquisa = await fetchProducts('computador');
-//   const produto = pesquisa.results;
-//   console.log(produto);
-// };
+const renderProducts = async () => {
+  const items = document.getElementsByClassName('items')[0];
+  const products = await fetchProducts('computador');
+  const produto = products.results;
+  console.log(produto);
+  produto.forEach((element) => {
+    const { id, title, thumbnail } = element;
+    const countrycard = createProductItemElement(id, title, thumbnail);
+    items.appendChild(countrycard);
+  });
+};
 
-window.onload = () => {};
+window.onload = () => {
+  renderProducts();
+};
