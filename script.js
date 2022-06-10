@@ -27,7 +27,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.parentElement.removeChild(event.target);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -37,14 +37,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-const section = document.querySelector('.items');
+const createProductList = document.querySelector('.items');
 const productList = async () => {  
   const { results } = await fetchProducts('computador');
   results.forEach(({ id, title, thumbnail }) => {
-    section.appendChild(createProductItemElement(({ sku: id, name: title, image: thumbnail })));
+    createProductList
+      .appendChild(createProductItemElement(({ sku: id, name: title, image: thumbnail })));
     });
 };
+const olCartItem = document.querySelector('.cart__items');
+const addCartItem = async () => {
+  const selectButton = document.querySelectorAll('.item__add');
+  // referenciar do stackoverflow para fazer forEach de um querySelectorAll
+    selectButton.forEach((element) => {
+        element.addEventListener('click', async (event) => {
+     const selectParentElement = getSkuFromProductItem(event.target.parentElement);
+     const parentElement = await fetchItem(selectParentElement);
+   olCartItem.appendChild(createCartItemElement(({ 
+     sku: parentElement.id,
+     name: parentElement.title,
+     salePrice: parentElement.price,
+   })));
+  });
+});
+};
 
-window.onload = () => {  
-  productList();
+window.onload = async () => {  
+  await productList();
+  await addCartItem();
+  // buttons();
 };
