@@ -30,8 +30,31 @@ const createProductItemElement = ({ id: sku, title: name, price: salePrice, thum
   return section;
 };
 
+const appendTotalCartValue = (param) => {
+  const getTotalElement = document.querySelector('.total-price');
+  getTotalElement.innerHTML = param;
+  return getTotalElement;
+};
+
+const getTotalCartValue = () => {
+  const allProductsOfCart = everyProductInCart();
+  const arrayOfProducts = Array.from(allProductsOfCart);
+  
+  const ValuesOfPurchase = arrayOfProducts.reduce((acc, product) => {
+    const productText = product.innerText;
+    const purchaseValue = productText.split(separatorOfValues, 7)[1];
+    const toNumber = Number(purchaseValue);
+    const totalPurchaseValue = acc + toNumber;
+    
+    return totalPurchaseValue;
+  }, 0);
+  
+  return appendTotalCartValue(ValuesOfPurchase);
+};
+
 const cartItemClickListener = (item) => {
   item.target.remove();
+  getTotalCartValue();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -40,28 +63,6 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-};
-
-const appendTotalCartValue = async (param) => {
-  const getTotalElement = await document.querySelector('.total-price');
-  getTotalElement.innerHTML = param;
-  return getTotalElement;
-};
-
-const getTotalCartValue = async () => {
-  const allProductsOfCart = await everyProductInCart();
-  const arrayOfProducts = Array.from(allProductsOfCart);
-
-  const ValuesOfPurchase = arrayOfProducts.reduce((acc, product) => {
-    const productText = product.innerText;
-    const purchaseValue = productText.split(separatorOfValues, 7)[1];
-    const toNumber = Number(purchaseValue);
-    const totalPurchaseValue = acc + toNumber;
-
-    return totalPurchaseValue;
-  }, 0);
-  
-  return appendTotalCartValue(ValuesOfPurchase);
 };
 
 const sendToCart = async (event) => {
@@ -91,6 +92,7 @@ const removeAllElements = () => {
   const createOl = document.createElement('ol');
   createOl.className = 'cart__items';
   reCreateOl.appendChild(createOl);
+  getTotalCartValue();
 };
 
 const emptyCart = async () => {
