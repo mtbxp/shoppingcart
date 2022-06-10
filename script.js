@@ -8,7 +8,6 @@ const createProductImageElement = (imageSource) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
 
 };
 
@@ -21,23 +20,23 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const renderItem = async (idItem) => {
-  const result = await fetchItem(idItem);
+  const result = await fetchItem(idItem);   
   const param = { 
-      sku: result.id, 
-      name: result.title, 
-      salePrice: result.price, 
-    };    
+    sku: result.id, 
+    name: result.title, 
+    salePrice: result.price, 
+  }; 
     const itemCart = document.querySelector('.cart__items');
     const creation = createCartItemElement(param);
     itemCart.appendChild(creation);
 }; 
 
-const createCustomElement = (element, className, innerText) => {
+const createCustomElement = (element, className, innerText, sku) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   if (element === 'button') {
-    e.addEventListener('click', () => renderItem());
+    e.addEventListener('click', () => renderItem(sku));
   }
   return e;
 };
@@ -49,7 +48,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!', sku));
 
   return section;
 };
