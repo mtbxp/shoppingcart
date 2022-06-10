@@ -1,3 +1,6 @@
+// @ts-nocheck
+ const classCardItems = '.cart__items';
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,8 +28,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-// Codigo remover Itens
+// codigo remover Items do carrinho
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
@@ -39,33 +41,45 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
 // Adicionar lista de produtos no site
 const addProductsToSite = async () => {
   const items = document.querySelector('.items');
   const products = await fetchProducts('computador');
   const listProduct = products.results;
   listProduct.forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
-    const item = createProductItemElement({ sku, name, image });
-    items.appendChild(item);
-});
+  const { id: sku, title: name, thumbnail: image } = product;
+  const item = createProductItemElement({ sku, name, image });
+  items.appendChild(item);
+  });
+};
+// Salvar o carrinho de compras no localStorage
+const saveCart = () => {
+  const cart = document.querySelector(classCardItems).innerHTML;
+  saveCartItems(cart);
+};
+// Carregar o a página do localStorage
+const loadCart = () => {
+  document.querySelector(classCardItems).innerHTML = getSavedCartItems();
+  document.querySelector(classCardItems).addEventListener('click', cartItemClickListener);
 };
 
 // Adicionar o Produto ao Carringo de Compras
 const addProductsToCarrinho = async (event) => {
   const carts = document.querySelector('.cart__items');
-  const itemId = getSkuFromProductItem(event.target.parentNode);
+  const itemId = getSkuFromProductItem(event.target.parentElement);
   const productId = await fetchItem(itemId);
   const { id: sku, title: name, price: salePrice } = productId;
-  const productIdOn = createCartItemElement({ sku, name, salePrice });
-  carts.append(productIdOn);
+  const cartItem = createCartItemElement({ sku, name, salePrice });
+  carts.appendChild(cartItem);
+
+  saveCart();
 };
 
 window.onload = async () => {
-  await addProductsToSite();
+await addProductsToSite();
+loadCart();
 
-  // Adicionando o Botao na captura dos items
-  const addButtonsItem = document.querySelectorAll('.item__add');
-  addButtonsItem.forEach((button) => button.addEventListener('click', addProductsToCarrinho));
+// Adicionando o Botao na captura dos items
+const addButtonsItem = document.querySelectorAll('.item__add');
+addButtonsItem.forEach((button) => button.addEventListener('click', addProductsToCarrinho));
 };
