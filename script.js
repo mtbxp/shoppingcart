@@ -75,11 +75,12 @@ const createCartItemElement = ({ id, title, price }) => {
   });
 };
 
-const clearCart = () => {
-  const emptyCartBtn = document.querySelector('.empty-cart');
-  emptyCartBtn.addEventListener('click', () => {
-    cartItems.innerHTML = '';
-    localStorage.setItem('cartItems', '');
+const btnBtnClearCart = () => {
+  const getBtn = document.querySelector('.empty-cart');
+  getBtn.addEventListener('click', () => {
+    localStorage.clear();
+    document.querySelector('ol').innerHTML = '';
+    document.querySelector('.total-price').innerHTML = 0;
   });
 };
 
@@ -87,5 +88,5 @@ window.onload = () => {
   addProductOnCart();
   getSavedCartItems();
   cartItemClickListener();
-  clearCart();
+  btnBtnClearCart();
 };
