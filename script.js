@@ -16,8 +16,9 @@ const loadingOn = () => {
   secItems.appendChild(element);
 };
 
-const sumValues = async () => {
-  const lcStog = await getSavedCartItems();
+const sumValues = () => {
+  let lcStog = getSavedCartItems();
+  lcStog = JSON.parse(lcStog);
   const allPrices = document.getElementsByClassName('total-price')[0];
   try {    
     let sum = 0;
@@ -34,8 +35,9 @@ const sumValues = async () => {
   }
 };
 
-const addItem = async (obj) => {
-  const lcStog = await getSavedCartItems();
+const addItem = (obj) => {
+  let lcStog = getSavedCartItems();
+  lcStog = JSON.parse(lcStog);
   if (obj !== undefined) {
     if (lcStog === null) {
       const newArr = [];
@@ -50,8 +52,9 @@ const addItem = async (obj) => {
   }
 };
 
-const deleteItem = async (obj) => {
-  const lcStog = await getSavedCartItems();
+const deleteItem = (obj) => {
+  let lcStog = getSavedCartItems();
+  lcStog = JSON.parse(lcStog);
   if (typeof obj === 'string') {
     const newArr = lcStog.filter((objItem) => Object.keys(objItem)[0] !== obj);
     saveCartItems(newArr);
@@ -129,10 +132,11 @@ const moveToCart = async (event) => {
   cartItems.appendChild(createCartItemElement(obj));
 };
 
-const loadStorage = async () => {
+const loadStorage = () => {
   try {
     const cartItems = document.getElementsByClassName('cart__items')[0];
-    const lcStog = await getSavedCartItems();
+    let lcStog = getSavedCartItems();
+    lcStog = JSON.parse(lcStog);
     if (lcStog !== null) {
       lcStog.forEach((item) => {
         const cartElement = createCartItemElement(Object.values(item)[0]);

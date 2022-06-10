@@ -12,8 +12,8 @@ describe('4 - Teste a função getSavedCartItems', () => {
     getSavedCartItems();
     expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
   });
-  test(`se retorna algo.`, async () => {
-    const result = await getSavedCartItems();
-    expect(await result).toBe({});
+  test(`se retorna algo.`, () => {
+    const result = getSavedCartItems();
+    expect(result).toEqual(undefined);
   });
 });
