@@ -1,7 +1,10 @@
 const cartItems = document.querySelector('.cart__items');
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-// console.log(getSkuFromProductItem);
+const valuePrice = document.querySelector('.total-price');
+
+const getSkuFromProductItem = (item) =>
+  item.querySelector('span.item__sku').innerText;
+// console.log(getSkuFromProductItem());
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -30,20 +33,17 @@ const cartItemClickListener = (event) => {
     const li = document.createElement('li');
     li.className = 'cart__item';
     li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-    // console.log(createCartItemElement);
     return li;
   };
+  // console.log(createCartItemElement({}));
   const addToCart = async (event) => { 
     const itemId = getSkuFromProductItem(event.target.parentElement);// clique capturando o sku(id) do produto, dentro da função getSku....!
     await fetchItem(itemId).then((product) => { // chamando a API_items em caso de sucesso acessar objeto results(contendo apenas dados do produto) retorna uma promise com o valor no parâmetro
       cartItems.appendChild(createCartItemElement(product)); // adicionando um elemento filho na ol(cartItems), retornando a li da função creatCart...!
       saveCartItems(cartItems.innerHTML);
 });
-  // console.log(itemId)
+  // console.log('clicoADD');
 };
-// btnEmptyCart.addEventListener('click', () => {
-//   console.log('Clico');
-// });
 
 cartItems.addEventListener('click', cartItemClickListener);
 
@@ -73,16 +73,28 @@ const callElementsBody = async () => { // const arrow function criada para chama
 const getItemsCreate = () => {
   cartItems.innerHTML = getSavedCartItems();
 };
-// function emptyCart() {
-//   const btnEmptyCart = document.getElementsByClassName('empty-cart')
-//   .addEventListener('click', cleanCart);
-// }
 
+// const cleanCart = () => {
+//   const ol = document.querySelectorAll('.cart__items');
+//   ol.textContent = '';
+//   saveCartItems(ol.innerHTML);
+// };
+
+const btnEmptyCart = document.querySelector('.empty-cart');
+
+btnEmptyCart.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+    // // ol.innerContent = '';
+    // event.target.removeChild(cartItems);
+  saveCartItems(cartItems.innerHTML);
+    // // return clearCart();
+  });
+
+// console.log(clearCart());
+// clearCart();
   window.onload = () => {
-    fetchProducts('computador');
     callElementsBody();
     getItemsCreate();
-    // saveCartItems();
     getSavedCartItems();
-    // fetchItem();
-  };
+    // buttonEmpty();
+};

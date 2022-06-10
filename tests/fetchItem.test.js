@@ -7,8 +7,9 @@ describe('2 - Teste a função fetchItem', () => {
     expect(typeof fetchItem).toEqual('function');
   })
   // fail('Teste vazio');
-  it('Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', () => {
-    expect(fetchItem('MLB1615760527')).toHaveBeenCalled();
+  it('Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', async () => {
+    await fetchItem('MLB1615760527')
+    expect(fetch).toHaveBeenCalled();
   })
   it('Teste se, ao chamar a função fetchItem com o argumento do item "MLB1615760527", a função fetch utiliza o endpoint "htps://api.mercadolibre.com/items/MLB1615760527"', async () => {
     await fetchItem('MLB1615760527')
@@ -18,8 +19,8 @@ describe('2 - Teste a função fetchItem', () => {
     expect(await fetchItem('MLB1615760527')).toEqual(item);
   })
   it('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: "You must provide an url"', async () => {
-    
-    expect(fetchItem()).toEqual(new Error('You must provide an url'));
+    const response = await fetchItem();
+    expect(response).toEqual(new Error('You must provide an url'));
   })
 
 

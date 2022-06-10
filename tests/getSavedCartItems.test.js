@@ -9,6 +9,7 @@ describe('4 - Teste a função getSavedCartItems', () => {
     expect(localStorage.getItem).toHaveBeenCalled();
   })
   it('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é chamado com o "cartItems" como parâmetro', async () => {
-    const execute = await getSavedCartItems()
+    const result = await getSavedCartItems('cartItems');
+    expect(localStorage.setItem).toEqual(result);
   })
 });

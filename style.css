@@ -138,14 +138,28 @@ body {
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
+  margin-top: 10px;
+}
+
+.cart__item {
+  text-align: center;
+  margin: 8px;
+  padding: 5px;
 }
 
 .empty-cart {
   width: 170px;
   height: 35px;
-  margin: 0 auto;
+  margin: 10px auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
   cursor: pointer;
+}
+
+.total-price {
+  text-align: left;
+  margin: 10px;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
 }
 
