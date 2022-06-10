@@ -28,6 +28,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -38,13 +39,13 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const getCartItemElement = async (e) => {
-  await fetchItem(e);
+const getCartItemElement = async () => {
+  await fetchItem('MLB1341706310');
   
   const OL = document.querySelector('.cart__items');
   const buttonsAdd = document.querySelectorAll('.item__add');
 
-  buttonsAdd.forEach(async (button) => {
+  buttonsAdd.forEach((button) => {
     button.addEventListener('click', async () => {
       const itemId = getSkuFromProductItem(button.parentElement); 
       const itemValues = await fetchItem(itemId);
@@ -53,7 +54,6 @@ const getCartItemElement = async (e) => {
     });
   });
 };
-getCartItemElement('MLB1930876153');
 
 const start = async () => {
   const { results } = await fetchProducts('computador');
@@ -64,3 +64,4 @@ const start = async () => {
 };
 
 window.onload = start;
+getCartItemElement();
