@@ -151,4 +151,11 @@ body {
 
 .cart__item {
   padding: 10px 0;
+  /* list-style-position: inside; */
+  cursor: default;
+  user-select: none;
+}
+
+.hide {
+  display: none;
 }

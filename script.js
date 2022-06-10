@@ -17,8 +17,8 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', id));
-  section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
+  section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -26,27 +26,35 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = ({ target }) => {
-  target.remove();
-};
+const cartItemClickListener = ({ target }) => target.remove();
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.innerHTML = `<span class="hide item__sku">SKU: ${id}</span>${title}<br><b>R$${price}</b>`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
-const teste = async ({ target }) => {
-  const productId = getSkuFromProductItem(target.parentNode);
-  const ol = document.querySelector('.cart__items');
-  ol.append(createCartItemElement(await fetchItem(productId)));
+const cartItemsList = () => document.querySelector('.cart__items');
+
+const appendProductToCart = (product) => cartItemsList().append(product);
+
+const appendSavedProducts = (param) => {
+cartItemsList().innerHTML = param;
+};
+
+const addToCart = async ({ target }) => {
+  const id = getSkuFromProductItem(target.parentNode);
+  const product = createCartItemElement(await fetchItem(id));
+  console.log(product);
+  appendProductToCart(product);
+  saveCartItems(cartItemsList().innerHTML);
 };
 
 const addToCartEventListener = () => {
   const addToCartBtn = document.querySelectorAll('.item__add');
-  addToCartBtn.forEach((element) => element.addEventListener('click', teste));
+  addToCartBtn.forEach((element) => element.addEventListener('click', addToCart));
 };
 
 const createList = async () => {
@@ -58,4 +66,5 @@ const createList = async () => {
 
 window.onload = () => {
   createList();
+  appendSavedProducts(getSavedCartItems());
 };
