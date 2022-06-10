@@ -7,15 +7,6 @@
 let addCartItemClick = '';
 const classItems = '.cart__items';
 
-// const itemsLocalStorage = document.getElementsById('list-cart');
-// console.log(itemsLocalStorage);
-
-// itemsLocalStorage.addEventListener('click', (event) => {
-//   removeItemStorage = event.target.id;
-//   const itemStorage = document.getElementById(removeItemClick);
-//   itemStorage.remove();
-// });
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
