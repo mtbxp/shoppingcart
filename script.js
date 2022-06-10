@@ -48,7 +48,6 @@ const addItemCart = async (idElement) => {
 const createButton = () => { 
   const getButton = document.querySelectorAll('.item__add');
 getButton.forEach((element) => element.addEventListener('click', (event) => {
-  console.log('teste');
     const idElement = event.target.parentNode.firstChild.innerText;
     addItemCart(idElement);
   }));
