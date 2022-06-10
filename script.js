@@ -75,7 +75,7 @@ const createCartItemElement = ({ id, title, price }) => {
   });
 };
 
-const btnBtnClearCart = () => {
+const btnClearCart = () => {
   const getBtn = document.querySelector('.empty-cart');
   getBtn.addEventListener('click', () => {
     localStorage.clear();
@@ -88,5 +88,5 @@ window.onload = () => {
   addProductOnCart();
   getSavedCartItems();
   cartItemClickListener();
-  btnBtnClearCart();
+  btnClearCart();
 };
