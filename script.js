@@ -1,3 +1,5 @@
+const itemsSection = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,7 +42,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const productsCar = async (item) => { 
-  const itemsSection = document.querySelector('.cart__items');
   const itemsCar = await fetchItem(item);
   const itemsInfor = {
     sku: itemsCar.id,
@@ -50,6 +51,11 @@ const productsCar = async (item) => {
   itemsSection.appendChild(createCartItemElement(itemsInfor));
   saveCartItems(itemsSection.innerHTML);
 };
+
+// const getStorage = () => {
+//   const getItems = window.localStorage.getItem('cartItems');
+//   console.log(JSON.parse(getItems));
+// };
 
 const showProducts = async () => {
   const productSection = document.querySelector('.items');
