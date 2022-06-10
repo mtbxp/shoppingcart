@@ -1,9 +1,3 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
-// const item = require("./mocks/item");
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
 let addCartItemClick = '';
 const classItems = '.cart__items';
 
@@ -41,9 +35,11 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  removeItemClick = event.target.id;
-  const itemRemoved = document.getElementById(removeItemClick);
-  itemRemoved.remove();
+  const removeItemClick = event.path[0];
+  // const itemRemoved = document.getElementById(removeItemClick);
+  // console.log(event);
+  removeItemClick.remove();
+  // saveCartItems('cartItems', ); // remover o item clicado do localStorage
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -56,6 +52,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const loadCart = () => {
+  // const getInfoLocalStorage = 
   const cartItem = document.querySelector(classItems).innerHTML;
   saveCartItems('cartItems', cartItem);
 };
@@ -73,8 +70,6 @@ listProduct = async () => {
     const resultProduct = createProductItemElement(objProduct);
     sectionItems.appendChild(resultProduct);
   });
-  const listCart = document.getElementById('list-cart');
-  listCart.addEventListener('click', cartItemClickListener);
 };
 
 itemAdd = async () => { 
@@ -85,8 +80,19 @@ itemAdd = async () => {
     const listItemCart = createCartItemElement(objItemAdd);
     sectionCart.appendChild(listItemCart);
   });
+
   loadCart();
 };
+
+const buttonEmptyCart = document.getElementById('button-empty');
+buttonEmptyCart.addEventListener('click', () => {
+  const listCart = document.getElementById('list-cart');
+  listCart.innerHTML = '';
+  saveCartItems('cartItems', '');
+});
+
+const listCart = document.getElementById('list-cart');
+listCart.addEventListener('click', cartItemClickListener);
 
 window.onload = async () => {
   listProduct();
