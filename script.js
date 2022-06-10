@@ -27,7 +27,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -38,8 +37,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const getItemsInfos = async () => {
-  const { results } = await fetchProducts('computador');
+const getItemsInfos = async (productId) => {
+  const { results } = await fetchProducts(productId);
   const productsInfos = [];
   results.forEach((result) => {
     productsInfos.push({
@@ -50,6 +49,19 @@ const getItemsInfos = async () => {
   return productsInfos;
 };
 
+const addItemToCart = async (e) => {
+  const cart = document.querySelector('.cart__items');
+  const item = e.target.parentElement;
+  const itemSku = getSkuFromProductItem(item);
+  const itemInfos = await fetchItem(itemSku);
+  const cartItem = createCartItemElement({
+    sku: itemSku,
+    name: itemInfos.title,
+    salePrice: itemInfos.price,
+  });
+  cart.appendChild(cartItem);
+};
+
 const appendProductsElements = async () => {
   const itemsSection = document.querySelector('.items');
   (await getItemsInfos()).forEach((item) => {
@@ -57,21 +69,14 @@ const appendProductsElements = async () => {
   });
 };
 
-const getCartProductInfos = async () => {
-  const cartItem = await fetchItem('MLB1341706310');
-  const cartItemInfos = {
-    sku: cartItem.id,
-    name: cartItem.title,
-    salePrice: cartItem.price };
-  return cartItemInfos;
-};
-
-const appendItemToCart = async () => {
-  const cart = document.querySelector('.cart__items');
-  cart.appendChild(createCartItemElement(await getCartProductInfos()));
+const addToCartClickListener = () => {
+  const addCartButtons = document.querySelectorAll('.item__add');
+  addCartButtons.forEach((button) => {
+    button.addEventListener('click', addItemToCart);
+  });
 };
 
 window.onload = async () => { 
   await appendProductsElements();
-  await appendItemToCart();
+  addToCartClickListener();
 };
