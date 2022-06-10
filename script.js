@@ -28,7 +28,7 @@ const o = event.target;
 o.parentNode.removeChild(o);
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -36,6 +36,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+};
+
+const valorTotal = async (param) => {
+  const la = await fetchItem(param);
+ const price = la.base_price;
+ return price;
 };
 
 const produtos = async () => {
@@ -56,8 +62,15 @@ const meuCarrinho = async (id) => {
   cartItem.appendChild(createCartItemElement(carrinho));
  };
 
+ const totalPrice = (sum) => {
+const cart = document.getElementsByClassName('total-price');
+const carts = Object.values(cart);
+carts[0].innerText = `Valor total da compra: R$ ${sum} REAIS`;
+};
+
 const AddNocarrinho = async () => {
 const bd = [];
+const soma = [];
 if (localStorage.getItem('CartItems')) {
   const la = JSON.parse(getSavedCartItems('CartItems'));
   la.map((element) => meuCarrinho(element));
@@ -66,10 +79,12 @@ await produtos();
 const catchButton = document.getElementsByClassName('item__add');
 const transButton = Object.values(catchButton);
 transButton.forEach((element) => element.addEventListener('click', async function lele(event) {
- const sku = event.target.parentNode.firstChild.innerText;
- bd.push(sku);
+ const sku = event.target.parentNode.firstChild.innerText; bd.push(sku);
  await meuCarrinho(sku);
  saveCartItems(JSON.stringify(bd));
+soma.push(await valorTotal(sku));
+const somar = soma.reduce((acc, cur) => acc + cur);
+totalPrice(somar);
 }));
 };
 AddNocarrinho();
