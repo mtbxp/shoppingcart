@@ -19,8 +19,8 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -28,19 +28,25 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const getPriceFromString = (element) => element.textContent.replace('.', '').replace(',', '.'); 
+
+const formatPriceToString = (price) => {
+  const stringOptions = {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  };
+  return price.toLocaleString('pt-br', stringOptions);
+};
+
 const updateTotalPrice = (price) => {
   const currentPrice = document.querySelector('.total-price');
   if (price === undefined) {
     currentPrice.textContent = '0,00';
     return;    
   }
-  const currentPriceValue = currentPrice.textContent.replace('.', '').replace(',', '.'); 
-  const stringOptions = {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  };
+  const currentPriceValue = getPriceFromString(currentPrice); 
   const newPrice = parseFloat(currentPriceValue) + price;
-  currentPrice.textContent = newPrice.toLocaleString('pt-br', stringOptions); // Formata como 1.000,00, por exemplo
+  currentPrice.textContent = formatPriceToString(newPrice);
 };
 
 const updateLocalStorage = () => {
@@ -50,18 +56,41 @@ const updateLocalStorage = () => {
 };
 
 const cartItemClickListener = (event) => {
-  const item = event.target;
-  const price = item.textContent.split('$')[1];
+  const item = event.target.parentElement;
+  const price = getPriceFromString(item.querySelector('.cart__price'));
   item.remove();
   updateTotalPrice(-parseFloat(price));
   updateLocalStorage();
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemImage = (image) => {
+  const div = document.createElement('div');
+  const img = createProductImageElement(image);
+  div.className = 'cart__image';
+  div.append(img);
+  return div;
+};
+
+const createCartItemDescription = ({ sku, name, salePrice }) => {
+  const div = document.createElement('div');
+  adjustedPrice = formatPriceToString(salePrice);
+  div.append(createCustomElement('p', 'cart__sku', sku));
+  div.append(createCustomElement('p', 'cart__name', name));
+  div.append(createCustomElement('p', 'cart__price', adjustedPrice));
+  div.className = 'cart__description';
+  return div;
+};
+
+const createCartItemElement = ({ sku, name, salePrice, image }) => {
   const li = document.createElement('li');
+  const cartImage = createCartItemImage(image);
+  const cartDescription = createCartItemDescription({ sku, name, salePrice });
+  const cartRemove = createCustomElement('span', 'cart__remove', 'x');
   li.className = 'cart__item';
-  li.addEventListener('click', cartItemClickListener);
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.append(cartImage);
+  li.append(cartDescription);
+  li.append(cartRemove);
+  cartRemove.addEventListener('click', cartItemClickListener);
   updateTotalPrice(salePrice);
   return li;
 };
@@ -70,8 +99,8 @@ const addItemToCartFromAddButton = async (event) => {
   const cart = document.querySelector(CART_CLASS);
   const itemId = getSkuFromProductItem(event.target.parentElement);
   const item = await fetchItem(itemId);
-  const { id: sku, title: name, price: salePrice } = item;
-  const cartItem = createCartItemElement({ sku, name, salePrice });
+  const { id: sku, title: name, price: salePrice, thumbnail: image } = item;
+  const cartItem = createCartItemElement({ sku, name, salePrice, image });
   cart.append(cartItem);
   updateLocalStorage();
 };
@@ -103,8 +132,8 @@ const addItemsFromLocalStorage = () => {
   cart.outerHTML = storedCartItems;
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((item) => {
-    item.addEventListener('click', cartItemClickListener);
-    const price = item.textContent.split('$')[1];
+    item.querySelector('.cart__remove').addEventListener('click', cartItemClickListener);
+    const price = item.querySelector('.cart__price').textContent;
     updateTotalPrice(parseFloat(price));
   });
 };

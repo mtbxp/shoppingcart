@@ -147,3 +147,49 @@ body {
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
+
+.cart__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 5px auto;
+  border: 2px solid rgb(234, 234, 233);
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: rgb(249, 249, 246);
+}
+
+.cart__sku {
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  color: grey;
+}
+
+.cart__name {
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  color: #323333;
+}
+
+.cart__price {
+  color: rgb(240, 100, 100);
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.cart__price::before {
+  content: 'R$ ';
+}
+
+.cart__remove {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  color: #323333;
+  font-weight: 800;
+}
+
+.cart__description {
+  padding: 8px 15px;
+}
