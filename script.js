@@ -28,8 +28,31 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const createElementPrice = async (total) => {
+  const paragraph = document.querySelector('.total-price');
+  paragraph.innerText = total;
+  const cart = document.querySelector('.cart');
+  return cart.appendChild(paragraph);
+};
+
+const sumPriceItems = async () => {
+  const cartItemsforSum = document.querySelectorAll('.cart__item');
+  const arr = [];
+  cartItemsforSum.forEach((element) => {
+    const result = element.innerText.split(/[|]+/);
+    const priceSplit = result[2].split('$');
+    const numbers = parseFloat(priceSplit[1]);
+    arr.push(numbers);
+  });
+  const sum = arr.reduce((acc, curr) => acc + curr);
+  const sumWithTwoDecimals = sum.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+  const total = parseFloat(sumWithTwoDecimals);
+  return createElementPrice(total);
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
+  sumPriceItems();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -45,19 +68,22 @@ const fetchItemId = async (id) => {
   newObj = { sku: item.id, name: item.title, salePrice: item.price };
   sectionCart.appendChild(createCartItemElement(newObj));
   saveCartItems(sectionCart.innerHTML);
+  sumPriceItems();
 };
 
 const showItens = async () => {
   const { results } = await fetchProducts('computador');
-  results.map((element) => ({ sku: element.id, name: element.title, image: element.thumbnail }))
+  results
+    .map((element) => ({ sku: element.id, name: element.title, image: element.thumbnail }))
     .forEach((element) => sectionItem.appendChild(createProductItemElement(element)));
   const result = document.querySelectorAll('.item');
-  result.forEach((element) => {
-    element.lastChild.addEventListener('click', (event) => {
-      const id = event.target.parentNode.firstChild.innerText;
-      fetchItemId(id);
+  result
+    .forEach((element) => {
+      element.lastChild.addEventListener('click', (event) => {
+        const id = event.target.parentNode.firstChild.innerText;
+        fetchItemId(id);
+      });
     });
-  });
 };
 
 const recoveryCart = () => {
@@ -72,6 +98,7 @@ const clearCartItems = () => {
     const cartItems = document.querySelectorAll('.cart__item');
     cartItems.forEach((element) => element.remove());
   });
+  sumPriceItems();
 };
 
 window.onload = () => {
