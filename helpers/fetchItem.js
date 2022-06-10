@@ -9,12 +9,6 @@ const fetchItem = async (id) => {
   }
 };
 
-async function printAPI(id) {
-  console.log(await fetchItem(id));
-}
-
-// printAPI('MLB1615760527');
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
