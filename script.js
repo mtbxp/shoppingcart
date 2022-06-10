@@ -36,7 +36,7 @@ const cartItemClickListener = ({ target }) => {
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerHTML = `<span class="hide item__sku">SKU: ${id}</span>${title}<br><b>R$${price}</b>`;
+  li.innerHTML = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
