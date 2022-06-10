@@ -68,6 +68,17 @@ const carts = Object.values(cart);
 carts[0].innerText = `Valor total da compra: R$ ${sum} REAIS`;
 };
 
+const esvaziarCarrinho = () => {
+  const botao = document.getElementsByClassName('empty-cart');
+  botao[0].addEventListener('click', () => {
+    localStorage.clear();
+  const cart = document.querySelectorAll('.cart__items');
+  cart[0].innerHTML = '';
+  const totalprice = document.getElementsByClassName('total-price');
+  totalprice[0].innerText = '';
+  });
+};
+esvaziarCarrinho();
 const AddNocarrinho = async () => {
 const bd = [];
 const soma = [];
