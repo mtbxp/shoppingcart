@@ -55,10 +55,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 // para realizar a função abaixo foi consultado o site stackoverflow
 const emptyCart = () => {
-  const priceDiv = document.getElementById('value');
+ // const priceDiv = document.getElementById('value');
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((item) => item.remove());
-  priceDiv.innerText = 0;
+ // priceDiv.innerText = 0;
 };
 
 const buttonToEmptyCart = document.querySelector('.empty-cart');
