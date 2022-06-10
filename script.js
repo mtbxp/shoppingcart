@@ -23,7 +23,6 @@ const createCartItemElement = (sku, name, salePrice) => {
 const buscaItem = async (element) => {
   const addItem = await fetchItem(element);
   const { id, title, price } = addItem;
-  soma(price);
   listItems.appendChild(createCartItemElement(id, title, price));
   saveCartItems(listItems.innerHTML);
   };
@@ -65,7 +64,7 @@ const createProductItemElement = ({
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const buscaLista = async () => {
   const lista = await fetchProducts('computador');
