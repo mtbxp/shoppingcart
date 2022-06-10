@@ -1,9 +1,10 @@
-const fetchItem = async(item) => {
+const urlfetchItem = (urlIdItem) => `https://api.mercadolibre.com/items/${urlIdItem}`;
 
-  const urlfetchItem = `https://api.mercadolibre.com/items/${Item}`;
+const fetchItem = async (urlIdItem)  => {
   try {
-    const response = await fetch(urlfetchItem);
-    const data = await response.json();
+    const url = urlfetchItem(urlIdItem)
+    const response = await fetch(url);
+    const data = response.json();
     return data;
   } catch (error) {
     return error;
