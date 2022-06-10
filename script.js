@@ -48,6 +48,7 @@ const productsCar = async (item) => {
     salePrice: itemsCar.price,
   };
   itemsSection.appendChild(createCartItemElement(itemsInfor));
+  saveCartItems(itemsSection.innerHTML);
 };
 
 const showProducts = async () => {
@@ -71,7 +72,4 @@ const showProducts = async () => {
 
 window.onload = () => { 
   showProducts();
-  productsCar();
-  saveCartItems();
-  getSavedCartItems();
 };
