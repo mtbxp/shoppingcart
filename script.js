@@ -1,3 +1,5 @@
+const olList = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -39,18 +41,14 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const getCartItemElement = async () => {
-  await fetchItem('MLB1341706310');
-  
-  const OL = document.querySelector('.cart__items');
+const getCartItemElement = () => {
   const buttonsAdd = document.querySelectorAll('.item__add');
-
   buttonsAdd.forEach((button) => {
     button.addEventListener('click', async () => {
       const itemId = getSkuFromProductItem(button.parentElement); 
       const itemValues = await fetchItem(itemId);
-      const itemSelected = createCartItemElement(itemValues);
-      OL.appendChild(itemSelected);
+      const itemSelected = await createCartItemElement(itemValues);
+      olList.appendChild(itemSelected);
     });
   });
 };
@@ -60,8 +58,9 @@ const start = async () => {
   const ITEMS = document.querySelector('.items');
 
   results.forEach((e) => ITEMS.appendChild(createProductItemElement(e)));
-  return results;
 };
 
-window.onload = start;
-getCartItemElement();
+window.onload = async () => {
+  await start();
+  getCartItemElement();
+};
