@@ -27,7 +27,7 @@ const countCart = (amount) => {
 
 const checkPrice = (results, indexes) => {
   // console.log(results)
-  cy.wait(1000);
+  cy.wait(3000);
   let total = 0;
   indexes.forEach(index => total += results[index].price);
   cy.get(TOTAL_PRICE)

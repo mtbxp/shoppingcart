@@ -1,12 +1,7 @@
 const saveCartItems = async (item) => {
-  console.log('fora');
-  console.log(item);
   try {
-    if (item) {
-      console.log('aquii');
-      const data = JSON.stringify(item);
-      localStorage.setItem('cartItems', data);
-    }
+    const data = JSON.stringify(item);
+    localStorage.setItem('cartItems', data);
   } catch (error) {
     return error;    
   }
