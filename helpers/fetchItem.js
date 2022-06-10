@@ -13,7 +13,7 @@ async function printAPI(id) {
   console.log(await fetchItem(id));
 }
 
-printAPI('MLB1615760527');
+// printAPI('MLB1615760527');
 
 if (typeof module !== 'undefined') {
   module.exports = {

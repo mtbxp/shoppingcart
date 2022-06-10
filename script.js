@@ -1,6 +1,6 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
-const { fetchItem } = require("./helpers/fetchItem");
+// const { fetchItem } = require("./helpers/fetchItem");
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -28,18 +28,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-async function insertProductElement() {
-  const listResults = await fetchProducts('computador');
-  listResults.forEach((item) => {
-    const sku = item.id;
-    const name = item.title;
-    const image = item.thumbnail;
-    const itemSection = createProductItemElement({ sku, name, image });
-    const parentElement = document.querySelector('.items');
-    parentElement.appendChild(itemSection);
-  });
-}
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -63,7 +51,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 // O primeiro elemento filho da section tem innerText = sku (.firstElementChild)
 // sku é o mesmo que id, então basta pegar o valor (element.value é uma ideia) e colocar na função abaixo.
 
-async function insertCartItem (id) {
+async function insertCartItemWithId(id) {
   const productInfo = await fetchItem(id);
   const sku = productInfo.id;
   const name = productInfo.title;
@@ -73,4 +61,24 @@ async function insertCartItem (id) {
   parentElement.appendChild(li);
 }
 
+async function insertProductElement() {
+  const listResults = await fetchProducts('computador');
+  listResults.forEach((item) => {
+    const sku = item.id;
+    const name = item.title;
+    const image = item.thumbnail;
+    const itemSection = createProductItemElement({ sku, name, image });
+    const parentElement = document.querySelector('.items');
+    parentElement.appendChild(itemSection);
+    // console.log(itemSection.lastElementChild);
+    itemSection.lastElementChild.addEventListener('click', () => {
+      // console.log(itemSection.firstElementChild.innerText);
+      const id = itemSection.firstElementChild.innerText;
+      insertCartItemWithId(id);
+    });
+  });
+}
+
 insertProductElement();
+
+// window.onload = insertCartItemWithClick;
