@@ -1,6 +1,6 @@
 const productToAppend = document.querySelector('.items');
 const productToAppendInCart = document.querySelector('.cart__items');
-let totalValueOfPurchase;
+// let totalValueOfPurchase;
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -29,8 +29,8 @@ const createProductItemElement = ({ id: sku, title: name, price: salePrice, thum
   return section;
 };
 
-const getSkuFromProductItem = () =>
-item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = () =>
+// item.querySelector('span.item__sku').innerText;
 // getSkuFromProductItem();
 
 const cartItemClickListener = (item) => {
