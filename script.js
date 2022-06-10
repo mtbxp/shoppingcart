@@ -1,8 +1,7 @@
-const productToAppend = document.querySelector('.items');
-const productToAppendInCart = document.querySelector('.cart__items');
-// const getAllProducts = document.querySelector('.cart__items');
-// const separatorOfValues = '$';
-// let totalValueOfPurchase;
+const productToAppend = () => document.querySelector('.items');
+const getAllProducts = () => document.querySelector('.cart__items');
+const everyProductInCart = () => document.querySelectorAll('.cart__item');
+const separatorOfValues = '$';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -31,12 +30,6 @@ const createProductItemElement = ({ id: sku, title: name, price: salePrice, thum
   return section;
 };
 
-// const getSkuFromProductItem = () => item.querySelector('span.item__sku').innerText;
-// getSkuFromProductItem();
-
-// const getNameFromProductItem = () => item.querySelector('span.item__sku').innerText;
-// getNameFromProductItem();
-
 const cartItemClickListener = (item) => {
   item.target.remove();
 };
@@ -49,11 +42,35 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+const appendTotalCartValue = async (param) => {
+  const getTotalElement = await document.querySelector('.total-price');
+  getTotalElement.innerHTML = param;
+  return getTotalElement;
+};
+
+const getTotalCartValue = async () => {
+  const allProductsOfCart = await everyProductInCart();
+  const arrayOfProducts = Array.from(allProductsOfCart);
+
+  const ValuesOfPurchase = arrayOfProducts.reduce((acc, product) => {
+    const productText = product.innerText;
+    const purchaseValue = productText.split(separatorOfValues, 7)[1];
+    const toNumber = Number(purchaseValue);
+    const totalPurchaseValue = acc + toNumber;
+
+    return totalPurchaseValue;
+  }, 0);
+  
+  return appendTotalCartValue(ValuesOfPurchase);
+};
+
 const sendToCart = async (event) => {
   const rescueElementId = event.target.parentNode.firstChild.innerText;
   const productInfo = await fetchItem(rescueElementId);
   const itemToSend = createCartItemElement(productInfo);
-  productToAppendInCart.appendChild(itemToSend);
+  const products = getAllProducts();
+  products.appendChild(itemToSend);
+  getTotalCartValue();
 };
 
 const createElement = async () => {
@@ -62,24 +79,14 @@ const createElement = async () => {
     .forEach((product) => {
       const createSectionofProduct = createProductItemElement(product);
       createSectionofProduct.lastChild.addEventListener('click', sendToCart);
-      productToAppend.appendChild(createSectionofProduct);
+      const products2 = productToAppend();
+      products2.appendChild(createSectionofProduct);
     }));
 };
 
-// const getTotalCartValue = (getAllProducts, separatorOfValues) => {
-//   getAllProducts.split(separatorOfValues, 10)[0];
-// };
-
-// const totalValue = () => {
-//   const getProducts = document.querySelector('.cart__items');
-//   const toArray = getProducts.reduce((addProduct) => parseInfo(addProduct));
-//   totalValueOfPurchase = toArray;
-// };
-// console.log(totalValue);
-
 const removeAllElements = () => {
-  const getAllProductsInTheCart = document.querySelector('.cart__items');
-  getAllProductsInTheCart.remove();
+  const product = getAllProducts();
+  product.remove();
   const reCreateOl = document.querySelector('.cart');
   const createOl = document.createElement('ol');
   createOl.className = 'cart__items';
@@ -87,16 +94,10 @@ const removeAllElements = () => {
 };
 
 const emptyCart = async () => {
-  const getEmptyButton = document.querySelector('.empty-cart');
+  const getEmptyButton = await document.querySelector('.empty-cart');
   getEmptyButton.addEventListener('click', removeAllElements);
 };
 emptyCart();
-
-// const totalPrice = async () => {
-//   const getTotalPriceElement = document.querySelector('.total-price');
-//   getTotalPriceElement.innerText = `${totalValueOfPurchase}`;
-// };
-// totalPrice();
 
 window.onload = () => {
   createElement();
