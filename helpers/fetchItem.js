@@ -8,7 +8,6 @@ const fetchItem = async (item) => {
     return new Error('You must provide an url');
   }
 };
-fetchItem();
 
 if (typeof module !== 'undefined') {
   module.exports = {
