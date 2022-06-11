@@ -1,3 +1,49 @@
+const lista = [];
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => { // req 5
+  // event.target.closest('li').remove(); caso eu estilize a ol/li
+  event.target.remove();
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => { // req4
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+async function addProductToCart(elementSku) {
+  const element1 = await fetchItem(elementSku);
+  const { id: sku, title: name, price: salePrice } = element1;
+  const resultado = createCartItemElement({ sku, name, salePrice });
+  const ol = document.getElementsByClassName('cart__items')[0];
+  ol.appendChild(resultado);
+}
+// const buttonClearCart = document.getElementsByClassName('empty-cart');
+// console.log(buttonClearCart);
+// buttonClearCart.addEventListener('click', () => {
+//   localStorage.clear();
+//   const ol = document.getElementsByClassName('cart__items')[0];
+//   ol.innerHTML = [];
+// });
+
+// Durante a realização do requisito 4, recebi orientações da colega Maria Clara Reis.
+async function addButtonEvent(button) { // req4
+  button.addEventListener('click', (event) => {
+    const elementSku = getSkuFromProductItem(event.target.parentNode);
+    console.log(elementSku);
+    // const elementSku = event.target.parentNode.firstChild.innerText;
+    addProductToCart(elementSku);    
+    lista.push(elementSku);
+    saveCartItems(lista);
+    // console.log(lista);
+     // buttonClearCart();
+  });
+}
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,49 +65,17 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+
+  const botao = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(botao);
+  addButtonEvent(botao);
 
   return section;
 }; 
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => { // req 5
-  // event.target.closest('li').remove(); caso eu estilize a ol/li
-  event.target.remove();
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => { // req4
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
-// Durante a realização do requisito 4, recebi orientações dos colegas Willian Portela, 
-// João Mattedi, Maria Clara Reis e Emily Menezes.
-
-async function appendFetchItems(idQualquer) { // req4
-  const element1 = await fetchItem(idQualquer);
-  const { id: sku, title: name, price: salePrice } = element1;
-  const resultado = createCartItemElement({ sku, name, salePrice });
-  const ol = document.getElementsByClassName('cart__items')[0];
-  ol.appendChild(resultado);
-  const li = document.querySelector('.item__add');
-  li.addEventListener('click', createCartItemElement);
-}
-
-function addBotao() { // req4
-  const listButton = document.querySelectorAll('.item__add');
-  listButton.forEach((botao) => botao.addEventListener('click', (event) => {
-    const eventoBotao = event.target.parentNode.firstChild.innerText;
-    appendFetchItems(eventoBotao);
-  }));
-}
-
-async function appendFetchProducts() { // req1
-  const result = await fetchProducts('computador');
+// req1
+async function loadProducts(productName) {
+  const result = await fetchProducts(productName);
   const productsList = result.results.map(function (p) {
     return {
       sku: p.id,
@@ -74,8 +88,22 @@ async function appendFetchProducts() { // req1
     const sectionsElement = document.getElementsByClassName('items')[0];
     sectionsElement.appendChild(resultSection);
   });
-  addBotao();
+  // addBotao();
 }
 
-window.onload = () => { appendFetchProducts(); };
-// Referências: <https://developer.mozilla.org/pt-BR/docs/Web/API/Element/closest>
+window.onload = () => { 
+  loadProducts('computador'); 
+
+  const textoSkusSalvas = getSavedCartItems();
+  let skusSalvas = [];
+  if (textoSkusSalvas !== null) {
+    console.log(textoSkusSalvas);
+   skusSalvas = textoSkusSalvas.split(',');    
+  }   
+   console.log(textoSkusSalvas);
+
+  for (let index = 0; index < skusSalvas.length; index += 1) {
+    addProductToCart(skusSalvas[index]);
+    lista.push(skusSalvas[index]);
+  }   
+  };
