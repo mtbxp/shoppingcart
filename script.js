@@ -1,6 +1,4 @@
-// const { fetchItem } = require("./helpers/fetchItem");
-
-// const saveCartItems = require("./helpers/saveCartItems");
+const olCartItems = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -31,7 +29,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  const olCartItems = document.querySelector('.cart__items');
   event.target.remove();
   saveCartItems(olCartItems.innerHTML);
 };
@@ -48,7 +45,6 @@ const sendToCart = async (event) => {
   const ElementId = event.target.parentNode.firstChild.innerText;
   const product = await fetchItem(ElementId);
   const InfoToCart = createCartItemElement(product);
-  const olCartItems = document.querySelector('.cart__items');
   olCartItems.appendChild(InfoToCart);
   saveCartItems(olCartItems.innerHTML);
 };
@@ -65,7 +61,6 @@ const fetchProductsToCreateProducts = async () => {
 const clearCartItem = () => {
   const btnClear = document.querySelector('.empty-cart');
   btnClear.addEventListener('click', () => {
-    const olCartItems = document.querySelector('.cart__items');
     olCartItems.innerHTML = '';
   });
 };
