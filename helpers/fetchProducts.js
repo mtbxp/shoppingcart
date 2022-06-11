@@ -7,7 +7,7 @@ const fetchProducts = async (query) => {
     const final = await response.json();
     return final;
   } catch (error) {
-    return error;
+    throw new Error('You must provide an url');
   }
 };
 
