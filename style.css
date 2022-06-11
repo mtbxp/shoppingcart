@@ -147,3 +147,9 @@ body {
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
+
+.price-container {
+  background-color: rgb(220, 220, 220);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

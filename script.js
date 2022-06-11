@@ -35,8 +35,8 @@ const addItemsToLocalStorage = () => {
 };
 
 const sumCart = () => {
-  const totalPrice = document.querySelector('.total-price');
   let sum = 0;
+  const totalPrice = document.querySelector('.total-price');
   const lis = document.querySelectorAll('li');
 
   lis.forEach((item) => {
@@ -93,8 +93,19 @@ const addItemsToCart = () => {
   items.addEventListener('click', addEventToProducts);
 };
 
+const emptyCart = () => {
+  const lis = document.querySelectorAll('.cart__item');
+  lis.forEach((item) => item.remove());
+};
+
+const addEventToBtn = () => {
+  const button = document.querySelector('.empty-cart');
+  button.addEventListener('click', emptyCart);
+};
+
 window.onload = () => {
   createItemsList();
   addItemsToCart();
   loadLocalData();
+  addEventToBtn();
 };
