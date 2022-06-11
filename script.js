@@ -37,7 +37,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
-// adição um texto de carregandodurante uma requisição à API
+//  carregando durante uma requisição à API
 const loading = async () => {
   const main = document.querySelector(classItem);
   const p = document.createElement('p');
