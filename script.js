@@ -1,15 +1,7 @@
-// createProductImageElement: Cria um elemento de imagem;
-// createCustomElement: Estrutura para criar um elemento;
-// createProductItemElement: Cria a lista de produtos;
-// getSkuFromProductItem: Pega o id de um produto;
-// cartItemClickListener: Escuta a ação de clicar em um item no carrinho;
-// createCartItemElement: Cria os elementos do carrinho.
-// fetchProducts: busca array com informações do produto por "computador"
-// fetchItem: busca array com informações do produto com id
-// getSavedCartItems:
-// saveCartItems:
-
 const itemsShowcase = document.querySelector('.items');
+const list = document.querySelector('.cart__items');
+const priceTotal = document.querySelector('.total-price');
+const saves = [];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -32,7 +24,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 };
 
@@ -47,10 +38,20 @@ const showcase = async () => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const getNameFromProductItem = (item) => item.querySelector('span.item__title').innerText;
+const sumPrices = () => {
+  const arrayPrices = [];
+  const itemsCart = document.querySelectorAll('.cart__item');
+  itemsCart.forEach((item) => arrayPrices.push(Number(item.innerText.split('$')[1])));
+  const sum = arrayPrices.reduce((acc, crr) => acc + crr, 0);
+  if (sum === 0) {
+    return '';
+  }
+  return sum;
+};
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  priceTotal.innerText = sumPrices();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -65,22 +66,39 @@ const addItemToCart = async (event) => {
   const item = event.target.parentElement;
   const id = getSkuFromProductItem(item);
   const selected = await fetchItem(id);
-  const data = { sku: getSkuFromProductItem(item),
-      name: getNameFromProductItem(item),
-      salePrice: selected.price };
+  const data = { sku: id, name: selected.title, salePrice: selected.price };
   const element = createCartItemElement(data);
-  const list = document.querySelector('.cart__items');
   list.appendChild(element);
+  saves.push(data);
+  saveCartItems(JSON.stringify(saves));
+  priceTotal.innerText = sumPrices();
 };
 
 const buttonsListener = () => {
-  const buttons = document.querySelectorAll('.item');
-  buttons.forEach((btn) => btn.addEventListener('click', addItemToCart));
+  document.querySelectorAll('.item').forEach((btn) => btn.addEventListener('click', addItemToCart));
 };
+
+const getIntemsLocalstorage = () => {
+  const save = getSavedCartItems();
+  const itemsLocalstorage = JSON.parse(save);
+  const arr = [...itemsLocalstorage];
+  arr.forEach((el) => {
+    const element = createCartItemElement(el);
+    list.appendChild(element);
+  });
+  priceTotal.innerText = sumPrices();
+};
+
+document.querySelector('.empty-cart').addEventListener('click', () => {
+  localStorage.clear();
+  list.innerHTML = '';
+  priceTotal.innerText = sumPrices();
+});
 
 const start = async () => {
   await showcase();
   buttonsListener();
+  getIntemsLocalstorage();
 };
 
 window.onload = () => start();
