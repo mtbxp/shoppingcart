@@ -34,9 +34,21 @@ const addItemsToLocalStorage = () => {
   saveCartItems(textToBeSaved);
 };
 
+const sumCart = () => {
+  const totalPrice = document.querySelector('.total-price');
+  let sum = 0;
+  const lis = document.querySelectorAll('li');
+
+  lis.forEach((item) => {
+    sum += parseFloat(item.innerText.split('$')[1] * 100);
+  });
+  totalPrice.innerHTML = (sum / 100);
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
   addItemsToLocalStorage();
+  sumCart();
 };
 
 const loadLocalData = () => {
@@ -68,6 +80,7 @@ const createItemsList = async () => {
 
 const addition = (info) => {
   cartItems.appendChild(createCartItemElement(info));
+  sumCart();
 };
 
 const addEventToProducts = async (event) => {
