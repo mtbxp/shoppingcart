@@ -103,6 +103,8 @@ const addItemsToCart = () => {
 const emptyCart = () => {
   const lis = document.querySelectorAll('.cart__item');
   lis.forEach((item) => item.remove());
+  localStorage.clear('cartItems');
+  sumCart();
 };
 
 const addEventToBtn = () => {
