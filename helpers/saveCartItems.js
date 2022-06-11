@@ -1,11 +1,15 @@
 const saveCartItems = (product) => {
-if (localStorage.getItem('cartItems') !== null) {
-  const information = JSON.parse(localStorage.getItem('cartItems'));
-  localStorage.setItem('cartItems', JSON.stringify([...information, product]));
-  }
-if (localStorage.getItem('cartItems') === null) {
-localStorage.setItem('cartItems', JSON.stringify([product]));
-}
+  const array = [product];
+//   const localstorage = localStorage.getItem('cartItems');
+// if (localstorage !== null) {
+//   const information = JSON.parse(localstorage);
+//   localStorage.setItem('cartItems', JSON.stringify([...information, product]));
+//   }
+// if (localstorage === null) {
+// localStorage.setItem('cartItems', JSON.stringify([product]));
+// }
+localStorage.setItem('cartItems', array);
+// };
 };
 
 if (typeof module !== 'undefined') {

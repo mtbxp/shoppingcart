@@ -1,3 +1,7 @@
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+
 const importItems = document.querySelector('.items');
 const elementClass = document.querySelector('.cart__items');
 
@@ -53,6 +57,16 @@ const totalPrice = () => {
   const idCartItem = document.querySelectorAll('.cart__item');
   console.log(idCartItem[0].innerHTML);
 };
+function recebeSave(itemsId) {
+    const localstorage = localStorage.getItem('cartItems');
+if (localstorage !== null) {
+  const information = JSON.parse(localstorage);
+  localStorage.setItem('cartItems', JSON.stringify([...information, itemsId]));
+  }
+if (localstorage === null) {
+localStorage.setItem('cartItems', JSON.stringify([itemsId]));
+}
+}
 
 function addItems() {
   fetchProducts('computador').then((items) => {
@@ -64,7 +78,7 @@ function addItems() {
 const elementChild = (element) => {
   fetchItem(element).then((itemsId) => {
   elementClass.appendChild(createCartItemElement(itemsId));
-  saveCartItems(itemsId);
+  recebeSave(itemsId);
   totalPrice();  
 });
 }; 
@@ -83,9 +97,19 @@ const load = async () => {
   await fetchProducts();
   divLoad.remove();
 };
-
+function getSaved(itemsCart) {
+  const findItems = document.querySelector('.cart__items');
+  const information = JSON.parse(getSavedCartItems());
+  if (information) {
+    information.forEach((element) => {
+      const currentItem = itemsCart(element);
+      findItems.appendChild(currentItem);
+    });
+  }
+}
+console.log(getSavedCartItems);
 window.onload = () => { 
   addItems();
-  getSavedCartItems(createCartItemElement);
+  getSaved(createCartItemElement);
   load();
 };

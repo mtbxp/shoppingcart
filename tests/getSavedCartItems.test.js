@@ -17,7 +17,7 @@ test('Teste se, ao executar getSavedCartItems, o método localStorage.getItem é
   {
   try {
   await getSavedCartItems();
-  } catch (erro) {
+  } catch (error) {
   expect(error).toEqual(new Error('mensagem esperada aqui'));
   }
   });
