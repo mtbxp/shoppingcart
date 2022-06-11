@@ -52,10 +52,10 @@ const productsCar = async (item) => {
   saveCartItems(itemsSection.innerHTML);
 };
 
-// const getStorage = () => {
-//   const getItems = window.localStorage.getItem('cartItems');
-//   console.log(JSON.parse(getItems));
-// };
+const getStorage = () => {
+  const getItems = window.localStorage.getItem('cartItems');
+  console.log(getItems);
+};
 
 const showProducts = async () => {
   const productSection = document.querySelector('.items');
@@ -78,4 +78,5 @@ const showProducts = async () => {
 
 window.onload = () => { 
   showProducts();
+  getStorage();
 };
