@@ -62,6 +62,15 @@ const fetchProductsToCreateProducts = async () => {
   });
 };
 
+const clearCartItem = () => {
+  const btnClear = document.querySelector('.empty-cart');
+  btnClear.addEventListener('click', () => {
+    const olCartItems = document.querySelector('.cart__items');
+    olCartItems.innerHTML = '';
+  });
+};
+clearCartItem();
+
 function start() {
   fetchProductsToCreateProducts();
   getSavedCartItems();
