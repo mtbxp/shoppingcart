@@ -2,7 +2,11 @@ const localStorageSimulator = require('../mocks/localStorageSimulator');
 const saveCartItems = require('../helpers/saveCartItems');
 
 localStorageSimulator('setItem');
-
+// const saveCartItems = (product) => {
+//     // seu código aqui
+  
+//   localStorage.setItem('cartItems', product);
+//   };
 describe('3 - Teste a função saveCartItems', () => {
     test('Teste se, ao executar saveCartItems com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado', async () => {
     await saveCartItems('<ol><li>Item</li></ol>');
