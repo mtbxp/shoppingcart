@@ -14,4 +14,8 @@ describe('4 - Teste a função getSavedCartItems', () => {
     const expected = localStorage.setItem('cartItems');
     expected(results).toHaveBeenCalledWith(expected);
   })
+  it('Teste se, ao executar getSavedCartItems, o método addEventListening é chamado com o "cartItems" como parâmetro', () => {
+    const results = remocaoLi();
+    expected(results).toHaveBeenCalled();
+  })
 });
