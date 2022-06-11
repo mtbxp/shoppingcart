@@ -13,9 +13,8 @@ const cartPriceManagement = () => {
     const numberOfInner = Number(item.innerText.split(' ').pop().slice(1));
     totalPrice += numberOfInner;
   });
-  // const formatNumber = totalPrice;
-  priceDiv.innerText = totalPrice;
-   /*  .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); // formatação encontrada em https://www.alura.com.br; */
+  const formatNumber = Math.floor(totalPrice * 100) / 100;
+  priceDiv.innerText = formatNumber;
 };
 
 const cartItemClickListener = (event) => {
