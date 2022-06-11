@@ -2,6 +2,7 @@
  const classCardItems = '.cart__items';
  const subValue = '.total-price';
  const cleanCart = '.empty-cart';
+ const classItem = '.items';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -30,11 +31,26 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
 // codigo remover Items do carrinho
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
+// adição um texto de carregandodurante uma requisição à API
+const loading = async () => {
+  const main = document.querySelector(classItem);
+  const p = document.createElement('p');
+  p.className = 'loading';
+  p.innerText = 'carregando...';
+
+  main.appendChild(p);
+
+  setTimeout(() => {
+    document.querySelector('.loading').remove();
+  }, 2000);
+};
+
 // Limpar o carrinho de compras
 const cleanCartClickListener = () => {
   const cart = document.querySelector(classCardItems);
@@ -102,6 +118,7 @@ window.onload = async () => {
   await addProductsToSite();
   loadCart();
   cleanCartClickListener();
+  loading();
 
 // Adicionando o Botao na captura dos items
 const addButtonsItem = document.querySelectorAll('.item__add');
