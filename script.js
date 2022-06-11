@@ -1,6 +1,7 @@
 // @ts-nocheck
  const classCardItems = '.cart__items';
  const subValue = '.total-price';
+ const cleanCart = '.empty-cart';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -34,16 +35,26 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
+// Limpe o carrinho de compras
+const cleanCartClickListener = () => {
+  const cart = document.querySelector(classCardItems);
+  cart.innerHTML = getSavedCartItems();
+  document.querySelector(cleanCart).addEventListener('click', () => {
+    localStorage.clear();
+    document.querySelector(classCardItems).innerHTML = '';
+  });
+};
+
 // Calcule o valor total dos itens do carrinho de compras
 const calculateTotal = () => {
   totalValue = 0;
   const total = document.querySelector(subValue);
   const cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach((element) => {
-  totalValue += parseFloat(element.innerHTML.split('$')[1], 10);
-  document.querySelector(classCardItems).addEventListener('click', calculateTotal);
-});
-total.innerHTML = `${totalValue}`;
+    totalValue += parseFloat(element.innerHTML.split('$')[1], 10);
+    document.querySelector(classCardItems).addEventListener('click', calculateTotal);
+  });
+  total.innerHTML = `${totalValue}`;
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -90,6 +101,7 @@ const addProductsToCarrinho = async (event) => {
 window.onload = async () => {
   await addProductsToSite();
   loadCart();
+  cleanCartClickListener();
 
 // Adicionando o Botao na captura dos items
 const addButtonsItem = document.querySelectorAll('.item__add');
