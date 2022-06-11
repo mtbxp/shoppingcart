@@ -27,8 +27,20 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const loading = () => {
+  const loadingText = createCustomElement('span', 'loading', 'loading...');
+  itemsShowcase.appendChild(loadingText);
+};
+
+const removeLoading = () => {
+  const loadingMessage = document.querySelector('.loading');
+  loadingMessage.remove();
+};
+
 const showcase = async () => {
+  loading();
   const resultApi = await fetchProducts('computador');
+  removeLoading();
   resultApi.results.forEach((product) => {
     const { id: sku, title: name, thumbnail: image } = product;
     const products = createProductItemElement({ sku, name, image });
@@ -79,14 +91,16 @@ const buttonsListener = () => {
 };
 
 const getIntemsLocalstorage = () => {
-  const save = getSavedCartItems();
-  const itemsLocalstorage = JSON.parse(save);
-  const arr = [...itemsLocalstorage];
-  arr.forEach((el) => {
-    const element = createCartItemElement(el);
-    list.appendChild(element);
-  });
-  priceTotal.innerText = sumPrices();
+  if (localStorage.getItem('cartItems') !== null) {
+    const save = getSavedCartItems();
+    const itemsLocalstorage = JSON.parse(save);
+    const arr = [...itemsLocalstorage];
+    arr.forEach((el) => {
+      const element = createCartItemElement(el);
+      list.appendChild(element);
+    });
+    priceTotal.innerText = sumPrices();
+  }  
 };
 
 document.querySelector('.empty-cart').addEventListener('click', () => {
