@@ -1,5 +1,6 @@
 // @ts-nocheck
  const classCardItems = '.cart__items';
+ const subValue = '.total-price';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -33,6 +34,17 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
+// Calcule o valor total dos itens do carrinho de compras
+const calculateTotal = () => {
+  totalValue = 0;
+  const total = document.querySelector(subValue);
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach((element) => {
+  totalValue += parseFloat(element.innerHTML.split('$')[1], 10);
+  document.querySelector(classCardItems).addEventListener('click', calculateTotal);
+});
+total.innerHTML = `${totalValue}`;
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -47,9 +59,9 @@ const addProductsToSite = async () => {
   const products = await fetchProducts('computador');
   const listProduct = products.results;
   listProduct.forEach((product) => {
-  const { id: sku, title: name, thumbnail: image } = product;
-  const item = createProductItemElement({ sku, name, image });
-  items.appendChild(item);
+    const { id: sku, title: name, thumbnail: image } = product;
+    const item = createProductItemElement({ sku, name, image });
+    items.appendChild(item);
   });
 };
 // Salvar o carrinho de compras no localStorage
@@ -62,7 +74,6 @@ const loadCart = () => {
   document.querySelector(classCardItems).innerHTML = getSavedCartItems();
   document.querySelector(classCardItems).addEventListener('click', cartItemClickListener);
 };
-
 // Adicionar o Produto ao Carringo de Compras
 const addProductsToCarrinho = async (event) => {
   const carts = document.querySelector('.cart__items');
@@ -73,11 +84,12 @@ const addProductsToCarrinho = async (event) => {
   carts.appendChild(cartItem);
 
   saveCart();
+  calculateTotal();
 };
 
 window.onload = async () => {
-await addProductsToSite();
-loadCart();
+  await addProductsToSite();
+  loadCart();
 
 // Adicionando o Botao na captura dos items
 const addButtonsItem = document.querySelectorAll('.item__add');
