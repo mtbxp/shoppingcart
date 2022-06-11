@@ -35,7 +35,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
   event.target.remove();
 };
-// Limpe o carrinho de compras
+// Limpar o carrinho de compras
 const cleanCartClickListener = () => {
   const cart = document.querySelector(classCardItems);
   cart.innerHTML = getSavedCartItems();
