@@ -25,7 +25,7 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   it('Sem argumento retorna Erro', async () => {
     const semArgumento = await fetchProducts();
-    expect(semArgumento).toThrow('You must provide an url');
+    expect(semArgumento).rejects.toThrow('You must provide an url');
   });
   // fail('Teste vazio');
 });
