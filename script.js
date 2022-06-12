@@ -31,7 +31,7 @@ const cartItemClickListener = (event) => event.target.remove();
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}\n\n`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -70,12 +70,12 @@ const addShoppingCart = async () => {
     const addCart = createCartItemElement(resultItem);
     const addclickItem = document.querySelector('ol.cart__items');
     addclickItem.appendChild(addCart);
-    console.log(clickItem);
-    console.log(addCart);
+    saveCartItems();
   });
 };
 
 window.onload = () => { 
   listProdutos();
   addShoppingCart();
+  getSavedCartItems();
 };
