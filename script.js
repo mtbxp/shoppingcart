@@ -1,3 +1,4 @@
+const carClick = document.querySelector('.cart__items');
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -70,12 +71,22 @@ const addShoppingCart = async () => {
     const addCart = createCartItemElement(resultItem);
     const addclickItem = document.querySelector('ol.cart__items');
     addclickItem.appendChild(addCart);
-    saveCartItems();
+    saveCartItems(carClick.innerHTML);
+  });
+};
+
+//  ADD AO CARRINHO DE COMPRAS LOCALSTORAGE
+const newgetSavedCartItems = () => {
+  const addLoadLocalstore = document.querySelector('ol.cart__items');
+  addLoadLocalstore.innerHTML = getSavedCartItems();
+  const meuCarrinho = document.querySelector('.cart__items');
+  meuCarrinho.addEventListener('click', (event) => {
+    event.target.remove();
   });
 };
 
 window.onload = () => { 
   listProdutos();
   addShoppingCart();
-  getSavedCartItems();
+  newgetSavedCartItems();
 };
