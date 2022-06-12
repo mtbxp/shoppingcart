@@ -1,5 +1,6 @@
 const itemsSection = document.querySelector('.cart__items');
 const sectionPrice = document.querySelector('.cart');
+const buttonCleam = document.querySelector('.empty-cart');
 
 const div = () => {
   const divPrice = document.createElement('div');
