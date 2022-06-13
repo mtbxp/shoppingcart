@@ -44,7 +44,7 @@ const sumPriceItems = async () => {
     const numbers = parseFloat(priceSplit[1]);
     arr.push(numbers);
   });
-  const sum = arr.reduce((acc, curr) => acc + curr);
+  const sum = arr.reduce((acc, curr) => acc + curr, 0);
   const sumWithTwoDecimals = sum.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
   const total = parseFloat(sumWithTwoDecimals);
   return createElementPrice(total);
@@ -68,7 +68,15 @@ const fetchItemId = async (id) => {
   newObj = { sku: item.id, name: item.title, salePrice: item.price };
   sectionCart.appendChild(createCartItemElement(newObj));
   saveCartItems(sectionCart.innerHTML);
-  sumPriceItems();
+  setTimeout(sumPriceItems, 100);
+};
+
+const loadingData = () => {
+  const divLoading = document.createElement('div');
+  divLoading.className = 'loading';
+  divLoading.innerText = 'carregando...';
+  const secItems = document.querySelector('.items');
+  secItems.appendChild(divLoading);
 };
 
 const showItens = async () => {
@@ -84,6 +92,8 @@ const showItens = async () => {
         fetchItemId(id);
       });
     });
+  const divLoading = document.querySelector('.loading');
+  divLoading.remove();
 };
 
 const recoveryCart = () => {
@@ -97,12 +107,16 @@ const clearCartItems = () => {
   emptyBtn.addEventListener('click', () => {
     const cartItems = document.querySelectorAll('.cart__item');
     cartItems.forEach((element) => element.remove());
+    const paragraph = document.querySelector('.total-price');
+    paragraph.innerText = null;
+    localStorage.removeItem('cartItems');
   });
   sumPriceItems();
 };
 
 window.onload = () => {
-  showItens();
+  loadingData();
+  setTimeout(showItens, 2000);
   recoveryCart();
   clearCartItems();
 };
