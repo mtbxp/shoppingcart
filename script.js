@@ -82,7 +82,7 @@ window.onload = async () => {
     });
   const arrBttn = document.querySelectorAll('.item__add');
   arrBttn.forEach((button) => {
-    button.addEventListener('click', addCartItems);
+    button.addEventListener('click', addCart);
   });
   const clearButton = document.getElementsByClassName('empty-cart')[0];
   clearButton.addEventListener('click', () => {
