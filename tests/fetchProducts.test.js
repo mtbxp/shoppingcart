@@ -17,7 +17,7 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   test('Deve se a função retorna a mesma estrutura de dados do objeto `computadorSearch`', async () => {
     const dados = await fetchProducts('computador');
-    expect(dados).toEqual(computadorSearch);
+    expect(dados).toEqual(computadorSearch.results);
   });
   test('Deve retornar uma mensagem de error ao passar a função sem nenhum argumento', async () => {
     expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
