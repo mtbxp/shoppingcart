@@ -1,5 +1,3 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -7,10 +5,34 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+const cartItemClickListener = (event) => {
+  // coloque seu código aqui
+};
+
+const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const itemContinue = async (element) => {
+  const alvo = (element.target);
+  const infoC = getSkuFromProductItem(alvo.parentElement);
+  const infoD = await fetchItem(infoC);
+  const { id, title, price } = infoD;
+  createCartItemElement({ id, title, price });
+};
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
+  
+  if (element === 'button') e.addEventListener('click', itemContinue);
   return e;
 };
 
@@ -26,26 +48,22 @@ const createProductItemElement = ({ id: sku, title: xname, thumbnail: image }) =
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
+/* const cartItemClickListener = (event) => {
   // coloque seu código aqui
-};
+}; */ 
 
-const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
+/* const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-};
+}; */
 
-// const separarEm3 = (parameter) => {
-//   // Esta função deve pegar cada resultado e separar somente id, title e tumbnail.
-//   const { id, title, tumbnail } = parameter;
-//   const acharPai = document.querySelector('.items');
-//   acharPai.appendChild(createProductItemElement({ id, title, tumbnail }));
-// };
+// });
+// const item = document.getElementsByClassName('item'); 
 
 const fetchContinue = async (element) => {
   // Vou colocar aqui o Id, title e tumbnail, mas primeiro separar o result

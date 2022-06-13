@@ -17,7 +17,10 @@ if (typeof module !== 'undefined') {
   };
 }
 
-/*
-const item_add = document.getElementsByClassName('item_add');
-const item = document.getElementsByClassName('item'); 
-*/
+// lixo:
+// const item_add = document.querySelector('.item_add');
+// item_add.addEventListener('click', async () => {
+  //   const { id, title, price } = await fetchItem(element);
+  //   createCartItemElement({ id, title, price });
+  //   console.lot('rodou');
+  // });
