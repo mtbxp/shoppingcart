@@ -4,7 +4,7 @@ const botaoLimpa = document.querySelector('.empty-cart');
 
 const cartItemClickListener = (event) => {
   event.target.remove(event.target);
-  // saveCartItems(listItems.innerHTML);
+  saveCartItems(listItems.innerHTML);
   };
 
 const createCartItemElement = (sku, name, salePrice) => {
