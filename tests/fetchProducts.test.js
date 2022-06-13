@@ -8,28 +8,26 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(typeof fetchProducts).toBe('function')
   })
 
-  test('Verifica se: ao ser chamada com o argumento "computador", retorna a resposta da url : ', async () => {
+  test('Verifica se ao ser chamada com o argumento "computador", retorna a resposta da url : ', async () => {
     await fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
     // Use .toHaveBeenCalled para garantir que uma função de simulação (mock, em inglês) foi chamada com argumentos específicos. link: https://jestjs.io/pt-BR/docs/expect#tohavebeencalled
   })
 
-  test('Verifica se: ao ser chamada com o argumento "computador", a função fetch realiza uma requisição pela url correta',
-   async () => {
-    await fetchProducts('computador');
-    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
-  })
+  test('Verifica se ao ser chamada com o argumento "computador", a função fetch realiza uma requisição pela url correta',
+    async () => {
+      await fetchProducts('computador');
+      expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+    })
 
-  test('Verifica se: ao ser chamada com o argumento "computador", o retorno da função é uma estrutura de dados igual ao objeto computadorSearch',
-   async () => {
-
-     // toStrictEqual: para testar se os objetos têm os mesmos tipos e estrutura. Link: https://jestjs.io/pt-BR/docs/expect#tostrictequalvalue
-
-    expect(await fetchProducts('computador')).toStrictEqual(computadorSearch);
-  })
+  test('Verifica se ao ser chamada com o argumento "computador", o retorno da função é uma estrutura de dados igual ao objeto computadorSearch',
+    async () => {
+      // toStrictEqual: para testar se os objetos têm os mesmos tipos e estrutura. Link: https://jestjs.io/pt-BR/docs/expect#tostrictequalvalue
+      expect(await fetchProducts('computador')).toStrictEqual(computadorSearch);
+    })
 
   test('Verifica se ao ser chamada sem argumento, o retorno da função é a mensagem de erro: "You must provide an url"',
-   async () => {
-    expect(await fetchProducts()).toEqual(new Error ('You must provide an url'));
-  })
+    async () => {
+      expect(await fetchProducts()).toEqual(new Error ('You must provide an url'));
+    })
 });
