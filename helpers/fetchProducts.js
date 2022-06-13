@@ -1,5 +1,3 @@
-const { thumbnail } = require("../mocks/item");
-
 const fetchProducts = async () => {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const response = await fetch(url);
