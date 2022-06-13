@@ -121,7 +121,16 @@ const localStorageInfo = () => {
   totalPrice();
 };
 
+const cleanCart = () => {
+  const clearButton = document.querySelector('.empty-cart');
+  clearButton.addEventListener('click', () => {
+    cartSection.innerHTML = '';
+    totalPrice();
+  });
+};
+
 window.onload = () => { 
   createProductsList();
   localStorageInfo();
+  cleanCart();
 };
