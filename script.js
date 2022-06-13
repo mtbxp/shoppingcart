@@ -7,6 +7,9 @@ const createProductImageElement = (imageSource) => {
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
+  const alvo = event.target;
+  console.log(alvo); // Vou deixar este console.log para informar que o valor foi corretamente removido
+  alvo.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
@@ -24,7 +27,8 @@ const itemContinue = async (element) => {
   const infoC = getSkuFromProductItem(alvo.parentElement);
   const infoD = await fetchItem(infoC);
   const { id, title, price } = infoD;
-  createCartItemElement({ id, title, price });
+  const acharPai = document.querySelector('.cart__items');
+  acharPai.appendChild(createCartItemElement({ id, title, price }));
 };
 
 const createCustomElement = (element, className, innerText) => {
