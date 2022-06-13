@@ -16,7 +16,4 @@ describe('3 - Teste a função saveCartItems', () => {
     saveCartItems(actual);
     expect(localStorage.setItem).toBeCalledWith('cartItems', actual);
   });
-  // test('se é retornado uma mensagem de erro ao passar a função sem argumentos',  () => {
-  //   expect(saveCartItems()).toThrow(new Error ('You must provide an url'));
-  // });
 });
