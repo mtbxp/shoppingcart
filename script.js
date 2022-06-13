@@ -15,11 +15,6 @@ const createCartItemElement = (sku, name, salePrice) => {
   return li;
 };
 
-// const soma = (preco) => {
-//   total += preco;
-//   contador.innerText = `Total: ${Math.round(total * 100) / 100}`;
-// };
-
 const buscaItem = async (element) => {
   const addItem = await fetchItem(element);
   const { id, title, price } = addItem;
