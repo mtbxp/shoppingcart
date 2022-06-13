@@ -1,12 +1,12 @@
-const fetchProducts = async (productItem) => {
-  const urlfetchProducts = `https://api.mercadolibre.com/sites/MLB/search?q=${productItem}`;
-  try {
-    const response = await fetch(urlfetchProducts);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
-  }
+// const { thumbnail } = require("../mocks/item");
+
+const fetchProducts = async (argument) => {
+  const endpointUrl = `https://api.mercadolibre.com/sites/MLB/search?q=${argument}`;
+  const require = fetch(endpointUrl)
+  .then((response) => response.json())
+  .then((data) => data)
+  .catch(() => (new Error('You must provide an url')));
+  return require;
 };
 
 if (typeof module !== 'undefined') {
