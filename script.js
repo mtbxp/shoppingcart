@@ -64,7 +64,7 @@ const createProductItemElement = ({
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const buscaLista = async () => {
   const lista = await fetchProducts('computador');
