@@ -1,4 +1,4 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
+// const { fetchProducts } = require('./helpers/fetchProducts');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -14,7 +14,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, xname, image }) => {
+const createProductItemElement = ({ id: sku, title: xname, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -32,7 +32,7 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, xname, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
@@ -54,14 +54,14 @@ const fetchContinue = async (element) => {
   // vou criar um forEach para fazer as sections
   results.forEach(((resultado) => {
     const { id, title, thumbnail } = resultado;
-    // console.log({ id, title, thumbnail });
-    sku = id;
-    xname = title;
-    image = thumbnail;
-    acharPai.appendChild(createProductItemElement({ sku, xname, image }));
+    // sku = id;
+    // xname = title;
+    // image = thumbnail;
+    acharPai.appendChild(createProductItemElement({ id, title, thumbnail }));
   }));
 };
 // fetchContinue('computador').then((data) => console.log(data));
+// Antes eu tava colocando no fetchContinue o sku, xname e image. Mas não é mais nescessário, deixei ai para ver a evolução
 
 window.onload = () => {
   fetchContinue('computador');
