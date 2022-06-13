@@ -3,7 +3,7 @@ const listItems = document.querySelector('.cart__items');
 const botaoLimpa = document.querySelector('.empty-cart');
 
 const cartItemClickListener = (event) => {
-  event.target.remove();
+  event.target.remove(event.target);
   saveCartItems(listItems.innerHTML);
   };
 
@@ -64,7 +64,7 @@ const createProductItemElement = ({
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const buscaLista = async () => {
   const lista = await fetchProducts('computador');
@@ -74,11 +74,14 @@ const buscaLista = async () => {
 const limpaCarro = () => {
   botaoLimpa.addEventListener('click', () => {
     listItems.innerText = '';
+    saveCartItems(listItems.innerHTML);
   });
 };
 
 const salvaCarrinho = () => {
   listItems.innerHTML = getSavedCartItems();
+  const filhos = listItems.childNodes;
+  filhos.addEventListener('click', cartItemClickListener);
 };
 
 window.onload = () => { 
