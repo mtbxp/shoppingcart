@@ -1,14 +1,13 @@
 // const { thumbnail } = require("../mocks/item");
 
-const fetchProducts = async (argument) => {
-  const endpointUrl = `https://api.mercadolibre.com/sites/MLB/search?q=${argument}`;
-  const require = fetch(endpointUrl)
-  .then((response) => response.json())
-  .then((data) => data)
-  .catch(() => (new Error('You must provide an url')));
-  return require;
+const fetchProducts = async () => {
+  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 };
 
+fetchProducts();
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
