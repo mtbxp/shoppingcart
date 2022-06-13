@@ -72,7 +72,7 @@ const buscaLista = async () => {
 };
 
 const limpaCarro = () => {
-  botaoLimpa.addEventListener('click', () => {
+  botaoLimpa.addEventListener('click', () => { 
     listItems.innerText = '';
     saveCartItems(listItems.innerHTML);
   });
