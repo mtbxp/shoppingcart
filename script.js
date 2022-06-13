@@ -68,19 +68,20 @@ const buscaLista = async () => {
 
 const limpaCarro = () => {
   botaoLimpa.addEventListener('click', () => { 
-    listItems.innerText = '';
+    listItems.innerHTML = '';
     saveCartItems(listItems.innerHTML);
   });
 };
 
-const salvaCarrinho = () => {
+const buscaCarrinho = () => {
   listItems.innerHTML = getSavedCartItems();
-  // const filhos = listItems.childNodes;
-  // filhos.addEventListener('click', cartItemClickListener);
+  const filhos = listItems.childNodes;
+  filhos.forEach((element) => element.addEventListener('click', cartItemClickListener));
+  
 };
 
 window.onload = () => { 
   buscaLista();
   limpaCarro();
-  salvaCarrinho();
+  buscaCarrinho();
 };
