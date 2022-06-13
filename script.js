@@ -65,6 +65,13 @@ const listaProdutos = async () => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// requisito 10
+const btnEsvaziarCarrinho = document.querySelector('.empty-cart');
+const esvaziaCarrinho = () => {
+  const li = document.querySelector('.cart__items');
+  li.innerHTML = '';
+};
+btnEsvaziarCarrinho.addEventListener('click', esvaziaCarrinho);
 
 window.onload = () => {
   listaProdutos();
