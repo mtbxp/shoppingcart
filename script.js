@@ -76,8 +76,9 @@ const limpaCarro = () => {
 const buscaCarrinho = () => {
   listItems.innerHTML = getSavedCartItems();
   const filhos = listItems.childNodes;
+  if (filhos.length !== 0) {
   filhos.forEach((element) => element.addEventListener('click', cartItemClickListener));
-  
+  }
 };
 
 window.onload = () => { 
