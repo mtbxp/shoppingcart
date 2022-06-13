@@ -1,4 +1,3 @@
-// const getSavedCartItems = require("./helpers/getSavedCartItems");
 const valuePrice = () => {
   const cartList = document.querySelectorAll('cart__item');
   let total = 0.00;
@@ -27,9 +26,10 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = (sku, name, image) => {
   const newSection = document.createElement('section');
   newSection.className = 'item';
+
   newSection.appendChild(createCustomElement('span', 'item__sku', sku));
   newSection.appendChild(createCustomElement('span', 'item__title', name));
   newSection.appendChild(createProductImageElement(image));
