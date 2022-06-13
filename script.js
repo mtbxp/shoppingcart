@@ -4,7 +4,7 @@ const botaoLimpa = document.querySelector('.empty-cart');
 
 const cartItemClickListener = (event) => {
   event.target.remove(event.target);
-  saveCartItems(listItems.innerHTML);
+  // saveCartItems(listItems.innerHTML);
   };
 
 const createCartItemElement = (sku, name, salePrice) => {
@@ -75,8 +75,8 @@ const limpaCarro = () => {
 
 const salvaCarrinho = () => {
   listItems.innerHTML = getSavedCartItems();
-  const filhos = listItems.childNodes;
-  filhos.addEventListener('click', cartItemClickListener);
+  // const filhos = listItems.childNodes;
+  // filhos.addEventListener('click', cartItemClickListener);
 };
 
 window.onload = () => { 
