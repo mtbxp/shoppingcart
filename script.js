@@ -85,7 +85,6 @@ const fetchContinue = async (element) => {
 // fetchContinue('computador').then((data) => console.log(data));
 // Antes eu tava colocando no fetchContinue o sku, xname e image. Mas não é mais nescessário, deixei ai para ver a evolução
 
-
 window.onload = () => {
   fetchContinue('computador');
 };
