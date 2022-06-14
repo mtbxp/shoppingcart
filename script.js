@@ -1,5 +1,5 @@
 const totalPrice = document.querySelector('.total-price');
-const listShop = document.querySelector('.cart__items');
+// const listShop = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -15,23 +15,23 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // Somando os valores totais
-// const sumValShop = async () => {
-//   const arrayShop = Array.from(document.getElementsByClassName('cart__item'));
-//   if (arrayShop.length === 0) {
-//     totalPrice.innerHTML = `Total: $${0}`;
-//   }
-//   let result = 0;
-//   arrayShop.forEach(async (elm) => {
-//     const en = elm.innerHTML.split('|')[0].split(' ')[1];
-//     const item = await fetchItem(en);
-//     result += parseFloat(item.price, 10);
-//     totalPrice.innerHTML = `Total: $${parseFloat(result, 10)}`;
-//     localStorage.setItem('shopTot', result);
-//   });
-// };
+const sumValShop = async () => {
+  const arrayShop = Array.from(document.getElementsByClassName('cart__item'));
+  if (arrayShop.length === 0) {
+    totalPrice.innerHTML = `Total: $${0}`;
+  }
+  let result = 0;
+  arrayShop.forEach(async (elem) => {
+    const end = elem.innerHTML.split('|')[0].split(' ')[1];
+    const item = await fetchItem(end);
+    result += parseFloat(item.price, 10);
+    totalPrice.innerHTML = `Total: $${parseFloat(result, 10)}`;
+    localStorage.setItem('shopTot', result);
+  });
+};
 
 // Deleta os elementos
 const cartItemClickListener = (event) => {
@@ -49,7 +49,6 @@ const createCartItemElement = ({ id, title, price }) => {
 };
 
 // Adicinando ao carrinho
-
 const putCart = async (elem) => {
   const idI = elem.target.parentNode.firstChild.innerText;
   const response = await fetchItem(idI);
