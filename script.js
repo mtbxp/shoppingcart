@@ -1,8 +1,16 @@
+const pricesTotais = [];
+const removeTotais = [];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+};
+
+const addRemove = (salePrice) => {
+  removeTotais.push(salePrice);
+  return removeTotais;
 };
 
 const cartItemClickListener = (event) => {
@@ -17,6 +25,8 @@ const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', addRemove(salePrice));
+  pricesTotais.push(salePrice);
   return li;
 };
 
@@ -52,23 +62,6 @@ const createProductItemElement = ({ id: sku, title: xname, thumbnail: image }) =
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-/* const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-}; */ 
-
-/* const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}; */
-
-// });
-// const item = document.getElementsByClassName('item'); 
-
 const fetchContinue = async (element) => {
   // Vou colocar aqui o Id, title e tumbnail, mas primeiro separar o result
   const { results } = await fetchProducts(element);
@@ -76,14 +69,35 @@ const fetchContinue = async (element) => {
   // vou criar um forEach para fazer as sections
   results.forEach(((resultado) => {
     const { id, title, thumbnail } = resultado;
-    // sku = id;
-    // xname = title;
-    // image = thumbnail;
     acharPai.appendChild(createProductItemElement({ id, title, thumbnail }));
   }));
 };
-// fetchContinue('computador').then((data) => console.log(data));
-// Antes eu tava colocando no fetchContinue o sku, xname e image. Mas não é mais nescessário, deixei ai para ver a evolução
+
+const totalPrice = () => {
+  console.log(pricesTotais);
+  let soma = 0;
+  for (let i = 0; i < pricesTotais.length; i += 1) {
+    soma += pricesTotais[i];
+  }
+  console.log(soma);
+  return soma;
+};
+
+const removePrice = () => {
+  console.log(removePrice);
+  let sub = 0;
+  for (let i = 0; i < pricesTotais.length; i += 1) {
+    sub += removeTotais[i];
+  }
+  console.log(sub);
+  return sub;
+};
+
+const exibirPrice = () => {
+  const sum = totalPrice;
+  const minx = removePrice;
+  console.log(sum - monx);
+};
 
 window.onload = () => {
   fetchContinue('computador');
