@@ -26,9 +26,12 @@ const removeLoadingElement = () => {
   getCartElements('visible');
 };
 
-const addLoadingElement = () => {
+const addLoadingElementCart = () => {
   getCartElements('hidden');
   cartSection.appendChild(loadingElement());
+};
+
+const addLoadingElementProducts = () => {
   productsSection.appendChild(loadingElement());
 };
 
@@ -73,14 +76,14 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
 
+  li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
 const createCartList = async (product) => {
   try {
-    addLoadingElement();
+    addLoadingElementCart();
     const data = await fetchItem(product);
     removeLoadingElement();
     cartSection.appendChild(createCartItemElement(data));
@@ -124,9 +127,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   const section = document.createElement('section');
   section.className = 'item';
 
+  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
@@ -134,7 +137,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const createProductsList = async () => {
   try {
-    addLoadingElement();
+    addLoadingElementProducts();
     const data = await fetchProducts('computador');
     removeLoadingElement();
     data.results.forEach((element) => {
