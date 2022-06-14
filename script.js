@@ -1,5 +1,5 @@
 const totalPrice = document.querySelector('.total-price');
-// const listShop = document.querySelector('.cart__items');
+const listShop = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -97,14 +97,14 @@ buttom.addEventListener('click', () => {
 
 // Carregando no localStorage
 const serchMemori = () => {
- const captOl = document.querySelector('.cart__items').innerHTML;
+//  const captOl = document.querySelector('.cart__items').innerHTML;
   saveCartItems(captOl);
 };
 
 // função recuperar items do localStorage
 const recLocalStorage = () => {
-document.querySelector('.cart__items').innerHTML = getSavedCartItems();
-document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
+// document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+// document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
 };
 
 window.onload = async () => {
