@@ -56,7 +56,7 @@ getButton.forEach((element) => element.addEventListener('click', (event) => {
   }));
 };
 
-const newfunction = async () => {
+const newObject = async () => {
   const newItens = await fetchProducts('computador');
 newItens.forEach((element) => {
   const obj = {
@@ -67,7 +67,7 @@ newItens.forEach((element) => {
   return createProductItemElement(obj);
 });
 createButton();
-}; newfunction();
+}; newObject();
 
 const returnLocalStorage = () => {
   list.innerHTML = getSavedCartItems();
@@ -77,4 +77,14 @@ element.addEventListener('click', cartItemClickListener);
   });
 };
 
-window.onload = () => { returnLocalStorage(); };
+const cleanCart = () => {
+  const getCleanButton = document.querySelector('.empty-cart');
+  // const clean = localStorage.removeItem('cartItems', value);
+  getCleanButton.addEventListener('click', () => {
+    localStorage.clear();
+    const cart = document.querySelector('ol');
+    cart.innerHTML = ' ';
+  });
+};
+
+window.onload = () => { returnLocalStorage(); cleanCart(); };
