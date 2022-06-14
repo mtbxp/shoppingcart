@@ -1,5 +1,36 @@
 const productsSection = document.querySelector('.items');
 const cartSection = document.querySelector('.cart__items');
+const cartElements = document.querySelector('.cart').children;
+
+const getCartElements = (visibility) => {
+const cart = [...cartElements];
+  cart.forEach((element) => {
+    const cartElement = element;
+    cartElement.style.visibility = visibility;
+    return element;
+  });
+};
+
+const loadingElement = () => {
+  const element = document.createElement('div');
+  element.className = 'loading';
+  element.innerText = 'carregando...';
+  element.style.visibility = 'visible';
+  return element;
+};
+
+const removeLoadingElement = () => {
+  const loading = document.querySelectorAll('.loading');
+  const loadingList = [...loading];
+  loadingList.forEach((element) => element.remove());
+  getCartElements('visible');
+};
+
+const addLoadingElement = () => {
+  getCartElements('hidden');
+  cartSection.appendChild(loadingElement());
+  productsSection.appendChild(loadingElement());
+};
 
 const priceSection = (finalPrice) => {
   const section = document.querySelector('.total-price');
@@ -49,7 +80,9 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 
 const createCartList = async (product) => {
   try {
+    addLoadingElement();
     const data = await fetchItem(product);
+    removeLoadingElement();
     cartSection.appendChild(createCartItemElement(data));
     saveCartItems(cartSection.innerHTML);
     totalPrice();
@@ -101,7 +134,9 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const createProductsList = async () => {
   try {
+    addLoadingElement();
     const data = await fetchProducts('computador');
+    removeLoadingElement();
     data.results.forEach((element) => {
       productsSection.appendChild(createProductItemElement(element));
     });
@@ -129,7 +164,7 @@ const cleanCart = () => {
   });
 };
 
-window.onload = () => { 
+window.onload = () => {
   createProductsList();
   localStorageInfo();
   cleanCart();
