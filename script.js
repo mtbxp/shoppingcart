@@ -5,7 +5,6 @@ const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
-
   return img;
 };
 
@@ -16,7 +15,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // Somando os valores totais
 // const sumValShop = async () => {
@@ -112,6 +111,6 @@ document.querySelector('.cart__items').addEventListener('click', cartItemClickLi
 window.onload = async () => {
   listProdct();
   recLocalStorage();
-  await serchMemori();
+  serchMemori();
   await sumValShop();
 };
