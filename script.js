@@ -16,18 +16,18 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // Calculando valor total dos itens
-const sumPrices = () => {
-  let sum = 0;
-  const total = document.querySelector('.total-price');
-  const arrayList = document.querySelectorAll('li');
-  arrayList.forEach((element) => {
-    sum += parseFloat(element.innerHTML.split('$')[1] * 100);
-  });
-  // total.innerHTML = sum / 100;
-};
+// const sumPrices = () => {
+//   let sum = 0;
+//   const total = document.querySelector('.total-price');
+//   const arrayList = document.querySelectorAll('li');
+//   arrayList.forEach((element) => {
+//     sum += parseFloat(element.innerHTML.split('$')[1] * 100);
+//   });
+//   // total.innerHTML = sum / 100;
+// };
 
 // Deleta os elementos
 const cartItemClickListener = (event) => {
