@@ -8,8 +8,7 @@ const createProductImageElement = (imageSource) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  const clique = event; 
-  clique.target.innerText = '';
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -22,7 +21,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const buscaItem = async (item) => {
   const it = await fetchItem(item);
-  console.log(it);
     const objItem = {
       sku: it.id,
       name: it.title,
@@ -31,15 +29,15 @@ const buscaItem = async (item) => {
     return objItem;
     };
 
-    let produt;
-    let y;
+    let produto;
+    let carItem;
 const capBtn = document.getElementsByClassName('items')[0];
     capBtn.addEventListener('click', async (event) => {
-      produt = event.target.parentNode.firstChild.innerText; 
-      y = await buscaItem(`${produt}`);
-      const aaa = document.getElementsByClassName('cart__items')[0];
-      const bbb = createCartItemElement(y);
-      aaa.appendChild(bbb);
+      produto = event.target.parentNode.firstChild.innerText; 
+      carItem = await buscaItem(`${produto}`);
+      const buscaClasse = document.getElementsByClassName('cart__items')[0];
+      const criaElemento = createCartItemElement(carItem);
+      buscaClasse.appendChild(criaElemento);
     });
 
   const createCustomElement = (element, className, innerText) => {
