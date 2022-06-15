@@ -15,22 +15,17 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// Somando os valores totais
-const sumValShop = async () => {
-  const arrayShop = Array.from(document.getElementsByClassName('cart__item'));
-  if (arrayShop.length === 0) {
-    totalPrice.innerHTML = `Total: $${0}`;
-  }
-  let result = 0;
-  arrayShop.forEach(async (elem) => {
-    const end = elem.innerHTML.split('|')[0].split(' ')[1];
-    const item = await fetchItem(end);
-    result += parseFloat(item.price, 10);
-    totalPrice.innerHTML = `Total: $${parseFloat(result, 10)}`;
-    localStorage.setItem('shopTot', result);
+// Calculando valor total dos itens
+const sumPrices = () => {
+  let sum = 0;
+  const total = document.querySelector('.total-price');
+  const arrayList = document.querySelectorAll('li');
+  arrayList.forEach((element) => {
+    sum += parseFloat(element.innerHTML.split('$')[1] * 100);
   });
+  // total.innerHTML = sum / 100;
 };
 
 // Deleta os elementos
@@ -55,7 +50,7 @@ const putCart = async (elem) => {
   const itemsC = createCartItemElement(response);
   listShop.appendChild(itemsC);
   saveCartItems(idI);
-  // await sumValShop();
+  sumPrices();
 };
 
 const createProductItemElement = ({ id, title, thumbnail }) => {
@@ -97,19 +92,19 @@ buttom.addEventListener('click', () => {
 
 // Carregando no localStorage
 const serchMemori = () => {
-//  const captOl = document.querySelector('.cart__items').innerHTML;
+ const captOl = document.querySelector('.cart__items').innerHTML;
   saveCartItems(captOl);
 };
 
 // função recuperar items do localStorage
 const recLocalStorage = () => {
-// document.querySelector('.cart__items').innerHTML = getSavedCartItems();
-// document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
+document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
 };
 
-window.onload = async () => {
+window.onload = () => {
   listProdct();
   recLocalStorage();
   serchMemori();
-  await sumValShop();
+  sumPrices();
 };
