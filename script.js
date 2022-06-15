@@ -1,10 +1,31 @@
-const lista = [];
+let listaDeSkus = [];
+let listaDePrices = [];
+let subtotal = 0;
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+function round(num) {
+  const m = Number((Math.abs(num) * 100).toPrecision(15));
+  return (Math.round(m) / 100) * Math.sign(num);
+}
+
+function updateSubtotalText() {
+  subtotal = listaDePrices.reduce((acc, price) => acc + price, 0);
+  const rounded = round(subtotal);
+
+  const total = document.getElementsByClassName('total-price')[0];
+  total.textContent = `${rounded}`;
+}
+
 const cartItemClickListener = (event) => { // req 5
-  // event.target.closest('li').remove(); caso eu estilize a ol/li
+  const myIndex = Array.prototype.indexOf.call(event.target.parentNode.children, event.target);
   event.target.remove();
+
+  listaDeSkus.splice(myIndex, 1);
+  saveCartItems(listaDeSkus);
+
+  listaDePrices.splice(myIndex, 1);
+  updateSubtotalText();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => { // req4
@@ -14,33 +35,37 @@ const createCartItemElement = ({ sku, name, salePrice }) => { // req4
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
+// Durante a realização do requisito 4, recebi orientações da colega Maria Clara Reis acerca da desestruturação do objeto retornado da API.
 async function addProductToCart(elementSku) {
-  const element1 = await fetchItem(elementSku);
-  const { id: sku, title: name, price: salePrice } = element1;
+  const element = await fetchItem(elementSku);
+  const { id: sku, title: name, price: salePrice } = element;
   const resultado = createCartItemElement({ sku, name, salePrice });
   const ol = document.getElementsByClassName('cart__items')[0];
   ol.appendChild(resultado);
+  
+  listaDePrices.push(salePrice);
+  updateSubtotalText();  
 }
-// const buttonClearCart = document.getElementsByClassName('empty-cart');
-// console.log(buttonClearCart);
-// buttonClearCart.addEventListener('click', () => {
-//   localStorage.clear();
-//   const ol = document.getElementsByClassName('cart__items')[0];
-//   ol.innerHTML = [];
-// });
 
-// Durante a realização do requisito 4, recebi orientações da colega Maria Clara Reis.
-async function addButtonEvent(button) { // req4
-  button.addEventListener('click', (event) => {
+function addEventToButtonClearCart() {
+ const botaoLimpar = document.getElementsByClassName('empty-cart')[0];
+ botaoLimpar.addEventListener('click', () => {
+    listaDeSkus = [];
+    listaDePrices = []; 
+    updateSubtotalText();
+    localStorage.clear();
+    const ol = document.getElementsByClassName('cart__items')[0];
+    ol.innerHTML = '';
+ });
+}
+
+
+function addButtonEvent(button) { // req4
+  button.addEventListener('click', async (event) => {
     const elementSku = getSkuFromProductItem(event.target.parentNode);
-    console.log(elementSku);
-    // const elementSku = event.target.parentNode.firstChild.innerText;
-    addProductToCart(elementSku);    
-    lista.push(elementSku);
-    saveCartItems(lista);
-    // console.log(lista);
-     // buttonClearCart();
+    await addProductToCart(elementSku);    
+    listaDeSkus.push(elementSku);
+    saveCartItems(listaDeSkus);
   });
 }
 
@@ -72,11 +97,10 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 }; 
-
 // req1
 async function loadProducts(productName) {
-  const result = await fetchProducts(productName);
-  const productsList = result.results.map(function (p) {
+  const request = await fetchProducts(productName);
+  const productsList = request.results.map(function (p) {
     return {
       sku: p.id,
       name: p.title,
@@ -88,22 +112,19 @@ async function loadProducts(productName) {
     const sectionsElement = document.getElementsByClassName('items')[0];
     sectionsElement.appendChild(resultSection);
   });
-  // addBotao();
-}
+  }
 
-window.onload = () => { 
-  loadProducts('computador'); 
+window.onload = async () => { 
+  loadProducts('computador'); addEventToButtonClearCart();
 
   const textoSkusSalvas = getSavedCartItems();
   let skusSalvas = [];
-  if (textoSkusSalvas !== null) {
-    console.log(textoSkusSalvas);
+  if (textoSkusSalvas !== null && textoSkusSalvas !== '') {
    skusSalvas = textoSkusSalvas.split(',');    
-  }   
-   console.log(textoSkusSalvas);
+  }
 
   for (let index = 0; index < skusSalvas.length; index += 1) {
     addProductToCart(skusSalvas[index]);
-    lista.push(skusSalvas[index]);
-  }   
+    listaDeSkus.push(skusSalvas[index]);
+  }
   };
