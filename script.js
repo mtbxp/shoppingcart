@@ -18,7 +18,8 @@ const getValue = () => {
     value.push(Number(amount));
   });
   const getPrice = value.reduce((i, index) => i + index, flag);
-  finishing.textContent = Number(getPrice.toFixed(2));
+  const total = Math.round(getPrice * 100) / 100;
+  finishing.textContent = total;
 };
 
 // Função que adiciona a mensagem carregando
@@ -124,7 +125,7 @@ const addLocalStorage = () => {
 button.addEventListener('click', () => {
     localStorage.clear();
     getListOl.innerHTML = '';
-     getValue(); 
+    getValue(); 
 });
 
 window.onload = () => { 
