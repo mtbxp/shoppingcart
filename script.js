@@ -4,7 +4,7 @@ const addValue = document.querySelector('.total-price');
 
 const sumPrice = () => {
   let price = 0;
-  const sum = document.querySelectorAll('li');
+  const sum = document.querySelectorAll('.cart__item');
   /* for (let index = 0; index < sum.length; index += 1) {
     price += sum[index].salePrice;
   } */
@@ -44,6 +44,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  sumPrice();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -70,7 +71,7 @@ const select = () => {
       const dados = await fetchItem(Selec);
       const { id: sku, title: name, price: salePrice } = dados;
       addList.appendChild(createCartItemElement({ sku, name, salePrice }));
-      saveCartItems();
+      // saveCartItems();
       sumPrice();
     }
  });
