@@ -2,7 +2,7 @@ const classItems = document.getElementById('itemsList');
 const cartList = document.querySelector('.cart__items');
 const btnEmptyCart = document.querySelector('.empty-cart');
 
-let sumCartItens = 0;
+// let sumCartItens = 0;
 
 // Remover todos os nodos filhos do elemento pai: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_removechild_while
 const emptyCart = () => {
@@ -65,23 +65,23 @@ const createStorageCartList = () => {
   return storagedItens;
 };
 
-const cartSum = (price) => {
-  if (!price) {
-    // const section = document.createElement('section');
-    // section.className = 'total';
-    const totalPrice = document.createElement('span');
-    totalPrice.className = 'total-price';
-    totalPrice.innerText = sumCartItens;
-    // section.appendChild(totalPrice);
-    return cartList.appendChild(totalPrice);
-  }
+// const cartSum = (price) => {
+//   if (!price) {
+//     // const section = document.createElement('section');
+//     // section.className = 'total';
+//     const totalPrice = document.createElement('span');
+//     totalPrice.className = 'total-price';
+//     totalPrice.innerText = sumCartItens;
+//     // section.appendChild(totalPrice);
+//     return cartList.appendChild(totalPrice);
+//   }
   
-  const totalPrice = document.createElement('span');
-  totalPrice.className = 'total-price';
-  sumCartItens += price;
-  totalPrice.innerText = sumCartItens;
-  return cartList.appendChild(totalPrice);
-};
+//   const totalPrice = document.createElement('span');
+//   totalPrice.className = 'total-price';
+//   sumCartItens += price;
+//   totalPrice.innerText = sumCartItens;
+//   return cartList.appendChild(totalPrice);
+// };
 
 // cartSum();
 
@@ -93,7 +93,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   saveCartItems('cartItems', li.innerText);
-  cartSum(salePrice);
+  // cartSum(salePrice);
   return cartList.appendChild(li);
 };
 
