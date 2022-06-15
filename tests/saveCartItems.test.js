@@ -12,8 +12,5 @@ describe('3 - Teste a função saveCartItems', () => {
     saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toBeCalledWith('cartItems', '<ol><li>Item</li></ol>');
   });
-  it('Teste se saveCartItens é uma função', () => {
-    expect( typeof saveCartItems).toBe('function');
-  });
  // fail('Teste vazio');
 });

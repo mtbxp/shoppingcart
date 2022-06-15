@@ -71,6 +71,12 @@ const insereLista = async () => {
   });
 };
 
+const clearBtn = document.getElementsByClassName('empty-cart')[0];
+const itensCarrinho = document.querySelectorAll('.cart__items')[0];
+clearBtn.addEventListener('click', () => {
+  itensCarrinho.innerHTML = '';
+});
+
 window.onload = () => {
   insereLista();
 };
