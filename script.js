@@ -1,5 +1,5 @@
-const pricesTotais = [];
-const removeTotais = [];
+// const pricesTotais = [];
+// const removeTotais = [];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -8,10 +8,10 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const addRemove = (salePrice) => {
-  removeTotais.push(salePrice);
-  return removeTotais;
-};
+// const addRemove = (salePrice) => {
+//   removeTotais.push(salePrice);
+//   return removeTotais;
+// };
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
@@ -25,8 +25,8 @@ const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  li.addEventListener('click', addRemove(salePrice));
-  pricesTotais.push(salePrice);
+  // li.addEventListener('click', addRemove(salePrice));
+  // pricesTotais.push(salePrice);
   return li;
 };
 
@@ -73,31 +73,36 @@ const fetchContinue = async (element) => {
   }));
 };
 
-const totalPrice = () => {
-  console.log(pricesTotais);
-  let soma = 0;
-  for (let i = 0; i < pricesTotais.length; i += 1) {
-    soma += pricesTotais[i];
-  }
-  console.log(soma);
-  return soma;
+const bottoneEpty = () => {
+  const acharPai = document.querySelector('.cart__items');
+  acharPai.innerHTML = '';
 };
 
-const removePrice = () => {
-  console.log(removePrice);
-  let sub = 0;
-  for (let i = 0; i < pricesTotais.length; i += 1) {
-    sub += removeTotais[i];
-  }
-  console.log(sub);
-  return sub;
-};
+// const totalPrice = () => {
+//   console.log(pricesTotais);
+//   let soma = 0;
+//   for (let i = 0; i < pricesTotais.length; i += 1) {
+//     soma += pricesTotais[i];
+//   }
+//   console.log(soma);
+//   return soma;
+// };
 
-const exibirPrice = () => {
-  const sum = totalPrice;
-  const minx = removePrice;
-  console.log(sum - monx);
-};
+// const removePrice = () => {
+//   console.log(removePrice);
+//   let sub = 0;
+//   for (let i = 0; i < pricesTotais.length; i += 1) {
+//     sub += removeTotais[i];
+//   }
+//   console.log(sub);
+//   return sub;
+// };
+
+// const exibirPrice = () => {
+//   const sum = totalPrice;
+//   const minx = removePrice;
+//   console.log(sum - monx);
+// };
 
 window.onload = () => {
   fetchContinue('computador');
