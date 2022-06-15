@@ -9,7 +9,7 @@ const sumPrice = () => {
     price += sum[index].salePrice;
   } */
   sum.forEach((sumList) => {
-    price += parseFloat(sumList.innerHTML.split("$")[1] * 100);
+    price += parseFloat(sumList.innerHTML.split('$')[1] * 100);
   });
   addValue.innerHTML = price / 100;
 };
