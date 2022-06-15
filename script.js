@@ -1,4 +1,6 @@
 const productList = document.querySelector('.items');
+const addList = document.querySelector('.cart__items');
+const addValue = document.querySelector('.total-price');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -49,18 +51,34 @@ const createListProduct = async () => {
   });
 };
 
-const addList = document.querySelector('.cart__items');
-
 const select = () => {
-  document.addEventListener('click', async (element) => {
+  productList.addEventListener('click', async (element) => {
     if (element.target.classList.contains('item__add')) {
       const Selec = getSkuFromProductItem((element.target.parentNode));
       const dados = await fetchItem(Selec);
       const { id: sku, title: name, price: salePrice } = dados;
       addList.appendChild(createCartItemElement({ sku, name, salePrice }));
+      saveCartItems();
+      sumPrice();
     }
  });
 };
+
+/* const saveStorage = () => {
+  
+} */
+
+const sumPrice = () => {
+  let price = 0
+  const sum = document.querySelectorAll('li');
+  /* for (let index = 0; index < sum.length; index += 1) {
+    price += sum[index].salePrice;
+  } */
+  sum.forEach((sumList) => {
+    price +=parseFloat(sumList.innerHTML.split("$")[1] * 100)
+  })
+  addValue.innerHTML = price / 100;
+}
 
 window.onload = async () => {
   await createListProduct();
