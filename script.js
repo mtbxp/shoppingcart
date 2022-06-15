@@ -24,15 +24,15 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const addProductItemElement = (section) => {
-  const parentSection = document.querySelector('.items');
-  parentSection.appendChild(section);
+const addProductItemElement = (element, parentElement) => {
+  const parentSection = document.querySelector(parentElement);
+  parentSection.appendChild(element);
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui!
+
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -40,16 +40,34 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  li.style.margin = '50px';
   return li;
 };
 
-const start = async () => {
-  const data = await fetchProducts('computador');
-  const items = data.results;
-  items.forEach((product) => {
-    const { id: sku, title: name, thumbnail: image } = product;
-    addProductItemElement(createProductItemElement({ sku, name, image }));
+const getSelectedItem = async (event) => {
+  const item = event.target.parentElement;
+  const { id: sku, title: name, price: salePrice } = await fetchItem(getSkuFromProductItem(item));
+  addProductItemElement(createCartItemElement({ sku, name, salePrice }), '.cart__items');
+  console.log(sku, name, salePrice);
+};
+
+const itemClickListener = () => {
+  const product = document.querySelectorAll('.item button');
+  product.forEach((item) => {
+    item.addEventListener('click', getSelectedItem);
   });
 };
 
-window.onload = () => { start(); };
+const startProductlist = async () => {
+  const data = await fetchProducts('computador');
+  const items = data.results;
+
+  items.forEach((product) => {
+    const { id: sku, title: name, thumbnail: image } = product;
+    addProductItemElement(createProductItemElement({ sku, name, image }), '.items');
+  });
+
+  itemClickListener(); 
+};
+
+window.onload = () => { startProductlist(); };
