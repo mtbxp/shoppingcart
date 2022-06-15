@@ -1,5 +1,5 @@
 const totalPrice = document.querySelector('.total-price');
-const listShop = '.cart__items';
+const listShop = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -7,7 +7,6 @@ const createProductImageElement = (imageSource) => {
   img.src = imageSource;
   return img;
 };
-
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -21,19 +20,19 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const sumPrices = () => {
   let sum = 0;
   const total = document.querySelector('.total-price');
-  const arrayList = document.querySelectorAll('li');
+  const arrayList = document.querySelectorAll('.cart__item');
   arrayList.forEach((element) => {
     sum += parseFloat(element.innerHTML.split('$')[1] * 100);
   });
   // total.innerHTML = sum / 100;
-  console.log(sum);
-  console.log(total);
 };
 
 // Deleta os elementos
 const cartItemClickListener = (event) => {
   listShop.removeChild(event.target);
   localStorage.clear();
+//   const limpar = event.target.remove();
+// console.log(limpar);
 };
 
 // Cria o item do carrinho
@@ -52,6 +51,7 @@ const putCart = async (elem) => {
   const itemsC = createCartItemElement(response);
   listShop.appendChild(itemsC);
   saveCartItems(idI);
+
   sumPrices();
 };
 
@@ -84,7 +84,7 @@ const listProdct = async () => {
   });
 };
 
-// Criando Buttom
+// Criando Buttom esvazear carrinho
 const buttom = document.querySelector('.empty-cart');
 buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
@@ -94,14 +94,14 @@ buttom.addEventListener('click', () => {
 
 // Carregando no localStorage
 const serchMemori = () => {
- const captOl = document.querySelector(listShop).innerHTML;
+  const captOl = document.querySelector('.cart__items').innerHTML;
   saveCartItems(captOl);
 };
 
-// função recuperar items do localStorage
+// Recuperar items do localStorage
 const recLocalStorage = () => {
-document.querySelector(listShop).innerHTML = getSavedCartItems();
-document.querySelector(listShop).addEventListener('click', cartItemClickListener);
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
 };
 
 window.onload = () => {
