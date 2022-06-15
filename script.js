@@ -1,8 +1,17 @@
 const classItems = document.getElementById('itemsList');
 const cartList = document.querySelector('.cart__items');
-const cart = document.querySelector('.cart');
+const btnEmptyCart = document.querySelector('.empty-cart');
+
 let sumCartItens = 0;
-// console.log(btnAddToCart);
+
+// Remover todos os nodos filhos do elemento pai: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_node_removechild_while
+const emptyCart = () => {
+  btnEmptyCart.addEventListener('click', () => {
+    while (cartList.hasChildNodes()) {
+      cartList.removeChild(cartList.firstChild);
+    }
+  });
+};
 
 const getProducts = async (product) => {
   const list = fetchProducts(product)
@@ -128,7 +137,7 @@ const createProductList = async () => {
 };
 
 createProductList();
-
+emptyCart();
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 window.onload = () => { };
