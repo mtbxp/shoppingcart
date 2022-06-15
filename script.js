@@ -2,6 +2,18 @@ const productList = document.querySelector('.items');
 const addList = document.querySelector('.cart__items');
 const addValue = document.querySelector('.total-price');
 
+const sumPrice = () => {
+  let price = 0;
+  const sum = document.querySelectorAll('li');
+  /* for (let index = 0; index < sum.length; index += 1) {
+    price += sum[index].salePrice;
+  } */
+  sum.forEach((sumList) => {
+    price += parseFloat(sumList.innerHTML.split("$")[1] * 100);
+  });
+  addValue.innerHTML = price / 100;
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -67,18 +79,6 @@ const select = () => {
 /* const saveStorage = () => {
   
 } */
-
-const sumPrice = () => {
-  let price = 0
-  const sum = document.querySelectorAll('li');
-  /* for (let index = 0; index < sum.length; index += 1) {
-    price += sum[index].salePrice;
-  } */
-  sum.forEach((sumList) => {
-    price +=parseFloat(sumList.innerHTML.split("$")[1] * 100)
-  })
-  addValue.innerHTML = price / 100;
-}
 
 window.onload = async () => {
   await createListProduct();
