@@ -1,7 +1,5 @@
-// const pricesTotais = [];
-// const removeTotais = [];
-
 const cartI = '.cart__items';
+const cartF = '.cart__item';
 
 const fromLocalStorage = () => {
   const acharPai = document.querySelector(cartI);
@@ -16,11 +14,6 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-// const addRemove = (salePrice) => {
-//   removeTotais.push(salePrice);
-//   return removeTotais;
-// };
-
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   const alvo = event.target;
@@ -33,9 +26,8 @@ const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${xname} | PRICE: $${salePrice}`;
+  // li.onclick = cartItemClickListener();
   li.addEventListener('click', cartItemClickListener);
-  // li.addEventListener('click', addRemove(salePrice));
-  // pricesTotais.push(salePrice);
   return li;
 };
 
@@ -91,35 +83,12 @@ const bottoneEpty = () => {
 
 const finalLocalStorage = () => {
   const acharPai = document.querySelector(cartI);
-  console.log(localStorage.cartItems);
   acharPai.innerHTML = localStorage.cartItems;
+  const acharFilhos = document.querySelectorAll(cartF);
+  acharFilhos.forEach((acc) => {
+    acc.addEventListener('click', cartItemClickListener);
+  });
 };
-
-// const totalPrice = () => {
-//   console.log(pricesTotais);
-//   let soma = 0;
-//   for (let i = 0; i < pricesTotais.length; i += 1) {
-//     soma += pricesTotais[i];
-//   }
-//   console.log(soma);
-//   return soma;
-// };
-
-// const removePrice = () => {
-//   console.log(removePrice);
-//   let sub = 0;
-//   for (let i = 0; i < pricesTotais.length; i += 1) {
-//     sub += removeTotais[i];
-//   }
-//   console.log(sub);
-//   return sub;
-// };
-
-// const exibirPrice = () => {
-//   const sum = totalPrice;
-//   const minx = removePrice;
-//   console.log(sum - monx);
-// };
 
 window.onload = () => {
   fetchContinue('computador');
