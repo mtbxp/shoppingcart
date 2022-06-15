@@ -1,7 +1,3 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
-// const { fetchItem } = require("./helpers/fetchItem");
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -55,8 +51,8 @@ async function insertCartItemWithId(id) {
   const productInfo = await fetchItem(id);
   const sku = productInfo.id;
   const name = productInfo.title;
-  const salesPrice = productInfo.price;
-  const li = createCartItemElement({ sku, name, salesPrice });
+  const salePrice = productInfo.price;
+  const li = createCartItemElement({ sku, name, salePrice });
   const parentElement = document.querySelector('.cart__items');
   parentElement.appendChild(li);
 }
@@ -70,9 +66,7 @@ async function insertProductElement() {
     const itemSection = createProductItemElement({ sku, name, image });
     const parentElement = document.querySelector('.items');
     parentElement.appendChild(itemSection);
-    // console.log(itemSection.lastElementChild);
     itemSection.lastElementChild.addEventListener('click', () => {
-      // console.log(itemSection.firstElementChild.innerText);
       const id = itemSection.firstElementChild.innerText;
       insertCartItemWithId(id);
     });
