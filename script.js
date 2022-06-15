@@ -1,6 +1,5 @@
 const totalPrice = document.querySelector('.total-price');
 const listShop = document.querySelector('.cart__items');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,7 +19,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const sumPrices = () => {
   let sum = 0;
   const total = document.querySelector('.total-price');
-  const arrayList = document.querySelectorAll('.cart__item');
+  const arrayList = document.querySelectorAll('li');
   arrayList.forEach((element) => {
     sum += parseFloat(element.innerHTML.split('$')[1] * 100);
   });
@@ -31,10 +30,7 @@ const sumPrices = () => {
 const cartItemClickListener = (event) => {
   listShop.removeChild(event.target);
   localStorage.clear();
-//   const limpar = event.target.remove();
-// console.log(limpar);
 };
-
 // Cria o item do carrinho
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
@@ -43,7 +39,6 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
 // Adicinando ao carrinho
 const putCart = async (elem) => {
   const idI = elem.target.parentNode.firstChild.innerText;
@@ -65,7 +60,6 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
     .addEventListener('click', putCart);
   return section;
 };
-
 // Criando lista de produtos
 const listProdct = async () => {
   // requisito 11 carregando...
@@ -74,7 +68,6 @@ const listProdct = async () => {
   divs.innerHTML = 'carregando...';
   divs.className = 'loading';
   prodct.appendChild(divs);
-
   const data = await fetchProducts('computador');
   const load = document.querySelector('.loading');
   load.remove();
@@ -83,8 +76,7 @@ const listProdct = async () => {
     prodct.appendChild(element);
   });
 };
-
-// Criando Buttom esvazear carrinho
+// Criando Buttom
 const buttom = document.querySelector('.empty-cart');
 buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
@@ -98,7 +90,7 @@ const serchMemori = () => {
   saveCartItems(captOl);
 };
 
-// Recuperar items do localStorage
+// função recuperar items do localStorage
 const recLocalStorage = () => {
   document.querySelector('.cart__items').innerHTML = getSavedCartItems();
 document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
