@@ -91,7 +91,8 @@ const bottoneEpty = () => {
 
 const finalLocalStorage = () => {
   const acharPai = document.querySelector(cartI);
-  acharPai.innerHTML = getSavedCartItems();
+  console.log(localStorage.cartItems);
+  acharPai.innerHTML = localStorage.cartItems;
 };
 
 // const totalPrice = () => {
