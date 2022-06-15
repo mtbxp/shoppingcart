@@ -59,7 +59,6 @@ function addEventToButtonClearCart() {
  });
 }
 
-
 function addButtonEvent(button) { // req4
   button.addEventListener('click', async (event) => {
     const elementSku = getSkuFromProductItem(event.target.parentNode);
