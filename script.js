@@ -8,7 +8,8 @@ const createProductImageElement = (imageSource) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  event.target.innerText = '';
+  const clique = event; 
+  clique.target.innerText = '';
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -28,8 +29,6 @@ const buscaItem = async (item) => {
       salePrice: it.price,
         };
     return objItem;
-   /*  const car = createCartItemElement(objItem);
-    capBtn.appendChild(car); */
     };
 
     let produt;
