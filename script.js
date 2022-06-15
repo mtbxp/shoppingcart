@@ -1,11 +1,13 @@
 const totalPrice = document.querySelector('.total-price');
 const listShop = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
 };
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -13,6 +15,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // Calculando valor total dos itens
@@ -31,7 +34,8 @@ const cartItemClickListener = (event) => {
   listShop.removeChild(event.target);
   localStorage.clear();
 };
-// Cria o item do carrinho
+
+// Cria item do carrinho
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -39,14 +43,15 @@ const createCartItemElement = ({ id, title, price }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-// Adicinando ao carrinho
+
+// Adicinando item ao carrinho
 const putCart = async (elem) => {
   const idI = elem.target.parentNode.firstChild.innerText;
   const response = await fetchItem(idI);
-  const itemsC = createCartItemElement(response);
-  listShop.appendChild(itemsC);
+  const itemsCar = createCartItemElement(response);
+  listShop.appendChild(itemsCar);
   saveCartItems(idI);
-
+  // await sumValShop();
   sumPrices();
 };
 
@@ -76,7 +81,8 @@ const listProdct = async () => {
     prodct.appendChild(element);
   });
 };
-// Criando Buttom
+
+// Criando Buttom limpar carrinho
 const buttom = document.querySelector('.empty-cart');
 buttom.addEventListener('click', () => {
   listShop.innerHTML = '';
@@ -86,13 +92,13 @@ buttom.addEventListener('click', () => {
 
 // Carregando no localStorage
 const serchMemori = () => {
-  const captOl = document.querySelector('.cart__items').innerHTML;
+ const captOl = document.querySelector('.cart__items').innerHTML;
   saveCartItems(captOl);
 };
 
 // função recuperar items do localStorage
 const recLocalStorage = () => {
-  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+document.querySelector('.cart__items').innerHTML = getSavedCartItems();
 document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
 };
 
