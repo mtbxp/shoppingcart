@@ -1,6 +1,14 @@
 // const pricesTotais = [];
 // const removeTotais = [];
 
+const cartI = '.cart__items';
+
+const fromLocalStorage = () => {
+  const acharPai = document.querySelector(cartI);
+  const textoOl = acharPai.innerHTML;
+  saveCartItems(textoOl);
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -18,6 +26,7 @@ const cartItemClickListener = (event) => {
   const alvo = event.target;
   console.log(alvo); // Vou deixar este console.log para informar que o valor foi corretamente removido
   alvo.remove();
+  fromLocalStorage();
 };
 
 const createCartItemElement = ({ id: sku, title: xname, price: salePrice }) => {
@@ -39,6 +48,7 @@ const itemContinue = async (element) => {
   const { id, title, price } = infoD;
   const acharPai = document.querySelector('.cart__items');
   acharPai.appendChild(createCartItemElement({ id, title, price }));
+  fromLocalStorage();
 };
 
 const createCustomElement = (element, className, innerText) => {
@@ -74,8 +84,14 @@ const fetchContinue = async (element) => {
 };
 
 const bottoneEpty = () => {
-  const acharPai = document.querySelector('.cart__items');
+  const acharPai = document.querySelector(cartI);
   acharPai.innerHTML = '';
+  fromLocalStorage();
+};
+
+const finalLocalStorage = () => {
+  const acharPai = document.querySelector(cartI);
+  acharPai.innerHTML = getSavedCartItems();
 };
 
 // const totalPrice = () => {
@@ -106,4 +122,5 @@ const bottoneEpty = () => {
 
 window.onload = () => {
   fetchContinue('computador');
+  finalLocalStorage();
 };
