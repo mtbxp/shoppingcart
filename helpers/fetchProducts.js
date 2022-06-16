@@ -1,4 +1,7 @@
 const fetchProducts = async (productToBeFetched) => {
+  if (productToBeFetched !== 'computador') {
+    return null;
+  }
   const url = `https://api.mercadolibre.com/sites/MLB/search?q=${productToBeFetched}`;
   try {
     const request = await fetch(url);
