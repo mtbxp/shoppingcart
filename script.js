@@ -58,7 +58,7 @@ const getProductsForCartItem = async (event) => {
   const data = await fetchItem(id);
   const { id: sku, title: name, price: salePrice } = data;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
-  saveCartItems(cart.innerHTML); // continuar aqui... em desenvolvimento
+  saveCartItems(cart.innerHTML);
   return cart;
 };
 
@@ -67,4 +67,10 @@ const productsListener = () => document.querySelectorAll('button.item__add')
     element.addEventListener('click', getProductsForCartItem);
   });
 
-window.onload = async () => { await products(); productsListener(); };
+const loadCart = () => {
+ const cartItems = getSavedCartItems();
+ const olCartItems = document.querySelector('.cart__items');
+ olCartItems.innerHTML = cartItems;
+};
+
+window.onload = async () => { await products(); productsListener(); loadCart(); };
