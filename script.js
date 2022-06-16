@@ -81,6 +81,12 @@ const select = () => {
   
 } */
 
+  document.querySelector('.empty-cart').addEventListener('click', () => {
+    addList.innerHTML = '';
+    addValue.innerHTML = '';
+  });
+
+
 window.onload = async () => {
   await createListProduct();
   select();
