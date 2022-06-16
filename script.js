@@ -29,7 +29,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 const computersAvaible = async () => {
   const arrayComputers = await fetchProducts('computer');
   const wantedHTMLelement = document.querySelector('.items');
-  arrayComputers.forEach((eachComputer) => {
+  arrayComputers.results.forEach((eachComputer) => {
     const append = createProductItemElement(eachComputer);
     wantedHTMLelement.appendChild(append);
   });
