@@ -26,16 +26,19 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-  // Creio que aqui é a função para remover o produto do carrinho caso seja clicado.
+const cartItemClickListener = () => {
+  // Add codigo
+  console.log(document.querySelectorAll('.cart__item'));
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', () => {
+    const parentElement = document.querySelector('.cart__items');
+    parentElement.removeChild(li);
+  });
   return li;
 };
 
@@ -47,6 +50,15 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 // O primeiro elemento filho da section tem innerText = sku (.firstElementChild)
 // sku é o mesmo que id, então basta pegar o valor (element.value é uma ideia) e colocar na função abaixo.
 
+// function renderProductElement(item) {
+//   const sku = item.id;
+//   const name = item.title;
+//   const image = item.thumbnail;
+//   const productElement = createProductItemElement({ sku, name, image });
+//   const parentElement = document.querySelector('.items');
+//   parentElement.appendChild(productElement);
+// }
+
 async function insertCartItemWithId(id) {
   const productInfo = await fetchItem(id);
   const sku = productInfo.id;
@@ -55,24 +67,29 @@ async function insertCartItemWithId(id) {
   const li = createCartItemElement({ sku, name, salePrice });
   const parentElement = document.querySelector('.cart__items');
   parentElement.appendChild(li);
+  // console.log(document.querySelectorAll('.cart__item'));
 }
 
-async function insertProductElement() {
-  const listResults = await fetchProducts('computador');
-  listResults.forEach((item) => {
-    const sku = item.id;
-    const name = item.title;
-    const image = item.thumbnail;
-    const itemSection = createProductItemElement({ sku, name, image });
+async function productsHandle() {
+  const productsInfo = await fetchProducts('computador');
+  productsInfo.forEach((item) => {
+    // renderProductElement
+    const sku = item.id; const name = item.title; const image = item.thumbnail;
+    const productElement = createProductItemElement({ sku, name, image });
     const parentElement = document.querySelector('.items');
-    parentElement.appendChild(itemSection);
-    itemSection.lastElementChild.addEventListener('click', () => {
-      const id = itemSection.firstElementChild.innerText;
+    parentElement.appendChild(productElement);
+    // insert product on chart with click
+    productElement.lastElementChild.addEventListener('click', () => {
+      const id = productElement.firstElementChild.innerText;
       insertCartItemWithId(id);
     });
   });
 }
 
-insertProductElement();
+async function start() {
+  productsHandle();
+}
 
-// window.onload = insertCartItemWithClick;
+window.onload = start;
+
+cartItemClickListener('click');
