@@ -1,5 +1,3 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,15 +23,6 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
-
-// const computersAvaible = async () => {
-//   const arrayComputers = await fetchProducts('computer');
-//   const wantedHTMLelement = document.querySelector('.items');
-//   arrayComputers.results.forEach((eachComputer) => {
-//     const append = createProductItemElement(eachComputer);
-//     wantedHTMLelement.appendChild(append);
-//   });
-// };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
