@@ -86,7 +86,6 @@ const select = () => {
     addValue.innerHTML = '';
   });
 
-
 window.onload = async () => {
   await createListProduct();
   select();
