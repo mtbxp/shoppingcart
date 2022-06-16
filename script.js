@@ -14,7 +14,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -26,14 +26,14 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const computersAvaible = async () => {
-  const arrayComputers = await fetchProducts('computer');
-  const wantedHTMLelement = document.querySelector('.items');
-  arrayComputers.results.forEach((eachComputer) => {
-    const append = createProductItemElement(eachComputer);
-    wantedHTMLelement.appendChild(append);
-  });
-};
+// const computersAvaible = async () => {
+//   const arrayComputers = await fetchProducts('computer');
+//   const wantedHTMLelement = document.querySelector('.items');
+//   arrayComputers.results.forEach((eachComputer) => {
+//     const append = createProductItemElement(eachComputer);
+//     wantedHTMLelement.appendChild(append);
+//   });
+// };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
