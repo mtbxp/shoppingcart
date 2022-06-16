@@ -1,5 +1,5 @@
-const arrayItem = [];
 const saveCartItems = (itemID) => {
+  const arrayItem = [];
   try {
       arrayItem.push(itemID);
       const itemLocalStorage = localStorage.setItem('cartItems', JSON.stringify(arrayItem));
