@@ -63,13 +63,24 @@ const addCartItem = async () => {
      name: parentElement.title,
      salePrice: parentElement.price,
    })));
-   saveCartItems(parentElement);
+   saveCartItems(parentElement); 
+// CONTINUAR A PARTIR DAQUI
   });
 });
+};
+
+const emptyCartButton = document.querySelector('.empty-cart');
+const removeAllItems = async () => {
+    emptyCartButton.addEventListener('click', () => {
+      while (olCartItem.hasChildNodes()) {
+        olCartItem.removeChild(olCartItem.firstChild);
+      }
+    });
 };
 
 window.onload = async () => {  
   await productList();
   await addCartItem();
   await saveCartItems();
+  await removeAllItems();
 };
