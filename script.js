@@ -33,7 +33,11 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `
+  SKU: ${sku} |
+  NAME: ${name} |
+  PRICE: $${salePrice}`;
+
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -46,6 +50,7 @@ const productList = async () => {
     });
 };
 const olCartItem = document.querySelector('.cart__items');
+
 const addCartItem = async () => {
   const selectButton = document.querySelectorAll('.item__add');
   // referenciar do stackoverflow para fazer forEach de um querySelectorAll
@@ -58,6 +63,7 @@ const addCartItem = async () => {
      name: parentElement.title,
      salePrice: parentElement.price,
    })));
+   saveCartItems(parentElement);
   });
 });
 };
@@ -65,5 +71,5 @@ const addCartItem = async () => {
 window.onload = async () => {  
   await productList();
   await addCartItem();
-  // buttons();
+  await saveCartItems();
 };
