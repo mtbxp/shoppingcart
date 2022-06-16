@@ -91,5 +91,3 @@ async function start() {
 }
 
 window.onload = start;
-
-cartItemClickListener('click');
