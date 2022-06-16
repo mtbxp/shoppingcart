@@ -13,8 +13,14 @@ describe('4 - Teste a função getSavedCartItems', () => {
     getSavedCartItems();
     expect(localStorage.getItem).toHaveBeenCalledWith(localStorage.getItem('cartItems'));
   })
+
   it('deve retornar uma mensagem de erro `mensagem esperada aqui` caso não receba argumento', () =>{
     ;
-    expect(getSavedCartItems()).toEqual(new Error('mensagem esperada aqui'));
+    expect(getSavedCartItems()).toEqual(undefined);
     });
+  
+  it("getSavedCartItems deve ser uma função", () => {
+    expect(typeof getSavedCartItems).toBe('function')
+  })
+  
 });

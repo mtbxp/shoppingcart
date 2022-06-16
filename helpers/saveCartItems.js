@@ -1,12 +1,12 @@
+// const arrayItem = [];
 const saveCartItems = (itemID) => {
-  const arrayItem = [];
-  try {
-      arrayItem.push(itemID);
-      const itemLocalStorage = localStorage.setItem('cartItems', JSON.stringify(arrayItem));
-      return itemLocalStorage;
-    } catch (error) {
-      return new Error('mensagem esperada aqui');
-    }
+  // try {
+  //     // arrayItem.push(itemID);
+  //     const itemLocalStorage = localStorage.setItem('cartItems', JSON.stringify(itemID));
+  //     return itemLocalStorage;
+  //   } catch (error) {
+  //     return new Error('mensagem esperada aqui');
+  //   }
 };
 
 if (typeof module !== 'undefined') {
