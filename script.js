@@ -49,15 +49,17 @@ const cartValue = () => {
   const showValue = document.querySelector('.total-price');
   let totalValue = 0;
   li.forEach((element) => {
-    totalValue += (Number(element.innerText.split('$')[1]));
+    // totalValue += (Number(element.innerText.split('$')[1]));
+    totalValue += parseFloat(element.innerHTML.split('$')[1], 10);
   });
-  showValue.innerText = totalValue;
+  // showValue.innerText = totalValue;
+  showValue.innerHTML = `${totalValue}`;
 };
 
 const cartItemClickListener = (event) => {
 event.target.remove();
-  saveCartItems(cart.innerHTML);
-  cartValue();
+  // saveCartItems(cart.innerHTML);
+  // cartValue();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -78,7 +80,7 @@ const cartItems = async (event) => {
   const products = await fetchItem(id);
   const createItem = createCartItemElement(products);
   cart.appendChild(createItem);
-  cartValue();
+  // cartValue();
   saveCartItems(cart.innerHTML);
   removeSavedItems();
 };
@@ -109,4 +111,5 @@ window.onload = async () => {
   await functionReturn();
   addButton();
   showList();
+  cartValue();
  };
