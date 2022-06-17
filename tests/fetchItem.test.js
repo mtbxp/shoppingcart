@@ -17,11 +17,11 @@ describe('2 - Teste a função fetchItem', () => {
     expect(fetch).toHaveBeenCalledWith(endpoint)
   });
   test('se a estrutura retornada é parecida com a da mock itens', async () => {
-    const data = await(fetchItem('MLB1615760527'));
-
-    expect(Object.keys(data)).toEqual(Object.keys(item));
+    const expected = await fetchItem('MLB1615760527');
+    expect(expected).toEqual(item);
   });
   test('se a url estiver vazia retorna um erro', async () => {
-    expect(await fetchItem()).toBe('You must provide an url');
-  })
+    const expected = await fetchItem();
+    expect(expected).toEqual(new Error('You must provide an url'));
+  });
 });

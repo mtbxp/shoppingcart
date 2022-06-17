@@ -1,15 +1,15 @@
 // const fetch = require('node-fetch')
 
-const fetchProducts = async (product) => {
+const fetchProducts = async (item) => {
   // seu código aqui
-  if (product === undefined) {
-    return 'You must provide an url';
-  }
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
+  try {
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${item}`;
     const result = await fetch(url);
     const data = await result.json();
-
     return data;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
