@@ -37,10 +37,22 @@ const createListOfProducts = async () => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const getCartValue = () => {
+  const sectionPrice = document.querySelector('.total-price');
+  const cartItems = Array.from(document.querySelectorAll('.cart__item'));
+  let valor = 0;
+  cartItems.forEach((element) => {
+    const value = element.innerHTML;
+    valor += Number(value.split('$')[1]);
+  });
+  sectionPrice.innerHTML = valor;
+};
+
 const deleteItemFromCart = (event) => {
   if (event.target.className === 'cart__item') {
   cart.removeChild(event.target);
   saveCartItems(cart.innerHTML);
+  getCartValue();
   }
 };
 
@@ -59,6 +71,7 @@ const addItemToCart = () => {
     const item = await fetchItem(id);
     cart.appendChild(createCartItemElement(item));
     saveCartItems(cart.innerHTML);
+    getCartValue();
     }
   });
 };
@@ -67,6 +80,7 @@ const reloadCart = () => {
   const setList = getSavedCartItems();
   if (setList) {
     cart.innerHTML = setList;
+    getCartValue();
   }
 };
 
@@ -82,4 +96,5 @@ window.onload = () => {
   addItemToCart(); 
   reloadCart();
   cartItemClickListener(); 
+  getCartValue();
 };
