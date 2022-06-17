@@ -55,7 +55,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const getCartValue = () => {
   const sectionPrice = document.querySelector('.total-price');
-  const cartItems = Array.from(document.querySelectorAll('.cart__item'));
+  const cartItems = document.querySelectorAll('li');
   let valor = 0;
   cartItems.forEach((element) => {
     const value = element.innerHTML;
