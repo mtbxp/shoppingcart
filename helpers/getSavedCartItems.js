@@ -3,7 +3,6 @@ const getSavedCartItems = () => {
   return cartItensSaved;
 };
 
-
 if (typeof module !== 'undefined') {
   module.exports = getSavedCartItems;
 }
