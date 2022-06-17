@@ -58,8 +58,15 @@ const computersAvaible = async () => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const removeItemByClick = () => {
+  const removeButton = document.querySelector('.empty-cart');
+  removeButton.addEventListener('click', (event) => {
+    kartIdentifier.innerHTML = ' ';
+    console.log(event.target);
+  });
+  console.log(removeButton);
 };
 
 window.onload = () => {
  computersAvaible(); 
+ removeItemByClick();
 };
