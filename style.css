@@ -133,7 +133,7 @@ body {
   flex-flow: column wrap;
   background-color: rgb(241, 241, 238);
   height: 100vh;
-  padding: 10px
+  padding: 10px;
 }
 
 .cart .cart__items {

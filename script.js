@@ -1,5 +1,6 @@
 const items = document.getElementsByClassName('items')[0];
 const cart = document.querySelector('.cart__items');
+const emptyButton = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -91,10 +92,18 @@ const cartItemClickListener = () => {
   });
 };
 
+const emptyButtonClickListener = () => {
+  emptyButton.addEventListener('click', () => {
+    cart.innerHTML = '';
+    getCartValue();
+  });
+};
+
 window.onload = () => { 
   createListOfProducts(); 
   addItemToCart(); 
   reloadCart();
   cartItemClickListener(); 
   getCartValue();
+  emptyButtonClickListener();
 };
