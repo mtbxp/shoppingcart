@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(9, 12, 13);
+  background-color: rgb(47, 179, 130);
 }
 
 .header {
@@ -98,7 +98,7 @@ body {
   margin: 5px;
   width: 200px;
   border: 2px solid rgb(234, 234, 233);
-  border-radius: 5px;
+  border-radius: 15px;
   box-sizing: border-box;
 }
 
@@ -125,6 +125,7 @@ body {
   margin: 0;
   padding: 10px;
   color: white;
+  border-radius: 10px;
 }
 
 .cart {
@@ -133,6 +134,7 @@ body {
   flex-flow: column wrap;
   background-color: rgb(241, 241, 238);
   height: 100vh;
+  border-radius: 10px;
 }
 
 .cart .cart__items {
@@ -144,6 +146,7 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
+  border-radius: 10px;
+  border: 4px solid rgb(10, 118, 79);
   background-color: rgb(249, 249, 246);
 }
