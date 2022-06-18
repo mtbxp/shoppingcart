@@ -63,7 +63,6 @@ const createCustomElement = (element, className, innerText) => {
     });
     return e;
   }
-  
   return e;
 };
 
@@ -81,10 +80,15 @@ const createProductItemElement = ({
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const buscaLista = async () => {
+  const carregando = document.createElement('div');
+  carregando.className = 'loading';
+  carregando.innerText = 'carregando...';
+  sectionItems.appendChild(carregando);
   const lista = await fetchProducts('computador');
+  sectionItems.firstChild.remove();
   lista.forEach((element) => sectionItems.appendChild(createProductItemElement(element)));
 };
 
