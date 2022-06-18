@@ -1,4 +1,6 @@
 let subtotalValue = 0;
+const cartItemsClass = '.cart__items';
+const totalPriceClass = '.total-price';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -51,9 +53,9 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => {
-    const parentElement = document.querySelector('.cart__items');
+    const parentElement = document.querySelector(cartItemsClass);
     parentElement.removeChild(li);
-    const subtotalElement = document.querySelector('.total-price');
+    const subtotalElement = document.querySelector(totalPriceClass);
     subtotalValue -= salePrice;
     subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
   });
@@ -66,9 +68,9 @@ async function insertCartItemWithId(id) {
   const name = productInfo.title;
   const salePrice = productInfo.price;
   const li = createCartItemElement({ sku, name, salePrice });
-  const parentElement = document.querySelector('.cart__items');
+  const parentElement = document.querySelector(cartItemsClass);
   parentElement.appendChild(li);
-  const subtotalElement = document.querySelector('.total-price');
+  const subtotalElement = document.querySelector(totalPriceClass);
   subtotalValue += salePrice;
   subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
 }
@@ -91,8 +93,8 @@ async function productsHandle() {
 
 function emptyCart() {
   const emptyButton = document.querySelector('.empty-cart');
-  const cartListElement = document.querySelector('.cart__items');
-  const subtotalElement = document.querySelector('.total-price');
+  const cartListElement = document.querySelector(cartItemsClass);
+  const subtotalElement = document.querySelector(totalPriceClass);
   emptyButton.addEventListener('click', () => {
     cartListElement.innerHTML = '';
     subtotalValue = 0;
