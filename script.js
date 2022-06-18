@@ -1,9 +1,32 @@
 const sectionItems = document.querySelector('.items');
 const listItems = document.querySelector('.cart__items');
 const botaoLimpa = document.querySelector('.empty-cart');
+const total = document.querySelector('.total-price');
+let result = 0;
+
+const showTotal = (resultado) => {
+  total.innerText = `TOTAL: ${Math.round(resultado * 100) / 100}`;
+  localStorage.setItem('totalPrice', total.innerText);
+};
+
+const soma = (param) => {
+  result += param;
+  showTotal(result);
+};
+
+const subtracao = (param) => {
+  result -= param;
+  showTotal(result);
+};
 
 const cartItemClickListener = (event) => {
   event.target.remove(event.target);
+  const buscaPreco = event.target.innerText.split(' ');
+  const preco = buscaPreco[buscaPreco.length - 1].split('');
+  preco.splice(0, 1);
+  const precoFinal = parseFloat(preco.join(''));
+  subtracao(precoFinal);
+  
   saveCartItems(listItems.innerHTML);
   };
 
@@ -19,6 +42,7 @@ const buscaItem = async (element) => {
   const addItem = await fetchItem(element);
   const { id, title, price } = addItem;
   listItems.appendChild(createCartItemElement(id, title, price));
+  soma(price);
   saveCartItems(listItems.innerHTML);
   };
 
@@ -70,6 +94,8 @@ const limpaCarro = () => {
   botaoLimpa.addEventListener('click', () => { 
     listItems.innerHTML = '';
     saveCartItems(listItems.innerHTML);
+    result = 0;
+    showTotal(result);
   });
 };
 
@@ -79,6 +105,11 @@ const buscaCarrinho = () => {
   if (filhos.length !== 0) {
   filhos.forEach((element) => element.addEventListener('click', cartItemClickListener));
   }
+  const precoTotal = localStorage.getItem('totalPrice');
+  const array = precoTotal.split(' ');
+  const precoGuardado = array.splice(1, 1);
+  result = parseFloat(precoGuardado);
+  showTotal(result);
 };
 
 window.onload = () => { 
