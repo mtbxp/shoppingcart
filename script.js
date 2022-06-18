@@ -1,3 +1,5 @@
+let subtotalValue = 0;
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,6 +33,19 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 //   console.log(document.querySelectorAll('.cart__item'));
 // };
 
+function showMoneyValueInPortuguese(value) {
+  const reais = Math.floor(value);
+  const centavos = (value - reais) * 100;
+  let roundedCentavos;
+  if (centavos - Math.floor(centavos) >= 0.5) {
+    roundedCentavos = Math.floor(centavos) + 1;
+  } else {
+    roundedCentavos = Math.floor(centavos);
+  }
+  const displaySubtotal = `Subtotal: R$ ${reais}, ${roundedCentavos}`;
+  return displaySubtotal;
+}
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -38,26 +53,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', () => {
     const parentElement = document.querySelector('.cart__items');
     parentElement.removeChild(li);
+    const subtotalElement = document.querySelector('.total-price');
+    subtotalValue -= salePrice;
+    subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
   });
   return li;
 };
-
-// Dado o Id de um item, a função appenda um li com as infos do item no carrinho de compras. Preciso pensar em uma forma de encontrar o Id do item em que cliquei.
-
-// Posso fazer um forEach em todos os botões dos elementos da lista. (classe item__add e querySelectorAll para gerar uma lista com todos eles).
-// Adicionar um listener para o click nesses botões
-// Caso haja o click, devo pegar o elemento pai do botão (será a section do item - .parentElement)
-// O primeiro elemento filho da section tem innerText = sku (.firstElementChild)
-// sku é o mesmo que id, então basta pegar o valor (element.value é uma ideia) e colocar na função abaixo.
-
-// function renderProductElement(item) {
-//   const sku = item.id;
-//   const name = item.title;
-//   const image = item.thumbnail;
-//   const productElement = createProductItemElement({ sku, name, image });
-//   const parentElement = document.querySelector('.items');
-//   parentElement.appendChild(productElement);
-// }
 
 async function insertCartItemWithId(id) {
   const productInfo = await fetchItem(id);
@@ -67,7 +68,9 @@ async function insertCartItemWithId(id) {
   const li = createCartItemElement({ sku, name, salePrice });
   const parentElement = document.querySelector('.cart__items');
   parentElement.appendChild(li);
-  // console.log(document.querySelectorAll('.cart__item'));
+  const subtotalElement = document.querySelector('.total-price');
+  subtotalValue += salePrice;
+  subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
 }
 
 async function productsHandle() {
