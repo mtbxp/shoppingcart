@@ -35,16 +35,27 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 //   console.log(document.querySelectorAll('.cart__item'));
 // };
 
+function numberRounder(number) {
+  const intPart = Math.floor(number);
+  const decimals = number - intPart;
+  const decimalsTwoPlaces = Math.round((decimals * 100));
+  const roundedNumber = intPart + 0.01 * decimalsTwoPlaces;
+  return { intPart, decimalsTwoPlaces, roundedNumber };
+}
+
 function showMoneyValueInPortuguese(value) {
-  const reais = Math.floor(value);
-  const centavos = (value - reais) * 100;
-  let roundedCentavos;
-  if (centavos - Math.floor(centavos) >= 0.5) {
-    roundedCentavos = Math.floor(centavos) + 1;
+  const valueObject = numberRounder(value);
+  const displayReais = valueObject.intPart;
+  const { decimalsTwoPlaces } = valueObject;
+  let displayCentavos;
+  if (decimalsTwoPlaces === 0) {
+    displayCentavos = '00';
+  } else if (decimalsTwoPlaces <= 9) {
+    displayCentavos = `0${decimalsTwoPlaces}`;
   } else {
-    roundedCentavos = Math.floor(centavos);
+    displayCentavos = `${decimalsTwoPlaces}`;
   }
-  const displaySubtotal = `Subtotal: R$ ${reais},${roundedCentavos}`;
+  const displaySubtotal = `Subtotal: R$ ${displayReais},${displayCentavos}`;
   return displaySubtotal;
 }
 
@@ -56,7 +67,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
     const parentElement = document.querySelector(cartItemsClass);
     parentElement.removeChild(li);
     const subtotalElement = document.querySelector(totalPriceClass);
-    subtotalValue -= salePrice;
+    subtotalValue -= numberRounder(salePrice).roundedNumber;
     subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
   });
   return li;
@@ -71,7 +82,7 @@ async function insertCartItemWithId(id) {
   const parentElement = document.querySelector(cartItemsClass);
   parentElement.appendChild(li);
   const subtotalElement = document.querySelector(totalPriceClass);
-  subtotalValue += salePrice;
+  subtotalValue += numberRounder(salePrice).roundedNumber;
   subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
 }
 
@@ -105,6 +116,7 @@ function emptyCart() {
 async function start() {
   productsHandle();
   emptyCart();
+  console.log(numberRounder(10.09));
 }
 
 window.onload = start;
