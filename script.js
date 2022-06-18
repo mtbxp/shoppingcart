@@ -1,12 +1,24 @@
 const itemsSection = document.querySelector('.cart__items');
 const sectionPrice = document.querySelector('.cart');
 const buttonCleam = document.querySelector('.empty-cart');
+// const priceTotal = document.querySelector('.total-price');
+
+const clearCar = () => {
+  const liS = document.querySelectorAll('.cart__item');
+  liS.forEach((item) => {
+    item.remove();
+  });
+  // const pricePrice = document.querySelector('.total-price');
+  // priceTotal.remove();
+};
+
+buttonCleam.addEventListener('click', clearCar);
 
 const div = () => {
   const divPrice = document.createElement('div');
   divPrice.className = 'total-price';
   sectionPrice.appendChild(divPrice);
-  divPrice.innerText = '0';
+  // divPrice.innerText = '0';
 };
 div();
 
