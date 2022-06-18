@@ -69,7 +69,13 @@ const removeItemByClick = () => {
   console.log(removeButton);
 };
 
+const previousCart = () => {
+  const mylist = getSavedCartItems();
+  kartIdentifier.innerHTML = mylist;
+};
+
 window.onload = () => {
  computersAvaible(); 
  removeItemByClick();
+ previousCart();
 };
