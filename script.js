@@ -89,8 +89,20 @@ async function productsHandle() {
   });
 }
 
+function emptyCart() {
+  const emptyButton = document.querySelector('.empty-cart');
+  const cartListElement = document.querySelector('.cart__items');
+  const subtotalElement = document.querySelector('.total-price');
+  emptyButton.addEventListener('click', () => {
+    cartListElement.innerHTML = '';
+    subtotalValue = 0;
+    subtotalElement.innerText = 'Subtotal: R$ 0,00';
+  });
+}
+
 async function start() {
   productsHandle();
+  emptyCart();
 }
 
 window.onload = start;
