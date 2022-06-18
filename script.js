@@ -44,7 +44,7 @@ function showMoneyValueInPortuguese(value) {
   } else {
     roundedCentavos = Math.floor(centavos);
   }
-  const displaySubtotal = `Subtotal: R$ ${reais}, ${roundedCentavos}`;
+  const displaySubtotal = `Subtotal: R$ ${reais},${roundedCentavos}`;
   return displaySubtotal;
 }
 
