@@ -1,7 +1,10 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 // const { fetchItem } = require('./helpers/fetchItem');
+// const saveCartItems = require('./helpers/saveCartItems');
 
 const cartItems = document.getElementsByClassName('cart__items')[0];
+
+const updateLocalStorage = () => saveCartItems(cartItems.innerHTML);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -20,6 +23,7 @@ const createCustomElement = (element, className, innerText) => {
 const cartItemClickListener = (event) => {
   const itemToBeRemoved = event.target;
   cartItems.removeChild(itemToBeRemoved);
+  updateLocalStorage();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -34,12 +38,12 @@ const addToCart = async ({ target }) => {
   const itemToBeFetched = target.parentNode.firstChild.innerText;
   const itemToBeAdded = await fetchItem(itemToBeFetched);
   cartItems.appendChild(createCartItemElement(itemToBeAdded));
+  updateLocalStorage();
 };
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -52,6 +56,15 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 // const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const addClickEventToLoadedCartItems = () => {
+  const loadedCartItems = document.querySelectorAll('.cart__item');
+  if (loadedCartItems) {
+    loadedCartItems.forEach((element) => {
+      element.addEventListener('click', cartItemClickListener);
+    });
+  }
+};
+
 const itemsSection = document.getElementsByClassName('items')[0];
 
 window.onload = () => {
@@ -60,4 +73,10 @@ window.onload = () => {
       data.results.forEach((element) => itemsSection
       .appendChild(createProductItemElement(element)));
     });
+  cartItems.innerHTML = getSavedCartItems(cartItems);
+  addClickEventToLoadedCartItems();
 };
+
+if (typeof module !== 'undefined') {
+  module.exports = cartItemClickListener;
+}
