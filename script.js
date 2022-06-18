@@ -12,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({ sku, name, image }) => {
+const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -23,6 +23,12 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return section;
 };
+
+const createProductList = async () => {
+  const products = await fetchProducts('computador');
+  const items = document.querySelector('.items');
+  products.results.forEach((product) => items.appendChild(createProductItemElement(product)));
+  };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -38,4 +44,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+window.onload = () => { createProductList(); };
