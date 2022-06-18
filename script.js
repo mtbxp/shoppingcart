@@ -61,12 +61,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const removeItemByClick = () => {
   const removeButton = document.querySelector('.empty-cart');
-  removeButton.addEventListener('click', (event) => {
+  removeButton.addEventListener('click', () => {
     kartIdentifier.innerHTML = ' ';
     localStorage.clear();
-    console.log(event.target);
   });
-  console.log(removeButton);
 };
 
 const previousCart = () => {
