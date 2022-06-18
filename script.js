@@ -72,8 +72,18 @@ const previousCart = () => {
   kartIdentifier.innerHTML = mylist;
 };
 
+const deletePreviousCart = () => {
+  const cart = document.querySelector('.cart__items').childNodes;
+  cart.forEach((cartItem) => cartItem.addEventListener('click', (event) => {
+    event.target.remove();
+    saveCartItems(kartIdentifier.innerHTML);
+    console.log('botao');
+  }));
+};
+
 window.onload = () => {
  computersAvaible(); 
  removeItemByClick();
  previousCart();
+ deletePreviousCart();
 };
