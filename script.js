@@ -5,7 +5,7 @@ const total = document.querySelector('.total-price');
 let result = 0;
 
 const showTotal = (resultado) => {
-  total.innerText = `TOTAL: ${Math.round(resultado * 100) / 100}`;
+  total.innerText = Math.round(resultado * 100) / 100;
   localStorage.setItem('totalPrice', total.innerText);
 };
 
@@ -26,7 +26,6 @@ const cartItemClickListener = (event) => {
   preco.splice(0, 1);
   const precoFinal = parseFloat(preco.join(''));
   subtracao(precoFinal);
-  
   saveCartItems(listItems.innerHTML);
   };
 
@@ -74,7 +73,6 @@ const createProductItemElement = ({
   thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -106,10 +104,8 @@ const buscaCarrinho = () => {
   filhos.forEach((element) => element.addEventListener('click', cartItemClickListener));
   }
   if (localStorage.getItem('totalPrice')) {
-    const precoTotal = localStorage.getItem('totalPrice');
-  const array = precoTotal.split(' ');
-  const precoGuardado = array.splice(1, 1);
-  result = parseFloat(precoGuardado);
+  const precoTotal = localStorage.getItem('totalPrice');
+  result = parseFloat(precoTotal);
   showTotal(result);
   }
 };
