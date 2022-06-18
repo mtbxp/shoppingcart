@@ -38,9 +38,9 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-const addProductsList = () => {
+const addProductsList = async () => {
 const productList = document.querySelector('.items');
-fetchProducts('computador')
+await fetchProducts('computador')
 .then((products) => {
   products.results
   .forEach((element) => {
@@ -68,5 +68,13 @@ btnLimpar.addEventListener('click', () => {
   localStorage.clear();
 });
 
-window.onload = () => { };
-addProductsList();
+const loading = async () => {
+  const div = document.createElement('div');
+  div.innerText = 'carregando...';
+  div.className = 'loading';
+  document.querySelector('.textLoading').appendChild(div);
+  await addProductsList();
+  div.remove();
+};
+
+window.onload = () => { loading(); };
