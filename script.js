@@ -105,11 +105,13 @@ const buscaCarrinho = () => {
   if (filhos.length !== 0) {
   filhos.forEach((element) => element.addEventListener('click', cartItemClickListener));
   }
-  // const precoTotal = localStorage.getItem('totalPrice');
-  // const array = precoTotal.split(' ');
-  // const precoGuardado = array.splice(1, 1);
-  // result = parseFloat(precoGuardado);
-  // showTotal(result);
+  if (localStorage.getItem('totalPrice')) {
+    const precoTotal = localStorage.getItem('totalPrice');
+  const array = precoTotal.split(' ');
+  const precoGuardado = array.splice(1, 1);
+  result = parseFloat(precoGuardado);
+  showTotal(result);
+  }
 };
 
 window.onload = () => { 
