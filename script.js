@@ -27,10 +27,14 @@ const createProductItemElement = ({ sku, name, image, salePrice }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const cart = document.querySelector('ol.cart__items');
+
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
   const cartItem = event.target;
   cartItem.remove();
+  saveCartItems('');
+  saveCartItems(cart.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -52,7 +56,6 @@ const products = async () => {
 };
 
 const getProductsForCartItem = async (event) => {
-  const cart = document.querySelector('ol.cart__items');
   const item = event.target.parentElement;
   const id = getSkuFromProductItem(item);
   const data = await fetchItem(id);
@@ -69,8 +72,11 @@ const productsListener = () => document.querySelectorAll('button.item__add')
 
 const loadCart = () => {
  const cartItems = getSavedCartItems();
- const olCartItems = document.querySelector('.cart__items');
- olCartItems.innerHTML = cartItems;
+ cart.innerHTML = cartItems;
+ document.querySelectorAll('li.cart__item')
+  .forEach((element) => {
+    element.addEventListener('click', cartItemClickListener);
+  });
 };
 
 window.onload = async () => { await products(); productsListener(); loadCart(); };
