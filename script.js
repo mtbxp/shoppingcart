@@ -16,6 +16,7 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(kartIdentifier.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -30,7 +31,8 @@ async function idIdentifier(event) {
   const pressedComputer = event.target.parentNode.firstChild.innerText;
   const wantedComputer = await fetchItem(pressedComputer);
   const infosForKart = createCartItemElement(wantedComputer);
-  return kartIdentifier.appendChild(infosForKart);
+  kartIdentifier.appendChild(infosForKart);
+  saveCartItems(kartIdentifier.innerHTML);
 }
 
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
@@ -61,6 +63,7 @@ const removeItemByClick = () => {
   const removeButton = document.querySelector('.empty-cart');
   removeButton.addEventListener('click', (event) => {
     kartIdentifier.innerHTML = ' ';
+    localStorage.clear();
     console.log(event.target);
   });
   console.log(removeButton);

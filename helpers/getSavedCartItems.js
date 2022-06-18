@@ -1,4 +1,4 @@
-const getSavedCartItems = () => {
+const getSavedCartItems = async () => {
     localStorage.getItem('cartItems');
 };
 
