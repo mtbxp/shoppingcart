@@ -100,7 +100,7 @@ body {
   border: 2px solid rgb(234, 234, 233);
   border-radius: 5px;
   box-sizing: border-box;
-  background-color: #dddcd2;
+  background-color: rgb(221, 220, 210);
   color: black;
 }
 
@@ -123,7 +123,7 @@ body {
 }
 
 .item .item__add {
-  background-color: #5f0a8c;
+  background-color: rgb(95, 10, 140);
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -137,7 +137,7 @@ body {
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
-  background-color: #dddcd2;
+  background-color: rgb(221, 220, 210);
   height: 100vh;
 }
 
@@ -156,8 +156,8 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid #414066;
-  background-color: #5f0a8c;
+  border: 2px solid rgb(65, 64, 102);
+  background-color: rgb(95, 10, 140);
   border-radius: 1rem;
   font-family: Nunito, sans-serif;
 }
