@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -53,17 +55,33 @@ const productCartItem = async () => {
     btn.addEventListener('click', async (event) => {
       const id = getSkuFromProductItem(event.target.parentElement);
       const result = await fetchItem(id);
-      const ol = document.querySelector('.cart__items');
       ol.appendChild(createCartItemElement({ 
       sku: result.id,
       name: result.title,
       salePrice: result.price,
     }));
+    saveCartItems(JSON.stringify(result));
   });
 });
 };
 
+const getLocalStorage = () => {
+  const result = getSavedCartItems();
+  if (result) {
+    result.forEach((item) => {
+      ol.appendChild(createCartItemElement({
+        sku: item.id, 
+        name: item.title,
+        salePrice: item.price,
+      }));
+    });
+  } else {
+    return null;
+  }
+};
+
 window.onload = async () => {  
- await productList();
+  await productList();
   await productCartItem();
+  getLocalStorage();
 };
