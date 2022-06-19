@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Righteous&display=swap');
+
 * {
   box-sizing: border-box;
   font-family: Epilogue, sans-serif;
@@ -11,7 +13,7 @@ body {
 
 .header {
   position: relative;
-  background-color: rgb(3, 52, 45);
+  background-color: #414066;
   display: flex;
   align-items: center;
   width: 100%;
@@ -23,16 +25,17 @@ body {
 }
 
 .title {
-  color: rgb(221, 221, 221);
+  color: white;
   font-size: 30px;
   padding-left: 30px;
+  font-family: 'Righteous', cursive;
 }
 
 .container-cartTitle {
   position: relative;
   display: flex;
   align-items: center;
-  background-color: rgb(10, 118, 79);
+  background-color: #414066;
   width: 40%;
   height: 100%;
   margin-left: 30px;
@@ -46,10 +49,10 @@ body {
   content: '';
   position: absolute;
   top: 15px;
-  right: 61.5%;
+  right: 56.5%;
   width: 39.5%;
   height: 15px;
-  background: rgb(10, 118, 79);
+  background: white;
   transform: skew(-45deg);
   z-index: 0;
 }
@@ -58,29 +61,26 @@ body {
   content: '';
   position: absolute;
   top: 30px;
-  right: 61.5%;
+  right: 56.5%;
   width: 39.5%;
   height: 15px;
-  background: rgb(10, 118, 79);
+  background: white;
   transform: skew(45deg);
   z-index: 0;
 }
 
 .container-cartTitle .cart__title {
-  color: white;
+  color: black;
   font-size: 20px;
   padding-left: 35px;
   font-weight: 700;
+  font-family: 'Nunito', sans-serif;
 }
 
 .container {
   display: flex;
   justify-content: space-around;
   width: 100%;
-}
-
-.title strong {
-  color: white;
 }
 
 .items {
@@ -100,6 +100,8 @@ body {
   border: 2px solid rgb(234, 234, 233);
   border-radius: 5px;
   box-sizing: border-box;
+  background-color: #DDDCD2;
+  color: black;
 }
 
 .item .item__sku {
@@ -111,7 +113,9 @@ body {
   align-items: center;
   flex-grow: 1;
   padding: 10px;
-  text-align: center;
+  text-align: justify;
+  word-spacing: -2px;
+  font-family: 'Nunito', sans-serif;
 }
 
 .item .item__image {
@@ -119,20 +123,27 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
+  background-color: #5F0A8C;
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 10px;
   color: white;
+  border-radius: 1rem;
+  font-family: 'Nunito', sans-serif;
 }
 
 .cart {
   display: flex;
   flex-basis: 32%;
   flex-flow: column wrap;
-  background-color: rgb(241, 241, 238);
+  background-color: #DDDCD2;
   height: 100vh;
+}
+
+.cart__item {
+  font-family: 'Nunito', sans-serif;
+  margin: 30px;
 }
 
 .cart .cart__items {
@@ -141,9 +152,17 @@ body {
 }
 
 .empty-cart {
+  color: white;
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  border: 2px solid rgb(5, 52, 219);
-  background-color: rgb(249, 249, 246);
+  border: 2px solid #414066;
+  background-color: #5F0A8C;
+  border-radius: 1rem;
+  font-family: 'Nunito', sans-serif;
+}
+
+.total-price {
+  font-family: 'Nunito', sans-serif;
+  margin-left: 20px;
 }

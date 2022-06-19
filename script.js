@@ -23,6 +23,16 @@ const loadCartTotalPrice = async () => {
   const localCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
   
   totalPrice = 0;
+  // if (localCart.length === 0) {
+  //   priceTag.innerText = `Total R$ 0,00`;
+  // } else {
+  //   localCart.forEach(async (elem) => {
+  //     const item = await fetchItem(elem);
+  //     totalPrice += item.price;
+  //     priceTag.innerText = `Total R$ ${totalPrice}`;
+  //   });
+  // }
+
   localCart.forEach(async (elem) => {
     const item = await fetchItem(elem);
     totalPrice += item.price;
@@ -63,12 +73,7 @@ const toCart = async (event) => {
   myCart.appendChild(createCartItemElement(response));
   saveCartItems(JSON.stringify(localCart));
  
-  totalPrice = 0;
-  localCart.forEach(async (elem) => {
-    const itemPrice = await fetchItem(elem);
-    totalPrice += itemPrice.price;
-    priceTag.innerText = totalPrice;
-  });
+  loadCartTotalPrice();
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -85,7 +90,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const loadProducts = async () => {
-  const toSellThem = await fetchProducts('computador');
+  const toSellThem = await fetchProducts('bicicleta');
 
   toSellThem.forEach(async ({ id, title, thumbnail }) => itensSection
   .appendChild(await createProductItemElement({ sku: id, name: title, image: thumbnail })));
@@ -104,6 +109,7 @@ const clearCart = () => {
   localStorage.removeItem('cartItems');
   myCart.innerHTML = '';
   priceTag.innerHTML = '';
+  loadCartTotalPrice();
 };
 
 const loadingOn = () => {
