@@ -1,15 +1,13 @@
 const itemsSection = document.querySelector('.cart__items');
 const sectionPrice = document.querySelector('.cart');
 const buttonCleam = document.querySelector('.empty-cart');
-// const priceTotal = document.querySelector('.total-price');
 
 const clearCar = () => {
   const liS = document.querySelectorAll('.cart__item');
   liS.forEach((item) => {
     item.remove();
   });
-  // const pricePrice = document.querySelector('.total-price');
-  // priceTotal.remove();
+  saveCartItems(itemsSection.innerHTML);
 };
 
 buttonCleam.addEventListener('click', clearCar);
@@ -18,7 +16,7 @@ const div = () => {
   const divPrice = document.createElement('div');
   divPrice.className = 'total-price';
   sectionPrice.appendChild(divPrice);
-  // divPrice.innerText = '0';
+  divPrice.innerText = 'R$ 0';
 };
 div();
 
@@ -28,14 +26,14 @@ const sumPrice = (number) => {
   const priceTotal = document.querySelector('.total-price');
 
   price += number;
-  priceTotal.innerText = price;
+  priceTotal.innerText = `R$${price}`;
 };
 
 const subPrice = (number) => {
   const priceTotal = document.querySelector('.total-price');
 
   price -= number;
-  priceTotal.innerText = price;
+  priceTotal.innerText = `R$${price}`;
 };
 
 const createProductImageElement = (imageSource) => {
