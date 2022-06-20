@@ -22,7 +22,7 @@ describe('2 - Teste a função fetchItem', () => {
   });
 
   test('Verifica se o retorno da função fetchItem, com o argumento MLB1615760527, é uma estrutura de dados igual ao objeto item.', async () => {
-    const result = await fetchProducts('MLB1615760527');
+    const result = await fetchItem('MLB1615760527');
     expect(result).toStrictEqual(item);
   });
 
