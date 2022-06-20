@@ -26,14 +26,14 @@ const sumPrice = (number) => {
   const priceTotal = document.querySelector('.total-price');
 
   price += number;
-  priceTotal.innerText = `R$${price}`;
+  priceTotal.innerText = price;
 };
 
 const subPrice = (number) => {
   const priceTotal = document.querySelector('.total-price');
 
   price -= number;
-  priceTotal.innerText = `R$${price}`;
+  priceTotal.innerText = price;
 };
 
 const createProductImageElement = (imageSource) => {
