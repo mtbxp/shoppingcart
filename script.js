@@ -27,27 +27,36 @@ const createProductItemElement = ({ sku, name, image, salePrice }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-let arrayPricesCart = 0;
 const cart = document.querySelector('ol.cart__items');
+const cartSection = document.querySelector('.cart');
+
 const totalPrice = document.createElement('h3');
 totalPrice.className = 'total-price';
-const cartSection = document.querySelector('.cart');
-const storagePrices = () => localStorage.setItem('price', arrayPricesCart);
+let pricesSum = 0;
+
+const storagePrices = () => localStorage.setItem('price', +pricesSum.toFixed(2));
 
 const insertCartTotalElement = () => {
-  totalPrice.innerHTML = +arrayPricesCart.toFixed(2);
+  if (+pricesSum.toFixed(2) === 0) {
+    totalPrice.innerHTML = '';
+  } else { 
+  totalPrice.innerHTML = +pricesSum.toFixed(2);
+  }
   cartSection.insertBefore(totalPrice, cartSection.children[1]);
 };
 
 const cartSum = (newPrice) => {
-  arrayPricesCart += newPrice;
+  pricesSum += newPrice;
   storagePrices();
   insertCartTotalElement();
 };
 
-const cartSub = (item) => {
-  const matchPrice = item.innerText.match(/(\d+)\.\d*|(\d+)/g).pop(); // consulta em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Regular_Expressions#trabalhando_com_express%C3%B5es_regulares
-  arrayPricesCart -= matchPrice;
+const cartSub = (element) => {
+  const priceToBeSub = element.innerText
+    .match(/(\d+)\.\d*|(\d+)/g)
+    .pop();
+    // consulta em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Regular_Expressions#trabalhando_com_express%C3%B5es_regulares
+  pricesSum -= priceToBeSub;
   storagePrices();
   insertCartTotalElement();
 };
@@ -103,8 +112,25 @@ const loadCart = () => {
       element.addEventListener('click', cartItemClickListener);  
     });
   const storage = () => JSON.parse(localStorage.getItem('price'));
-  arrayPricesCart = storage();
-  if (arrayPricesCart !== null) insertCartTotalElement();
+  pricesSum = storage();
+  if (pricesSum !== null) insertCartTotalElement();
 };
 
-window.onload = async () => { await products(); productsListener(); loadCart(); };
+const emptyCart = () => {
+  while (cart.hasChildNodes()) {
+    cart.removeChild(cart.firstChild);
+  }
+  localStorage.clear();
+  totalPrice.innerHTML = '';
+  pricesSum = 0;
+};
+
+const emptyListener = () => document.querySelector('button.empty-cart')
+  .addEventListener('click', emptyCart);
+
+window.onload = async () => { 
+  await products();
+  productsListener();
+  emptyListener();
+  loadCart(); 
+};
