@@ -27,22 +27,23 @@ const totalPrices = () => {
 
 const sumPrices = (price) => {
   total += parseFloat(price);
+  totalP.innerText = total;
+  console.log(total);
   totalPrices();
-  return total;
 };
 
 const nunPrice = (event) => {
-  const splitT = event.target.innerText.split('$');
-  total -= parseFloat(splitT[1]);
+  const price = event.target.innerText.split('$')[1];
+  total -= parseFloat(price);
   totalPrices();
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  event.target.remove();  
-  saveCartItems(cartList.innerHTML);
   nunPrice(event);
+  event.target.remove();
+  saveCartItems(cartList.innerHTML);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -94,7 +95,8 @@ btn.addEventListener('click', removeItens);
 const requisição = () => {
   const olHtml = document.querySelector('.cart__items');
   olHtml.innerHTML = getSavedCartItems();
-  olHtml.addEventListener('click', cartItemClickListener);
+  olHtml.querySelectorAll('li')
+  .forEach((element) => element.addEventListener('click', cartItemClickListener));
 };
 
   window.onload = () => { 
