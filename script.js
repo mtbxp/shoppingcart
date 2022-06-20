@@ -24,8 +24,29 @@ const createProductItemElement = (sku, name, image) => {
   return section;
 };
 
-const cartItemClickListener = (event) => {
-  event.target.remove();
+const calculateTotalPrice = () => {
+  const totalPriceTag = document.querySelector('.total-price');
+  const cart = document.querySelectorAll('.cart__item');
+  const cartArray = Array.from(cart);
+  const totalPrice = cartArray.reduce((total, currentProduct) => {
+    const currentPrice = currentProduct.innerText.split('$')[1];
+    return total + parseFloat(currentPrice);
+  }, 0);
+  totalPriceTag.innerHTML = Math.round(totalPrice * 100) / 100;
+};
+
+const cartItemClickListenerDelete = (event) => {
+  const cart = document.querySelector('.cart__items');
+  cart.removeChild(event.target);
+  saveCartItems(cart.innerHTML);
+  calculateTotalPrice();
+};
+
+const cartItemClickListener = () => {
+  const cart = document.querySelectorAll('.cart__item');
+  cart.forEach((item) => {
+    item.addEventListener('click', cartItemClickListenerDelete);
+  });  
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
@@ -34,7 +55,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListenerDelete);
   return li;
 };
 
@@ -46,7 +67,9 @@ const adicionarItens = () => {
       const item = await fetchItem(itemID);
       const { id: sku, title: name, price: salePrice } = item;
       const listItem = createCartItemElement({ sku, name, salePrice });
-      document.querySelector('ol.cart__items').append(listItem);
+      const savedItems = document.querySelector('ol.cart__items');
+      savedItems.append(listItem);
+      calculateTotalPrice();
     });
   }); 
 };
@@ -60,4 +83,21 @@ listProducts.forEach(({ id, title, thumbnail }) =>
 adicionarItens();
 };
 
-window.onload = () => { productsOnScreen(); };
+const emptyCart = () => {
+  const cartItems = document.querySelector('.cart__items');
+  const emptyCartBtn = document.querySelector('.empty-cart');
+  emptyCartBtn.addEventListener('click', () => {
+    cartItems.innerHTML = '';
+    localStorage.setItem('cartItems', '');
+    calculateTotalPrice();
+  });
+};
+
+window.onload = () => { 
+  productsOnScreen(); 
+  getSavedCartItems();
+  cartItemClickListener();
+  saveCartItems();
+  calculateTotalPrice();
+  emptyCart();
+};
