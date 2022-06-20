@@ -9,7 +9,7 @@ describe('2 - Teste a função fetchItem', () => {
       expect(typeof fetchItem).toBe('function');
   });
 
-  it('test if when the function fetchProducts as an argument `computador`, the function use the right endpoint ', () => {
+  it('test if when the function fetchProducts as an argument `computador`, the function use the right endpoint ', async () => {
     fetchProducts('MLB1615760527');
     expect(fetch).toHaveBeenCalledWith(urlItem);
   });
