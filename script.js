@@ -81,7 +81,6 @@ const removeItemFromCart = () => {
   });
 };
 
-
 window.onload = () => {
   sendProduct();
   removeItemFromCart();
