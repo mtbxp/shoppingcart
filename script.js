@@ -1,5 +1,6 @@
 const items = document.querySelector('.items');
 const shoppingCartList = document.querySelector('.cart__items');
+const emptyCartBtn = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -58,6 +59,13 @@ const addListenerToBtn = async () => {
   const addBtns = document.querySelectorAll('.item__add');
   addBtns.forEach((button) => button.addEventListener('click', addItemToShoppingCart));
 };
+
+const cleanShoppingCart = () => {
+  const cartItems = document.querySelectorAll('.cart__item');
+  cartItems.forEach((item) => item.remove());
+};
+
+emptyCartBtn.addEventListener('click', cleanShoppingCart);
 
 window.onload = () => { 
   addListenerToBtn();
