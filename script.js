@@ -119,6 +119,21 @@ const showProducts = async () => {
   });
 };
 
+const carregando = () => {
+  const li = document.createElement('li');
+  li.innerText = 'carregando...';
+  li.className = 'loading';
+  itemsSection.appendChild(li);
+};
+
+const removeCarregando = async () => {
+  const liRemove = document.querySelector('.loading');
+  await fetchProducts();
+  liRemove.remove();
+};
+
 window.onload = () => { 
+  carregando();
+  removeCarregando();
   showProducts();
 };
