@@ -24,7 +24,7 @@ describe('2 - Teste a função fetchItem', () => {
     expect(result).toEqual(item);
   })
 
-  it('test if fectchProducts is a function', () => {
+  it('se a função não tiver parâmetro, retorn um erro', () => {
     const actual = fetchItem();
     expect(actual).toEqual(new Error('You must provide an url'));
   })

@@ -7,7 +7,14 @@ const createProductImageElement = (imageSource) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => event.target.remove();
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  const sectionCart = document.getElementsByClassName('cart__items')[0];
+  console.log(sectionCart.innerText);
+  const cartStringfy = JSON.stringify(sectionCart.innerText);
+  console.log(cartStringfy);
+  getSavedCartItems(cartStringfy);
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -25,9 +32,13 @@ const renderItems = async (id) => {
     salePrice: item.price,
   };
   const sectionCart = document.getElementsByClassName('cart__items')[0];
+  console.log(sectionCart);
+  // const sectionCart2 = document.querySelectorAll('.cart__items');
   const y = createCartItemElement(element);
-  console.log(y);
   sectionCart.appendChild(y);
+  const cartStringfy = JSON.stringify(sectionCart.innerText);
+  console.log(cartStringfy);
+  saveCartItems(cartStringfy);
 };
 
 const createCustomElement = (element, className, innerText, sku) => {
