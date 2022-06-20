@@ -1,10 +1,12 @@
 const fetchItem = async (arg) => {
-  const url = `https://api.mercadolibre.com/items/${arg}`;
-  const getResponse = await fetch(url)
-  .then((response) => response.json())
-  .then((date) => date)
-  .catch((error) => error);
-  return getResponse;
+  const getUrl = `https://api.mercadolibre.com/items/${arg}`;
+  try {
+    const response = await fetch(getUrl);
+    const itemProduct = await response.json();
+    return itemProduct;
+  } catch (error) {
+    return error;
+  }
 };
 
 if (typeof module !== 'undefined') {
