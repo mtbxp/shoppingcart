@@ -122,7 +122,7 @@ const loadCart = () => {
     .forEach((element) => {
       element.addEventListener('click', cartItemClickListener);  
     });
-  const storage = () => (localStorage.getItem('price'));
+  const storage = () => JSON.parse(localStorage.getItem('price'));
   pricesSum = storage();
   if (pricesSum !== null) insertCartTotalElement();
 };
