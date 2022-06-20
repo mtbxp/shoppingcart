@@ -27,7 +27,30 @@ const createProductItemElement = ({ sku, name, image, salePrice }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+let arrayPricesCart = 0;
 const cart = document.querySelector('ol.cart__items');
+const totalPrice = document.createElement('h3');
+totalPrice.className = 'total-price';
+const cartSection = document.querySelector('.cart');
+const storagePrices = () => localStorage.setItem('price', arrayPricesCart);
+
+const insertCartTotalElement = () => {
+  totalPrice.innerHTML = +arrayPricesCart.toFixed(2);
+  cartSection.insertBefore(totalPrice, cartSection.children[1]);
+};
+
+const cartSum = (newPrice) => {
+  arrayPricesCart += newPrice;
+  storagePrices();
+  insertCartTotalElement();
+};
+
+const cartSub = (item) => {
+  const matchPrice = item.innerText.match(/(\d+)\.\d*|(\d+)/g).pop(); // consulta em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Regular_Expressions#trabalhando_com_express%C3%B5es_regulares
+  arrayPricesCart -= matchPrice;
+  storagePrices();
+  insertCartTotalElement();
+};
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
@@ -35,6 +58,7 @@ const cartItemClickListener = (event) => {
   cartItem.remove();
   saveCartItems('');
   saveCartItems(cart.innerHTML);
+  cartSub(cartItem);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -62,6 +86,7 @@ const getProductsForCartItem = async (event) => {
   const { id: sku, title: name, price: salePrice } = data;
   cart.appendChild(createCartItemElement({ sku, name, salePrice }));
   saveCartItems(cart.innerHTML);
+  cartSum(salePrice);
   return cart;
 };
 
@@ -71,12 +96,15 @@ const productsListener = () => document.querySelectorAll('button.item__add')
   });
 
 const loadCart = () => {
- const cartItems = getSavedCartItems();
- cart.innerHTML = cartItems;
- document.querySelectorAll('li.cart__item')
-  .forEach((element) => {
-    element.addEventListener('click', cartItemClickListener);
-  });
+  const cartItems = getSavedCartItems();
+  cart.innerHTML = cartItems;
+  document.querySelectorAll('li.cart__item')
+    .forEach((element) => {
+      element.addEventListener('click', cartItemClickListener);  
+    });
+  const storage = () => JSON.parse(localStorage.getItem('price'));
+  arrayPricesCart = storage();
+  if (arrayPricesCart !== null) insertCartTotalElement();
 };
 
 window.onload = async () => { await products(); productsListener(); loadCart(); };
