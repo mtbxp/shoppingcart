@@ -1,5 +1,6 @@
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 const cartItem = document.getElementsByClassName('cart__items')[0];
+const butRemov = document.getElementsByClassName('empty-cart')[0];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -74,6 +75,14 @@ const sendProduct = async () => {
   });
 };
 
+const removeItemFromCart = () => {
+  butRemov.addEventListener('click', () => {
+    cartItem.innerHTML = '';
+  });
+};
+
+
 window.onload = () => {
   sendProduct();
+  removeItemFromCart();
  };
