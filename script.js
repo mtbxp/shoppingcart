@@ -1,3 +1,6 @@
+const items = document.querySelector('.items');
+const shoppingCartList = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -24,12 +27,6 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const createProductList = async () => {
-  const products = await fetchProducts('computador');
-  const items = document.querySelector('.items');
-  products.results.forEach((product) => items.appendChild(createProductItemElement(product)));
-  };
-
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
@@ -44,4 +41,23 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
-window.onload = () => { createProductList(); };
+const createProductList = async () => {
+  const products = await fetchProducts('computador');
+  products.results.forEach((product) => items.appendChild(createProductItemElement(product)));
+  };
+
+const addItemToShoppingCart = async (event) => {
+  const itemId = event.target.parentElement.firstElementChild.innerText;
+  const item = await fetchItem(itemId);
+  shoppingCartList.appendChild(createCartItemElement(item));
+};
+
+const addListenerToBtn = async () => {
+  await createProductList();
+  const addBtn = document.querySelectorAll('.item__add');
+  addBtn.forEach((button) => button.addEventListener('click', addItemToShoppingCart));
+};
+
+window.onload = () => { 
+  addListenerToBtn(); 
+};
