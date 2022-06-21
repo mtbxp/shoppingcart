@@ -28,10 +28,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  localStorage.removeItem(event.target);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
-  console.log(sku, name, salePrice);
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -40,10 +40,11 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
 };
 
 async function addToCart(event) {
-  const clickedProduct = await fetchItem(event.target.id);
-  const li = createCartItemElement(clickedProduct);
+  const clickedItem = await fetchItem(event.target.id);
+  const li = createCartItemElement(clickedItem);
   document.querySelector('.cart__items').appendChild(li);
-  li.addEventListener('click', cartItemClickListener);
+  saveCartItems(clickedItem);
+  // li.addEventListener('click', cartItemClickListener);
 }
 
 function addingIdsInAddToCartButtons(products) {
@@ -52,6 +53,11 @@ function addingIdsInAddToCartButtons(products) {
     buttons[indice].id = product.id;
   });
 }
+
+const emptyCart = () => {
+  const cart = document.querySelector('.cart__items');
+  cart.innerHTML = '';
+};
 
 function addingEventListenerInAddToCartButtons() {
   // Objetos array-like são retornados de muitos métodos DOM nativos como getElementsByClassName(),por isso foi necessário usar o método 'Array.from' para convertê-lo em um array.
@@ -72,4 +78,6 @@ window.onload = async () => {
   appendItemsInSection(products);
   addingEventListenerInAddToCartButtons();
   addingIdsInAddToCartButtons(products);
+  const buttonEmptyCart = document.querySelector('.empty-cart');
+  buttonEmptyCart.addEventListener('click', emptyCart);
 };
