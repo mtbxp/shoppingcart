@@ -18,38 +18,44 @@ const createCustomElement = (element, className, innerText) => {
 }
 console.log(start('computador')); */
 
-const createProductItemElement = async ({ id: sku, title: name, thumbnail: image }) => {
+const createProductItemElement = async ({
+  id: sku,
+  title: name,
+  thumbnail: image,
+}) => {
   const section = document.createElement('section');
   section.className = 'item';
-  
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
+  );
 
   return section;
 };
 
-async function god() {
+async function godProducts() {
   try {
     const product = await fetchProducts('computador');
-      product.results.forEach(async (element) => {
-       const values = await createProductItemElement(element);
-       console.log(values);
-       document.querySelector('.items').appendChild(values);
-      });
+    product.results.forEach(async (element) => {
+      const values = await createProductItemElement(element);
+      document.querySelector('.items').appendChild(values);
+    });
   } catch (error) {
     return new Error('AHAAAAA');
   }
-  }
+}
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) =>
+  item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -57,6 +63,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { 
-  god();
+async function godItems() {
+  const buttonAddItem = document.querySelector('.items');
+  buttonAddItem.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('item__add')) {
+      console.log(event.target.parentNode);
+      const getSku = getSkuFromProductItem(event.target.parentNode);
+      const resultItems = await fetchItem(getSku);
+      const selectedItem = createCartItemElement(resultItems);
+      console.log(selectedItem);
+      document.querySelector('.cart__items').appendChild(selectedItem);
+    }
+  });
+}
+
+window.onload = () => {
+  godProducts();
+  godItems();
 };

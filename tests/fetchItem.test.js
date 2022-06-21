@@ -7,7 +7,7 @@ const item = require('../mocks/item');
 describe('2 - Teste a função fetchItem', () => {
 
   test('Teste se fetchProducts é uma função', async () => {
-    expect(await fetchItem()).toBe(Function);
+    expect(typeof fetchItem).toBe('function');
   })
 
   test('Execute a função fetchItem com o argumento do item "MLB1615760527" e teste se fetch foi chamada', async () => {
@@ -29,6 +29,6 @@ describe('2 - Teste a função fetchItem', () => {
   })
 
 test('Teste se, ao chamar a função fetchItem sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
-  expect(await fetchItem('')).toEqual(new Error('You must provide an url'));
+  expect(await fetchItem()).toEqual(new Error('You must provide an url'));
 })
   });
