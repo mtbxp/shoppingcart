@@ -41,6 +41,7 @@ const total = async () => {
 const cartItemClickListener = (event) => {
   event.target.remove();
   total();
+  localStorage.removeItem(event.target);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
