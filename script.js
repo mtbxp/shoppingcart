@@ -31,8 +31,11 @@ emptyButton.addEventListener('click', () => {
   cartItem.innerHTML = '';
 });
 
-const cartItemClickListener = (event) => 
+const cartItemClickListener = (event) => {
 event.target.remove();
+const replace = document.querySelector('.cart__items').innerHTML;
+saveCartItems(replace);
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -82,4 +85,6 @@ itemsNode.addEventListener('click', async (event) => {
 window.onload = async () => {
   createHtmlItens();
   getSavedCartItems();
+  const allLi = document.querySelectorAll('.cart__item');
+  allLi.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
