@@ -111,9 +111,22 @@ function loadAllSourcesToCart() {
   }
 }
 
+function clickEmptyButton() {
+  const shoppingCartNode = document.querySelector(cartItems);
+  shoppingCartNode.innerHTML = '';
+  shoppingCart = [];
+  saveCartItems(shoppingCartNode.innerHTML, shoppingCart);
+}
+
+function createEmptyCartListeners() {
+  const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', clickEmptyButton);
+}
+
 window.onload = async () => {
   await loadAllProductsOnPage();
   loadAllSourcesToCart();
   // await fetchItem('MLB1615760527');
   createAllProductsOnPageListeners();
+  createEmptyCartListeners();
 };
