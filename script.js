@@ -46,8 +46,8 @@ const allProducts = async () => {
     const section = createProductItemElement(product);
     // section.lastChild.addEventListener('click', pegaId)
     itens.appendChild(section);
-  }))
-}
+  }));
+};
 window.onload = () => { 
   allProducts();
 };

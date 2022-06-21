@@ -1,6 +1,6 @@
 const fetchProducts = (param) => {
   // seu código aqui
-  const fetchProducts = async (endpoint) => {
+  const pegaProdutos = async (endpoint) => {
     try {
       const url = `https://api.mercadolibre.com/sites/MLB/search?q=${endpoint}`;
       const response = await fetch(url);
@@ -9,8 +9,8 @@ const fetchProducts = (param) => {
     } catch (error) {
       return error;
     }
-  }
-  return fetchProducts(param);
+  };
+  return pegaProdutos(param);
 };
 if (typeof module !== 'undefined') {
   module.exports = {
