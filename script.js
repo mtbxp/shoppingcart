@@ -15,7 +15,6 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -33,11 +32,11 @@ const allProducts = async () => {
   });
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-// const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-// };
+const cartItemClickListener = (event) => {
+  
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -47,21 +46,21 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const getElement = async () => {
-  await allProducts();
-  await fetchItem();
-
-  const btn = document.querySelectorAll('.item__add');
-  const itemSku = document.querySelectorAll('.item__sku');
-  const itemName = document.querySelectorAll('.item__title');
+const cartItemElement = async (id) => {
+  const item = await fetchItem(id);
+  const dataElement = { sku: item.id, name: item.title, salePrice: item.price };
   const olElement = document.querySelector('.cart__items');
-  for (let i = 0; i < btn.length; i += 1) {
-      const price = fetchItem(itemSku[i].innerText);
-      btn[i].addEventListener('click', () => olElement.appendChild(createCartItemElement({ 
-      sku: `${itemSku[i].innerText}`, 
-      name: `${itemName[i].innerText}`, 
-      salePrice: `${price}` }))); 
-  }
+  const newElement = createCartItemElement(dataElement);
+  olElement.appendChild(newElement);
 };
 
-window.onload = () => { allProducts(); getElement(); };
+const buttonListener = () => {
+  const btn = document.querySelectorAll('.item__add');
+    for (let i = 0; i < btn.length; i += 1) {
+    const parentBtn = btn[i].parentNode;
+    const itemSku = getSkuFromProductItem(parentBtn);
+    btn[i].addEventListener('click', () => cartItemElement(itemSku));
+}
+};
+
+window.onload = async () => { await allProducts(); buttonListener(); };

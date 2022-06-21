@@ -3,7 +3,7 @@ const fetchItem = async ($ItemID) => {
   try {
     const result = await fetch(ID_URL);
     const data = await result.json();
-    return data.price;
+    return data;
   } catch (error) {
     return error;
   }
