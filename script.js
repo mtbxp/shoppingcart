@@ -43,21 +43,22 @@ function numberRounder(number) {
   return { intPart, decimalsTwoPlaces, roundedNumber };
 }
 
-function showMoneyValueInPortuguese(value) {
-  const valueObject = numberRounder(value);
-  const displayReais = valueObject.intPart;
-  const { decimalsTwoPlaces } = valueObject;
-  let displayCentavos;
-  if (decimalsTwoPlaces === 0) {
-    displayCentavos = '00';
-  } else if (decimalsTwoPlaces <= 9) {
-    displayCentavos = `0${decimalsTwoPlaces}`;
-  } else {
-    displayCentavos = `${decimalsTwoPlaces}`;
-  }
-  const displaySubtotal = `Subtotal: R$ ${displayReais},${displayCentavos}`;
-  return displaySubtotal;
-}
+// Infelizmente, o resultado esperado pelo teste é diferente do que é indicado no read.me. Dessa forma, a função abaixo não tem utilidade.
+// function showMoneyValueInPortuguese(value) {
+//   const valueObject = numberRounder(value);
+//   const displayReais = valueObject.intPart;
+//   const { decimalsTwoPlaces } = valueObject;
+//   let displayCentavos;
+//   if (decimalsTwoPlaces === 0) {
+//     displayCentavos = '00';
+//   } else if (decimalsTwoPlaces <= 9) {
+//     displayCentavos = `0${decimalsTwoPlaces}`;
+//   } else {
+//     displayCentavos = `${decimalsTwoPlaces}`;
+//   }
+//   const displaySubtotal = `Subtotal: R$ ${displayReais},${displayCentavos}`;
+//   return displaySubtotal;
+// }
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -69,7 +70,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
     const subtotalElement = document.querySelector(totalPriceClass);
     subtotalValue -= numberRounder(salePrice).roundedNumber;
     subtotalValue = numberRounder(subtotalValue).roundedNumber;
-    subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
+    subtotalElement.innerText = subtotalValue;
   });
   return li;
 };
@@ -84,7 +85,7 @@ async function insertCartItemWithId(id) {
   parentElement.appendChild(li);
   const subtotalElement = document.querySelector(totalPriceClass);
   subtotalValue += numberRounder(salePrice).roundedNumber;
-  subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
+  subtotalElement.innerText = subtotalValue;
 }
 
 async function productsHandle() {
