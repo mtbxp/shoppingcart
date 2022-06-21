@@ -67,6 +67,14 @@ const getProducts = async () => {
 });
 };
 
+const emptyCart = () => {
+  const items = document.querySelectorAll('li');
+  items.forEach((element) => element.remove());
+};
+
+const buttonEmpty = document.querySelector('.empty-cart');
+buttonEmpty.addEventListener('click', emptyCart);
+
 window.onload = () => { 
   getProducts();
 };
