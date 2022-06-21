@@ -9,6 +9,7 @@ it('Testando se o localStorage.getItem é chamado com a execução da função',
 getSavedCartItems();
 expect(await localStorage.getItem).toBeCalled();
 });
+
 it('Testa localStorage é chamado com 2 parâmetros', async () => {
   getSavedCartItems('cartItems')
   expect(await localStorage.getItem).toBeCalledWith('cartItems');
