@@ -62,9 +62,9 @@ const cartShopping = async (id) => {
 
 const productCartItem = async () => {
   const item = document.querySelectorAll('.item');
-  item.forEach((item) => {
-    item.addEventListener('click', async () => {
-      const id = getSkuFromProductItem(item);
+  item.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const id = getSkuFromProductItem(btn);
       await cartShopping(id);
   });
 });
