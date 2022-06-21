@@ -1,10 +1,14 @@
 // const { thumbnail } = require('./mocks/item');
 
+// const getSavedCartItems = require("./helpers/getSavedCartItems");
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { json } = require("stylelint/lib/formatters");
 
 // const { fetchItem } = require("./helpers/fetchItem");
 
 let shoppingCart = [];
+const cartItems = '.cart__items';
 
 async function fetchItems(item) {
   const res = await fetchItem(item);
@@ -40,9 +44,11 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
+  const shoppingCartNode = document.querySelector(cartItems);
   const sk = event.target.innerText.split(' ')[1];
   shoppingCart = shoppingCart.filter((produto) => produto.id !== sk);
   event.target.remove();
+  saveCartItems(shoppingCartNode.innerHTML, shoppingCart);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -57,13 +63,14 @@ const addToCart = async (event) => {
   const skuOuID = getSkuFromProductItem(event.target.parentNode);
   const jsonProduto = await fetchItems(skuOuID);
   shoppingCart.push(jsonProduto);
-  const shoppingCartNode = document.querySelector('.cart__items');
+  const shoppingCartNode = document.querySelector(cartItems);
   const formatedProduct = {
     sku: jsonProduto.id,
     name: jsonProduto.title,
     salePrice: jsonProduto.price,
   };
   shoppingCartNode.appendChild(createCartItemElement(formatedProduct));
+  saveCartItems(shoppingCartNode.innerHTML, shoppingCart);
 };
 
 const loadAllProductsOnPage = async () => {
@@ -87,8 +94,26 @@ const createAllProductsOnPageListeners = () => {
   });
 };
 
+function refreshCartListeners() {
+  const productsOnCart = document.querySelectorAll('.cart__item');
+  productsOnCart.forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
+}
+
+function loadAllSourcesToCart() {
+  const shoppingCartNode = document.querySelector(cartItems);
+  const savedHtml = getSavedCartItems();
+  if (savedHtml !== null) {
+    shoppingCartNode.innerHTML = getSavedCartItems();
+    shoppingCart = JSON.parse(localStorage.getItem('cartItemsArray'));
+    refreshCartListeners();
+  }
+}
+
 window.onload = async () => {
   await loadAllProductsOnPage();
+  loadAllSourcesToCart();
   // await fetchItem('MLB1615760527');
   createAllProductsOnPageListeners();
 };
