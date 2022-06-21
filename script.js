@@ -89,12 +89,15 @@ async function insertCartItemWithId(id) {
 }
 
 async function productsHandle() {
+  const parentElement = document.querySelector('.items');
+  const loadingElement = createCustomElement('section', 'loading', 'carregando...');
+  parentElement.appendChild(loadingElement);
   const productsInfo = await fetchProducts('computador');
+  parentElement.innerHTML = '';
   productsInfo.forEach((item) => {
     // renderProductElement
     const sku = item.id; const name = item.title; const image = item.thumbnail;
-    const productElement = createProductItemElement({ sku, name, image });
-    const parentElement = document.querySelector('.items');
+    const productElement = createProductItemElement({ sku, name, image });   
     parentElement.appendChild(productElement);
     // insert product on chart with click
     productElement.lastElementChild.addEventListener('click', () => {
