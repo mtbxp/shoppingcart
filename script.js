@@ -73,6 +73,11 @@ itemsNode.addEventListener('click', async (event) => {
     };
   cartItem.appendChild(createCartItemElement(objChanged));
   }
+  saveCartItems(cartItem.innerHTML);
+  getSavedCartItems();
 });
 
-window.onload = async () => createHtmlItens();
+window.onload = async () => {
+  createHtmlItens();
+  getSavedCartItems();
+};
