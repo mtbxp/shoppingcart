@@ -38,6 +38,15 @@ body {
   margin-left: 30px;
 }
 
+.total-price-identifier {
+  display: flex;
+  margin: 12px;
+  border-bottom: dashed rgb(10, 118, 79);
+  border-top: dashed rgb(10, 118, 79);
+  padding-top: 7px;
+  justify-content: space-between;
+}
+
 .container-cartTitle span {
   z-index: 1;
 }
