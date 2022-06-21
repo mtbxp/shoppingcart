@@ -3,6 +3,13 @@ const cartItems = '.cart__items';
 const constanteAuxiliar = document.querySelector(cartItems);
 const action = document.querySelector('.empty-cart');
 
+const carregando = () => {
+  const element = document.createElement('div');
+  element.innerHTML = 'carregando...';
+  element.classList.add('loading');
+  classItems.appendChild(element);
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -64,7 +71,9 @@ const addShopping = () => {
 };
 
 const addProducts = async () => {
+  const loading = document.querySelector('.loading');
   const listItems = await fetchProducts('computador');
+  loading.remove();
   listItems.forEach((acc) => {
     const listProducts = createProductItemElement(acc);
     classItems.appendChild(listProducts);
@@ -76,6 +85,7 @@ action.addEventListener('click', () => {
 });
 
 window.onload = () => { 
+  carregando();
   addProducts();
   addShopping();
 };
