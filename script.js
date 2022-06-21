@@ -26,9 +26,21 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
+const total = async () => {
+  const itemsCart = await document.querySelectorAll('.cart__item');
+  const pricesList = [];
+  itemsCart.forEach((item) => {
+    pricesList.push(Number(item.id));
+  });
+  console.log(pricesList);
+  const sumPricesList = pricesList.reduce((soma, i) => soma + i);
+  console.log(sumPricesList);
+  document.querySelector('.total-price').innerText = sumPricesList;
+};
+
 const cartItemClickListener = (event) => {
   event.target.remove();
-  localStorage.removeItem(event.target);
+  total();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -43,8 +55,8 @@ async function addToCart(event) {
   const clickedItem = await fetchItem(event.target.id);
   const li = createCartItemElement(clickedItem);
   document.querySelector('.cart__items').appendChild(li);
-  saveCartItems(clickedItem);
-  // li.addEventListener('click', cartItemClickListener);
+  li.id = clickedItem.price;
+  total();
 }
 
 function addingIdsInAddToCartButtons(products) {
@@ -55,14 +67,17 @@ function addingIdsInAddToCartButtons(products) {
 }
 
 const emptyCart = () => {
+  const totalPrice = document.querySelector('.total-price');
   const cart = document.querySelector('.cart__items');
   cart.innerHTML = '';
+  totalPrice.innerHTML = '';
 };
 
 function addingEventListenerInAddToCartButtons() {
-  // Objetos array-like são retornados de muitos métodos DOM nativos como getElementsByClassName(),por isso foi necessário usar o método 'Array.from' para convertê-lo em um array.
-  Array.from(document.getElementsByClassName('item__add'))
-  .forEach((button) => button.addEventListener('click', addToCart)); 
+  const buttonsAddToCart = document.querySelectorAll('.item__add');
+  buttonsAddToCart.forEach((button) => {
+    button.addEventListener('click', addToCart);
+  });
 }
 
 function appendItemsInSection(products) {
