@@ -2,7 +2,7 @@ const getClassCartItems = '.cart__Items';
 const getElement = document.querySelector(getClassCartItems);
 const getClassItems = document.querySelector('.items');
 // const getTagOl = document.querySelector(getClassCartItems).textContent;
-const button = document.querySelector('.empty-cart')
+const button = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
