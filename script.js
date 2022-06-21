@@ -1,3 +1,10 @@
+// const { fetchItem } = require("./helpers/fetchItem");
+// const saveCartItems = require("./helpers/saveCartItems");
+
+// const saveCartItems = require("./helpers/saveCartItems");
+
+const cartItems = document.getElementsByClassName('cart__items')[0];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,7 +37,8 @@ const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -40,16 +48,46 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const exibePagina = async () => {
+  const coisas = document.querySelector('.items');
+const pcs = await fetchProducts('computador');
+pcs.results.forEach((element) => {
+  coisas.appendChild(
+    createProductItemElement({
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    }),
+  );
+});
+};
+
+const getCart = async (itemCart) => {
+  const takeFetch = await fetchItem(itemCart);
+  const carrinho = {
+    sku: takeFetch.id,
+    name: takeFetch.title,
+    salePrice: takeFetch.price,
+  };
+cartItems.appendChild(createCartItemElement(carrinho));
+saveCartItems(cartItems.innerHTML);
+};
+const addCart = () => {
+  document.addEventListener('click', (evento) => {
+  if (evento.target.classList.contains('item__add')) {
+  const adicionando = (evento.target.parentNode.firstChild.innerHTML);
+  getCart(adicionando);
+  }
+  });
+};
+const clean = document.getElementsByClassName('empty-cart')[0];
+
+const limpa = () => {
+saveCartItems(cartItems.innerHTML = '');
+};
+
+clean.addEventListener('click', limpa);
 window.onload = async () => {
-    const coisas = document.querySelector('.items');
-    const pcs = await fetchProducts('computador');
-    pcs.results.forEach((element) => {
-      coisas.appendChild(
-        createProductItemElement({
-          sku: element.id,
-          name: element.title,
-          image: element.thumbnail,
-        }),
-      );
-    });
+  exibePagina();
+  addCart();
   };
