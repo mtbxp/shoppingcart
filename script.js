@@ -1,5 +1,8 @@
-// Variables
+// Variables - DOM
 const cartItems = document.querySelector('.cart__items');
+
+// Variables
+const prices = [];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -33,6 +36,9 @@ const addProcuctCart = async (event) => {
   const productID = getSkuFromProductItem(event.target.parentElement);
   const data = await fetchItem(productID);
 
+/*   prices.push(data.price);
+  console.log(prices); */
+
   cartItems.appendChild(createCartItemElement(data));
 };
 
@@ -47,6 +53,17 @@ const createProductItemElement = ({ sku, name, image }) => {
   .addEventListener('click', addProcuctCart);
 
   return section;
+};
+
+const emptyCartClickListener = () => {
+  console.log(cartItems);
+  cartItems.innerHTML = ' ';
+};
+
+const cleanCart = () => {
+  const emptyCart = document.querySelector('.empty-cart');
+
+  emptyCart.addEventListener('click', emptyCartClickListener);
 };
 
 // Obtive ajuda nesses exercícios
@@ -75,6 +92,7 @@ const createListProducts = async () => {
 
 const starting = () => {
   createListProducts();
+  cleanCart();
 };
 
 window.onload = () => { starting(); };

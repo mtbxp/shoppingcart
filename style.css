@@ -9,6 +9,11 @@ body {
   background-color: rgb(246, 246, 246);
 }
 
+.total-price {
+  padding: 6px;
+  align-self: flex-end;
+}
+
 .header {
   position: relative;
   background-color: rgb(3, 52, 45);
