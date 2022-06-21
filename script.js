@@ -26,8 +26,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
 const cartItemClickListener = (event) => 
 event.target.remove();
 
@@ -74,7 +72,6 @@ itemsNode.addEventListener('click', async (event) => {
   cartItem.appendChild(createCartItemElement(objChanged));
   }
   saveCartItems(cartItem.innerHTML);
-  getSavedCartItems();
 });
 
 window.onload = async () => {
