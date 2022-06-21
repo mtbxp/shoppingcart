@@ -29,7 +29,8 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-   event.target.parentElement.removeChild(event.target);
+  event.target.remove();
+  saveCartItems(ol.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -49,35 +50,42 @@ const productList = async () => {
   });
 };
 
+const cartShopping = async (id) => {
+  const fechCart = await fetchItem(id); 
+  ol.appendChild(createCartItemElement({ 
+    sku: fechCart.id, 
+    name: fechCart.title,
+    salePrice: fechCart.price, 
+  }));
+  saveCartItems(ol.innerHTML);
+};
+
 const productCartItem = async () => {
-  const button = document.querySelectorAll('.item__add'); // referencia https://www.w3schools.com/js/js_htmldom_elements.asp
-  button.forEach((btn) => { 
-    btn.addEventListener('click', async (event) => {
-      const id = getSkuFromProductItem(event.target.parentElement);
-      const result = await fetchItem(id);
-      ol.appendChild(createCartItemElement({ 
-      sku: result.id,
-      name: result.title,
-      salePrice: result.price,
-    }));
-    saveCartItems(JSON.stringify(result));
+  const item = document.querySelectorAll('.item');
+  item.forEach((item) => {
+    item.addEventListener('click', async () => {
+      const id = getSkuFromProductItem(item);
+      await cartShopping(id);
   });
 });
 };
 
 const getLocalStorage = () => {
-  const result = getSavedCartItems();
-  if (result) {
-    result.forEach((item) => {
-      ol.appendChild(createCartItemElement({
-        sku: item.id, 
-        name: item.title,
-        salePrice: item.price,
-      }));
-    });
-  } else {
-    return null;
-  }
+  ol.innerHTML = getSavedCartItems();
+  document.querySelectorAll('li').forEach((element) => {
+    element.addEventListener('click', cartItemClickListener);
+  });
+  // if (result) {
+  //   result.forEach((item) => {
+  //     ol.appendChild(createCartItemElement({
+  //       sku: item.id, 
+  //       name: item.title,
+  //       salePrice: item.price,
+  //     }));
+  //   });
+  // } else {
+  //   return null;
+  // }
 };
 
 window.onload = async () => {  
