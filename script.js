@@ -68,6 +68,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
     parentElement.removeChild(li);
     const subtotalElement = document.querySelector(totalPriceClass);
     subtotalValue -= numberRounder(salePrice).roundedNumber;
+    subtotalValue = numberRounder(subtotalValue).roundedNumber;
     subtotalElement.innerText = showMoneyValueInPortuguese(subtotalValue);
   });
   return li;
