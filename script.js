@@ -11,7 +11,7 @@ const cartItemClickListener = (event) => {
   event.target.remove();
   const sectionCart = document.getElementsByClassName('cart__items')[0];
   console.log(sectionCart.innerText);
-  const cartStringfy = JSON.stringify(sectionCart.innerText);
+  const cartStringfy = JSON.stringify(sectionCart.innerHTML);
   console.log(cartStringfy);
   getSavedCartItems(cartStringfy);
 };
@@ -32,12 +32,9 @@ const renderItems = async (id) => {
     salePrice: item.price,
   };
   const sectionCart = document.getElementsByClassName('cart__items')[0];
-  console.log(sectionCart);
-  // const sectionCart2 = document.querySelectorAll('.cart__items');
   const y = createCartItemElement(element);
   sectionCart.appendChild(y);
-  const cartStringfy = JSON.stringify(sectionCart.innerText);
-  console.log(cartStringfy);
+  const cartStringfy = JSON.stringify(sectionCart.innerHTML);
   saveCartItems(cartStringfy);
 };
 
