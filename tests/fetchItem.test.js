@@ -18,7 +18,7 @@ describe('2 - Teste a função fetchItem', () => {
   
   it('Test if the return of the fethItem function with the argument "MLB1615760527" is a data structure equal to the item object, which is already imported in the file', async () => {    
     const expectArgument = await fetchItem('MLB1615760527');
-    expect(expectArgument).toEqual(item);
+    expect(expectArgument).toStrictEqual(item);
   });
 
   it('Test if calling the fethItem function with no argument returns an error with the message: You must provide an url', async () => {    
