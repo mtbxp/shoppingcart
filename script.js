@@ -43,6 +43,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  // saveCartItems(li.innerText);
   return li;
 };
 
@@ -51,7 +52,9 @@ const cartItemElement = async (id) => {
   const dataElement = { sku: item.id, name: item.title, salePrice: item.price };
   const olElement = document.querySelector('.cart__items');
   const newElement = createCartItemElement(dataElement);
-  olElement.appendChild(newElement);
+  const element = olElement.appendChild(newElement);
+  saveCartItems(element.innerText);
+  return element;
 };
 
 const buttonListener = () => {
