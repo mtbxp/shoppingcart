@@ -30,7 +30,12 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   // coloque seu código 
+  console.log(event);
 };
+
+console.log(fetchProducts);
+console.log(createProductItemElement);
+console.log(getSkuFromProductItem);
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -40,4 +45,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => {};
+window.onload = () => {
+  console.log(createCartItemElement);
+};
