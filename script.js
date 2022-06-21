@@ -32,7 +32,7 @@ const createProductItemElement = async ({ id: sku, title: name, thumbnail: image
 
 async function god() {
   try {
-    const product = await fetchProducts();
+    const product = await fetchProducts('computador');
       product.results.forEach(async (element) => {
        const values = await createProductItemElement(element);
        console.log(values);
