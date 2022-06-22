@@ -12,30 +12,28 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({
-  id: sku,
-  title: name,
-  thumbnail: image,
-}) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
-  );
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
 };
 
 const fetchProcts2 = async () => {
-  const secao = document.querySelector('.item');
-  const data = fetchProducts('computador');
+  const data = await fetchProducts('computador');
   const produto = data.results;
-  produto.forEach((elemento) =>
-    secao.appendChild(createProductItemElement(elemento)));
+  const final = produto.map((elemento) => ({
+    sku: elemento.id,
+    name: elemento.title,
+    image: elemento.thumbnail,
+  }));
+
+  createProductItemElement(final);
 };
 
 const getSkuFromProductItem = (item) =>
