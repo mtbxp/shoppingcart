@@ -26,7 +26,7 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const fetchProdutcs = async () => {
+const fetchProdutcs2 = async () => {
   const secao = document.querySelector('.items');
   const data = await fetchProducts();
   const products = data.results;
@@ -47,4 +47,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { fetchProdutcs(); };
+window.onload = () => { fetchProdutcs2(); };
