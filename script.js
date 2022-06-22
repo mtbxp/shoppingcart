@@ -71,7 +71,6 @@ async function godItems() {
   });
 }
 
-
 window.onload = () => {
   godProducts();
   godItems();
