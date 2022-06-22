@@ -26,12 +26,12 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
   return section;
 };
 
-const fetchProdutcs2 = async () => {
-  const secao = document.querySelector('.items');
-  const data = await fetchProducts();
-  const products = data.results;
-  products.forEach((elemento) => secao.appendChild(createProductItemElement(elemento)));
-};
+// const fetchProdutcs2 = async () => {
+//   const secao = document.querySelector('.items');
+//   const data = await fetchProducts();
+//   const products = data.results;
+//   products.forEach((elemento) => secao.appendChild(createProductItemElement(elemento)));
+// };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -47,4 +47,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { fetchProdutcs2(); };
+// window.onload = () => { fetchProdutcs(); };
