@@ -1,3 +1,5 @@
+const items = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -64,16 +66,25 @@ const getProducts = async () => {
     
      productCard.children[3].addEventListener('click', addProductsCart);
 });
+  items.removeChild(items.firstChild);
 };
 
 const emptyCart = () => {
-  const items = document.querySelectorAll('li');
-  items.forEach((element) => element.remove());
+  const items1 = document.querySelectorAll('li');
+  items1.forEach((element) => element.remove());
 };
 
 const buttonEmpty = document.querySelector('.empty-cart');
 buttonEmpty.addEventListener('click', emptyCart);
 
+const Addloading = () => {
+  const loading = document.createElement('p');
+  loading.className = 'loading';
+  loading.innerText = 'carregando...';
+  items.appendChild(loading);
+};
+
 window.onload = () => { 
   getProducts();
+  Addloading();
 };
