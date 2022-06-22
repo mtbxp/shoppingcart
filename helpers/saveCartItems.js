@@ -1,6 +1,6 @@
 const saveCartItems = async (item) => {
   // const renderStringify = JSON.stringify();
-  localStorage.setItem('itemList', item);
+  localStorage.setItem('cartItems', item);
 };
 
 if (typeof module !== 'undefined') {

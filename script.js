@@ -1,4 +1,4 @@
-const ol = document.querySelectorAll('.cart__items');
+// const ol = document.querySelectorAll('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -7,12 +7,12 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   event.target.remove(); 
-  const carts = ol;
-  saveCartItems(JSON.stringify(carts.innerHTML));
+/*   const carts = ol;
+  saveCartItems(JSON.stringify(carts.innerHTML)); */
 // --funciona mas não passa no cypress -- 
 
 /* const li = document.querySelector('.cart__item');
@@ -37,7 +37,7 @@ const renderItem = async (idItem) => {
     const itemCart = document.querySelector('.cart__items');
     const creation = createCartItemElement(param);
     itemCart.appendChild(creation);
-    saveCartItems(JSON.stringify(itemCart.innerHTML));
+    /* saveCartItems(JSON.stringify(itemCart.innerHTML)); */
 }; 
 
 const createCustomElement = (element, className, innerText, sku) => {
@@ -60,12 +60,12 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const saveLocalStorage = () => {
+/* const saveLocalStorage = () => {
     const saveCartItem = ol;
     saveCartItem.innerHTML = JSON.parse(getSavedCartItems);
     const savedLocal = ol;
     savedLocal.forEach((item) => item.addEventListener('click', cartItemClickListener));
-  };
+  }; */
 
 const renderProducts = async () => {
   const productsSection = document.querySelector('.items');
@@ -88,5 +88,5 @@ const renderProducts = async () => {
 
 window.onload = () => {
   renderProducts();
-  saveLocalStorage();
+  /* saveLocalStorage(); */
 };
