@@ -15,4 +15,9 @@ describe('1 - Teste a função fetchProducts', () => {
     const data = await fetchProducts('computador');
     expect(data).toEqual(computadorSearch);
   });
+  it('Testa se ao chamar com argumento computador a fetch é chamada.', async () => {
+    const funcfetchProducts = await fetchProducts('computador');
+    const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+    expect(funcfetchProducts).toHaveBeenCalledWith(url);
+  })
 });
