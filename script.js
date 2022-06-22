@@ -1,5 +1,3 @@
-// const { fetchProducts } = require('./helpers/fetchProducts');
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -22,9 +20,22 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 };
+
+const result = fetchProducts('computador').then((data) => {
+  const resultadoBusca = data.results;
+  resultadoBusca.forEach((element) => {
+    const obj = {
+      sku: element.id,
+      name: element.title,
+      image: element.thumbnail,
+    };
+    const child = createProductItemElement(obj);
+    const section = document.querySelector('.items');
+    section.appendChild(child);
+  });
+});
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
@@ -41,6 +52,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => {
-  console.log(createCartItemElement);
-};
+window.onload = () => {};
