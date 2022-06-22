@@ -12,12 +12,6 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-/*  async function start(loko) {
-  const data = await fetchProducts(loko); 
-  console.log(data);
-}
-console.log(start('computador')); */
-
 const createProductItemElement = async ({
   id: sku,
   title: name,
@@ -52,8 +46,10 @@ const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  
 };
+
+/*   cartItem.parentNode.removeChild(cartItem) */
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
@@ -67,15 +63,14 @@ async function godItems() {
   const buttonAddItem = document.querySelector('.items');
   buttonAddItem.addEventListener('click', async (event) => {
     if (event.target.classList.contains('item__add')) {
-      console.log(event.target.parentNode);
       const getSku = getSkuFromProductItem(event.target.parentNode);
       const resultItems = await fetchItem(getSku);
       const selectedItem = createCartItemElement(resultItems);
-      console.log(selectedItem);
       document.querySelector('.cart__items').appendChild(selectedItem);
     }
   });
 }
+
 
 window.onload = () => {
   godProducts();
