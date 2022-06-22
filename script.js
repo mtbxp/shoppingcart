@@ -4,6 +4,7 @@
 // const saveCartItems = require("./helpers/saveCartItems");
 
 const cartItems = document.getElementsByClassName('cart__items')[0];
+const tudo = document.getElementsByClassName('items')[0];
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -48,6 +49,12 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+
+const removeLoading = async () => {
+  const carrega = document.querySelector('.loading');
+    tudo.removeChild(carrega);
+  };
+
 const exibePagina = async () => {
   const coisas = document.querySelector('.items');
 const pcs = await fetchProducts('computador');
@@ -60,6 +67,7 @@ pcs.results.forEach((element) => {
     }),
   );
 });
+removeLoading();
 };
 
 const getCart = async (itemCart) => {
@@ -86,8 +94,16 @@ const limpa = () => {
 saveCartItems(cartItems.innerHTML = '');
 };
 
+const loading = async () => {
+  const createElement = document.createElement('span');
+  createElement.classList = 'loading';
+  createElement.innerHTML = 'carregando...';
+tudo.appendChild(createElement);
+};
+
 clean.addEventListener('click', limpa);
 window.onload = async () => {
   exibePagina();
   addCart();
+  loading();
   };
