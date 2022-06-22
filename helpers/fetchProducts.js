@@ -1,5 +1,5 @@
 const fetchProducts = async (produto) => {
-  const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${produto}`;
   if (produto === undefined) {
     return new Error('You must provide an url.');
   }
