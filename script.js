@@ -84,11 +84,12 @@ const renderProducts = async () => {
     sectionItems.appendChild(x);
   });
 };
+
 const ol = document.querySelector('.empty-cart');
-const cleanOl = () => {
-  sectionCart.innerText = '';
-};
-ol.addEventListener('click', cleanOl);
+function cleanList() {
+  sectionCart.innerHTML = '';
+}
+ol.addEventListener('click', cleanList);
 
 window.onload = () => { 
   renderProducts();
