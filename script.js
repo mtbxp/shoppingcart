@@ -1,4 +1,15 @@
 const sectionCart = document.getElementsByClassName('cart__items')[0];
+
+const textOnload = async () => {
+  const h3 = document.createElement('h3');
+  h3.className = 'loading';
+  h3.innerText = 'carregando...';
+  console.log(h3);
+  document.getElementsByClassName('container')[0].appendChild(h3);
+  await fetchProducts('computador');
+  h3.remove();
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -89,6 +100,7 @@ function cleanList() {
 }
 ol.addEventListener('click', cleanList);
 
-window.onload = () => { 
+window.onload = () => {
+  textOnload();
   renderProducts();
 };
