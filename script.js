@@ -26,10 +26,8 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 };
 
 const insertAvailableProducts = async () => {
-  const getClassLoading = document.querySelector('.loading');
   const itemsGroup = document.querySelector('.items');
   const data = await fetchProducts('computador');
-  getClassLoading.remove();
   const allProducts = data.results;
   allProducts.forEach((product) => itemsGroup.appendChild(createProductItemElement(product)));
 };
