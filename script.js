@@ -1,11 +1,6 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 // const item = require('./mocks/item');
 // const { results } = require('./mocks/search');
-const addMessage = document.createElement('aside');
-addMessage.innerHTML = 'carregando...';
-addMessage.classList.add('loading');
-getClassItems.appendChild(addMessage);
-
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
