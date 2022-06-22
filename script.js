@@ -45,7 +45,7 @@ async function godProducts() {
 const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = () => {
   
 };
 
