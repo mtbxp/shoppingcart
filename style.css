@@ -142,7 +142,7 @@ body {
 
 .total-price {
   display: flex;
-  align-self:center;
+  align-self: center;
 }
 
 .loading {
