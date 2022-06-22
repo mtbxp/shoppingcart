@@ -45,12 +45,10 @@ async function godProducts() {
 const getSkuFromProductItem = (item) =>
   item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = () => {
-  const list = document.querySelector('.cart__item');
-  list.addEventListener('click', (event) => {
-    event.target.remove();
-  });
-};
+const cartItemClickListener = (event) => {
+  const remove = event.target;
+  remove.parentNode.removeChild(remove);
+  };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
