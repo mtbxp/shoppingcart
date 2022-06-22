@@ -1,4 +1,4 @@
-// const ol = document.querySelectorAll('.cart__items');
+const ol = document.querySelector('.cart__items');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -85,8 +85,15 @@ const renderProducts = async () => {
     productsSection.innerHTML = `<h1>${error}</h1>`;
   }
 };
+const clearCart = () => {
+  const bttClear = document.querySelector('.empty-cart');
+  bttClear.addEventListener('click', () => {
+  ol.innerHTML = '';
+  });
+};
 
 window.onload = () => {
   renderProducts();
+  clearCart();
   /* saveLocalStorage(); */
 };
