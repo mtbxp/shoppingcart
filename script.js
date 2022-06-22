@@ -1,3 +1,4 @@
+const sectionCart = document.getElementsByClassName('cart__items')[0];
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -9,11 +10,8 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  const sectionCart = document.getElementsByClassName('cart__items')[0];
-  console.log(sectionCart.innerText);
-  const cartStringfy = JSON.stringify(sectionCart.innerHTML);
-  console.log(cartStringfy);
-  getSavedCartItems(cartStringfy);
+  // const sectionCart = document.getElementsByClassName('cart__items')[0];
+  savedCartItems(sectionCart.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -31,7 +29,6 @@ const renderItems = async (id) => {
     name: item.title,
     salePrice: item.price,
   };
-  const sectionCart = document.getElementsByClassName('cart__items')[0];
   const y = createCartItemElement(element);
   sectionCart.appendChild(y);
   const cartStringfy = JSON.stringify(sectionCart.innerHTML);
@@ -46,6 +43,12 @@ const createCustomElement = (element, className, innerText, sku) => {
     e.addEventListener('click', async () => renderItems(sku));
   }
   return e;
+};
+
+const totaCost = async () => {
+  let array = [];
+  array = sectionCart.innerText;
+  console.log(array);
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -81,6 +84,11 @@ const renderProducts = async () => {
     sectionItems.appendChild(x);
   });
 };
+const ol = document.querySelector('.empty-cart');
+const cleanOl = () => {
+  sectionCart.innerText = '';
+};
+ol.addEventListener('click', cleanOl);
 
 window.onload = () => { 
   renderProducts();
