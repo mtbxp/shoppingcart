@@ -11,7 +11,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const cartItemClickListener = (event) => {
   event.target.remove();
   // const sectionCart = document.getElementsByClassName('cart__items')[0];
-  savedCartItems(sectionCart.innerHTML);
+  // savedCartItems(sectionCart.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -45,11 +45,9 @@ const createCustomElement = (element, className, innerText, sku) => {
   return e;
 };
 
-const totaCost = async () => {
-  let array = [];
-  array = sectionCart.innerText;
-  console.log(array);
-};
+// const totaCost = async () => {
+  
+// };
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
