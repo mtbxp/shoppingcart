@@ -88,8 +88,18 @@ const getLocalStorage = () => {
   // }
 };
 
+const btnRemove = document.querySelector('.empty-cart');
+const removeCartItems = async () => {
+    btnRemove.addEventListener('click', () => {
+      while (ol.hasChildNodes()) {
+        ol.removeChild(ol.firstChild);
+      }
+    });
+};
+
 window.onload = async () => {  
   await productList();
   await productCartItem();
   getLocalStorage();
+  await removeCartItems();
 };
