@@ -1,5 +1,16 @@
 const sectionPai = document.querySelector('.items');
 const cartItemsPai = document.querySelector('.cart__items');
+const loadingPai = document.querySelector('.cart');
+
+// requisito 11
+const loading = async () => {
+ const paragraph = document.createElement('p');
+ paragraph.className = 'loading';
+ paragraph.innerText = 'carregando...';
+ loadingPai.appendChild(paragraph);
+ await fetchProducts();
+ paragraph.remove();
+};
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -65,6 +76,11 @@ const listaProdutos = async () => {
 };
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// requisito 9
+const somaValorCarrinho = async () => {
+
+};
+
 // requisito 10
 const btnEsvaziarCarrinho = document.querySelector('.empty-cart');
 const esvaziaCarrinho = () => {
@@ -75,4 +91,5 @@ btnEsvaziarCarrinho.addEventListener('click', esvaziaCarrinho);
 
 window.onload = () => {
   listaProdutos();
+  loading();
  };
