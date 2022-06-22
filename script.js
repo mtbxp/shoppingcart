@@ -1,4 +1,4 @@
-const { fetchProducts } = require('./helpers/fetchProducts');
+// const { fetchProducts } = require('./helpers/fetchProducts');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -32,10 +32,6 @@ const cartItemClickListener = (event) => {
   // coloque seu código 
   console.log(event);
 };
-
-console.log(fetchProducts);
-console.log(createProductItemElement);
-console.log(getSkuFromProductItem);
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
