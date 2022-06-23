@@ -19,6 +19,13 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(cartItem.innerHTML);
+};
+
+// Adiciona Função para salvar no Local Storage
+const loadCart = () => {
+  cartItem.innerHTML = getSavedCartItems();
+  cartItem.addEventListener('click', cartItemClickListener);
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -37,6 +44,7 @@ const addItems = async (itemId) => {
 // };
   const fetch = await fetchItem(itemId);
   cartItem.appendChild(createCartItemElement(fetch));
+  saveCartItems(cartItem.innerHTML);
   // console.log(fetch);
 };
 
@@ -74,4 +82,5 @@ const listItems = async () => {
 
 window.onload = () => {
   listItems();
+  loadCart();
  };
