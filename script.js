@@ -58,6 +58,14 @@ document.addEventListener('click', (e) => {
   }
   });
 
+// Escutador Limpar o Carrinho
+
+document.addEventListener('click', (e) => { 
+  if (e.target.classList.contains('empty-cart')) {
+    cartItem.innerHTML = '';
+  }
+});
+
 const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) => {
   const section = document.createElement('section');
   section.className = 'item';
